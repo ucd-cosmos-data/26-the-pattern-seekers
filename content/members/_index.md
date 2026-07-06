@@ -76,3 +76,24 @@ title: "Members"
   </div>
 
 </div>
+
+### Brendan Park
+
+<div class="member-block" style="display: flex; align-items: flex-start; gap: 20px; flex-wrap: wrap; margin-bottom: 40px;">
+
+  <img src="/26-the-pattern-seekers/members/brendan.jpeg"
+       alt="Brendan Park"
+       style="width: 150px; height: 150px; object-fit: contain; border-radius: 25%; object-position: center; flex-shrink: 0;">
+
+  <div style="flex: 1; text-align: left;">
+    <p style="margin: 0; padding-top: 0.5em;">
+      Brendan is a rising junior at Oxford Academy in Cypress.
+    </p>
+    <ul style="margin: 0; padding-left: 20px;">
+      <li>He likes to play basketball with friends</li>
+      <li>He likes to buy clothes</li>
+      <li>His favorite food is pasta</li>
+    </ul>
+  </div>
+
+</div>
