@@ -17,9 +17,9 @@ params:
     enabled: true
     title: "The Pattern Seekers"
     subtitle: "<Description>"
-    imageUrl: "/26-the-pattern-seekers/bonsai.jpeg"
-    imageWidth: 300
-    imageHeight: 300
+    imageUrl: "/26-the-pattern-seekers/cosmos.png"
+    imageWidth: 420
+    imageHeight: 334
 
 menu:
   main:
