@@ -35,22 +35,22 @@ title: "Members"
 
 </div>
 
-### Woodstock
+### Jerry Li
 
 <div class="member-block" style="display: flex; align-items: flex-start; gap: 20px; flex-wrap: wrap; margin-bottom: 40px;">
 
-  <img src="/26-the-pattern-seekers/members/woodstock.jpeg"
-       alt="Woodstock"
+  <img src="/26-the-pattern-seekers/members/lemon.jpeg"
+       alt="Lemon"
        style="width: 150px; height: 150px; object-fit: contain; border-radius: 25%; object-position: center; flex-shrink: 0;">
 
   <div style="flex: 1; text-align: left;">
     <p style="margin: 0; padding-top: 0.5em;">
-      Woodstock is ...
+      Jerry is a rising junior at Cupertino High School in Cupertino
     </p>
     <ul style="margin: 0; padding-left: 20px;">
-      <li>AAA</li>
-      <li>BBB</li>
-      <li>CCC</li>
+      <li>He does not like dinosaurs.</li>
+      <li>He likes BBQ.</li>
+      <li>He likes cookies.</li>
     </ul>
   </div>
 
