@@ -69,7 +69,7 @@ title: "Members"
       Pranav is a rising senior at Irvington High School
     </p>
     <ul style="margin: 0; padding-left: 20px;">
-      <li>Pranav does not know hot to code.</li>
+      <li>Pranav does not know how to code.</li>
       <li>He also does not like ice cream.</li>
       <li>He likes falling asleep.</li>
     </ul>
