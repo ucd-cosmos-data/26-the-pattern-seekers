@@ -14,22 +14,22 @@ title: "Members"
 }
 </style>
 
-### Snoopy
+### Advay Mandalia
 
 <div class="member-block" style="display: flex; align-items: flex-start; gap: 20px; flex-wrap: wrap; margin-bottom: 40px;">
 
   <img src="/26-the-pattern-seekers/members/snoopy.jpeg"
-       alt="Snoopy"
+       alt="Advay Mandalia"
        style="width: 150px; height: 150px; object-fit: contain; border-radius: 0%; object-position: center; flex-shrink: 0;">
 
   <div style="flex: 1; text-align: left;">
     <p style="margin: 0; padding-top: 0.5em;">
-      Snoopy is a lovable beagle and one of the most iconic characters from the Peanuts comic strip, created by Charles M. Schulz. 
+      Advay is a rising junior at Amador Valley High School in Pleasanton, and is also a national level cricketer
     </p>
     <ul style="margin: 0; padding-left: 20px;">
-      <li>Loyal companion of Charlie Brown</li>
-      <li>Loves root beer and pizza</li>
-      <li>Sleeps on top of his doghouse, not inside it</li>
+      <li>He follows most sports from NFL to IPL</li>
+      <li>Likes hooping with friends and playing video games</li>
+      <li>Wants to enjoy, but also learn at UC Davis</li>
     </ul>
   </div>
 
