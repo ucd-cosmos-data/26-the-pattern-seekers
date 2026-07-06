@@ -60,7 +60,7 @@ title: "Members"
 
 <div class="member-block" style="display: flex; align-items: flex-start; gap: 20px; flex-wrap: wrap; margin-bottom: 40px;">
 
-  <img src="/26-the-pattern-seekers/members/luffy.jpeg"
+  <img src="/26-the-pattern-seekers/members/luffy.jpg"
        alt="Luffy"
        style="width: 150px; height: 150px; object-fit: contain; border-radius: 25%; object-position: center; flex-shrink: 0;">
 
