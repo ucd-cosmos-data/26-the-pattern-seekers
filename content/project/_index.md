@@ -1,5 +1,6 @@
 ---
 title: "Project"
+author: "Pattern Seekers"
 ---
 ### Mini Manual Survey Results
 
