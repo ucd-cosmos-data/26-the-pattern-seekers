@@ -2,7 +2,7 @@
 title: "Project"
 author: "Pattern Seekers"
 ---
-### Initial Project
+### Mini Manual Survey
 
 <style>
 @media (max-width: 600px) {
@@ -17,7 +17,7 @@ author: "Pattern Seekers"
 }
 </style>
 
-This is an example of a project we conducted to see sleep schedules relative to how refreshed students were, generating multiple bar plots to visualize. The data was constructed from a Google Form and is an example of data extraction.
+This is an example of a project we conducted to see sleep schedules relative to how refreshed students were, generating multiple bar plots to visualize. The data was constructed from a Google Form and is an example of data acquisition.
 
 ## Plot 1
 <div class="member-block" style="display: flex; align-items: flex-start; gap: 20px; flex-wrap: wrap; margin-top: 5px; margin-bottom: 20px;">
