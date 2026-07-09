@@ -1,0 +1,26 @@
+{{- define "main" }}
+
+<article class="post-single project-layout">
+  <header class="post-header project-header">
+    {{- partial "breadcrumbs.html" . }}
+    <h1 class="post-title">{{ .Title }}</h1>
+    {{- with .Description }}
+    <p class="post-description">{{ . }}</p>
+    {{- end }}
+  </header>
+
+  <div class="project-reading-layout">
+    <div class="post-content md-content project-content">
+      {{- if not (.Param "disableAnchoredHeadings") }}
+      {{- partial "anchored_headings.html" .Content -}}
+      {{- else }}{{ .Content }}{{ end }}
+    </div>
+
+    <aside class="project-outline" aria-label="Document outline">
+      <p class="project-outline__title">On this page</p>
+      {{ .TableOfContents }}
+    </aside>
+  </div>
+</article>
+
+{{- end }}

@@ -1,0 +1,34 @@
+{{- define "main" }}
+
+<section class="project-index" aria-labelledby="project-index-title">
+  <header class="page-header project-index__header">
+    {{- partial "breadcrumbs.html" . }}
+    <h1 id="project-index-title">{{ .Title }}</h1>
+    {{- with .Description }}
+    <p class="project-index__description">{{ . | markdownify }}</p>
+    {{- end }}
+  </header>
+
+  {{- with .Content }}
+  <div class="project-index__intro md-content">{{ . }}</div>
+  {{- end }}
+
+  <div class="project-grid">
+    {{- range .RegularPages.ByDate.Reverse }}
+    <article class="project-card">
+      <a class="project-card__link" href="{{ .RelPermalink }}" aria-label="View project: {{ .Title }}">
+        <div class="project-card__thumbnail">
+          <img src="{{ .Params.thumbnail | relURL }}" alt="{{ .Params.thumbnailAlt }}" loading="lazy">
+        </div>
+        <div class="project-card__content">
+          <h2>{{ .Title }}</h2>
+          <p>{{ .Description }}</p>
+          <span class="project-card__action" aria-hidden="true">Read project <span>→</span></span>
+        </div>
+      </a>
+    </article>
+    {{- end }}
+  </div>
+</section>
+
+{{- end }}
