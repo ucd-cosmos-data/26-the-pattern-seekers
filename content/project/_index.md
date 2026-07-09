@@ -2,6 +2,19 @@
 title: "Projects"
 author: "Pattern Seekers"
 ---
+<style>
+@media (max-width: 600px) {
+  .member-block {
+    flex-direction: column !important;
+    align-items: center !important;
+    text-align: center;
+  }
+  .member-block img {
+    margin-bottom: 10px;
+  }
+}
+</style>
+
 ## Mini Manual Survey
 
 This is an example of a project we conducted to see sleep schedules relative to how refreshed students were, generating multiple bar plots to visualize. The data was constructed from a Google Form and is an example of data acquisition.
