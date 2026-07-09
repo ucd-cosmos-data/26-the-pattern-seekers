@@ -89,7 +89,7 @@ For hourly wages:
 
 <div style="display: flex; align-items: flex-start; flex-wrap: wrap; margin-top: 5px; margin-bottom: 20px;">
  <img src="/26-the-pattern-seekers/ca-wage-map.jpg"
-       alt="California Obesity Wage Map"
+       alt="California hourly living wage map"
        style="width: 100%; height: auto; flex-shrink: 0; border-radius: 0px;">
 </div>
 
