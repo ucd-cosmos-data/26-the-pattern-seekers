@@ -95,7 +95,7 @@ For hourly wages:
 
 ### Correlation
 
-We applied linear regression on the combined dataset, producing a PCC of -0.781. This suggests a relatively strong correlation between obesity and hourly wage; counties with higher hourly wages have lower obesity prevalence.
+We computed the Pearson correlation coefficient (PCC) on the combined dataset (PCC = -0.781) and fit a linear regression line to visualize the relationship. This suggests a relatively strong negative association between obesity prevalence and hourly wage; counties with higher hourly wages tend to have lower obesity prevalence.
 
 <div style="display: flex; align-items: flex-start; flex-wrap: wrap; margin-top: 5px; margin-bottom: 20px;">
  <img src="/26-the-pattern-seekers/living_wage_obesity_correlation.jpg"
