@@ -92,7 +92,7 @@
     transition: transform 180ms ease-out;
 }
 
-.project-card:hover span {
+.project-card:hover .project-card__action {
     opacity: 0.8;
 }
 
