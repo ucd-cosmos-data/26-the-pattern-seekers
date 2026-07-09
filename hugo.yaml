@@ -12,6 +12,8 @@ params:
   socialIcons:
     - name: github
       url: "https://github.com/ucd-cosmos-data/26-the-pattern-seekers"
+    - name: github
+      url: "https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis"
   math: True
   profileMode:
     enabled: true
