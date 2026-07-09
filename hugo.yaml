@@ -27,9 +27,9 @@ menu:
       name: Members
       url: /members/
       weight: 10
-    - identifier: Project
-      name: Project
-      url: /project/
+    - identifier: Projects
+      name: Projects
+      url: /projects/
       weight: 20
     - identifier: Logs
       name: Logs

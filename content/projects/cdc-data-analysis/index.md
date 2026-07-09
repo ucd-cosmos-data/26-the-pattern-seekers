@@ -1,7 +1,7 @@
 ---
 title: "CDC Data Analysis"
 date: 2026-07-09
-description: "We examined how living wages and obesity prevalence varied across California's 58 counties."
+description: "Living wages and obesity prevalence across California's 58 counties"
 thumbnail: "living_wage_obesity_correlation.jpg"
 thumbnailAlt: "Scatterplot showing the relationship between living wage and obesity prevalence in California counties"
 author: "Pattern Seekers"

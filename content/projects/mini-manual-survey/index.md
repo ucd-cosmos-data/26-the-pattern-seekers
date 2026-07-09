@@ -1,7 +1,7 @@
 ---
 title: "Mini Manual Survey"
 date: 2026-07-07
-description: "We collected survey responses to explore how students' sleep schedules related to how refreshed they felt."
+description: "Exploration on students' sleep schedules and perceived refreshness"
 thumbnail: "boxplot_refreshed_by_sleep_int.png"
 thumbnailAlt: "Boxplot comparing how refreshed students felt across sleep-duration groups"
 author: "Pattern Seekers"
