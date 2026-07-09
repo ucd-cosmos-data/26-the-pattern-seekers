@@ -99,7 +99,7 @@ We applied linear regression on the combined dataset, producing a PCC of -0.781.
 
 <div style="display: flex; align-items: flex-start; flex-wrap: wrap; margin-top: 5px; margin-bottom: 20px;">
  <img src="/26-the-pattern-seekers/living_wage_obesity_correlation.jpg"
-       alt="California Obesity Prevalence Map"
+       alt="Scatter plot of hourly living wage vs age-adjusted obesity prevalence with fitted trend line"
        style="width: 100%; height: auto; flex-shrink: 0; border-radius: 0px;">
 </div>
 
