@@ -89,3 +89,9 @@ We applied linear regression on the combined dataset, producing a PCC of -0.781.
        alt="California Obesity Prevalence Map"
        style="width: 100%; height: auto; flex-shrink: 0; border-radius: 0px;">
 </div>
+
+### Conclusion
+
+We found a strong negative relationship between living wages and age-adjusted obesity prevalence across California counties. Counties with higher living wages generally had lower obesity rates, while many inland counties had both lower living wages and higher obesity rates than coastal counties. The Pearson correlation coefficient of -0.781 summarized this pattern across all 58 counties.
+
+This result showed an association, not proof that living wages directly caused differences in obesity. Other factors—including food access, health care, transportation, education, and local demographics—may also have contributed to the county-level pattern. Even with that limitation, our analysis highlighted a meaningful geographic and economic disparity that could guide further research into how local conditions shaped public health.
