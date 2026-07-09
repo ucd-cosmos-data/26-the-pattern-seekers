@@ -2,89 +2,187 @@
 title: "Logs"
 ---
 
+{{< rawhtml >}}
 <style>
 .log-page {
   display: flex;
-  gap: 1.5rem;
+  gap: 1rem;
   align-items: flex-start;
+  max-width: 100%;
+  box-sizing: border-box;
+  overflow-x: hidden;
 }
 
-.log-toc {
-  flex: 0 0 240px;
+.log-sidebar {
+  flex: 0 0 220px;
   position: sticky;
   top: 1rem;
   background: #f8fafc;
   border: 1px solid #d0d7de;
   border-radius: 8px;
-  padding: 1rem 1.25rem;
+  padding: 0.9rem 1rem;
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
+  box-sizing: border-box;
 }
 
-.log-toc h2 {
+.log-sidebar h2 {
   margin-top: 0;
   margin-bottom: 0.5rem;
+  font-size: 1rem;
 }
 
-.log-toc ul {
+.log-sidebar ul {
   margin: 0;
-  padding-left: 1.2rem;
+  padding-left: 1rem;
 }
 
-.log-content {
+.log-sidebar li {
+  margin-bottom: 0.25rem;
+}
+
+.log-main {
   flex: 1;
+  min-width: 0;
+}
+
+.log-search {
+  margin-bottom: 0.9rem;
+}
+
+.log-search input {
+  width: 100%;
+  max-width: 100%;
+  box-sizing: border-box;
+  padding: 0.6rem 0.8rem;
+  border: 1px solid #cbd5e1;
+  border-radius: 6px;
 }
 
 .log-card {
-  border: 1px solid #d0d7de;
-  border-radius: 8px;
-  padding: 1rem 1.25rem;
-  margin: 0 0 1.25rem;
   background: #ffffff;
-  max-height: 280px;
-  overflow-y: auto;
+  border: 1px solid #d0d7de;
+  border-radius: 10px;
+  padding: 1rem 1.1rem;
+  margin-bottom: 1rem;
   box-shadow: 0 1px 3px rgba(15, 23, 42, 0.08);
+  max-width: 100%;
+  overflow-wrap: anywhere;
+  word-break: break-word;
+  box-sizing: border-box;
 }
 
 .log-card h2,
 .log-card h3 {
   margin-top: 0;
 }
+
+.log-card p {
+  margin-bottom: 0;
+}
+
+.log-empty {
+  display: none;
+  padding: 1rem;
+  border: 1px dashed #cbd5e1;
+  border-radius: 8px;
+  color: #475569;
+}
+
+@media (max-width: 800px) {
+  .log-page {
+    flex-direction: column;
+  }
+
+  .log-sidebar {
+    position: static;
+    max-height: none;
+    width: 100%;
+    flex-basis: auto;
+  }
+}
 </style>
 
 <div class="log-page">
-  <div class="log-toc">
+  <aside class="log-sidebar">
     <h2>Table of Contents</h2>
-    <h3>Week 1</h3>
+    <p><strong>Week 1</strong></p>
     <ul>
-      <li><a href="#monday-july-6th">Monday July 6th</a></li>
-      <li><a href="#tuesday-july-7th">Tuesday July 7th</a></li>
-      <li><a href="#wednesday-july-8th">Wednesday July 8th</a></li>
-      <li><a href="#thursday-july-9th">Thursday July 9th</a></li>
+      <li><a href="#monday-july-6th">Monday July 6th</a>
+        <ul>
+          <li><a href="#collaboration">Collaboration</a></li>
+        </ul>
+      </li>
+      <li><a href="#tuesday-july-7th">Tuesday July 7th</a>
+        <ul>
+          <li><a href="#building-the-project-page">Building the Project Page</a></li>
+        </ul>
+      </li>
+      <li><a href="#wednesday-july-8th">Wednesday July 8th</a>
+        <ul>
+          <li><a href="#polishing-details">Polishing Details</a></li>
+        </ul>
+      </li>
+      <li><a href="#thursday-july-9th">Thursday July 9th</a>
+        <ul>
+          <li><a href="#wiring-things-together">Wiring Things Together</a></li>
+        </ul>
+      </li>
     </ul>
-  </div>
+  </aside>
 
-  <div class="log-content">
-    <div class="log-card">
-      <h2 id="monday-july-6th">Monday July 6th</h2>
-      <h3>Collaboration</h3>
+  <div class="log-main">
+    <div class="log-search">
+      <input id="logSearch" type="search" placeholder="Search logs..." />
+    </div>
+
+    <div id="logEmpty" class="log-empty">No matching log entries found.</div>
+
+    <section class="log-card" id="monday-july-6th">
+      <h2>Monday July 6th</h2>
+      <h3 id="collaboration">Collaboration</h3>
       <p>We randomized into our groups and got this website to work with for the rest of the program. We set up Github, Codex, VS Code, and worked together to not destroy the "main" branch of our website. Wonjun was amazing and really nice, helping everyone out and explaining everything to us. This'll be our place to share what our life is like in Cluster 11.</p>
-    </div>
+    </section>
 
-    <div class="log-card">
-      <h2 id="tuesday-july-7th">Tuesday July 7th</h2>
-      <h3>Building the Project Page</h3>
+    <section class="log-card" id="tuesday-july-7th">
+      <h2>Tuesday July 7th</h2>
+      <h3 id="building-the-project-page">Building the Project Page</h3>
       <p>Today we started filling in our Project page. We ran our first mini project: a survey on how much sleep students got versus how refreshed they felt, with the data pulled straight from a Google Form as an example of data acquisition. Pranav put together the two boxplots and got them showing up on the site, and we linked in our separate analysis repo so people can dig into the code. We also spent some time wrestling with the layout, cleaning up the spacing between columns so everything lined up right.</p>
-    </div>
+    </section>
 
-    <div class="log-card">
-      <h2 id="wednesday-july-8th">Wednesday July 8th</h2>
-      <h3>Polishing Details</h3>
+    <section class="log-card" id="wednesday-july-8th">
+      <h2>Wednesday July 8th</h2>
+      <h3 id="polishing-details">Polishing Details</h3>
       <p>Shorter day of tweaks. Advay went back through the project description and cleaned up the wording so it reads better, including relabeling the survey section and fixing "data extraction" to "data acquisition" so it matches what we actually did.</p>
-    </div>
+    </section>
 
-    <div class="log-card">
-      <h2 id="thursday-july-9th">Thursday July 9th</h2>
-      <h3>Wiring Things Together</h3>
+    <section class="log-card" id="thursday-july-9th">
+      <h2>Thursday July 9th</h2>
+      <h3 id="wiring-things-together">Wiring Things Together</h3>
       <p>Brendan added a second GitHub icon to the site config so our analysis repo is linked right next to the main one. We also went back and wrote up the log for Monday to get our logs tab caught up, then filled in the rest of the week so this page tells the whole story of what we've been up to.</p>
-    </div>
+    </section>
   </div>
 </div>
+
+<script>
+  const searchInput = document.getElementById('logSearch');
+  const emptyState = document.getElementById('logEmpty');
+  const cards = Array.from(document.querySelectorAll('.log-card'));
+
+  function filterLogs() {
+    const query = searchInput.value.trim().toLowerCase();
+    let visibleCount = 0;
+
+    cards.forEach((card) => {
+      const text = card.textContent.toLowerCase();
+      const matches = text.includes(query);
+      card.style.display = matches ? '' : 'none';
+      if (matches) visibleCount += 1;
+    });
+
+    emptyState.style.display = visibleCount === 0 ? 'block' : 'none';
+  }
+
+  searchInput.addEventListener('input', filterLogs);
+</script>
+{{< /rawhtml >}}
