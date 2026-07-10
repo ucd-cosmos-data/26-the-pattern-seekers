@@ -175,6 +175,11 @@ title: "Logs"
           <li><a href="#wiring-things-together">Wiring Things Together</a></li>
         </ul>
       </li>
+      <li><a href="#friday-july-10th">Friday July 10th</a>
+        <ul>
+          <li><a href="#nine-datasets-and-a-quiz">Nine Datasets and a Quiz</a></li>
+        </ul>
+      </li>
     </ul>
   </aside>
 
@@ -207,6 +212,12 @@ title: "Logs"
       <h2>Thursday July 9th</h2>
       <h3 id="wiring-things-together">Wiring Things Together</h3>
       <p>Brendan added a second GitHub icon to the site config so our analysis repo is linked right next to the main one. We also went back and wrote up the log for Monday to get our logs tab caught up, then filled in the rest of the week so this page tells the whole story of what we've been up to.</p>
+    </section>
+
+    <section class="log-card" id="friday-july-10th">
+      <h2>Friday July 10th</h2>
+      <h3 id="nine-datasets-and-a-quiz">Nine Datasets and a Quiz</h3>
+      <p>Today's lecture walked us through the nine candidate datasets we could build our COSMOS project around, going from real-world data to a research question for each. The lineup: Sienna scalp EEG (clinical time-series of epilepsy recordings in EDF files), Dreyer2023 BCI (prompt-based motor imagery EEG for brain-computer interfaces), PBMC3K (single-cell RNA-seq counts from blood immune cells as a sparse gene-by-cell matrix), Bay Wheels San Francisco (trip-level bike share records and station mobility summaries), California SWE (daily snow water equivalent by station and date), Copenhagen Networks (a multi-layer network of Bluetooth proximity, calls, SMS, and Facebook), Email-Eu-Core Temporal (directed email events in a research institution), SocioPatterns High School (face-to-face proximity contacts between students), and StatsBomb 2022 World Cup (football event streams with 360 freeze-frame context). For each one we learned how to read the data, the key terms, and the kinds of research questions it could answer. We also took a quick quiz covering everything from the previous days to check what stuck.</p>
     </section>
   </div>
 </div>
