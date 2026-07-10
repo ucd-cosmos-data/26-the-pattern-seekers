@@ -18,7 +18,7 @@ params:
   profileMode:
     enabled: true
     title: "The Pattern Seekers"
-    subtitle: "<Description>"
+    subtitle: "A data studio for curious patterns, public health questions, and visual stories."
     imageUrl: "/26-the-pattern-seekers/cosmos.png"
     imageWidth: 420
     imageHeight: 334
