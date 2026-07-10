@@ -2,21 +2,44 @@
 title: "Members"
 ---
 <style>
+/* Define color variables for light mode (default) */
+:root {
+  --bg-color: #ffffff;
+  --text-color: #333333;
+  --border-color: #e0e0e0;
+  --hover-shadow: rgba(0, 0, 0, 0.12);
+  --box-shadow: rgba(0, 0, 0, 0.05);
+  --trace-color: #000000; /* Border trace color in light mode */
+}
+
+/* Define color variables for dark mode */
+@media (prefers-color-scheme: dark) {
+  :root {
+    --bg-color: #1e1e1e;
+    --text-color: #f5f5f5;
+    --border-color: #444444;
+    --hover-shadow: rgba(0, 0, 0, 0.5);
+    --box-shadow: rgba(0, 0, 0, 0.2);
+    --trace-color: #ffffff; /* Border trace color changes to white in dark mode */
+  }
+}
+
 /* Base styling for the box around each member */
 .member-block {
   position: relative; /* Required so the animated border lines position correctly */
-  border: 1px solid #e0e0e0;
+  border: 1px solid var(--border-color);
   border-radius: 8px;
   padding: 20px;
-  background-color: #ffffff;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
-  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth animation trigger */
+  background-color: var(--bg-color);
+  color: var(--text-color);
+  box-shadow: 0 2px 4px var(--box-shadow);
+  transition: transform 0.3s ease, box-shadow 0.3s ease, background-color 0.3s ease, border-color 0.3s ease; /* Smooth animation trigger */
 }
 
 /* The elevation effect when the mouse hovers over the box */
 .member-block:hover {
   transform: translateY(-5px); /* Lifts the box up slightly */
-  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12); /* Deepens the shadow to look elevated */
+  box-shadow: 0 8px 16px var(--hover-shadow); /* Deepens the shadow to look elevated */
 }
 
 /* Common setup for the tracing border outlines */
@@ -24,7 +47,7 @@ title: "Members"
 .member-block::after {
   content: '';
   position: absolute;
-  background: transparent; /* Fixed: Keeps it from overlaying a black block */
+  background: transparent; /* Keeps it from overlaying a black block */
   transition: width 0.3s ease, height 0.3s ease;
   z-index: 2; /* Keeps the borders crisp on top */
   pointer-events: none; /* Makes sure the outline doesn't block text selection */
@@ -32,7 +55,7 @@ title: "Members"
 
 /* Left side line trace: Starts at top-center, goes left, down, then to bottom-center */
 .member-block::before {
-  top: -1px; /* Aligns perfectly on top of the original gray border */
+  top: -1px; /* Aligns perfectly on top of the original border */
   right: 50%;
   width: 0;
   height: 0;
@@ -45,7 +68,7 @@ title: "Members"
 
 /* Right side line trace: Starts at top-center, goes right, down, then to bottom-center */
 .member-block::after {
-  top: -1px; /* Aligns perfectly on top of the original gray border */
+  top: -1px; /* Aligns perfectly on top of the original border */
   left: 50%;
   width: 0;
   height: 0;
@@ -56,17 +79,17 @@ title: "Members"
   border-bottom-right-radius: 8px;
 }
 
-/* Trigger the outline drawing animation on hover */
+/* Trigger the outline drawing animation on hover using the trace variable */
 .member-block:hover::before {
   width: 50%;
   height: calc(100% + 2px); /* Seamlessly fits the height of the block */
-  border-color: #000000; /* Turns the specific borders black on hover */
+  border-color: var(--trace-color); 
 }
 
 .member-block:hover::after {
   width: 50%;
   height: calc(100% + 2px); /* Seamlessly fits the height of the block */
-  border-color: #000000; /* Turns the specific borders black on hover */
+  border-color: var(--trace-color);
 }
 
 @media (max-width: 600px) {
