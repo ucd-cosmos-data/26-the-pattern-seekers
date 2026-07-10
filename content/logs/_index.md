@@ -101,6 +101,53 @@ title: "Logs"
     flex-basis: auto;
   }
 }
+
+/* --- DARK MODE STYLES --- */
+@media (prefers-color-scheme: dark) {
+  .log-sidebar {
+    background: #1e293b; /* Dark slate background */
+    border-color: #334155; /* Subtle dark border */
+    color: #f1f5f9; /* Off-white text */
+  }
+
+  .log-sidebar a {
+    color: #38bdf8; /* Brighter blue for readable links in dark mode */
+  }
+
+  .log-sidebar p strong {
+    color: #cbd5e1;
+  }
+
+  .log-search input {
+    background: #1e293b;
+    border-color: #475569;
+    color: #ffffff;
+  }
+
+  .log-search input::placeholder {
+    color: #94a3b8; /* Dimmed placeholder text */
+  }
+
+  .log-card {
+    background: #0f172a; /* Deep dark background */
+    border-color: #334155;
+    color: #e2e8f0;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.3); /* Stronger shadow contrast */
+  }
+
+  .log-card h2 {
+    color: #ffffff;
+  }
+
+  .log-card h3 {
+    color: #94a3b8; /* Muted subtitle heading color */
+  }
+
+  .log-empty {
+    border-color: #475569;
+    color: #94a3b8;
+  }
+}
 </style>
 
 <div class="log-page">

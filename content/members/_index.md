@@ -2,6 +2,73 @@
 title: "Members"
 ---
 <style>
+/* Base styling for the box around each member */
+.member-block {
+  position: relative; /* Required so the animated border lines position correctly */
+  border: 1px solid #e0e0e0;
+  border-radius: 8px;
+  padding: 20px;
+  background-color: #ffffff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.05);
+  transition: transform 0.3s ease, box-shadow 0.3s ease; /* Smooth animation trigger */
+}
+
+/* The elevation effect when the mouse hovers over the box */
+.member-block:hover {
+  transform: translateY(-5px); /* Lifts the box up slightly */
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.12); /* Deepens the shadow to look elevated */
+}
+
+/* Common setup for the tracing border outlines */
+.member-block::before,
+.member-block::after {
+  content: '';
+  position: absolute;
+  background: transparent; /* Fixed: Keeps it from overlaying a black block */
+  transition: width 0.3s ease, height 0.3s ease;
+  z-index: 2; /* Keeps the borders crisp on top */
+  pointer-events: none; /* Makes sure the outline doesn't block text selection */
+}
+
+/* Left side line trace: Starts at top-center, goes left, down, then to bottom-center */
+.member-block::before {
+  top: -1px; /* Aligns perfectly on top of the original gray border */
+  right: 50%;
+  width: 0;
+  height: 0;
+  border-top: 2px solid transparent;
+  border-left: 2px solid transparent;
+  border-bottom: 2px solid transparent;
+  border-top-left-radius: 8px;
+  border-bottom-left-radius: 8px;
+}
+
+/* Right side line trace: Starts at top-center, goes right, down, then to bottom-center */
+.member-block::after {
+  top: -1px; /* Aligns perfectly on top of the original gray border */
+  left: 50%;
+  width: 0;
+  height: 0;
+  border-top: 2px solid transparent;
+  border-right: 2px solid transparent;
+  border-bottom: 2px solid transparent;
+  border-top-right-radius: 8px;
+  border-bottom-right-radius: 8px;
+}
+
+/* Trigger the outline drawing animation on hover */
+.member-block:hover::before {
+  width: 50%;
+  height: calc(100% + 2px); /* Seamlessly fits the height of the block */
+  border-color: #000000; /* Turns the specific borders black on hover */
+}
+
+.member-block:hover::after {
+  width: 50%;
+  height: calc(100% + 2px); /* Seamlessly fits the height of the block */
+  border-color: #000000; /* Turns the specific borders black on hover */
+}
+
 @media (max-width: 600px) {
   .member-block {
     flex-direction: column !important;
