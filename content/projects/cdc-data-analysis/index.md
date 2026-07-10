@@ -49,7 +49,11 @@ For obesity:
 - inland counties had higher obesity prevalences than coastal counties (see map below).
 
 <div class="project-figure">
-  <img src="/26-the-pattern-seekers/ca-obesity-map.jpg" alt="Map of age-adjusted obesity prevalence by California county">
+  <iframe src="../../results/figures/ca-obesity-prevalence-map.html"
+          width="100%"
+          height="500px"
+          style="border:none;"
+          title="Map of age-adjusted obesity prevalence by California county"></iframe>
 </div>
 
 For hourly wages:
@@ -59,7 +63,10 @@ For hourly wages:
 - coastal counties had significantly higher hourly wages than inland counties (see map below).
 
 <div class="project-figure">
-  <img src="/26-the-pattern-seekers/ca-wage-map.jpg" alt="Map of hourly living wages by California county">
+  <iframe src="../../results/figures/ca-living-wage-map.html"
+          width="100%"
+          height="500px"
+          style="border:none;"></iframe>
 </div>
 
 ## Correlation
@@ -67,7 +74,9 @@ For hourly wages:
 We applied linear regression to the combined dataset and calculated a Pearson correlation coefficient of -0.781. This indicated a relatively strong negative correlation between obesity and hourly wages: counties with higher hourly wages tended to have lower obesity prevalence.
 
 <div class="project-figure">
-  <img src="/26-the-pattern-seekers/living_wage_obesity_correlation.jpg" alt="Scatterplot of California county living wages and obesity prevalence with a downward trend line">
+  <img src="../../results/figures/correlation_heatmap.svg" 
+       alt="Correlation Heatmap" 
+       style="width: 100%; height: auto; border: none;">
 </div>
 
 ## Conclusion
