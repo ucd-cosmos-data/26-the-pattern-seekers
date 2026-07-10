@@ -10,6 +10,8 @@ hideMeta: true
 
 We analyzed the relationship between obesity rates and the cost of healthy living across California counties.
 
+## Data Acquisition
+
 We downloaded the [PLACES](https://data.cdc.gov/500-Cities-Places/PLACES-County-Data-GIS-Friendly-Format-2025-releas/i46a-9kgh/about_data) CDC dataset (2025 release) for obesity rates in California counties.
 
 We downloaded the [Living Wage](https://lab.data.ca.gov/dataset/living-wage/4fe5413a-7a82-4150-8492-342fbe844a45) dataset from the State of California Government website for living wages by county (hourly USD).
@@ -23,6 +25,8 @@ There were no missing values in the **Living Wage** dataset.
 
 We then joined them by county, resulting in a final dataset with 58 rows and two features.
 
+## Results
+
 We started exploratory data inspection and found:
 
 | Statistic | Adjusted Obesity Prevalence | Hourly Wage (USD) |
@@ -35,6 +39,8 @@ We started exploratory data inspection and found:
 | p75 | 32.400 | 21.403 |
 | max | 37.900 | 25.440 |
 
+### Obesity Prevalence
+
 For obesity:
 
 - the top three most obese counties were **Fresno**, **Riverside**, and **Madera**,
@@ -44,6 +50,8 @@ For obesity:
 
 <div class="project-figure"><iframe src="../../results/figures/ca-obesity-prevalence-map.html" width="100%" height="500px" style="border:none;" title="Map of age-adjusted obesity prevalence by California county"></iframe><p style="text-align: center; font-weight: bold; margin-top: 8px; margin-bottom: 24px;">Figure 1: Obesity Prevalence by County in California</p></div>
 
+### Hourly Wages
+
 For hourly wages:
 
 - the top three counties with the highest hourly wages were **San Mateo**, **San Francisco**, and **Marin**,
@@ -52,9 +60,13 @@ For hourly wages:
 
 <div class="project-figure"><iframe src="../../results/figures/ca-living-wage-map.html" width="100%" height="500px" style="border:none;"></iframe><p style="text-align: center; font-weight: bold; margin-top: 8px; margin-bottom: 24px;">Figure 2: Living Wage by County in California</p></div>
 
+### Correlation
+
 We applied linear regression to the combined dataset and calculated a Pearson correlation coefficient of -0.781. This indicated a relatively strong negative correlation between obesity and hourly wages: counties with higher hourly wages tended to have lower obesity prevalence.
 
 <div class="project-figure"><img src="../../results/figures/correlation_heatmap.svg" alt="Correlation Heatmap" style="width: 100%; height: auto; border: none;"><p style="text-align: center; font-weight: bold; margin-top: 8px; margin-bottom: 24px;">Figure 3: Correlation Matrix Heatmap</p></div>
+
+## Takeaway
 
 We found a strong negative relationship between living wages and age-adjusted obesity prevalence across California counties. Counties with higher living wages generally had lower obesity rates, while many inland counties had both lower living wages and higher obesity rates than coastal counties. The Pearson correlation coefficient of -0.781 summarized this pattern across all 58 counties.
 
