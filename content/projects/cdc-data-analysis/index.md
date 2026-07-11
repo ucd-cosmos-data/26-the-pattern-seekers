@@ -64,7 +64,7 @@ For hourly wages:
 
 We applied linear regression to the combined dataset and calculated a Pearson correlation coefficient of -0.781. This indicated a relatively strong negative correlation between obesity and hourly wages: counties with higher hourly wages tended to have lower obesity prevalence.
 
-<div class="project-figure"><img src="../../results/figures/correlation_heatmap.svg" alt="Correlation Heatmap" style="width: 100%; height: auto; border: none;"><p style="text-align: center; font-weight: bold; margin-top: 8px; margin-bottom: 24px;">Figure 3: Correlation Matrix Heatmap</p></div>
+<div class="project-figure"><img src="../../results/figures/living_wage_obesity_correlation.jpg" alt="Scatterplot and Linear Regression" style="width: 100%; height: auto; border: none;"><p style="text-align: center; font-weight: bold; margin-top: 8px; margin-bottom: 24px;">Figure 3: Scatterplot with Least Squares Regression Line (LSRL)</p></div>
 
 ## Takeaway
 
