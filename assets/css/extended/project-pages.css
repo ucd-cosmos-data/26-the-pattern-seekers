@@ -113,6 +113,11 @@
     margin-top: 1rem;
 }
 
+/* Offset anchor jumps so headings aren't hidden behind the sticky header. */
+.project-content :where(h1, h2, h3, h4, h5, h6) {
+    scroll-margin-top: calc(var(--header-height) + 24px);
+}
+
 .project-outline {
     position: sticky;
     top: calc(var(--header-height) + 24px);
