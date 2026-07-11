@@ -1,0 +1,5 @@
+html,
+body,
+body * {
+    cursor: url('/26-the-pattern-seekers/magnifying-glass-cursor.png') 17 17, auto !important;
+}
