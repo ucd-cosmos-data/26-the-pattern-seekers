@@ -10,10 +10,8 @@
   </header>
 
   <div class="project-reading-layout">
-    <div class="post-content md-content project-content">
-      {{- if not (.Param "disableAnchoredHeadings") }}
-      {{- partial "anchored_headings.html" .Content -}}
-      {{- else }}{{ .Content }}{{ end }}
+    <div class="post-content md-content project-content main-article">
+      {{ .Content }}
     </div>
 
     <aside class="project-outline" aria-label="Document outline">

@@ -1,0 +1,60 @@
+{{- define "main" }}
+<section class="home-profile">
+    {{- with .Site.Params.profileMode }}
+    {{- if .imageUrl }}
+    <img class="home-profile__image" src="{{ .imageUrl | absURL }}" alt="{{ .title | default $.Site.Title }}"
+        width="{{ .imageWidth | default 150 }}" height="{{ .imageHeight | default 150 }}" />
+    {{- end }}
+    <h1 class="home-profile__title">{{ .title | default $.Site.Title }}</h1>
+    {{- if .subtitle }}
+    <p class="home-profile__subtitle">{{ .subtitle | markdownify }}</p>
+    {{- end }}
+    {{- end }}
+
+    {{- with .Site.Params.socialIcons }}
+    <div class="home-profile__links">
+        {{- range . }}
+        <a href="{{ .url }}" target="_blank" rel="noopener" title="{{ .name }}">
+            {{- partial "helper/icon" (printf "brand-%s" .name) -}}
+        </a>
+        {{- end }}
+    </div>
+    {{- end }}
+</section>
+
+<style>
+.home-profile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    gap: 0.75rem;
+    padding: 3rem 1rem;
+}
+.home-profile__image {
+    border-radius: 50%;
+    object-fit: cover;
+}
+.home-profile__title {
+    margin: 0;
+}
+.home-profile__subtitle {
+    margin: 0;
+    opacity: 0.75;
+}
+.home-profile__links {
+    display: flex;
+    gap: 1rem;
+    margin-top: 0.5rem;
+}
+.home-profile__links a {
+    display: flex;
+    width: 24px;
+    height: 24px;
+}
+.home-profile__links svg {
+    width: 100%;
+    height: 100%;
+}
+</style>
+{{- end }}

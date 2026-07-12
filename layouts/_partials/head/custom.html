@@ -1,0 +1,3 @@
+{{- if or .Params.math .Site.Params.article.math -}}
+{{- partialCached "article/components/math.html" . -}}
+{{- end -}}
