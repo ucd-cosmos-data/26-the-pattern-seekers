@@ -89,6 +89,30 @@ title: "Logs"
   color: #475569;
 }
 
+.log-week-break {
+  display: flex;
+  align-items: center;
+  gap: 0.8rem;
+  margin: 0.25rem 0 1.25rem;
+  color: #475569;
+  font-size: 0.85rem;
+  font-weight: 800;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.log-week-break::after {
+  content: "";
+  flex: 1;
+  height: 2px;
+  background: currentColor;
+  opacity: 0.35;
+}
+
+.log-week-break--continued {
+  margin-top: 2.5rem;
+}
+
 @media (max-width: 800px) {
   .log-page {
     flex-direction: column;
@@ -147,6 +171,10 @@ title: "Logs"
     border-color: #475569;
     color: #94a3b8;
   }
+
+  .log-week-break {
+    color: #cbd5e1;
+  }
 }
 </style>
 
@@ -181,6 +209,14 @@ title: "Logs"
         </ul>
       </li>
     </ul>
+    <p><strong>Week 2</strong></p>
+    <ul>
+      <li><a href="#monday-july-13th">Monday July 13th</a>
+        <ul>
+          <li><a href="#learning-to-predict">Learning to Predict</a></li>
+        </ul>
+      </li>
+    </ul>
   </aside>
 
   <div class="log-main">
@@ -189,6 +225,8 @@ title: "Logs"
     </div>
 
     <div id="logEmpty" class="log-empty">No matching log entries found.</div>
+
+    <div class="log-week-break" aria-label="Week 1"><span>Week 1</span></div>
 
     <section class="log-card" id="monday-july-6th">
       <h2>Monday July 6th</h2>
@@ -218,6 +256,14 @@ title: "Logs"
       <h2>Friday July 10th</h2>
       <h3 id="nine-datasets-and-a-quiz">Nine Datasets and a Quiz</h3>
       <p>Today's lecture walked us through the nine candidate datasets we could build our COSMOS project around, going from real-world data to a research question for each. The lineup: Sienna scalp EEG (clinical time-series of epilepsy recordings in EDF files), Dreyer2023 BCI (prompt-based motor imagery EEG for brain-computer interfaces), PBMC3K (single-cell RNA-seq counts from blood immune cells as a sparse gene-by-cell matrix), Bay Wheels San Francisco (trip-level bike share records and station mobility summaries), California SWE (daily snow water equivalent by station and date), Copenhagen Networks (a multi-layer network of Bluetooth proximity, calls, SMS, and Facebook), Email-Eu-Core Temporal (directed email events in a research institution), SocioPatterns High School (face-to-face proximity contacts between students), and StatsBomb 2022 World Cup (football event streams with 360 freeze-frame context). For each one we learned how to read the data, the key terms, and the kinds of research questions it could answer. We also took a quick quiz covering everything from the previous days to check what stuck.</p>
+    </section>
+
+    <div class="log-week-break log-week-break--continued" aria-label="Week 2"><span>Week 2</span></div>
+
+    <section class="log-card" id="monday-july-13th">
+      <h2>Monday July 13th</h2>
+      <h3 id="learning-to-predict">Learning to Predict</h3>
+      <p>Today we started prediction and supervised learning, where a model learns a mapping from input features to a labeled output. We compared regression for continuous values with classification for categories, then discussed how training, validation, and test sets help us fit models and evaluate their performance on unseen data. We also looked at common loss functions, including mean squared and absolute error for regression and 0-1 and cross-entropy loss for classification. A major focus was the bias-variance tradeoff: simple models tend to have higher bias and lower variance, while more complex models can have lower bias but higher variance. We surveyed methods ranging from linear, polynomial, ridge, lasso, and elastic-net regression to k-NN, splines, decision trees, random forests, boosting, PCR, PLS, stacking, and bagging. We finished by giving our group presentation on the CDC data analysis project.</p>
     </section>
   </div>
 </div>
