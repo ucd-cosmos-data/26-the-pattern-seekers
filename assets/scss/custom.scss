@@ -73,23 +73,26 @@ body {
 /*
  * Layout shell
  */
+.container.main-container,
+.container.compact,
 .container.extended,
 .main-container {
-    width: calc(100% - 40px);
-    max-width: 1400px;
-    margin-inline: auto;
+    width: 100%;
+    max-width: none;
+    margin-inline: 0;
 }
 
 .main-container {
     display: flex;
     align-items: flex-start;
-    justify-content: center;
-    gap: clamp(28px, 4vw, 56px);
+    justify-content: flex-start;
+    gap: clamp(32px, 4vw, 64px);
+    padding-inline: clamp(18px, 3vw, 56px);
 }
 
 .left-sidebar {
-    flex: 0 0 clamp(220px, 18vw, 280px);
-    max-width: clamp(220px, 18vw, 280px);
+    flex: 0 0 clamp(190px, 14vw, 250px);
+    max-width: clamp(190px, 14vw, 250px);
 }
 
 .main {
@@ -108,8 +111,12 @@ body {
  * Sidebar / menu (Stack's equivalent of PaperMod's top nav)
  */
 .sidebar.left-sidebar {
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
     min-height: 100vh;
-    padding: clamp(28px, 5vw, 72px) 18px;
+    padding: clamp(28px, 5vw, 72px) 0;
     border-right: 2px solid var(--brand-ink);
 
     @include respond(md) {
@@ -119,7 +126,7 @@ body {
 
 .sidebar header,
 .sidebar .menu {
-    width: fit-content;
+    width: 100%;
     max-width: 100%;
 }
 
@@ -130,26 +137,44 @@ body {
 }
 
 #main-menu {
+    box-sizing: border-box;
     display: flex;
     flex-direction: column;
     align-items: flex-start;
     gap: 0.9rem;
+    overflow: visible;
+    margin: 0;
+    padding: 2px 8px 8px 2px;
+    background: transparent;
+    box-shadow: none;
 
     li {
-        width: fit-content;
+        width: auto;
+    }
+
+    li.menu-bottom-section {
+        display: none;
     }
 
     li a {
         display: inline-flex;
         align-items: center;
+        gap: 0;
+        width: auto;
+        max-width: 100%;
         min-height: 38px;
         padding: 0 0.85rem;
         border: 1.5px solid var(--brand-ink);
         border-radius: 999px;
         background: var(--entry);
+        color: var(--content);
         box-shadow: 3px 3px 0 var(--brand-ink);
         font-weight: 700;
         transition: transform 160ms ease, box-shadow 160ms ease, background-color 160ms ease;
+    }
+
+    li span {
+        flex: 0 1 auto;
     }
 
     li a:hover,
@@ -219,9 +244,12 @@ body {
 }
 
 @media screen and (max-width: 760px) {
+    .container.main-container,
+    .container.compact,
     .container.extended,
     .main-container {
-        width: calc(100% - 28px);
+        width: 100%;
+        padding-inline: 14px;
     }
 
     .main-container {
