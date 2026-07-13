@@ -1,3 +1,53 @@
 {{- if or .Params.math .Site.Params.article.math -}}
 {{- partialCached "article/components/math.html" . -}}
 {{- end -}}
+
+{{- if .Site.Params.colorScheme.toggle -}}
+<script>
+document.addEventListener("DOMContentLoaded", function () {
+    var toggle = document.getElementById("dark-mode-toggle");
+    if (!toggle) return;
+
+    var root = document.documentElement;
+    var storageKey = "StackColorScheme";
+
+    function updateAccessibilityState() {
+        var isDark = root.dataset.scheme === "dark";
+        var label = toggle.querySelector("span");
+
+        if (label) {
+            label.textContent = isDark ? "Light mode" : "Dark mode";
+        }
+
+        toggle.setAttribute("aria-pressed", String(isDark));
+        toggle.setAttribute(
+            "aria-label",
+            isDark ? "Switch to light mode" : "Switch to dark mode"
+        );
+    }
+
+    function switchColorScheme(event) {
+        event.preventDefault();
+        event.stopImmediatePropagation();
+
+        var nextScheme = root.dataset.scheme === "dark" ? "light" : "dark";
+        root.dataset.scheme = nextScheme;
+        localStorage.setItem(storageKey, nextScheme);
+        updateAccessibilityState();
+        window.dispatchEvent(new CustomEvent("onColorSchemeChange", {
+            detail: nextScheme
+        }));
+    }
+
+    toggle.setAttribute("role", "button");
+    toggle.setAttribute("tabindex", "0");
+    updateAccessibilityState();
+    toggle.addEventListener("click", switchColorScheme, true);
+    toggle.addEventListener("keydown", function (event) {
+        if (event.key === "Enter" || event.key === " ") {
+            switchColorScheme(event);
+        }
+    });
+});
+</script>
+{{- end -}}
