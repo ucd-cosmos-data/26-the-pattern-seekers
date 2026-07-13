@@ -6,7 +6,7 @@ theme: hugo-theme-stack
 params:
   favicon: bonsai.jpeg #the small icon shown in the browser tab
   colorScheme:
-    toggle: false
+    toggle: true
     default: auto
   article:
     math: true
