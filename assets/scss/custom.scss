@@ -71,15 +71,56 @@ body {
 }
 
 /*
+ * Layout shell
+ */
+.container.extended,
+.main-container {
+    width: calc(100% - 40px);
+    max-width: 1400px;
+    margin-inline: auto;
+}
+
+.main-container {
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    gap: clamp(28px, 4vw, 56px);
+}
+
+.left-sidebar {
+    flex: 0 0 clamp(220px, 18vw, 280px);
+    max-width: clamp(220px, 18vw, 280px);
+}
+
+.main {
+    width: 100%;
+    max-width: 1100px;
+    min-width: 0;
+    margin-inline: 0;
+    padding-top: clamp(24px, 4vw, 56px);
+}
+
+.right-sidebar {
+    display: none;
+}
+
+/*
  * Sidebar / menu (Stack's equivalent of PaperMod's top nav)
  */
 .sidebar.left-sidebar {
-    padding-inline: var(--spacing-lg);
+    min-height: 100vh;
+    padding: clamp(28px, 5vw, 72px) 18px;
     border-right: 2px solid var(--brand-ink);
 
     @include respond(md) {
         border-right: 2px solid var(--brand-ink);
     }
+}
+
+.sidebar header,
+.sidebar .menu {
+    width: fit-content;
+    max-width: 100%;
 }
 
 .sidebar .site-name a {
@@ -89,6 +130,15 @@ body {
 }
 
 #main-menu {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 0.9rem;
+
+    li {
+        width: fit-content;
+    }
+
     li a {
         display: inline-flex;
         align-items: center;
@@ -126,12 +176,12 @@ body {
 .main .page-header,
 .main .post-header {
     position: relative;
-    margin: 18px 0 44px;
-    padding: clamp(28px, 5vw, 54px);
+    margin: 0 0 42px;
+    padding: clamp(24px, 4vw, 42px);
     border: 2px solid var(--brand-ink);
-    border-radius: 24px;
+    border-radius: 20px;
     background: var(--entry);
-    box-shadow: 14px 14px 0 var(--brand-sky);
+    box-shadow: 10px 10px 0 var(--brand-sky);
 }
 
 .main .page-header::before,
@@ -153,9 +203,9 @@ body {
 .main .page-header h1,
 .main .post-title {
     max-width: 760px;
-    font-size: clamp(3rem, 8vw, 6.6rem);
+    font-size: clamp(2.75rem, 6vw, 5.25rem);
     font-weight: 950;
-    line-height: 0.88;
+    line-height: 0.92;
     letter-spacing: 0;
     text-transform: uppercase;
 }
@@ -169,6 +219,38 @@ body {
 }
 
 @media screen and (max-width: 760px) {
+    .container.extended,
+    .main-container {
+        width: calc(100% - 28px);
+    }
+
+    .main-container {
+        display: block;
+    }
+
+    .left-sidebar {
+        max-width: none;
+    }
+
+    .sidebar.left-sidebar {
+        min-height: auto;
+        padding: 20px 0;
+        border-right: 0;
+        border-bottom: 2px solid var(--brand-ink);
+    }
+
+    #main-menu {
+        flex-direction: row;
+        flex-wrap: wrap;
+        gap: 0.75rem;
+    }
+
+    .main {
+        width: 100%;
+        max-width: none;
+        padding-top: 28px;
+    }
+
     .main .page-header,
     .main .post-header {
         box-shadow: 8px 8px 0 var(--brand-sky);
