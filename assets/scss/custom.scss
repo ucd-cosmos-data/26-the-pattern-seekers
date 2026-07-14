@@ -806,7 +806,8 @@ body .photo-grid button:nth-child(3n) {
 }
 
 .home-profile__image {
-    max-width: min(420px, 86vw);
+    width: 86vw;
+    max-width: 420px;
     height: auto;
     object-fit: cover;
 }
