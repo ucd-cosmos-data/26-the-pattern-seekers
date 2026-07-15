@@ -216,6 +216,11 @@ title: "Logs"
           <li><a href="#learning-to-predict">Learning to Predict</a></li>
         </ul>
       </li>
+      <li><a href="#tuesday-july-14th">Tuesday July 14th</a>
+        <ul>
+          <li><a href="#trees-clusters-and-california">Trees, Clusters, and California</a></li>
+        </ul>
+      </li>
     </ul>
   </aside>
 
@@ -264,6 +269,12 @@ title: "Logs"
       <h2>Monday July 13th</h2>
       <h3 id="learning-to-predict">Learning to Predict</h3>
       <p>Today we started prediction and supervised learning, where a model learns a mapping from input features to a labeled output. We compared regression for continuous values with classification for categories, then discussed how training, validation, and test sets help us fit models and evaluate their performance on unseen data. We also looked at common loss functions, including mean squared and absolute error for regression and 0-1 and cross-entropy loss for classification. A major focus was the bias-variance tradeoff: simple models tend to have higher bias and lower variance, while more complex models can have lower bias but higher variance. We surveyed methods ranging from linear, polynomial, ridge, lasso, and elastic-net regression to k-NN, splines, decision trees, random forests, boosting, PCR, PLS, stacking, and bagging. We finished by giving our group presentation on the CDC data analysis project.</p>
+    </section>
+
+    <section class="log-card" id="tuesday-july-14th">
+      <h2>Tuesday July 14th</h2>
+      <h3 id="trees-clusters-and-california">Trees, Clusters, and California</h3>
+      <p>Today's lecture continued prediction with classification, decision trees, and ensemble learning. We learned how CART recursively splits the feature space, then compared boosting, bagging, and random forests and how they reduce bias or variance. We also discussed Leo Breiman's <a href="https://www2.math.uu.se/~thulin/mm/breiman.pdf">two cultures of statistical modeling</a> before moving into unsupervised learning. We compared hierarchical clustering with K-means, explored several ways to measure similarity and distance, and learned how elbow and silhouette methods can help choose the number of clusters. In lab, we worked through the mathematics behind linear regression. We then began Mini Project 2, using longitude, latitude, and median house value from the California Housing dataset to build and interpret a map of geographically connected, price-similar regions with K-means.</p>
     </section>
   </div>
 </div>
