@@ -221,6 +221,16 @@ title: "Logs"
           <li><a href="#trees-clusters-and-california">Trees, Clusters, and California</a></li>
         </ul>
       </li>
+      <li><a href="#wednesday-july-15th">Wednesday July 15th</a>
+        <ul>
+          <li><a href="#dimensions-validation-and-baseball">Dimensions, Validation, and Baseball</a></li>
+        </ul>
+      </li>
+      <li><a href="#thursday-july-16th">Thursday July 16th</a>
+        <ul>
+          <li><a href="#a-day-at-cal-academy">A Day at Cal Academy</a></li>
+        </ul>
+      </li>
     </ul>
   </aside>
 
@@ -275,6 +285,18 @@ title: "Logs"
       <h2>Tuesday July 14th</h2>
       <h3 id="trees-clusters-and-california">Trees, Clusters, and California</h3>
       <p>Today's lecture continued prediction with classification, decision trees, and ensemble learning. We learned how CART recursively splits the feature space, then compared boosting, bagging, and random forests and how they reduce bias or variance. We also discussed Leo Breiman's <a href="https://www2.math.uu.se/~thulin/mm/breiman.pdf">two cultures of statistical modeling</a> before moving into unsupervised learning. We compared hierarchical clustering with K-means, explored several ways to measure similarity and distance, and learned how elbow and silhouette methods can help choose the number of clusters. In lab, we worked through the mathematics behind linear regression. We then began Mini Project 2, using longitude, latitude, and median house value from the California Housing dataset to build and interpret a map of geographically connected, price-similar regions with K-means.</p>
+    </section>
+
+    <section class="log-card" id="wednesday-july-15th">
+      <h2>Wednesday July 15th</h2>
+      <h3 id="dimensions-validation-and-baseball">Dimensions, Validation, and Baseball</h3>
+      <p>Today we learned how dimension-reduction methods such as PCA and t-SNE transform high-dimensional data into fewer dimensions for exploration, downstream analysis, and finding hidden patterns. We then focused on model validation through new data, train-test splits, cross-validation, and residual analysis. This tied back to the bias-variance tradeoff: more flexible models can capture complicated relationships, but too much complexity causes them to learn noise instead, so criteria such as AIC and BIC penalize complexity. We also compared evaluation metrics for different tasks, including MSE, R², accuracy, precision, recall, AUC-ROC, inertia, silhouette score, and explained variance. We finished with a distinguished guest lecture from Dr. David Gagnon, the Washington Nationals' baseball science team lead, who showed how statistical modeling, computer vision, and mechanics are used to measure bat paths and player movement in real games.</p>
+    </section>
+
+    <section class="log-card" id="thursday-july-16th">
+      <h2>Thursday July 16th</h2>
+      <h3 id="a-day-at-cal-academy">A Day at Cal Academy</h3>
+      <p>Today our whole cluster took a field trip to San Francisco to explore the California Academy of Sciences. We traded the classroom for a day of walking through the museum's many attractions, from the aquarium and its incredible marine life to the towering indoor rainforest filled with plants, birds, butterflies, and other animals. It was a fun chance to experience science outside of lectures, explore together, and spend time with the rest of the cluster.</p>
     </section>
   </div>
 </div>
