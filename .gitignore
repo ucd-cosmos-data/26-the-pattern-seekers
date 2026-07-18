@@ -1,6 +1,9 @@
 public/
 resources/_gen/
 .hugo_build.lock
+node_modules/
+.npm-cache/
+static/css/tailwind.css
 
 .DS_Store
 Thumbs.db

@@ -1,0 +1,8 @@
+/* Stack remains responsible for global base styles. */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme) prefix(tw);
+@import "tailwindcss/utilities.css" layer(utilities) prefix(tw);
+
+@source "../../content";
+@source "../../layouts";
+@source "..";

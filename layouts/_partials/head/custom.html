@@ -2,6 +2,8 @@
 {{- partialCached "article/components/math.html" . -}}
 {{- end -}}
 
+<link rel="stylesheet" href="{{ "css/tailwind.css" | relURL }}">
+
 {{- if .Site.Params.colorScheme.toggle -}}
 <script>
 document.addEventListener("DOMContentLoaded", function () {
