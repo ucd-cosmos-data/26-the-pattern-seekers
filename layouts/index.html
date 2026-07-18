@@ -1,341 +1,87 @@
 {{- define "main" }}
-<div class="home-hero tw:relative">
-<section class="home-profile">
-    {{- with .Site.Params.profileMode }}
-    {{- if .imageUrl }}
-    <img class="home-profile__image" src="{{ .imageUrl | absURL }}" alt="{{ .title | default $.Site.Title }}"
-        width="{{ .imageWidth | default 150 }}" height="{{ .imageHeight | default 150 }}" />
-    {{- end }}
-    <h1 class="home-profile__title">{{ .title | default $.Site.Title }}</h1>
-    {{- if .subtitle }}
-    <p class="home-profile__subtitle">{{ .subtitle | markdownify }}</p>
-    {{- end }}
-    {{- end }}
-
-    {{- with .Site.Params.socialIcons }}
-    <div class="home-profile__links">
-        {{- range . }}
-        <a href="{{ .url }}" target="_blank" rel="noopener" title="{{ .name }}" aria-label="{{ .name | title }}">
-            {{- if eq .name "github" -}}
-            <svg viewBox="0 0 16 16" aria-hidden="true" focusable="false">
-                <path fill="currentColor" d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82A7.65 7.65 0 0 1 8 3.86c.68 0 1.36.09 1.99.27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.01 8.01 0 0 0 16 8c0-4.42-3.58-8-8-8Z" />
-            </svg>
-            {{- else -}}
-            <span>{{ .name | title }}</span>
-            {{- end -}}
-        </a>
-        {{- end }}
-    </div>
-    {{- end }}
-</section>
-
-<section class="pattern-game" data-pattern-game aria-labelledby="pattern-game-title">
-    <div class="pattern-game__copy">
-        <p class="pattern-game__eyebrow">Interactive pattern lab</p>
-        <h2 id="pattern-game-title">Signal Trace</h2>
-        <p>
-            Watch the data nodes light up, then replay the signal path. Each clear trace adds one more pulse.
-        </p>
-        <div class="pattern-game__stats" aria-label="Signal Trace score">
-            <span><strong data-level>0</strong> Level</span>
-            <span><strong data-streak>0</strong> Streak</span>
-            <span><strong data-best>0</strong> Best</span>
-        </div>
-    </div>
-
-    <div class="pattern-game__panel">
-        <div class="pattern-game__board" role="grid" aria-label="Signal Trace board">
-            {{- range $index := seq 0 15 }}
-            <button
-                class="pattern-game__node"
-                type="button"
-                data-node="{{ $index }}"
-                aria-label="Signal node {{ add $index 1 }}"
-                disabled
+<div class="home-page">
+    <section class="hero tw:relative tw:isolate tw:overflow-hidden" aria-labelledby="home-title">
+        <div class="hero__copy">
+            {{- with .Site.Params.profileMode }}
+            <h1 id="home-title" data-reveal data-reveal-delay="0">
+                {{ .title | default $.Site.Title }}
+            </h1>
+            {{- with .subtitle }}
+            <p class="hero__subtitle" data-reveal data-reveal-delay="100">
+                {{ . | markdownify }}
+            </p>
+            {{- end }} {{- end }} {{- with .Site.Params.socialIcons }}
+            <div
+                class="hero__links"
+                aria-label="Pattern Seekers repositories"
+                data-reveal
+                data-reveal-delay="190"
             >
-                <span>{{ printf "%02d" (add $index 1) }}</span>
-            </button>
+                {{- range $index, $item := . }}
+                <a href="{{ $item.url }}" target="_blank" rel="noopener">
+                    {{ partial "helper/icon" "brand-github" }}
+                    <span
+                        >{{ if eq $index 0 }}Website code{{ else }}Research notebooks{{ end
+                        }}</span
+                    >
+                </a>
+                {{- end }}
+            </div>
             {{- end }}
         </div>
-        <div class="pattern-game__controls">
-            <button class="pattern-game__button pattern-game__button--primary" type="button" data-start>
-                Start Trace
-            </button>
-            <button class="pattern-game__button" type="button" data-replay disabled>
-                Replay
-            </button>
+
+        <div class="hero__visual" aria-hidden="true">
+            <canvas class="interference-canvas" data-interference-canvas></canvas>
         </div>
-        <p class="pattern-game__status" data-status aria-live="polite">
-            Press Start Trace when you are ready.
-        </p>
-    </div>
-</section>
+    </section>
+
+    <section class="signal-section" data-reveal>
+        <div class="pattern-game" data-pattern-game aria-labelledby="pattern-game-title">
+            <div class="pattern-game__copy">
+                <h2 id="pattern-game-title">Signal Trace</h2>
+                <p class="pattern-game__description">
+                    Watch the data nodes light up, then replay the signal path. Each clear trace
+                    adds one more pulse.
+                </p>
+                <div class="pattern-game__stats" aria-label="Signal Trace score">
+                    <span><strong data-level>0</strong>Level</span>
+                    <span><strong data-streak>0</strong>Streak</span>
+                    <span><strong data-best>0</strong>Best</span>
+                </div>
+            </div>
+
+            <div class="pattern-game__panel">
+                <div class="pattern-game__board" role="grid" aria-label="Signal Trace board">
+                    {{- range $index := seq 0 15 }}
+                    <button
+                        class="pattern-game__node"
+                        type="button"
+                        role="gridcell"
+                        data-node="{{ $index }}"
+                        aria-label="Signal node {{ add $index 1 }}"
+                        disabled
+                    >
+                        <span>{{ printf "%02d" (add $index 1) }}</span>
+                    </button>
+                    {{- end }}
+                </div>
+                <div class="pattern-game__controls">
+                    <button
+                        class="pattern-game__button pattern-game__button--primary"
+                        type="button"
+                        data-start
+                    >
+                        Start Trace
+                    </button>
+                    <button class="pattern-game__button" type="button" data-replay disabled>
+                        Replay
+                    </button>
+                </div>
+                <p class="pattern-game__status" data-status aria-live="polite">
+                    Press Start Trace when you are ready.
+                </p>
+            </div>
+        </div>
+    </section>
 </div>
-
-<script>
-(function () {
-    function createSignalTraceController(size, randomFn) {
-        var random = typeof randomFn === "function" ? randomFn : Math.random;
-        var state = {
-            best: 0,
-            inputIndex: 0,
-            level: 0,
-            sequence: [],
-            streak: 0
-        };
-
-        function chooseNext() {
-            var next = Math.floor(random() * size);
-            var previous = state.sequence[state.sequence.length - 1];
-
-            if (size > 1) {
-                while (next === previous) {
-                    next = Math.floor(random() * size);
-                }
-            }
-
-            return next;
-        }
-
-        function snapshot() {
-            return {
-                best: state.best,
-                inputIndex: state.inputIndex,
-                level: state.level,
-                sequence: state.sequence.slice(),
-                streak: state.streak
-            };
-        }
-
-        function start(best) {
-            state.best = Math.max(state.best, best || 0);
-            state.inputIndex = 0;
-            state.level = 1;
-            state.sequence = [chooseNext()];
-            state.streak = 0;
-            return snapshot();
-        }
-
-        function addStep() {
-            state.sequence.push(chooseNext());
-            state.level = state.sequence.length;
-            state.inputIndex = 0;
-            return snapshot();
-        }
-
-        function guess(index) {
-            var expected = state.sequence[state.inputIndex];
-
-            if (index !== expected) {
-                state.best = Math.max(state.best, state.level - 1);
-                state.inputIndex = 0;
-                state.streak = 0;
-                return {
-                    complete: false,
-                    correct: false,
-                    expected: expected,
-                    state: snapshot()
-                };
-            }
-
-            state.inputIndex += 1;
-            state.streak += 1;
-
-            if (state.inputIndex === state.sequence.length) {
-                state.best = Math.max(state.best, state.level);
-                return {
-                    complete: true,
-                    correct: true,
-                    expected: expected,
-                    state: snapshot()
-                };
-            }
-
-            return {
-                complete: false,
-                correct: true,
-                expected: expected,
-                state: snapshot()
-            };
-        }
-
-        function resetInput() {
-            state.inputIndex = 0;
-            return snapshot();
-        }
-
-        return {
-            addStep: addStep,
-            getState: snapshot,
-            guess: guess,
-            resetInput: resetInput,
-            start: start
-        };
-    }
-
-    if (typeof window !== "undefined") {
-        window.createSignalTraceController = createSignalTraceController;
-    }
-
-    if (typeof document === "undefined") {
-        return;
-    }
-
-    var roots = Array.prototype.slice.call(document.querySelectorAll("[data-pattern-game]"));
-
-    roots.forEach(function (root) {
-        var nodes = Array.prototype.slice.call(root.querySelectorAll("[data-node]"));
-        var startButton = root.querySelector("[data-start]");
-        var replayButton = root.querySelector("[data-replay]");
-        var status = root.querySelector("[data-status]");
-        var level = root.querySelector("[data-level]");
-        var streak = root.querySelector("[data-streak]");
-        var best = root.querySelector("[data-best]");
-        var storageKey = "pattern-seekers-signal-trace-best";
-        var controller = createSignalTraceController(nodes.length);
-        var acceptingInput = false;
-        var playing = false;
-
-        function readBest() {
-            try {
-                return Number(window.localStorage.getItem(storageKey)) || 0;
-            } catch (error) {
-                return 0;
-            }
-        }
-
-        function writeBest(value) {
-            try {
-                window.localStorage.setItem(storageKey, String(value));
-            } catch (error) {
-                return;
-            }
-        }
-
-        function wait(ms) {
-            return new Promise(function (resolve) {
-                window.setTimeout(resolve, ms);
-            });
-        }
-
-        function setStatus(message, tone) {
-            status.textContent = message;
-            root.dataset.tone = tone || "ready";
-        }
-
-        function setBoardEnabled(enabled) {
-            nodes.forEach(function (node) {
-                node.disabled = !enabled;
-            });
-        }
-
-        function pulseNode(index, className, duration) {
-            var node = nodes[index];
-            if (!node) return;
-
-            node.classList.add(className);
-            window.setTimeout(function () {
-                node.classList.remove(className);
-            }, duration || 420);
-        }
-
-        function updateStats(nextState) {
-            var current = nextState || controller.getState();
-            level.textContent = String(current.level);
-            streak.textContent = String(current.streak);
-            best.textContent = String(Math.max(current.best, readBest()));
-        }
-
-        async function playSequence() {
-            var current = controller.getState();
-
-            if (playing || current.sequence.length === 0) return;
-
-            acceptingInput = false;
-            playing = true;
-            replayButton.disabled = true;
-            setBoardEnabled(false);
-            setStatus("Reading the signal...", "watch");
-
-            await wait(300);
-
-            for (var i = 0; i < current.sequence.length; i += 1) {
-                pulseNode(current.sequence[i], "is-pulse", 480);
-                await wait(560);
-            }
-
-            acceptingInput = true;
-            playing = false;
-            replayButton.disabled = false;
-            setBoardEnabled(true);
-            setStatus("Your turn. Replay the path.", "play");
-        }
-
-        function startGame() {
-            var current = controller.start(readBest());
-            writeBest(current.best);
-            updateStats(current);
-            startButton.textContent = "New Trace";
-            playSequence();
-        }
-
-        function replayGame() {
-            if (playing) return;
-            controller.resetInput();
-            playSequence();
-        }
-
-        function handleGuess(index) {
-            if (!acceptingInput || playing) return;
-
-            var result = controller.guess(index);
-            pulseNode(index, result.correct ? "is-hit" : "is-miss", 520);
-
-            if (!result.correct) {
-                acceptingInput = false;
-                setBoardEnabled(false);
-                pulseNode(result.expected, "is-expected", 720);
-                writeBest(result.state.best);
-                updateStats(result.state);
-                setStatus("Glitch spotted. Start a fresh trace.", "miss");
-                return;
-            }
-
-            updateStats(result.state);
-
-            if (result.complete) {
-                acceptingInput = false;
-                setBoardEnabled(false);
-                replayButton.disabled = true;
-                writeBest(result.state.best);
-                setStatus("Trace locked. Leveling up...", "hit");
-                window.setTimeout(function () {
-                    updateStats(controller.addStep());
-                    playSequence();
-                }, 760);
-                return;
-            }
-
-            setStatus("Good hit. Keep tracing.", "hit");
-        }
-
-        nodes.forEach(function (node) {
-            node.addEventListener("click", function () {
-                handleGuess(Number(node.dataset.node));
-            });
-        });
-
-        startButton.addEventListener("click", startGame);
-        replayButton.addEventListener("click", replayGame);
-
-        best.textContent = String(readBest());
-        root.signalTraceGame = {
-            clickNode: handleGuess,
-            controller: controller,
-            play: playSequence,
-            start: startGame
-        };
-    });
-})();
-</script>
 {{- end }}

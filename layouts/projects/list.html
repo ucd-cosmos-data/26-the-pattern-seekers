@@ -1,25 +1,19 @@
 {{- define "main" }}
-
-<section class="project-index" aria-labelledby="project-index-title">
-    <header class="page-header project-index__header">
+<section class="page-shell project-index" aria-labelledby="project-index-title">
+    <header class="page-header">
         {{- partial "breadcrumbs.html" . }}
-        <h1 id="project-index-title">{{ .Title }}</h1>
-        {{- with .Description }}
-        <p class="project-index__description">{{ . | markdownify }}</p>
-        {{- end }}
+        <h1 id="project-index-title" data-reveal data-reveal-delay="90">Projects</h1>
     </header>
 
-    {{- with .Content }}
-    <div class="project-index__intro md-content">{{ . }}</div>
-    {{- end }}
-
-    <div class="project-grid">
+    <div
+        class="project-grid tw:grid"
+        data-reveal-stagger
+        data-reveal-start="210"
+        data-reveal-step="90"
+    >
         {{- range .RegularPages.ByDate.Reverse }}
-        <article class="project-card">
-            <a
-                class="project-card__link"
-                href="{{ .RelPermalink }}"
-            >
+        <article class="project-card" data-reveal>
+            <a class="project-card__link" href="{{ .RelPermalink }}">
                 <div class="project-card__thumbnail">
                     <img
                         src="{{ .Params.thumbnail | relURL }}"
@@ -39,5 +33,4 @@
         {{- end }}
     </div>
 </section>
-
 {{- end }}

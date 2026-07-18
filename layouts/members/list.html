@@ -1,12 +1,24 @@
 {{- define "main" }}
-<header class="page-header">
-  {{- partial "breadcrumbs.html" . }}
-  <h1>{{ .Title }}</h1>
-  {{- if .Description }}
-  <div class="post-description">{{ .Description | markdownify }}</div>
-  {{- end }}
-</header>
-{{- if .Content }}
-<div class="post-content md-content main-article">{{ .Content }}</div>
+<section class="page-shell" aria-labelledby="team-title">
+    <header class="page-header">
+        {{- partial "breadcrumbs.html" . }}
+        <h1 id="team-title" data-reveal data-reveal-delay="90">Team</h1>
+    </header>
+    <div class="team-grid tw:grid" data-reveal-stagger data-reveal-start="210" data-reveal-step="90">
+        {{- range .Params.members }}
+        <article class="team-card" data-reveal>
+            <div class="team-card__portrait{{ if eq .imageFit "contain" }} team-card__portrait--contain{{ end }}">
+                <img src="{{ .image | relURL }}" alt="{{ .imageAlt | default .name }}" loading="lazy">
+            </div>
+            <h2>{{ .name }}</h2>
+            <p>{{ .description }}</p>
+            <ul>
+                {{- range .bullets }}
+                <li>{{ . }}</li>
+                {{- end }}
+            </ul>
+        </article>
+        {{- end }}
+    </div>
+</section>
 {{- end }}
-{{- end }}{{- /* end main */ -}}
