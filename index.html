@@ -1,0 +1,403 @@
+<!doctype html>
+<html lang="en-us" dir="ltr">
+    <head>
+	<meta name="generator" content="Hugo 0.163.3">
+        <script>
+            (function () {
+                var saved = "auto";
+                try {
+                    saved = localStorage.getItem("StackColorScheme") || "auto";
+                } catch (error) {
+                    saved = "auto";
+                }
+                var systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+                document.documentElement.dataset.scheme =
+                    saved === "dark" || (saved === "auto" && systemDark) ? "dark" : "light";
+            })();
+        </script>
+        <style>
+            html[data-scheme="dark"],
+            html[data-scheme="dark"] body {
+                background: #000;
+                color-scheme: dark;
+            }
+            html[data-scheme="light"],
+            html[data-scheme="light"] body {
+                background: #f5f5f7;
+                color-scheme: light;
+            }
+        </style><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="">
+<title>The Pattern Seekers</title>
+
+
+<link rel="canonical" href="https://raw.githack.com/ucd-cosmos-data/26-the-pattern-seekers/preview-tailwind-redesign-v1/">
+
+
+
+<link rel="stylesheet" href="/ucd-cosmos-data/26-the-pattern-seekers/preview-tailwind-redesign-v1/scss/style.min.e62e09c60ba428a627e03568fa3df938f6a8224f815b5846f00816c17d4a0be4.css"><meta property='og:title' content="The Pattern Seekers">
+<meta property='og:description' content="">
+<meta property='og:url' content='https://raw.githack.com/ucd-cosmos-data/26-the-pattern-seekers/preview-tailwind-redesign-v1/'>
+<meta property='og:site_name' content='The Pattern Seekers'>
+<meta property='og:type' content='website'><meta property='og:updated_time' content=' 2026-07-14T00:00:00&#43;00:00 '/>
+<meta name="twitter:title" content="The Pattern Seekers">
+<meta name="twitter:description" content=""><link rel="alternate" type="application/rss&#43;xml" href="https://raw.githack.com/ucd-cosmos-data/26-the-pattern-seekers/preview-tailwind-redesign-v1/index.xml">
+    <link rel="shortcut icon" href="/ucd-cosmos-data/26-the-pattern-seekers/preview-tailwind-redesign-v1/bonsai.jpeg" />
+<link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        const elementsToRender = [".main-article", ".widget--toc"];
+
+        elementsToRender.forEach(selector => {
+            const element = document.querySelector(selector);
+            if (element) {
+                renderMathInElement(element, {
+                    delimiters: [
+                        { left: "$$", right: "$$", display: true },
+                        { left: "$", right: "$", display: false },
+                        { left: "\\(", right: "\\)", display: false },
+                        { left: "\\[", right: "\\]", display: true }
+                    ],
+                    ignoredClasses: ["gist"]
+                });
+            }
+        });
+    });
+</script><link rel="preload" href="/ucd-cosmos-data/26-the-pattern-seekers/preview-tailwind-redesign-v1/fonts/Satoshi-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/ucd-cosmos-data/26-the-pattern-seekers/preview-tailwind-redesign-v1/css/tailwind.css"><meta property="og:image" content="https://raw.githack.com/ucd-cosmos-data/26-the-pattern-seekers/preview-tailwind-redesign-v1/og.png">
+<meta property="og:image:alt" content="The Pattern Seekers over a two-source water interference pattern">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://raw.githack.com/ucd-cosmos-data/26-the-pattern-seekers/preview-tailwind-redesign-v1/og.png">
+<script>document.documentElement.classList.add("js");</script><script src="/ucd-cosmos-data/26-the-pattern-seekers/preview-tailwind-redesign-v1/js/site.min.5d77e403259a5cf59345c9fdf00d1223d1b6b282963ad8ad35f456f677749bce.js" integrity="sha256-XXfkAyWaXPWTRcn98A0SI9G2soKWOtitNfRW9nd0m84=" defer></script>
+
+    </head>
+    <body class="">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<header class="site-nav" data-site-nav>
+    <div class="site-nav__bar">
+        <a class="site-nav__brand" href="/ucd-cosmos-data/26-the-pattern-seekers/preview-tailwind-redesign-v1/" aria-label="Pattern Seekers home">
+            Pattern Seekers
+        </a>
+
+        <nav class="site-nav__desktop" aria-label="Primary navigation">
+            <div class="site-nav__primary">
+                <a href="/ucd-cosmos-data/26-the-pattern-seekers/preview-tailwind-redesign-v1/projects/">Projects</a>
+                <a href="/ucd-cosmos-data/26-the-pattern-seekers/preview-tailwind-redesign-v1/logs/">Logs</a>
+                <a href="/ucd-cosmos-data/26-the-pattern-seekers/preview-tailwind-redesign-v1/photos/">Photos</a>
+                <a href="/ucd-cosmos-data/26-the-pattern-seekers/preview-tailwind-redesign-v1/members/">Team</a>
+            </div>
+            <div class="site-nav__secondary">
+                <a href="https://ucd-cosmos-data.github.io/" target="_blank" rel="noopener">Course Website</a>
+                <button class="theme-toggle" id="dark-mode-toggle" type="button" aria-label="Toggle color theme">
+                    <span class="theme-toggle__icon theme-toggle__icon--moon" aria-hidden="true"></span>
+                    <span class="theme-toggle__icon theme-toggle__icon--sun" aria-hidden="true"></span>
+                </button>
+            </div>
+        </nav>
+
+        <button class="site-nav__menu-button" type="button" aria-expanded="false" aria-controls="mobile-menu" data-menu-toggle>
+            <span class="sr-only">Open menu</span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </button>
+    </div>
+
+    <div class="site-nav__mobile" id="mobile-menu" data-mobile-menu hidden>
+        <nav aria-label="Mobile navigation">
+            <a href="/ucd-cosmos-data/26-the-pattern-seekers/preview-tailwind-redesign-v1/projects/">Projects</a>
+            <a href="/ucd-cosmos-data/26-the-pattern-seekers/preview-tailwind-redesign-v1/logs/">Logs</a>
+            <a href="/ucd-cosmos-data/26-the-pattern-seekers/preview-tailwind-redesign-v1/photos/">Photos</a>
+            <a href="/ucd-cosmos-data/26-the-pattern-seekers/preview-tailwind-redesign-v1/members/">Team</a>
+            <a href="https://ucd-cosmos-data.github.io/" target="_blank" rel="noopener">Course Website <span aria-hidden="true">↗</span></a>
+        </nav>
+        <button class="site-nav__mobile-theme" type="button" data-mobile-theme>
+            <span>Appearance</span>
+            <span data-theme-label>System</span>
+        </button>
+    </div>
+</header>
+
+        <div class="container main-container flex on-phone--column compact">
+            <main class="main full-width">
+<div class="home-page">
+    <section class="hero tw:relative tw:isolate tw:overflow-hidden" aria-labelledby="home-title">
+        <div class="hero__copy">
+            <h1 id="home-title" data-reveal data-reveal-delay="0">
+                The Pattern Seekers
+            </h1>
+            <p class="hero__subtitle" data-reveal data-reveal-delay="100">
+                A data studio for curious patterns, public health questions, and visual stories.
+            </p>
+            <div
+                class="hero__links"
+                aria-label="Pattern Seekers repositories"
+                data-reveal
+                data-reveal-delay="190"
+            >
+                <a href="https://github.com/ucd-cosmos-data/26-the-pattern-seekers" target="_blank" rel="noopener">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                    <span
+                        >Website code</span
+                    >
+                </a>
+                <a href="https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis" target="_blank" rel="noopener">
+                    <svg xmlns="http://www.w3.org/2000/svg" class="icon icon-tabler icon-tabler-brand-github" width="24" height="24" viewBox="0 0 24 24" stroke-width="2" stroke="currentColor" fill="none" stroke-linecap="round" stroke-linejoin="round">
+  <path stroke="none" d="M0 0h24v24H0z" fill="none"/>
+  <path d="M9 19c-4.3 1.4 -4.3 -2.5 -6 -3m12 5v-3.5c0 -1 .1 -1.4 -.5 -2c2.8 -.3 5.5 -1.4 5.5 -6a4.6 4.6 0 0 0 -1.3 -3.2a4.2 4.2 0 0 0 -.1 -3.2s-1.1 -.3 -3.5 1.3a12.3 12.3 0 0 0 -6.2 0c-2.4 -1.6 -3.5 -1.3 -3.5 -1.3a4.2 4.2 0 0 0 -.1 3.2a4.6 4.6 0 0 0 -1.3 3.2c0 4.6 2.7 5.7 5.5 6c-.6 .6 -.6 1.2 -.5 2v3.5" />
+</svg>
+
+
+
+                    <span
+                        >Research notebooks</span
+                    >
+                </a>
+            </div>
+        </div>
+
+        <div class="hero__visual" aria-hidden="true">
+            <canvas class="interference-canvas" data-interference-canvas></canvas>
+        </div>
+    </section>
+
+    <section class="signal-section" data-reveal>
+        <div class="pattern-game" data-pattern-game aria-labelledby="pattern-game-title">
+            <div class="pattern-game__copy">
+                <h2 id="pattern-game-title">Signal Trace</h2>
+                <p class="pattern-game__description">
+                    Watch the data nodes light up, then replay the signal path. Each clear trace
+                    adds one more pulse.
+                </p>
+                <div class="pattern-game__stats" aria-label="Signal Trace score">
+                    <span><strong data-level>0</strong>Level</span>
+                    <span><strong data-streak>0</strong>Streak</span>
+                    <span><strong data-best>0</strong>Best</span>
+                </div>
+            </div>
+
+            <div class="pattern-game__panel">
+                <div class="pattern-game__board" role="grid" aria-label="Signal Trace board">
+                    <button
+                        class="pattern-game__node"
+                        type="button"
+                        role="gridcell"
+                        data-node="0"
+                        aria-label="Signal node 1"
+                        disabled
+                    >
+                        <span>01</span>
+                    </button>
+                    <button
+                        class="pattern-game__node"
+                        type="button"
+                        role="gridcell"
+                        data-node="1"
+                        aria-label="Signal node 2"
+                        disabled
+                    >
+                        <span>02</span>
+                    </button>
+                    <button
+                        class="pattern-game__node"
+                        type="button"
+                        role="gridcell"
+                        data-node="2"
+                        aria-label="Signal node 3"
+                        disabled
+                    >
+                        <span>03</span>
+                    </button>
+                    <button
+                        class="pattern-game__node"
+                        type="button"
+                        role="gridcell"
+                        data-node="3"
+                        aria-label="Signal node 4"
+                        disabled
+                    >
+                        <span>04</span>
+                    </button>
+                    <button
+                        class="pattern-game__node"
+                        type="button"
+                        role="gridcell"
+                        data-node="4"
+                        aria-label="Signal node 5"
+                        disabled
+                    >
+                        <span>05</span>
+                    </button>
+                    <button
+                        class="pattern-game__node"
+                        type="button"
+                        role="gridcell"
+                        data-node="5"
+                        aria-label="Signal node 6"
+                        disabled
+                    >
+                        <span>06</span>
+                    </button>
+                    <button
+                        class="pattern-game__node"
+                        type="button"
+                        role="gridcell"
+                        data-node="6"
+                        aria-label="Signal node 7"
+                        disabled
+                    >
+                        <span>07</span>
+                    </button>
+                    <button
+                        class="pattern-game__node"
+                        type="button"
+                        role="gridcell"
+                        data-node="7"
+                        aria-label="Signal node 8"
+                        disabled
+                    >
+                        <span>08</span>
+                    </button>
+                    <button
+                        class="pattern-game__node"
+                        type="button"
+                        role="gridcell"
+                        data-node="8"
+                        aria-label="Signal node 9"
+                        disabled
+                    >
+                        <span>09</span>
+                    </button>
+                    <button
+                        class="pattern-game__node"
+                        type="button"
+                        role="gridcell"
+                        data-node="9"
+                        aria-label="Signal node 10"
+                        disabled
+                    >
+                        <span>10</span>
+                    </button>
+                    <button
+                        class="pattern-game__node"
+                        type="button"
+                        role="gridcell"
+                        data-node="10"
+                        aria-label="Signal node 11"
+                        disabled
+                    >
+                        <span>11</span>
+                    </button>
+                    <button
+                        class="pattern-game__node"
+                        type="button"
+                        role="gridcell"
+                        data-node="11"
+                        aria-label="Signal node 12"
+                        disabled
+                    >
+                        <span>12</span>
+                    </button>
+                    <button
+                        class="pattern-game__node"
+                        type="button"
+                        role="gridcell"
+                        data-node="12"
+                        aria-label="Signal node 13"
+                        disabled
+                    >
+                        <span>13</span>
+                    </button>
+                    <button
+                        class="pattern-game__node"
+                        type="button"
+                        role="gridcell"
+                        data-node="13"
+                        aria-label="Signal node 14"
+                        disabled
+                    >
+                        <span>14</span>
+                    </button>
+                    <button
+                        class="pattern-game__node"
+                        type="button"
+                        role="gridcell"
+                        data-node="14"
+                        aria-label="Signal node 15"
+                        disabled
+                    >
+                        <span>15</span>
+                    </button>
+                    <button
+                        class="pattern-game__node"
+                        type="button"
+                        role="gridcell"
+                        data-node="15"
+                        aria-label="Signal node 16"
+                        disabled
+                    >
+                        <span>16</span>
+                    </button>
+                </div>
+                <div class="pattern-game__controls">
+                    <button
+                        class="pattern-game__button pattern-game__button--primary"
+                        type="button"
+                        data-start
+                    >
+                        Start Trace
+                    </button>
+                    <button class="pattern-game__button" type="button" data-replay disabled>
+                        Replay
+                    </button>
+                </div>
+                <p class="pattern-game__status" data-status aria-live="polite">
+                    Press Start Trace when you are ready.
+                </p>
+            </div>
+        </div>
+    </section>
+</div></main>
+        </div>
+        
+<script type="text/javascript" src="/ucd-cosmos-data/26-the-pattern-seekers/preview-tailwind-redesign-v1/ts/main.1ff1e5fdc4e178ed422e50aa407526dc552f26342d729343fded19416194382c.js" defer></script>
+
+
+    </body>
+</html>

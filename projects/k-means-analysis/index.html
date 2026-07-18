@@ -1,0 +1,363 @@
+<!doctype html>
+<html lang="en-us" dir="ltr">
+    <head>
+        <script>
+            (function () {
+                var saved = "auto";
+                try {
+                    saved = localStorage.getItem("StackColorScheme") || "auto";
+                } catch (error) {
+                    saved = "auto";
+                }
+                var systemDark = window.matchMedia("(prefers-color-scheme: dark)").matches;
+                document.documentElement.dataset.scheme =
+                    saved === "dark" || (saved === "auto" && systemDark) ? "dark" : "light";
+            })();
+        </script>
+        <style>
+            html[data-scheme="dark"],
+            html[data-scheme="dark"] body {
+                background: #000;
+                color-scheme: dark;
+            }
+            html[data-scheme="light"],
+            html[data-scheme="light"] body {
+                background: #f5f5f7;
+                color-scheme: light;
+            }
+        </style><meta charset='utf-8'>
+<meta name='viewport' content='width=device-width, initial-scale=1'><meta name='description' content="Grouping California census block groups into geographic housing-market regions">
+<title>K-Means Analysis of California Housing</title>
+
+
+<link rel="canonical" href="https://raw.githack.com/ucd-cosmos-data/26-the-pattern-seekers/preview-tailwind-redesign-v1/projects/k-means-analysis/">
+
+
+
+<link rel="stylesheet" href="/ucd-cosmos-data/26-the-pattern-seekers/preview-tailwind-redesign-v1/scss/style.min.e62e09c60ba428a627e03568fa3df938f6a8224f815b5846f00816c17d4a0be4.css"><meta property='og:title' content="K-Means Analysis of California Housing">
+<meta property='og:description' content="Grouping California census block groups into geographic housing-market regions">
+<meta property='og:url' content='https://raw.githack.com/ucd-cosmos-data/26-the-pattern-seekers/preview-tailwind-redesign-v1/projects/k-means-analysis/'>
+<meta property='og:site_name' content='The Pattern Seekers'>
+<meta property='og:type' content='article'><meta property='article:section' content='Projects' /><meta property='article:published_time' content='2026-07-14T00:00:00&#43;00:00'/><meta property='article:modified_time' content='2026-07-14T00:00:00&#43;00:00'/>
+<meta name="twitter:title" content="K-Means Analysis of California Housing">
+<meta name="twitter:description" content="Grouping California census block groups into geographic housing-market regions">
+    <link rel="shortcut icon" href="/ucd-cosmos-data/26-the-pattern-seekers/preview-tailwind-redesign-v1/bonsai.jpeg" />
+<link 
+                rel="stylesheet" 
+                href="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.css"integrity="sha384-n8MVd4RsNIU0tAv4ct0nTaAbDJwPJzDEaqSD1odI&#43;WdtXRGWt2kTvGFasHpSy3SV"crossorigin="anonymous"
+            ><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/katex.min.js"integrity="sha384-XjKyOOlGwcjNTAIQHIpgOno0Hl1YQqzUOEleOLALmuqehneUG&#43;vnGctmUb0ZY0l8"crossorigin="anonymous"
+                defer
+                >
+            </script><script 
+                src="https://cdn.jsdelivr.net/npm/katex@0.16.9/dist/contrib/auto-render.min.js"integrity="sha384-&#43;VBxd3r6XgURycqtZ117nYw44OOcIax56Z4dCRWbxyPt0Koah1uHoK0o4&#43;/RRE05"crossorigin="anonymous"
+                defer
+                >
+            </script><script>
+    window.addEventListener("DOMContentLoaded", () => {
+        const elementsToRender = [".main-article", ".widget--toc"];
+
+        elementsToRender.forEach(selector => {
+            const element = document.querySelector(selector);
+            if (element) {
+                renderMathInElement(element, {
+                    delimiters: [
+                        { left: "$$", right: "$$", display: true },
+                        { left: "$", right: "$", display: false },
+                        { left: "\\(", right: "\\)", display: false },
+                        { left: "\\[", right: "\\]", display: true }
+                    ],
+                    ignoredClasses: ["gist"]
+                });
+            }
+        });
+    });
+</script><link rel="preload" href="/ucd-cosmos-data/26-the-pattern-seekers/preview-tailwind-redesign-v1/fonts/Satoshi-Variable.woff2" as="font" type="font/woff2" crossorigin>
+<link rel="stylesheet" href="/ucd-cosmos-data/26-the-pattern-seekers/preview-tailwind-redesign-v1/css/tailwind.css"><meta property="og:image" content="https://raw.githack.com/ucd-cosmos-data/26-the-pattern-seekers/preview-tailwind-redesign-v1/og.png">
+<meta property="og:image:alt" content="The Pattern Seekers over a two-source water interference pattern">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:image" content="https://raw.githack.com/ucd-cosmos-data/26-the-pattern-seekers/preview-tailwind-redesign-v1/og.png">
+<script>document.documentElement.classList.add("js");</script><script src="/ucd-cosmos-data/26-the-pattern-seekers/preview-tailwind-redesign-v1/js/site.min.5d77e403259a5cf59345c9fdf00d1223d1b6b282963ad8ad35f456f677749bce.js" integrity="sha256-XXfkAyWaXPWTRcn98A0SI9G2soKWOtitNfRW9nd0m84=" defer></script>
+
+    </head>
+    <body class="">
+    <script>
+        (function() {
+            const colorSchemeKey = 'StackColorScheme';
+            if(!localStorage.getItem(colorSchemeKey)){
+                localStorage.setItem(colorSchemeKey, "auto");
+            }
+        })();
+    </script><script>
+    (function() {
+        const colorSchemeKey = 'StackColorScheme';
+        const colorSchemeItem = localStorage.getItem(colorSchemeKey);
+        const supportDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches === true;
+
+        if (colorSchemeItem == 'dark' || colorSchemeItem === 'auto' && supportDarkMode) {
+            
+
+            document.documentElement.dataset.scheme = 'dark';
+        } else {
+            document.documentElement.dataset.scheme = 'light';
+        }
+    })();
+</script>
+<header class="site-nav" data-site-nav>
+    <div class="site-nav__bar">
+        <a class="site-nav__brand" href="/ucd-cosmos-data/26-the-pattern-seekers/preview-tailwind-redesign-v1/" aria-label="Pattern Seekers home">
+            Pattern Seekers
+        </a>
+
+        <nav class="site-nav__desktop" aria-label="Primary navigation">
+            <div class="site-nav__primary">
+                <a href="/ucd-cosmos-data/26-the-pattern-seekers/preview-tailwind-redesign-v1/projects/" aria-current="page">Projects</a>
+                <a href="/ucd-cosmos-data/26-the-pattern-seekers/preview-tailwind-redesign-v1/logs/">Logs</a>
+                <a href="/ucd-cosmos-data/26-the-pattern-seekers/preview-tailwind-redesign-v1/photos/">Photos</a>
+                <a href="/ucd-cosmos-data/26-the-pattern-seekers/preview-tailwind-redesign-v1/members/">Team</a>
+            </div>
+            <div class="site-nav__secondary">
+                <a href="https://ucd-cosmos-data.github.io/" target="_blank" rel="noopener">Course Website</a>
+                <button class="theme-toggle" id="dark-mode-toggle" type="button" aria-label="Toggle color theme">
+                    <span class="theme-toggle__icon theme-toggle__icon--moon" aria-hidden="true"></span>
+                    <span class="theme-toggle__icon theme-toggle__icon--sun" aria-hidden="true"></span>
+                </button>
+            </div>
+        </nav>
+
+        <button class="site-nav__menu-button" type="button" aria-expanded="false" aria-controls="mobile-menu" data-menu-toggle>
+            <span class="sr-only">Open menu</span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </button>
+    </div>
+
+    <div class="site-nav__mobile" id="mobile-menu" data-mobile-menu hidden>
+        <nav aria-label="Mobile navigation">
+            <a href="/ucd-cosmos-data/26-the-pattern-seekers/preview-tailwind-redesign-v1/projects/" aria-current="page">Projects</a>
+            <a href="/ucd-cosmos-data/26-the-pattern-seekers/preview-tailwind-redesign-v1/logs/">Logs</a>
+            <a href="/ucd-cosmos-data/26-the-pattern-seekers/preview-tailwind-redesign-v1/photos/">Photos</a>
+            <a href="/ucd-cosmos-data/26-the-pattern-seekers/preview-tailwind-redesign-v1/members/">Team</a>
+            <a href="https://ucd-cosmos-data.github.io/" target="_blank" rel="noopener">Course Website <span aria-hidden="true">↗</span></a>
+        </nav>
+        <button class="site-nav__mobile-theme" type="button" data-mobile-theme>
+            <span>Appearance</span>
+            <span data-theme-label>System</span>
+        </button>
+    </div>
+</header>
+
+        <div class="container main-container flex on-phone--column compact">
+            <main class="main full-width">
+<article class="project-page" aria-labelledby="project-title">
+    <header class="project-header"><nav class="breadcrumbs" aria-label="Breadcrumb" data-reveal data-reveal-delay="0">
+    <a href="/ucd-cosmos-data/26-the-pattern-seekers/preview-tailwind-redesign-v1/">Home</a>
+    <span aria-hidden="true">/</span>
+    <a href="/ucd-cosmos-data/26-the-pattern-seekers/preview-tailwind-redesign-v1/projects/"
+        >Projects</a
+    >
+    <span aria-hidden="true">/</span>
+    <span aria-current="page"
+        >K-Means Analysis of California Housing</span
+    >
+</nav>
+
+        <h1 id="project-title" data-reveal data-reveal-delay="90">K-Means Analysis of California Housing</h1>
+        <p class="project-header__description" data-reveal data-reveal-delay="165">Grouping California census block groups into geographic housing-market regions</p>
+    </header>
+
+    <div class="project-reading-layout">
+        <div class="project-content main-article" data-reveal data-reveal-delay="230"><p>We used <strong>K-means clustering</strong> to divide California census block groups into six housing-market regions based on location and median house value. The goal was to find groups whose observations were geographically close and had broadly similar prices without supplying the algorithm with predefined region labels.</p>
+<h2 id="data-structure"><a href="#data-structure" class="header-anchor"></a>Data Structure
+</h2><p>The analysis used scikit-learn&rsquo;s California Housing dataset, which was derived from the 1990 U.S. Census. It contains 20,640 rows, with one row representing one census block group. The complete dataset has eight explanatory variables and one target, but the final clustering model uses only three numeric features:</p>
+<div class="project-table-scroll"><table>
+	<thead>
+			<tr>
+					<th>Feature</th>
+					<th>Meaning</th>
+					<th>Unit in the dataset</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td><code>Longitude</code></td>
+					<td>East-west location of the block group</td>
+					<td>Decimal degrees</td>
+			</tr>
+			<tr>
+					<td><code>Latitude</code></td>
+					<td>North-south location of the block group</td>
+					<td>Decimal degrees</td>
+			</tr>
+			<tr>
+					<td><code>MedHouseVal</code></td>
+					<td>Median house value</td>
+					<td>Hundreds of thousands of dollars</td>
+			</tr>
+	</tbody>
+</table></div>
+<p>There are no missing values in these features. Although <code>MedHouseVal</code> is called a target in the original supervised-learning dataset, K-means treats it simply as a third input coordinate. K-means operates on a numeric matrix, so the model input has 20,640 rows and three columns. It does not use labels or a response variable.</p>
+<h2 id="purpose-of-k-means"><a href="#purpose-of-k-means" class="header-anchor"></a>Purpose of K-Means
+</h2><p>K-means is an <strong>unsupervised clustering</strong> method. Its purpose is to partition observations into \(K\) groups so that observations within the same group are as similar as possible under Euclidean distance. In this project, similarity combines geographic proximity and house value. The resulting clusters are descriptive market regions, not predictions or official geographic boundaries.</p>
+<h2 id="scaling-and-feature-weighting"><a href="#scaling-and-feature-weighting" class="header-anchor"></a>Scaling and Feature Weighting
+</h2><p>Euclidean distance is sensitive to measurement units. Longitude and latitude are measured in degrees, while <code>MedHouseVal</code> is measured in units of $100,000. Using the raw columns would let whichever feature has the largest numerical spread dominate the distance calculation, even if that dominance did not match the research goal.</p>
+<p>The notebook therefore standardizes each feature with <code>StandardScaler</code>:</p>
+$$
+z_{ij}=\frac{x_{ij}-\bar{x}_j}{s_j},
+$$<p>where \(x_{ij}\) is feature \(j\) for observation \(i\), \(\bar{x}_j\) is that feature&rsquo;s mean, and \(s_j\) is its standard deviation. After this transformation, each feature is centered near zero and has unit variance.</p>
+<p>The final notebook iteration then multiplies the standardized house-value feature by 0.35. Thus, the vector actually clustered is</p>
+$$
+\mathbf{y}_i = \left(z_{i,\text{longitude}},\ z_{i,\text{latitude}},\ 0.35z_{i,\text{price}}\right).
+$$<p>This weighting makes geographic position more influential while still allowing price to affect cluster membership. It is a modeling choice rather than a requirement of K-means, so its effect should be checked with sensitivity analysis.</p>
+<h2 id="minimization-problem"><a href="#minimization-problem" class="header-anchor"></a>Minimization Problem
+</h2><p>For observations \(\mathbf{y}_1,\ldots,\mathbf{y}_n\), K-means chooses a partition \(C_1,\ldots,C_K\) and a centroid \(\boldsymbol{\mu}_k\) for each cluster to minimize the within-cluster sum of squared distances:</p>
+$$
+\underset{C_1,\ldots,C_K}{\operatorname{minimize}}
+\quad
+\sum_{k=1}^{K}\sum_{\mathbf{y}_i\in C_k}
+\left\lVert \mathbf{y}_i-\boldsymbol{\mu}_k\right\rVert_2^2.
+$$<p>The centroid \(\boldsymbol{\mu}_k\) is the mean of all transformed observations assigned to cluster \(k\). The minimized quantity is also called <strong>inertia</strong>. Lower inertia means points lie closer to their assigned centroids, but inertia always decreases as \(K\) increases and therefore cannot select \(K\) by itself.</p>
+<h2 id="algorithm"><a href="#algorithm" class="header-anchor"></a>Algorithm
+</h2><p>The notebook uses scikit-learn&rsquo;s <code>KMeans</code>, which applies an iterative procedure commonly called Lloyd&rsquo;s algorithm:</p>
+<ol>
+<li>Initialize \(K\) centroids. The implementation uses its default K-means++ initialization, which spreads the starting centroids apart.</li>
+<li>Assign every observation to the nearest centroid using squared Euclidean distance.</li>
+<li>Recalculate each centroid as the mean of the observations assigned to it.</li>
+<li>Repeat the assignment and update steps until the centroids stabilize or the stopping limit is reached.</li>
+<li>Repeat the entire fit from 10 different initializations and retain the solution with the lowest inertia.</li>
+</ol>
+<p>This procedure decreases the objective after each assignment-update cycle, but it is not guaranteed to find the global minimum. Multiple initializations reduce the chance of reporting a poor local solution.</p>
+<h2 id="hyperparameters"><a href="#hyperparameters" class="header-anchor"></a>Hyperparameters
+</h2><p>The final model uses the following settings:</p>
+<div class="project-table-scroll"><table>
+	<thead>
+			<tr>
+					<th>Hyperparameter or setting</th>
+					<th>Value</th>
+					<th>Reason</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td>Number of clusters, <code>n_clusters</code></td>
+					<td>6</td>
+					<td>Produces a manageable set of regions that can be interpreted on a California map.</td>
+			</tr>
+			<tr>
+					<td>Number of initializations, <code>n_init</code></td>
+					<td>10</td>
+					<td>Tries several starting configurations and keeps the one with the lowest inertia.</td>
+			</tr>
+			<tr>
+					<td>Initialization</td>
+					<td>K-means++ default</td>
+					<td>Gives more dispersed starting centroids than purely random initialization.</td>
+			</tr>
+			<tr>
+					<td>Random seed, <code>random_state</code></td>
+					<td>42</td>
+					<td>Makes the fitted assignments reproducible.</td>
+			</tr>
+			<tr>
+					<td>Standardized price weight</td>
+					<td>0.35</td>
+					<td>Prioritizes geographic continuity while retaining price information.</td>
+			</tr>
+			<tr>
+					<td>Stopping tolerance and maximum iterations</td>
+					<td>scikit-learn defaults</td>
+					<td>The notebook does not override the library&rsquo;s convergence controls.</td>
+			</tr>
+	</tbody>
+</table></div>
+<p>The current analysis fixes \(K=6\) for interpretability; it does not compare candidate values of \(K\). A more systematic selection would fit a range of values and compare an elbow plot of inertia, silhouette scores, cluster stability across random seeds, and whether the resulting regions remain useful for the research question. The 0.35 price weight should be assessed in the same way because changing it changes the meaning of distance and therefore the clusters.</p>
+<h2 id="results"><a href="#results" class="header-anchor"></a>Results
+</h2><p>Reproducing the final notebook configuration produced the following summaries. Cluster numbers are identifiers only; their numeric order has no substantive meaning.</p>
+<div class="project-table-scroll"><table>
+	<thead>
+			<tr>
+					<th style="text-align: right">Cluster</th>
+					<th style="text-align: right">Observations</th>
+					<th style="text-align: right">Mean house value</th>
+					<th style="text-align: right">Approximate geographic centroid (longitude, latitude)</th>
+			</tr>
+	</thead>
+	<tbody>
+			<tr>
+					<td style="text-align: right">0</td>
+					<td style="text-align: right">2,062</td>
+					<td style="text-align: right">$162,767</td>
+					<td style="text-align: right">(-116.92, 33.06)</td>
+			</tr>
+			<tr>
+					<td style="text-align: right">1</td>
+					<td style="text-align: right">4,051</td>
+					<td style="text-align: right">$291,133</td>
+					<td style="text-align: right">(-122.14, 37.59)</td>
+			</tr>
+			<tr>
+					<td style="text-align: right">2</td>
+					<td style="text-align: right">6,799</td>
+					<td style="text-align: right">$177,452</td>
+					<td style="text-align: right">(-118.07, 34.02)</td>
+			</tr>
+			<tr>
+					<td style="text-align: right">3</td>
+					<td style="text-align: right">2,345</td>
+					<td style="text-align: right">$400,190</td>
+					<td style="text-align: right">(-118.33, 33.96)</td>
+			</tr>
+			<tr>
+					<td style="text-align: right">4</td>
+					<td style="text-align: right">1,725</td>
+					<td style="text-align: right">$101,702</td>
+					<td style="text-align: right">(-119.74, 36.19)</td>
+			</tr>
+			<tr>
+					<td style="text-align: right">5</td>
+					<td style="text-align: right">3,658</td>
+					<td style="text-align: right">$118,677</td>
+					<td style="text-align: right">(-121.72, 38.71)</td>
+			</tr>
+	</tbody>
+</table></div>
+<div class="project-figure"><img src="/26-the-pattern-seekers/k-means-california-housing.png" alt="Scatterplot map of six California housing clusters and boxplots showing their house-value distributions" style="width: 100%; height: auto;"><p style="text-align: center; font-weight: bold; margin-top: 8px; margin-bottom: 24px;">Figure 1: Geographic cluster assignments and house-value distributions from the final model</p></div>
+<p>The map shows that location drives broad geographic continuity, while the boxplots show that price still distinguishes clusters. For example, Cluster 3 has the highest mean house value, while Cluster 4 has the lowest. Some regions and price distributions overlap because K-means balances all three transformed inputs rather than imposing hard geographic boundaries or equal price ranges.</p>
+<h2 id="limitations"><a href="#limitations" class="header-anchor"></a>Limitations
+</h2><p>K-means assumes that Euclidean distance and mean-based centroids are meaningful. It tends to work best for compact, roughly spherical clusters of comparable scale, whereas California&rsquo;s geography is elongated and its housing markets can have irregular boundaries and unequal densities. Results also depend on \(K\), feature scaling, the 0.35 price weight, and initialization. Finally, the data describe 1990 census block groups, so these clusters should not be interpreted as current housing-market conditions.</p>
+<h2 id="takeaway"><a href="#takeaway" class="header-anchor"></a>Takeaway
+</h2><p>K-means provides a concise way to summarize 20,640 observations as six location-and-price groups. Standardization makes the three inputs comparable, the price weight encodes the project&rsquo;s preference for geographic continuity, and repeated K-means++ initializations improve the reliability of the numerical solution. The clusters are useful exploratory summaries, but their validity should be tested across alternative values of (K), feature weights, and clustering methods before they are treated as stable market regions.</p>
+
+        </div>
+
+        <aside
+            class="project-outline"
+            aria-label="On this page"
+            data-scrollspy
+            data-reveal
+            data-reveal-delay="370"
+        >
+            <p class="project-outline__label">On this page</p>
+            <nav id="TableOfContents">
+  <ul>
+    <li><a href="#data-structure">Data Structure</a></li>
+    <li><a href="#purpose-of-k-means">Purpose of K-Means</a></li>
+    <li><a href="#scaling-and-feature-weighting">Scaling and Feature Weighting</a></li>
+    <li><a href="#minimization-problem">Minimization Problem</a></li>
+    <li><a href="#algorithm">Algorithm</a></li>
+    <li><a href="#hyperparameters">Hyperparameters</a></li>
+    <li><a href="#results">Results</a></li>
+    <li><a href="#limitations">Limitations</a></li>
+    <li><a href="#takeaway">Takeaway</a></li>
+  </ul>
+</nav>
+        </aside>
+    </div>
+</article></main>
+        </div>
+        
+<script type="text/javascript" src="/ucd-cosmos-data/26-the-pattern-seekers/preview-tailwind-redesign-v1/ts/main.1ff1e5fdc4e178ed422e50aa407526dc552f26342d729343fded19416194382c.js" defer></script>
+
+
+    </body>
+</html>
