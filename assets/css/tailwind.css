@@ -934,7 +934,7 @@
     .project-reading-layout {
         display: grid;
         grid-template-columns: minmax(0, 76rem) minmax(18rem, 24rem);
-        justify-content: center;
+        justify-content: start;
         align-items: start;
         gap: clamp(5rem, 8vw, 11rem);
     }
