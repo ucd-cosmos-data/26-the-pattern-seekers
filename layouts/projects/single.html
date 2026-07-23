@@ -1,23 +1,29 @@
 {{- define "main" }}
+<article class="project-page" aria-labelledby="project-title">
+    <header class="project-header">
+        {{- partial "breadcrumbs.html" . }}
+        <h1 id="project-title" data-reveal data-reveal-delay="90">{{ .Title }}</h1>
+        {{- with .Description }}
+        <p class="project-header__description" data-reveal data-reveal-delay="165">{{ . }}</p>
+        {{- end }}
+    </header>
 
-<article class="post-single project-layout">
-  <header class="post-header project-header">
-    {{- partial "breadcrumbs.html" . }}
-    <h1 class="post-title">{{ .Title }}</h1>
-    {{- with .Description }}
-    <p class="post-description">{{ . }}</p>
-    {{- end }}
-  </header>
+    <div class="project-reading-layout">
+        <div class="project-content main-article" data-reveal data-reveal-delay="230">
+            {{- $wrappedTable := printf "<div class=\"project-table-scroll\">${1}</div>" -}}
+            {{ .Content | replaceRE "(<table>(?:.|\n)+?</table>)" $wrappedTable | safeHTML }}
+        </div>
 
-  <div class="project-reading-layout">
-    <div class="post-content md-content project-content main-article">
-      {{ .Content }}
+        <aside
+            class="project-outline"
+            aria-label="On this page"
+            data-scrollspy
+            data-reveal
+            data-reveal-delay="370"
+        >
+            <p class="project-outline__label">On this page</p>
+            {{ .TableOfContents }}
+        </aside>
     </div>
-
-    <aside class="project-outline" aria-label="Document outline">
-      {{ .TableOfContents }}
-    </aside>
-  </div>
 </article>
-
 {{- end }}

@@ -1,14 +1,13 @@
-{{- /* Theme-independent breadcrumbs, kept outside the theme so a theme swap doesn't break it. */ -}}
-<nav class="breadcrumbs" role="navigation" aria-label="Breadcrumb">
-    {{- $ancestors := .Ancestors.Reverse -}}
-    {{- range $i, $bc := $ancestors }}
-        {{- if eq $i 0 }}
-            <a href="{{ $bc.RelPermalink }}">{{ i18n "home" | default "Home" }}</a>
-        {{- else }}
-            <span class="breadcrumbs__sep" aria-hidden="true">›</span>
-            <a href="{{ $bc.RelPermalink }}">{{ $bc.Title }}</a>
-        {{- end }}
-    {{- end }}
-    <span class="breadcrumbs__sep" aria-hidden="true">›</span>
-    <span class="breadcrumbs__current" aria-current="page">{{ .Title }}</span>
+<nav class="breadcrumbs" aria-label="Breadcrumb" data-reveal data-reveal-delay="0">
+    <a href="{{ .Site.Home.RelPermalink }}">Home</a>
+    {{- range .Ancestors.Reverse }} {{- if not .IsHome }}
+    <span aria-hidden="true">/</span>
+    <a href="{{ .RelPermalink }}"
+        >{{ if eq .Section "members" }}Team{{ else }}{{ .Title }}{{ end }}</a
+    >
+    {{- end }} {{- end }}
+    <span aria-hidden="true">/</span>
+    <span aria-current="page"
+        >{{ if eq .Section "members" }}Team{{ else }}{{ .Title }}{{ end }}</span
+    >
 </nav>

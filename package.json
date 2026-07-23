@@ -1,0 +1,14 @@
+{
+  "name": "the-pattern-seekers",
+  "private": true,
+  "scripts": {
+    "build": "npm run build:css && hugo build",
+    "build:css": "tailwindcss -i ./assets/css/tailwind.css -o ./static/css/tailwind.css --minify",
+    "dev": "npm run build:css && hugo server --disableFastRender",
+    "dev:css": "tailwindcss -i ./assets/css/tailwind.css -o ./static/css/tailwind.css --watch"
+  },
+  "devDependencies": {
+    "@tailwindcss/cli": "^4.1.0",
+    "tailwindcss": "^4.1.0"
+  }
+}

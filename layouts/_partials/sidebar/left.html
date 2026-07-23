@@ -1,0 +1,52 @@
+{{- $current := .RelPermalink -}}
+<header class="site-nav" data-site-nav>
+    <div class="site-nav__bar">
+        <a class="site-nav__brand" href="{{ .Site.Home.RelPermalink }}" aria-label="Pattern Seekers home">
+            Pattern Seekers
+        </a>
+
+        <nav class="site-nav__desktop" aria-label="Primary navigation">
+            <div class="site-nav__primary">
+                <a href="{{ "projects/" | relURL }}"{{ if hasPrefix $current ("projects/" | relURL) }} aria-current="page"{{ end }}>Projects</a>
+                <a href="{{ "logs/" | relURL }}"{{ if hasPrefix $current ("logs/" | relURL) }} aria-current="page"{{ end }}>Logs</a>
+                <a href="{{ "photos/" | relURL }}"{{ if hasPrefix $current ("photos/" | relURL) }} aria-current="page"{{ end }}>Photos</a>
+                <a href="{{ "members/" | relURL }}"{{ if hasPrefix $current ("members/" | relURL) }} aria-current="page"{{ end }}>Team</a>
+            </div>
+            <div class="site-nav__secondary">
+                <a href="https://ucd-cosmos-data.github.io/" target="_blank" rel="noopener">Course Website</a>
+                <button class="theme-toggle" id="dark-mode-toggle" type="button" aria-label="Toggle color theme">
+                    <span class="theme-toggle__icon theme-toggle__icon--moon" aria-hidden="true"></span>
+                    <span class="theme-toggle__icon theme-toggle__icon--sun" aria-hidden="true"></span>
+                </button>
+            </div>
+        </nav>
+
+        <button class="site-nav__menu-button" type="button" aria-expanded="false" aria-controls="mobile-menu" data-menu-toggle>
+            <span class="sr-only">Open menu</span>
+            <span aria-hidden="true"></span>
+            <span aria-hidden="true"></span>
+        </button>
+    </div>
+
+    <div class="site-nav__mobile" id="mobile-menu" data-mobile-menu hidden>
+        <nav aria-label="Mobile navigation">
+            <a href="{{ "projects/" | relURL }}"{{ if hasPrefix $current ("projects/" | relURL) }} aria-current="page"{{ end }}>Projects</a>
+            <a href="{{ "logs/" | relURL }}"{{ if hasPrefix $current ("logs/" | relURL) }} aria-current="page"{{ end }}>Logs</a>
+            <a href="{{ "photos/" | relURL }}"{{ if hasPrefix $current ("photos/" | relURL) }} aria-current="page"{{ end }}>Photos</a>
+            <a href="{{ "members/" | relURL }}"{{ if hasPrefix $current ("members/" | relURL) }} aria-current="page"{{ end }}>Team</a>
+            <a href="https://ucd-cosmos-data.github.io/" target="_blank" rel="noopener">Course Website <span aria-hidden="true">↗</span></a>
+        </nav>
+        <button class="site-nav__mobile-theme" type="button" data-mobile-theme>
+            <span>Appearance</span>
+            <span data-theme-label>System</span>
+        </button>
+    </div>
+
+    <button
+        class="site-nav__scrim"
+        type="button"
+        data-menu-scrim
+        aria-label="Close menu"
+        hidden
+    ></button>
+</header>

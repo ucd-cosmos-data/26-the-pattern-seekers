@@ -99,7 +99,7 @@ Reproducing the final notebook configuration produced the following summaries. C
 | 4 | 1,725 | $101,702 | (-119.74, 36.19) |
 | 5 | 3,658 | $118,677 | (-121.72, 38.71) |
 
-<div class="project-figure"><img src="/26-the-pattern-seekers/k-means-california-housing.png" alt="Scatterplot map of six California housing clusters and boxplots showing their house-value distributions" style="width: 100%; height: auto;"><p style="text-align: center; font-weight: bold; margin-top: 8px; margin-bottom: 24px;">Figure 1: Geographic cluster assignments and house-value distributions from the final model</p></div>
+<div class="project-figure"><img src="../../k-means-california-housing.png" alt="Scatterplot map of six California housing clusters and boxplots showing their house-value distributions" style="width: 100%; height: auto;"><p style="text-align: center; font-weight: bold; margin-top: 8px; margin-bottom: 24px;">Figure 1: Geographic cluster assignments and house-value distributions from the final model</p></div>
 
 The map shows that location drives broad geographic continuity, while the boxplots show that price still distinguishes clusters. For example, Cluster 3 has the highest mean house value, while Cluster 4 has the lowest. Some regions and price distributions overlap because K-means balances all three transformed inputs rather than imposing hard geographic boundaries or equal price ranges.
 

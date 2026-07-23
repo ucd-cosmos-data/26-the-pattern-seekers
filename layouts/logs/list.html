@@ -1,12 +1,11 @@
 {{- define "main" }}
-<header class="page-header">
-  {{- partial "breadcrumbs.html" . }}
-  <h1>{{ .Title }}</h1>
-  {{- if .Description }}
-  <div class="post-description">{{ .Description | markdownify }}</div>
-  {{- end }}
-</header>
-{{- if .Content }}
-<div class="post-content md-content main-article">{{ .Content }}</div>
+<section class="page-shell" aria-labelledby="logs-title">
+    <header class="page-header">
+        {{- partial "breadcrumbs.html" . }}
+        <h1 id="logs-title" data-reveal data-reveal-delay="90">Logs</h1>
+    </header>
+    {{- with .Content }}
+    <div class="log-content">{{ . }}</div>
+    {{- end }}
+</section>
 {{- end }}
-{{- end }}{{- /* end main */ -}}
