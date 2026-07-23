@@ -23,7 +23,7 @@ We created two boxplots to view the relationship from both directions.
 The first plot compared students' refreshed ratings across sleep-duration groups.
 
 <div class="project-figure project-figure--narrow">
-  <img src="/26-the-pattern-seekers/boxplot_refreshed_by_sleep_int.png" alt="Boxplot of refreshed feeling by sleep duration">
+  <img src="../../boxplot_refreshed_by_sleep_int.png" alt="Boxplot of refreshed feeling by sleep duration">
 </div>
 
 ### Sleep Duration by Refreshed Feeling
@@ -31,7 +31,7 @@ The first plot compared students' refreshed ratings across sleep-duration groups
 The second plot grouped sleep duration by how refreshed students reported feeling.
 
 <div class="project-figure project-figure--narrow">
-  <img src="/26-the-pattern-seekers/boxplot_sleep_by_refreshed.png" alt="Boxplot of sleep duration by refreshed feeling">
+  <img src="../../boxplot_sleep_by_refreshed.png" alt="Boxplot of sleep duration by refreshed feeling">
 </div>
 
 ## Takeaway

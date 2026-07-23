@@ -459,6 +459,10 @@
         color: var(--ps-muted);
     }
 
+    .site-nav__scrim {
+        display: none;
+    }
+
     /* Shared page frame */
     .page-shell {
         width: min(100% - 4.8rem, 128rem);
@@ -1194,16 +1198,8 @@
         display: none;
     }
 
-    .log-sidebar h2 {
-        margin: 0 0 1.8rem;
-        color: var(--ps-text);
-        font-size: 1.6rem;
-        font-weight: 500;
-        letter-spacing: -0.02em;
-    }
-
     .log-sidebar p {
-        margin: 2rem 0 0.8rem;
+        margin: 0 0 0.8rem;
         color: var(--ps-muted);
         font-size: 1.1rem;
         font-weight: 600;
@@ -1300,12 +1296,12 @@
     }
 
     .log-card {
-        margin: 0 0 1.6rem;
-        padding: clamp(2.4rem, 4vw, 4rem);
-        border-radius: 2.6rem;
-        background: var(--ps-surface);
+        margin: 0 0 clamp(4.8rem, 7vw, 7.2rem);
+        padding: 0;
+        border-radius: 0;
+        background: transparent;
         color: var(--ps-text);
-        box-shadow: var(--ps-shadow-soft);
+        box-shadow: none;
         scroll-margin-top: 9rem;
     }
 
@@ -1483,17 +1479,34 @@
         position: absolute;
         top: 2rem;
         right: 2rem;
-        display: grid;
+        display: block;
         width: 4.4rem;
         height: 4.4rem;
-        place-items: center;
         border: 0;
         border-radius: 50%;
         background: rgba(255, 255, 255, 0.14);
         color: #ffffff;
         cursor: pointer;
-        font-size: 2.4rem;
-        line-height: 1;
+    }
+
+    .photo-lightbox__close::before,
+    .photo-lightbox__close::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        left: 50%;
+        width: 1.7rem;
+        height: 0.16rem;
+        border-radius: 999px;
+        background: currentColor;
+    }
+
+    .photo-lightbox__close::before {
+        transform: translate(-50%, -50%) rotate(45deg);
+    }
+
+    .photo-lightbox__close::after {
+        transform: translate(-50%, -50%) rotate(-45deg);
     }
 
     /* Ordered page-entry animation */
@@ -1557,6 +1570,47 @@
     }
 
     @media (max-width: 900px) {
+        body {
+            padding-top: 5.6rem;
+        }
+
+        .site-nav {
+            position: fixed;
+            right: 0;
+            left: 0;
+        }
+
+        .site-nav__bar,
+        .site-nav__mobile {
+            position: relative;
+            z-index: 2;
+        }
+
+        .site-nav__mobile {
+            max-height: calc(100svh - 5.6rem);
+            overflow-y: auto;
+        }
+
+        .site-nav__scrim {
+            position: fixed;
+            z-index: 1;
+            top: 5.6rem;
+            right: 0;
+            bottom: 0;
+            left: 0;
+            display: block;
+            width: 100%;
+            padding: 0;
+            border: 0;
+            background: rgba(0, 0, 0, 0.68);
+            -webkit-backdrop-filter: blur(0.4rem);
+            backdrop-filter: blur(0.4rem);
+        }
+
+        .site-nav__scrim[hidden] {
+            display: none;
+        }
+
         .site-nav__desktop {
             display: none;
         }
@@ -1581,18 +1635,7 @@
         }
 
         .hero__visual {
-            min-height: 62svh;
-            margin-top: -10rem;
-        }
-
-        .hero__visual::after {
-            background: linear-gradient(
-                180deg,
-                var(--ps-bg) 0%,
-                transparent 16%,
-                transparent 88%,
-                var(--ps-bg) 100%
-            );
+            display: none;
         }
 
         .pattern-game {
@@ -1658,7 +1701,6 @@
             overflow: hidden;
         }
 
-        .log-sidebar h2,
         .log-sidebar p,
         .log-sidebar ul ul {
             display: none;

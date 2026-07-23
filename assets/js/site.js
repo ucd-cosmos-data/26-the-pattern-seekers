@@ -8,6 +8,7 @@
         var navigation = document.querySelector("[data-site-nav]");
         var menuButton = document.querySelector("[data-menu-toggle]");
         var mobileMenu = document.querySelector("[data-mobile-menu]");
+        var menuScrim = document.querySelector("[data-menu-scrim]");
         var mobileTheme = document.querySelector("[data-mobile-theme]");
         var primaryTheme = document.getElementById("dark-mode-toggle");
 
@@ -22,6 +23,7 @@
             menuButton.setAttribute("aria-expanded", "false");
             menuButton.querySelector(".sr-only").textContent = "Open menu";
             mobileMenu.hidden = true;
+            if (menuScrim) menuScrim.hidden = true;
             document.body.classList.remove("menu-open");
         }
 
@@ -53,6 +55,7 @@
                 menuButton.setAttribute("aria-expanded", String(willOpen));
                 menuButton.querySelector(".sr-only").textContent = willOpen ? "Close menu" : "Open menu";
                 mobileMenu.hidden = !willOpen;
+                if (menuScrim) menuScrim.hidden = !willOpen;
                 document.body.classList.toggle("menu-open", willOpen);
             });
 
@@ -62,6 +65,17 @@
 
             window.addEventListener("resize", function () {
                 if (window.innerWidth > 900) closeMenu();
+            });
+
+            if (menuScrim) {
+                menuScrim.addEventListener("click", closeMenu);
+            }
+
+            document.addEventListener("keydown", function (event) {
+                if (event.key === "Escape" && menuButton.getAttribute("aria-expanded") === "true") {
+                    closeMenu();
+                    menuButton.focus();
+                }
             });
         }
 

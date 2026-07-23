@@ -5,7 +5,6 @@ title: "Logs"
 {{< rawhtml >}}
 <div class="log-page" data-reveal-stagger data-reveal-start="190" data-reveal-step="75">
   <aside class="log-sidebar" aria-label="Log entries" data-scrollspy data-reveal>
-    <h2>In this log</h2>
     <p><strong>Week 1</strong></p>
     <ul>
       <li><a href="#monday-july-6th">Monday July 6th</a>
