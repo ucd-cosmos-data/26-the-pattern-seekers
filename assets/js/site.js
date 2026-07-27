@@ -670,8 +670,20 @@
         var animationCount = room.querySelector("[data-animation-count]");
         var animationTitle = room.querySelector("[data-animation-title]");
         var animationCopy = room.querySelector("[data-animation-copy]");
-        var animationTimer = null;
-        var animationIndex = 0;
+        var animationControls = room.querySelector(".coach-animation__controls");
+        var animationTimeline = room.querySelector(".coach-timeline");
+        var animationScrubber = room.querySelector("[data-animation-scrubber]");
+        var animationTime = room.querySelector("[data-animation-time]");
+        var animationSpeed = room.querySelector("[data-animation-speed]");
+        var tacticCanvas = room.querySelector("[data-coach-canvas]");
+        var tacticContext = tacticCanvas.getContext("2d");
+        var animationFrameId = 0;
+        var animationStartTime = 0;
+        var animationElapsed = 0;
+        var animationDuration = 12000;
+        var activeTacticView = "attack";
+        var currentPhaseIndex = 0;
+        var motionCache = {};
 
         var states = {
             prematch: {
@@ -704,7 +716,8 @@
                     },
                     opponent: {
                         gk: [89, 50], rb: [72, 17], rcb: [74, 44], lcb: [71, 65],
-                        lb: [67, 84], rm: [57, 25], cm: [57, 52], lm: [53, 78]
+                        lb: [67, 84], rm: [57, 25], cm: [57, 52], lm: [53, 78],
+                        rw: [42, 18], st: [39, 50], lw: [42, 82]
                     }
                 }
             },
@@ -738,7 +751,8 @@
                     },
                     opponent: {
                         gk: [90, 50], rb: [66, 16], rcb: [69, 39], lcb: [69, 62],
-                        lb: [65, 84], rm: [48, 23], cm: [50, 49], lm: [47, 77]
+                        lb: [65, 84], rm: [48, 23], cm: [50, 49], lm: [47, 77],
+                        rw: [35, 17], st: [32, 50], lw: [35, 83]
                     }
                 }
             },
@@ -772,7 +786,8 @@
                     },
                     opponent: {
                         gk: [91, 50], rb: [75, 17], rcb: [77, 42], lcb: [74, 65],
-                        lb: [69, 84], rm: [59, 22], cm: [60, 51], lm: [56, 76]
+                        lb: [69, 84], rm: [59, 22], cm: [60, 51], lm: [56, 76],
+                        rw: [44, 18], st: [41, 50], lw: [44, 82]
                     }
                 }
             },
@@ -806,7 +821,8 @@
                     },
                     opponent: {
                         gk: [92, 50], rb: [80, 14], rcb: [81, 40], lcb: [81, 61],
-                        lb: [79, 86], rm: [67, 23], cm: [68, 49], lm: [66, 76]
+                        lb: [79, 86], rm: [67, 23], cm: [68, 49], lm: [66, 76],
+                        rw: [55, 19], st: [53, 50], lw: [55, 81]
                     }
                 }
             }
@@ -1026,6 +1042,145 @@
             }
         };
 
+        var tacticViewProfiles = {
+            prematch: {
+                formation: {
+                    labels: ["In possession", "Out of possession", "Rest defence", "Last line"],
+                    values: ["3–2–5", "4–4–2", "3 + 2", "Five lanes"],
+                    shape: "Formation · 3–2–5",
+                    title: "Three build, two connect, five attack",
+                    copy: "The fullbacks are asymmetric: Molina advances while Tagliafico protects the back three. Messi owns the right half-space.",
+                    progress: 0.08
+                },
+                dimensions: {
+                    labels: ["Attacking width", "Line height", "Team depth", "Weak-side gap"],
+                    values: ["62 m", "48 m", "43 m", "14 m"],
+                    shape: "Dimensions · stretch then connect",
+                    title: "Stretch the block without disconnecting",
+                    copy: "Hold maximum width in the first two thirds, then reduce the gaps around the ball before the final pass.",
+                    progress: 0.52
+                },
+                press: {
+                    labels: ["Press shape", "Primary trigger", "Lock direction", "Fallback"],
+                    values: ["4–4–2", "Backward pass", "France right", "Mid-block"],
+                    shape: "Press · curved front two",
+                    title: "Screen the pivot, force the outside pass",
+                    copy: "The first forward curves the press to remove the central return. The near winger jumps only after the fullback receives.",
+                    progress: 0.38
+                },
+                transition: {
+                    labels: ["Rest defence", "Counterpress", "First release", "Recovery"],
+                    values: ["3 + 2", "5 seconds", "Right channel", "4–4–2"],
+                    shape: "Transition · protect the centre",
+                    title: "Five close the ball, five protect the field",
+                    copy: "The nearest unit counterpresses while the back three and Enzo defend the central counterattack lane.",
+                    progress: 0.92
+                }
+            },
+            leading: {
+                formation: {
+                    labels: ["In possession", "Out of possession", "Rest defence", "Release"],
+                    values: ["3–2–3–2", "4–4–2", "4 + 1", "Front two"],
+                    shape: "Formation · compact control",
+                    title: "Keep one more player behind the attack",
+                    copy: "The wide players start lower, the midfield stays connected, and only the front two remain beyond the ball.",
+                    progress: 0.08
+                },
+                dimensions: {
+                    labels: ["Defensive width", "Line height", "Unit depth", "Vertical gap"],
+                    values: ["44 m", "41 m", "31 m", "9 m"],
+                    shape: "Dimensions · deny the centre",
+                    title: "Shorter distances make the lead safer",
+                    copy: "The block narrows and compresses vertically. France can circulate outside but cannot play cleanly through the middle.",
+                    progress: 0.42
+                },
+                press: {
+                    labels: ["Press shape", "Primary trigger", "Lock direction", "Do not chase"],
+                    values: ["4–4–2", "Loose touch", "Touchline", "Centre-backs"],
+                    shape: "Press · selective, not constant",
+                    title: "Press the mistake, not every pass",
+                    copy: "Hold the medium block until a poor touch, bouncing pass, or isolated fullback creates a high-probability regain.",
+                    progress: 0.38
+                },
+                transition: {
+                    labels: ["First action", "Release target", "Support", "If blocked"],
+                    values: ["Secure", "Messi", "Forward + wing", "Reset"],
+                    shape: "Transition · selective release",
+                    title: "Counter only when the field is open",
+                    copy: "The first look is forward into the space France vacates. If the lane is not clean, secure the ball and restore the block.",
+                    progress: 0.94
+                }
+            },
+            drawing: {
+                formation: {
+                    labels: ["In possession", "Out of possession", "Rest defence", "Extra runner"],
+                    values: ["3–2–5", "4–4–2", "3 + 2", "Molina"],
+                    shape: "Formation · higher right-back",
+                    title: "Add one runner without losing the platform",
+                    copy: "Molina joins the last line earlier, but Enzo and the three defenders remain positioned for the turnover.",
+                    progress: 0.12
+                },
+                dimensions: {
+                    labels: ["Attacking width", "Line height", "Team depth", "Box spacing"],
+                    values: ["64 m", "53 m", "46 m", "10–12 m"],
+                    shape: "Dimensions · aggressive width",
+                    title: "Stretch wider, arrive closer together",
+                    copy: "The first line stays wide to move France. The finishing unit then compresses around the box for combinations and second balls.",
+                    progress: 0.58
+                },
+                press: {
+                    labels: ["Press shape", "Primary trigger", "Second wave", "Fallback"],
+                    values: ["4–3–3", "Back pass", "Man-oriented", "4–4–2"],
+                    shape: "Press · raise the first wave",
+                    title: "Use one aggressive press, then recover",
+                    copy: "Jump on the first backward pass with three players. If France escapes, recover the compact shape instead of chasing.",
+                    progress: 0.46
+                },
+                transition: {
+                    labels: ["Rest defence", "Counterpress", "Box runners", "Risk level"],
+                    values: ["3 + 2", "Immediate", "Two", "Medium-high"],
+                    shape: "Transition · close the right half-space",
+                    title: "The overload must also secure the loss",
+                    copy: "The right-side triangle closes immediately after a turnover while Enzo blocks the direct central release.",
+                    progress: 0.95
+                }
+            },
+            trailing: {
+                formation: {
+                    labels: ["In possession", "Last line", "Rest defence", "Box occupation"],
+                    values: ["3–2–5", "Five lanes", "2 + 2", "Three runners"],
+                    shape: "Formation · maximum pressure",
+                    title: "Five pin the line, four secure the wave",
+                    copy: "The front five occupy every lane. Two midfielders and two defenders control clearances and restart the attack.",
+                    progress: 0.12
+                },
+                dimensions: {
+                    labels: ["Attacking width", "Line height", "Team depth", "Box density"],
+                    values: ["67 m", "59 m", "51 m", "Three + two"],
+                    shape: "Dimensions · squeeze the pitch",
+                    title: "Make the field wide for us and short for them",
+                    copy: "Use the full width in possession while the back line holds near halfway to keep second balls inside the attacking half.",
+                    progress: 0.62
+                },
+                press: {
+                    labels: ["Press shape", "Primary trigger", "Marking", "Line height"],
+                    values: ["3–4–3", "Every restart", "Man-oriented", "59 m"],
+                    shape: "Press · lock the restart",
+                    title: "Do not let France leave its defensive third",
+                    copy: "Match the short options, force the long clearance, and position the midfield underneath the second ball.",
+                    progress: 0.52
+                },
+                transition: {
+                    labels: ["Rest defence", "Counterpress", "Risk", "Recovery"],
+                    values: ["2 + 2", "Immediate", "Accepted", "Sprint inside"],
+                    shape: "Transition · attack the next action",
+                    title: "Treat the loss as the start of the next attack",
+                    copy: "Four players close the ball and nearby exits. The remaining defenders protect only the direct route to goal.",
+                    progress: 0.97
+                }
+            }
+        };
+
         var playerJobs = {
             "Martínez": "Martínez · Invite the first press, then find the free centre-back rather than forcing the central pass.",
             "Molina": "Molina · Hold width, arrive beyond De Paul, and protect the immediate recovery lane after a turnover.",
@@ -1101,89 +1256,478 @@
             optionDetail.textContent = optionCopy[key].detail;
         }
 
+        function clonePositions(positions) {
+            var clone = {};
+            Object.keys(positions).forEach(function (key) {
+                clone[key] = positions[key].slice();
+            });
+            return clone;
+        }
+
+        function clamp(value, minimum, maximum) {
+            return Math.min(maximum, Math.max(minimum, value));
+        }
+
+        function getMotionFrames(stateKey) {
+            if (motionCache[stateKey]) return motionCache[stateKey];
+
+            var sequence = attackAnimations[stateKey];
+            var base = states[stateKey].pitch;
+            var accumulatedTeam = clonePositions(base.team);
+            var accumulatedOpponent = clonePositions(base.opponent);
+            var teamFlow = {
+                gk: 0.12,
+                molina: 0.8,
+                romero: 0.32,
+                otamendi: 0.28,
+                tagliafico: 0.24,
+                enzo: 0.5,
+                depaul: 0.72,
+                macallister: 0.67,
+                messi: 0.76,
+                dimaria: 0.68,
+                forward: 0.88
+            };
+
+            motionCache[stateKey] = sequence.steps.map(function (step, stepIndex) {
+                Object.keys(step.team).forEach(function (key) {
+                    accumulatedTeam[key] = step.team[key].slice();
+                });
+                Object.keys(step.opponent).forEach(function (key) {
+                    accumulatedOpponent[key] = step.opponent[key].slice();
+                });
+
+                var phase = stepIndex / Math.max(sequence.steps.length - 1, 1);
+                var team = clonePositions(accumulatedTeam);
+                var opponent = clonePositions(accumulatedOpponent);
+
+                Object.keys(team).forEach(function (key, playerIndex) {
+                    var flow = teamFlow[key] || 0.4;
+                    var ballPull = (step.ball[1] - team[key][1]) * phase * 0.018;
+                    var collectivePulse = Math.sin((stepIndex + 1) * 1.35 + playerIndex * 0.7) * phase * 0.45;
+                    team[key][0] = clamp(team[key][0] + phase * flow * 1.35, 3, 96);
+                    team[key][1] = clamp(team[key][1] + ballPull + collectivePulse, 4, 96);
+                });
+
+                Object.keys(opponent).forEach(function (key, playerIndex) {
+                    var ballPull = (step.ball[1] - opponent[key][1]) * phase * 0.014;
+                    var blockShift = Math.cos((stepIndex + 1) * 1.1 + playerIndex * 0.55) * phase * 0.35;
+                    opponent[key][0] = clamp(opponent[key][0] + phase * 0.55, 4, 97);
+                    opponent[key][1] = clamp(opponent[key][1] + ballPull + blockShift, 4, 96);
+                });
+
+                return {
+                    team: team,
+                    opponent: opponent,
+                    ball: step.ball.slice(),
+                    targetOpacity: step.targetOpacity
+                };
+            });
+
+            return motionCache[stateKey];
+        }
+
+        function catmullRom(p0, p1, p2, p3, amount) {
+            var amountSquared = amount * amount;
+            var amountCubed = amountSquared * amount;
+            return 0.5 * (
+                (2 * p1) +
+                (-p0 + p2) * amount +
+                (2 * p0 - 5 * p1 + 4 * p2 - p3) * amountSquared +
+                (-p0 + 3 * p1 - 3 * p2 + p3) * amountCubed
+            );
+        }
+
+        function interpolatePoint(frames, getter, progress) {
+            var segmentFloat = clamp(progress, 0, 1) * (frames.length - 1);
+            var segment = Math.min(Math.floor(segmentFloat), frames.length - 2);
+            var amount = segmentFloat - segment;
+            var point0 = getter(frames[Math.max(0, segment - 1)]);
+            var point1 = getter(frames[segment]);
+            var point2 = getter(frames[Math.min(frames.length - 1, segment + 1)]);
+            var point3 = getter(frames[Math.min(frames.length - 1, segment + 2)]);
+
+            return [
+                clamp(catmullRom(point0[0], point1[0], point2[0], point3[0], amount), 2, 98),
+                clamp(catmullRom(point0[1], point1[1], point2[1], point3[1], amount), 2, 98)
+            ];
+        }
+
+        function interpolateValue(frames, getter, progress) {
+            var segmentFloat = clamp(progress, 0, 1) * (frames.length - 1);
+            var segment = Math.min(Math.floor(segmentFloat), frames.length - 2);
+            var amount = segmentFloat - segment;
+            var value0 = getter(frames[Math.max(0, segment - 1)]);
+            var value1 = getter(frames[segment]);
+            var value2 = getter(frames[Math.min(frames.length - 1, segment + 1)]);
+            var value3 = getter(frames[Math.min(frames.length - 1, segment + 2)]);
+            return catmullRom(value0, value1, value2, value3, amount);
+        }
+
+        function getInterpolatedMotion(progress) {
+            var frames = getMotionFrames(stateControl.value);
+            var team = {};
+            var opponent = {};
+
+            Object.keys(frames[0].team).forEach(function (key) {
+                team[key] = interpolatePoint(frames, function (frame) {
+                    return frame.team[key];
+                }, progress);
+            });
+            Object.keys(frames[0].opponent).forEach(function (key) {
+                opponent[key] = interpolatePoint(frames, function (frame) {
+                    return frame.opponent[key];
+                }, progress);
+            });
+
+            return {
+                team: team,
+                opponent: opponent,
+                ball: interpolatePoint(frames, function (frame) {
+                    return frame.ball;
+                }, progress)
+            };
+        }
+
+        var canvasSize = { width: 0, height: 0 };
+
+        function resizeTacticCanvas() {
+            if (!tacticContext) return;
+            var bounds = pitch.getBoundingClientRect();
+            var density = Math.min(window.devicePixelRatio || 1, 2);
+            canvasSize.width = Math.max(1, bounds.width);
+            canvasSize.height = Math.max(1, bounds.height);
+            tacticCanvas.width = Math.round(canvasSize.width * density);
+            tacticCanvas.height = Math.round(canvasSize.height * density);
+            tacticContext.setTransform(density, 0, 0, density, 0, 0);
+        }
+
+        function toCanvasPoint(point) {
+            return [
+                point[0] * canvasSize.width / 100,
+                point[1] * canvasSize.height / 100
+            ];
+        }
+
+        function canvasColor(name, fallback) {
+            var value = window.getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+            return value || fallback;
+        }
+
+        function drawPath(points, color, width, dash, alpha, closePath) {
+            if (!points.length) return;
+            tacticContext.save();
+            tacticContext.beginPath();
+            points.forEach(function (point, index) {
+                var canvasPoint = toCanvasPoint(point);
+                if (index === 0) {
+                    tacticContext.moveTo(canvasPoint[0], canvasPoint[1]);
+                } else {
+                    tacticContext.lineTo(canvasPoint[0], canvasPoint[1]);
+                }
+            });
+            if (closePath) tacticContext.closePath();
+            tacticContext.strokeStyle = color;
+            tacticContext.lineWidth = width;
+            tacticContext.globalAlpha = alpha;
+            tacticContext.lineJoin = "round";
+            tacticContext.lineCap = "round";
+            tacticContext.setLineDash(dash || []);
+            tacticContext.stroke();
+            tacticContext.restore();
+        }
+
+        function drawArrow(from, to, color, alpha, dash) {
+            var start = toCanvasPoint(from);
+            var end = toCanvasPoint(to);
+            var angle = Math.atan2(end[1] - start[1], end[0] - start[0]);
+            var head = 8;
+
+            tacticContext.save();
+            tacticContext.beginPath();
+            tacticContext.moveTo(start[0], start[1]);
+            tacticContext.lineTo(end[0], end[1]);
+            tacticContext.strokeStyle = color;
+            tacticContext.lineWidth = 2;
+            tacticContext.globalAlpha = alpha;
+            tacticContext.setLineDash(dash || []);
+            tacticContext.stroke();
+            tacticContext.setLineDash([]);
+            tacticContext.beginPath();
+            tacticContext.moveTo(end[0], end[1]);
+            tacticContext.lineTo(end[0] - head * Math.cos(angle - Math.PI / 6), end[1] - head * Math.sin(angle - Math.PI / 6));
+            tacticContext.lineTo(end[0] - head * Math.cos(angle + Math.PI / 6), end[1] - head * Math.sin(angle + Math.PI / 6));
+            tacticContext.closePath();
+            tacticContext.fillStyle = color;
+            tacticContext.fill();
+            tacticContext.restore();
+        }
+
+        function drawCanvasLabel(text, point, color) {
+            var canvasPoint = toCanvasPoint(point);
+            tacticContext.save();
+            tacticContext.font = "600 11px system-ui, sans-serif";
+            var width = tacticContext.measureText(text).width + 14;
+            tacticContext.fillStyle = canvasColor("--ps-surface", "#ffffff");
+            tacticContext.globalAlpha = 0.9;
+            tacticContext.fillRect(canvasPoint[0] - width / 2, canvasPoint[1] - 11, width, 22);
+            tacticContext.globalAlpha = 1;
+            tacticContext.fillStyle = color;
+            tacticContext.textAlign = "center";
+            tacticContext.textBaseline = "middle";
+            tacticContext.fillText(text, canvasPoint[0], canvasPoint[1]);
+            tacticContext.restore();
+        }
+
+        function drawAttackOverlay(progress) {
+            var frames = getMotionFrames(stateControl.value);
+            var accent = canvasColor("--ps-accent", "#7c5cff");
+            var textColor = canvasColor("--ps-text", "#151515");
+            var ballPath = [];
+            var samples = Math.max(2, Math.ceil(progress * 42));
+            var sampleIndex;
+
+            for (sampleIndex = 0; sampleIndex <= samples; sampleIndex += 1) {
+                ballPath.push(interpolatePoint(frames, function (frame) {
+                    return frame.ball;
+                }, progress * sampleIndex / samples));
+            }
+            drawPath(ballPath, accent, 3, [], 0.86, false);
+
+            ["molina", "depaul", "messi", "forward"].forEach(function (key, playerIndex) {
+                var trail = [];
+                for (sampleIndex = 0; sampleIndex <= samples; sampleIndex += 1) {
+                    trail.push(interpolatePoint(frames, function (frame) {
+                        return frame.team[key];
+                    }, progress * sampleIndex / samples));
+                }
+                drawPath(trail, textColor, 1.35, [5, 5], 0.22 + playerIndex * 0.025, false);
+            });
+        }
+
+        function drawFormationOverlay(motion) {
+            var accent = canvasColor("--ps-accent", "#7c5cff");
+            var textColor = canvasColor("--ps-text", "#151515");
+            var units = [
+                ["tagliafico", "otamendi", "romero"],
+                ["enzo", "depaul"],
+                ["dimaria", "macallister", "forward", "messi", "molina"]
+            ];
+            units.forEach(function (unit, index) {
+                drawPath(unit.map(function (key) {
+                    return motion.team[key];
+                }), index === 2 ? accent : textColor, index === 2 ? 2.2 : 1.7, [], index === 2 ? 0.65 : 0.34, false);
+            });
+        }
+
+        function drawDimensionsOverlay(motion) {
+            var accent = canvasColor("--ps-accent", "#7c5cff");
+            var points = Object.keys(motion.team).map(function (key) {
+                return motion.team[key];
+            });
+            var xValues = points.map(function (point) { return point[0]; });
+            var yValues = points.map(function (point) { return point[1]; });
+            var minimumX = Math.min.apply(null, xValues);
+            var maximumX = Math.max.apply(null, xValues);
+            var minimumY = Math.min.apply(null, yValues);
+            var maximumY = Math.max.apply(null, yValues);
+            var widthMetres = Math.round((maximumY - minimumY) * 0.68);
+            var depthMetres = Math.round((maximumX - minimumX) * 1.05);
+
+            drawPath([
+                [minimumX, minimumY],
+                [maximumX, minimumY],
+                [maximumX, maximumY],
+                [minimumX, maximumY]
+            ], accent, 1.6, [6, 5], 0.58, true);
+            drawArrow([maximumX + 2, minimumY], [maximumX + 2, maximumY], accent, 0.85, []);
+            drawArrow([minimumX, maximumY + 3], [maximumX, maximumY + 3], accent, 0.85, []);
+            drawCanvasLabel(widthMetres + " m width", [maximumX - 3, (minimumY + maximumY) / 2], accent);
+            drawCanvasLabel(depthMetres + " m depth", [(minimumX + maximumX) / 2, maximumY + 3], accent);
+        }
+
+        function drawPressOverlay(motion) {
+            var accent = canvasColor("--ps-accent", "#7c5cff");
+            var danger = canvasColor("--ps-danger", "#d85d5d");
+            [["forward", "rcb"], ["messi", "cm"], ["dimaria", "rb"], ["molina", "rm"]].forEach(function (pair) {
+                drawArrow(motion.team[pair[0]], motion.opponent[pair[1]], accent, 0.76, [5, 4]);
+            });
+
+            var trigger = toCanvasPoint(motion.opponent.rb);
+            tacticContext.save();
+            tacticContext.beginPath();
+            tacticContext.arc(trigger[0], trigger[1], Math.min(canvasSize.width, canvasSize.height) * 0.08, 0, Math.PI * 2);
+            tacticContext.strokeStyle = danger;
+            tacticContext.lineWidth = 2;
+            tacticContext.globalAlpha = 0.58;
+            tacticContext.setLineDash([6, 5]);
+            tacticContext.stroke();
+            tacticContext.restore();
+            drawCanvasLabel("PRESS TRIGGER", [motion.opponent.rb[0], motion.opponent.rb[1] - 11], danger);
+        }
+
+        function drawTransitionOverlay(motion) {
+            var accent = canvasColor("--ps-accent", "#7c5cff");
+            var positive = canvasColor("--ps-positive", "#318d6a");
+            var restDefence = ["tagliafico", "otamendi", "romero", "enzo", "depaul"];
+            drawPath(restDefence.map(function (key) {
+                return motion.team[key];
+            }), positive, 2.1, [], 0.68, true);
+
+            var ball = toCanvasPoint(motion.ball);
+            tacticContext.save();
+            tacticContext.beginPath();
+            tacticContext.arc(ball[0], ball[1], Math.min(canvasSize.width, canvasSize.height) * 0.15, 0, Math.PI * 2);
+            tacticContext.fillStyle = accent;
+            tacticContext.globalAlpha = 0.08;
+            tacticContext.fill();
+            tacticContext.strokeStyle = accent;
+            tacticContext.lineWidth = 2;
+            tacticContext.globalAlpha = 0.55;
+            tacticContext.setLineDash([7, 5]);
+            tacticContext.stroke();
+            tacticContext.restore();
+            ["messi", "forward", "molina", "depaul"].forEach(function (key) {
+                drawArrow(motion.team[key], motion.ball, accent, 0.7, [4, 4]);
+            });
+            drawCanvasLabel("5-SECOND COUNTERPRESS", [motion.ball[0], clamp(motion.ball[1] - 17, 7, 92)], accent);
+        }
+
+        function drawTacticalOverlay(progress, motion) {
+            if (!tacticContext || !canvasSize.width) return;
+            tacticContext.clearRect(0, 0, canvasSize.width, canvasSize.height);
+
+            if (activeTacticView === "attack") drawAttackOverlay(progress);
+            if (activeTacticView === "formation") drawFormationOverlay(motion);
+            if (activeTacticView === "dimensions") drawDimensionsOverlay(motion);
+            if (activeTacticView === "press") drawPressOverlay(motion);
+            if (activeTacticView === "transition") drawTransitionOverlay(motion);
+        }
+
+        function setPlanStrip(labels, values) {
+            labels.forEach(function (label, index) {
+                var labelNode = room.querySelector('[data-plan-label="' + index + '"]');
+                if (labelNode) labelNode.textContent = label;
+            });
+            setText("[data-plan-shape]", values[0]);
+            setText("[data-plan-create]", values[1]);
+            setText("[data-plan-finish]", values[2]);
+            setText("[data-plan-loss]", values[3]);
+        }
+
+        function formatAnimationTime(milliseconds) {
+            var seconds = Math.min(12, Math.floor(milliseconds / 1000));
+            return "00:" + String(seconds).padStart(2, "0");
+        }
+
+        function updateAttackCaption(progress) {
+            var sequence = attackAnimations[stateControl.value];
+            var phaseFloat = clamp(progress, 0, 1) * sequence.steps.length;
+            var phaseIndex = Math.min(sequence.steps.length - 1, Math.floor(phaseFloat));
+            var frame = sequence.steps[phaseIndex];
+            currentPhaseIndex = phaseIndex;
+
+            room.querySelectorAll("[data-team-node]").forEach(function (node) {
+                node.classList.toggle("is-involved", frame.involved.indexOf(node.dataset.teamNode) !== -1);
+            });
+            animationCount.textContent = "PHASE " + String(phaseIndex + 1).padStart(2, "0") + " / 04";
+            animationTitle.textContent = frame.title;
+            animationCopy.textContent = frame.copy;
+            shapeLabel.textContent = frame.shape;
+            pitch.setAttribute("aria-label", states[stateControl.value].pitch.aria + ". Current phase: " + frame.title + ".");
+        }
+
+        function renderMotion(progress, updateCaption) {
+            var motion = getInterpolatedMotion(progress);
+            var frames = getMotionFrames(stateControl.value);
+            var targetOpacity = interpolateValue(frames, function (frame) {
+                return frame.targetOpacity;
+            }, progress);
+
+            setNodePositions("team", motion.team);
+            setNodePositions("opponent", motion.opponent);
+            coachBall.style.setProperty("--x", motion.ball[0] + "%");
+            coachBall.style.setProperty("--y", motion.ball[1] + "%");
+            targetArea.style.opacity = String(clamp(targetOpacity, 0, 1));
+            animationScrubber.value = String(progress * 100);
+            animationTime.textContent = formatAnimationTime(progress * animationDuration);
+            if (updateCaption) updateAttackCaption(progress);
+            drawTacticalOverlay(progress, motion);
+        }
+
         function stopAnimation(endLabel) {
-            if (animationTimer) {
-                window.clearInterval(animationTimer);
-                animationTimer = null;
+            if (animationFrameId) {
+                window.cancelAnimationFrame(animationFrameId);
+                animationFrameId = 0;
             }
             animationPlay.setAttribute("aria-pressed", "false");
             animationPlay.querySelector("span").textContent = endLabel || "Play attack";
         }
 
-        function applyAccumulatedPositions(sequence, index) {
-            var base = states[stateControl.value].pitch;
-            setNodePositions("team", base.team);
-            setNodePositions("opponent", base.opponent);
+        function animationTick(timestamp) {
+            var speed = Number(animationSpeed.value) || 1;
+            animationElapsed = Math.min(animationDuration, (timestamp - animationStartTime) * speed);
+            renderMotion(animationElapsed / animationDuration, true);
 
-            for (var stepIndex = 0; stepIndex <= index; stepIndex += 1) {
-                var frame = sequence.steps[stepIndex];
-                setNodePositions("team", frame.team);
-                setNodePositions("opponent", frame.opponent);
+            if (animationElapsed >= animationDuration) {
+                animationFrameId = 0;
+                animationPlay.setAttribute("aria-pressed", "false");
+                animationPlay.querySelector("span").textContent = "Replay attack";
+                return;
             }
-        }
-
-        function applyAnimationFrame(index) {
-            var sequence = attackAnimations[stateControl.value];
-            var frame = sequence.steps[index];
-            animationIndex = index;
-
-            applyAccumulatedPositions(sequence, index);
-            coachBall.style.setProperty("--x", frame.ball[0] + "%");
-            coachBall.style.setProperty("--y", frame.ball[1] + "%");
-            shapeLabel.textContent = frame.shape;
-            targetArea.style.opacity = String(frame.targetOpacity);
-            applyTargetAndRoutes({
-                target: states[stateControl.value].pitch.target,
-                routes: frame.routes
-            });
-
-            room.querySelectorAll("[data-team-node]").forEach(function (node) {
-                node.classList.toggle("is-involved", frame.involved.indexOf(node.dataset.teamNode) !== -1);
-            });
-
-            animationCount.textContent = String(index + 1).padStart(2, "0") + " / 04";
-            animationTitle.textContent = frame.title;
-            animationCopy.textContent = frame.copy;
-            pitch.setAttribute("aria-label", states[stateControl.value].pitch.aria + ". Current step: " + frame.title + ".");
-
-            room.querySelectorAll("[data-animation-step]").forEach(function (button) {
-                var active = Number(button.dataset.animationStep) === index;
-                button.classList.toggle("is-active", active);
-                if (active) {
-                    button.setAttribute("aria-current", "step");
-                } else {
-                    button.removeAttribute("aria-current");
-                }
-            });
-        }
-
-        function updateAnimationOverview() {
-            var overview = attackAnimations[stateControl.value].overview;
-            setText("[data-plan-shape]", overview[0]);
-            setText("[data-plan-create]", overview[1]);
-            setText("[data-plan-finish]", overview[2]);
-            setText("[data-plan-loss]", overview[3]);
+            animationFrameId = window.requestAnimationFrame(animationTick);
         }
 
         function startAnimation() {
-            var steps = attackAnimations[stateControl.value].steps;
-
-            if (animationTimer) {
+            if (animationFrameId) {
                 stopAnimation("Continue attack");
                 return;
             }
-
-            if (animationIndex >= steps.length - 1) {
-                applyAnimationFrame(0);
+            if (animationElapsed >= animationDuration) {
+                animationElapsed = 0;
+                renderMotion(0, true);
             }
 
+            pitch.classList.add("is-realtime");
             animationPlay.setAttribute("aria-pressed", "true");
             animationPlay.querySelector("span").textContent = "Pause";
-            animationTimer = window.setInterval(function () {
-                var nextIndex = animationIndex + 1;
-                applyAnimationFrame(nextIndex);
-                if (nextIndex >= steps.length - 1) stopAnimation("Replay attack");
-            }, 1800);
+            animationStartTime = performance.now() - animationElapsed / (Number(animationSpeed.value) || 1);
+            animationFrameId = window.requestAnimationFrame(animationTick);
+        }
+
+        function updateTacticView(view) {
+            var sequence = attackAnimations[stateControl.value];
+            activeTacticView = view;
+            pitch.dataset.view = view;
+            stopAnimation(view === "attack" && animationElapsed > 0 ? "Continue attack" : "Play attack");
+
+            room.querySelectorAll("[data-tactic-tab]").forEach(function (button) {
+                var selected = button.dataset.tacticTab === view;
+                button.setAttribute("aria-selected", String(selected));
+                button.tabIndex = selected ? 0 : -1;
+            });
+
+            animationControls.hidden = view !== "attack";
+            animationTimeline.hidden = view !== "attack";
+            room.querySelectorAll("[data-team-node]").forEach(function (node) {
+                node.classList.remove("is-involved");
+            });
+
+            if (view === "attack") {
+                setPlanStrip(["Base shape", "Create", "Finish", "On loss"], sequence.overview);
+                renderMotion(animationElapsed / animationDuration, true);
+                return;
+            }
+
+            var profile = tacticViewProfiles[stateControl.value][view];
+            setPlanStrip(profile.labels, profile.values);
+            renderMotion(profile.progress, false);
+            shapeLabel.textContent = profile.shape;
+            animationCount.textContent = view === "dimensions" ? "WIDTH & DEPTH" : view.toUpperCase() + " VIEW";
+            animationTitle.textContent = profile.title;
+            animationCopy.textContent = profile.copy;
+            targetArea.style.opacity = view === "transition" ? "0.18" : "0.05";
+            pitch.setAttribute("aria-label", states[stateControl.value].pitch.aria + ". Tactical view: " + profile.title + ".");
         }
 
         function updatePlayer() {
@@ -1214,6 +1758,8 @@
 
         function updateState() {
             var current = states[stateControl.value];
+            stopAnimation("Play attack");
+            animationElapsed = 0;
             planName.textContent = current.plan;
             planWhy.textContent = current.why;
 
@@ -1232,10 +1778,8 @@
             riskCard.classList.toggle("is-safer", current.effects.risk[0].charAt(0) === "−");
             applyScenarioPitch(current.pitch);
             selectOption(stateControl.value === "trailing" ? "transition" : "controlled");
-            updateAnimationOverview();
-            stopAnimation("Play attack");
-            applyAnimationFrame(0);
             updatePlayer();
+            updateTacticView(activeTacticView);
         }
 
         room.querySelectorAll("[data-option]").forEach(function (button) {
@@ -1249,7 +1793,7 @@
                 var label = button.querySelector("small");
                 if (!label) return;
                 var name = label.textContent.trim();
-                stopAnimation("Play attack");
+                stopAnimation(animationElapsed > 0 ? "Continue attack" : "Play attack");
                 room.querySelectorAll("[data-team-node]").forEach(function (node) {
                     node.classList.toggle("is-involved", node === button);
                 });
@@ -1263,7 +1807,7 @@
         playerControl.addEventListener("change", function () {
             updatePlayer();
             var forwardLabel = playerControl.value === "lautaro" ? "Lautaro" : "Álvarez";
-            stopAnimation("Play attack");
+            stopAnimation(animationElapsed > 0 ? "Continue attack" : "Play attack");
             animationCount.textContent = "LINEUP CHANGE";
             animationTitle.textContent = forwardLabel;
             animationCopy.textContent = playerJobs[forwardLabel];
@@ -1271,17 +1815,62 @@
 
         animationPlay.addEventListener("click", startAnimation);
 
-        room.querySelectorAll("[data-animation-step]").forEach(function (button) {
+        animationScrubber.addEventListener("input", function () {
+            stopAnimation("Continue attack");
+            animationElapsed = Number(animationScrubber.value) / 100 * animationDuration;
+            renderMotion(animationElapsed / animationDuration, true);
+        });
+
+        animationSpeed.addEventListener("change", function () {
+            if (!animationFrameId) return;
+            window.cancelAnimationFrame(animationFrameId);
+            animationStartTime = performance.now() - animationElapsed / (Number(animationSpeed.value) || 1);
+            animationFrameId = window.requestAnimationFrame(animationTick);
+        });
+
+        room.querySelectorAll("[data-tactic-tab]").forEach(function (button, index, buttons) {
             button.addEventListener("click", function () {
-                stopAnimation("Play attack");
-                applyAnimationFrame(Number(button.dataset.animationStep));
+                updateTacticView(button.dataset.tacticTab);
+            });
+            button.addEventListener("keydown", function (event) {
+                if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+                event.preventDefault();
+                var direction = event.key === "ArrowRight" ? 1 : -1;
+                var nextIndex = (index + direction + buttons.length) % buttons.length;
+                buttons[nextIndex].focus();
+                updateTacticView(buttons[nextIndex].dataset.tacticTab);
             });
         });
 
+        resizeTacticCanvas();
         updateState();
 
+        if ("ResizeObserver" in window) {
+            new ResizeObserver(function () {
+                resizeTacticCanvas();
+                if (activeTacticView === "attack") {
+                    renderMotion(animationElapsed / animationDuration, true);
+                } else {
+                    updateTacticView(activeTacticView);
+                }
+            }).observe(pitch);
+        } else {
+            window.addEventListener("resize", function () {
+                resizeTacticCanvas();
+                updateTacticView(activeTacticView);
+            });
+        }
+
+        window.addEventListener("onColorSchemeChange", function () {
+            if (activeTacticView === "attack") {
+                renderMotion(animationElapsed / animationDuration, false);
+            } else {
+                updateTacticView(activeTacticView);
+            }
+        });
+
         window.addEventListener("pagehide", function () {
-            if (animationTimer) window.clearInterval(animationTimer);
+            if (animationFrameId) window.cancelAnimationFrame(animationFrameId);
         });
     }
 

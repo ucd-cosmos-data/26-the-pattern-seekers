@@ -91,25 +91,41 @@
                     </div>
                 </div>
 
+                <div class="coach-tactic-tabs" role="tablist" aria-label="Tactical views">
+                    <button type="button" role="tab" aria-selected="true" data-tactic-tab="attack">Attack pattern</button>
+                    <button type="button" role="tab" aria-selected="false" data-tactic-tab="formation">Formation</button>
+                    <button type="button" role="tab" aria-selected="false" data-tactic-tab="dimensions">Width &amp; depth</button>
+                    <button type="button" role="tab" aria-selected="false" data-tactic-tab="press">Press</button>
+                    <button type="button" role="tab" aria-selected="false" data-tactic-tab="transition">Transitions</button>
+                </div>
+
                 <div class="coach-plan-strip" aria-label="Overall tactical plan">
-                    <div><small>Base shape</small><strong data-plan-shape>3–2 buildup</strong></div>
-                    <div><small>Create</small><strong data-plan-create>Right-side 3v2</strong></div>
-                    <div><small>Finish</small><strong data-plan-finish>Low cutback</strong></div>
-                    <div><small>On loss</small><strong data-plan-loss>Five-second press</strong></div>
+                    <div><small data-plan-label="0">Base shape</small><strong data-plan-shape>3–2 buildup</strong></div>
+                    <div><small data-plan-label="1">Create</small><strong data-plan-create>Right-side 3v2</strong></div>
+                    <div><small data-plan-label="2">Finish</small><strong data-plan-finish>Low cutback</strong></div>
+                    <div><small data-plan-label="3">On loss</small><strong data-plan-loss>Five-second press</strong></div>
                 </div>
 
                 <div class="coach-pitch-wrap">
                     <div class="coach-pitch" data-coach-pitch role="img" aria-label="Tactical pitch showing Argentina's right-side overload against France">
+                        <canvas class="coach-pitch__canvas" data-coach-canvas aria-hidden="true"></canvas>
                         <div class="coach-pitch__line coach-pitch__line--half"></div>
                         <div class="coach-pitch__circle"></div>
                         <div class="coach-pitch__box coach-pitch__box--left"></div>
                         <div class="coach-pitch__box coach-pitch__box--right"></div>
+                        <div class="coach-pitch__six coach-pitch__six--left"></div>
+                        <div class="coach-pitch__six coach-pitch__six--right"></div>
+                        <div class="coach-pitch__arc coach-pitch__arc--left"></div>
+                        <div class="coach-pitch__arc coach-pitch__arc--right"></div>
                         <div class="coach-pitch__goal coach-pitch__goal--left"></div>
                         <div class="coach-pitch__goal coach-pitch__goal--right"></div>
+                        <div class="coach-pitch__spot coach-pitch__spot--left"></div>
+                        <div class="coach-pitch__spot coach-pitch__spot--right"></div>
                         <div class="coach-pitch__target" data-target-zone>
                             <span class="sr-only">Target area</span>
                         </div>
                         <div class="coach-pitch__shape" data-shape-label>3–2 build</div>
+                        <div class="coach-pitch__direction" aria-hidden="true">Attacking <span>→</span></div>
                         <div class="coach-pitch__route coach-pitch__route--pass" data-route="one"></div>
                         <div class="coach-pitch__route coach-pitch__route--run" data-route="two"></div>
                         <div class="coach-ball" data-coach-ball style="--x: 10%; --y: 50%" aria-hidden="true"></div>
@@ -134,12 +150,15 @@
                         <span class="coach-player is-opponent" data-opponent-node="rm" style="--x: 57%; --y: 25%"><b>8</b></span>
                         <span class="coach-player is-opponent" data-opponent-node="cm" style="--x: 57%; --y: 52%"><b>14</b></span>
                         <span class="coach-player is-opponent" data-opponent-node="lm" style="--x: 53%; --y: 78%"><b>7</b></span>
+                        <span class="coach-player is-opponent" data-opponent-node="rw" style="--x: 42%; --y: 18%"><b>11</b></span>
+                        <span class="coach-player is-opponent" data-opponent-node="st" style="--x: 39%; --y: 50%"><b>10</b></span>
+                        <span class="coach-player is-opponent" data-opponent-node="lw" style="--x: 42%; --y: 82%"><b>12</b></span>
                     </div>
                 </div>
 
                 <div class="coach-animation">
                     <div class="coach-animation__caption" aria-live="polite">
-                        <span data-animation-count>01 / 04</span>
+                        <span data-animation-count>LIVE PATTERN</span>
                         <div>
                             <h3 data-animation-title>Set the structure</h3>
                             <p data-animation-copy>Build with three behind the ball and two central outlets. Keep both wings available.</p>
@@ -150,14 +169,21 @@
                             <i aria-hidden="true"></i>
                             <span>Play attack</span>
                         </button>
-                        <div class="coach-animation__steps" aria-label="Attack steps">
-                            <button type="button" class="is-active" data-animation-step="0" aria-label="Show step 1" aria-current="step"><span>1</span></button>
-                            <button type="button" data-animation-step="1" aria-label="Show step 2"><span>2</span></button>
-                            <button type="button" data-animation-step="2" aria-label="Show step 3"><span>3</span></button>
-                            <button type="button" data-animation-step="3" aria-label="Show step 4"><span>4</span></button>
-                        </div>
+                        <label class="coach-animation__speed">
+                            <span>Speed</span>
+                            <select data-animation-speed aria-label="Animation speed">
+                                <option value="0.75">0.75×</option>
+                                <option value="1" selected>1×</option>
+                                <option value="1.25">1.25×</option>
+                            </select>
+                        </label>
                     </div>
                 </div>
+                <label class="coach-timeline">
+                    <span class="sr-only">Attack timeline</span>
+                    <input type="range" min="0" max="100" step="0.1" value="0" data-animation-scrubber aria-label="Review the attack timeline">
+                    <small><span data-animation-time>00:00</span><span>00:12</span></small>
+                </label>
             </section>
 
             <aside class="coach-panel coach-instructions" aria-labelledby="coach-instructions-title" data-reveal>
@@ -322,26 +348,25 @@
             </div>
         </section>
 
-        <details class="coach-evidence" data-reveal>
-            <summary>
-                <span class="coach-evidence__summary-copy">
-                    <b>For analysts</b>
-                    <small>Model evidence, uncertainty, and validation</small>
-                </span>
-                <i aria-hidden="true"></i>
-            </summary>
+        <section class="coach-evidence" aria-labelledby="coach-evidence-title" data-reveal>
+            <div class="coach-evidence__top">
+                <div>
+                    <p class="coach-kicker">Analyst validation</p>
+                    <h2 id="coach-evidence-title">Evidence behind the recommendation</h2>
+                </div>
+                <span><i></i> Prototype evidence</span>
+            </div>
             <div class="coach-evidence__content">
                 <div class="coach-evidence__intro">
                     <div>
                         <p class="coach-kicker">How to read this</p>
-                        <h3>Evidence behind the recommendation</h3>
+                        <h3>Confidence is not certainty</h3>
                         <p>
                             Candidate strategies are compared on held-out matches. The production
                             version will report only out-of-sample results and will separate model
                             confidence from tactical upside.
                         </p>
                     </div>
-                    <span><i></i> Prototype evidence</span>
                 </div>
                 <dl class="coach-evidence__metrics">
                     <div>
@@ -370,7 +395,7 @@
                     finalized validation outputs.
                 </p>
             </div>
-        </details>
+        </section>
     </div>
 </article>
 {{- end }}
