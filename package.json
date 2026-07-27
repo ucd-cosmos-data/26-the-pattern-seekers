@@ -5,7 +5,8 @@
     "build": "npm run build:css && hugo build",
     "build:css": "tailwindcss -i ./assets/css/tailwind.css -o ./static/css/tailwind.css --minify",
     "dev": "npm run build:css && hugo server --disableFastRender",
-    "dev:css": "tailwindcss -i ./assets/css/tailwind.css -o ./static/css/tailwind.css --watch"
+    "dev:css": "tailwindcss -i ./assets/css/tailwind.css -o ./static/css/tailwind.css --watch",
+    "test": "node --test tests/*.test.js"
   },
   "devDependencies": {
     "@tailwindcss/cli": "^4.1.0",

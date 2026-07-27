@@ -84,90 +84,93 @@
                         <p class="coach-kicker">Animated game plan</p>
                         <h2 id="coach-tactics-title">See the attack unfold</h2>
                     </div>
-                    <div class="coach-pitch-legend" aria-label="Pitch legend">
-                        <span><i class="is-team"></i> Argentina</span>
-                        <span><i class="is-opponent"></i> France</span>
-                        <span><i class="is-ball"></i> Ball</span>
+                    <div class="coach-pitch-legend" aria-label="Pitch legend and direction of play">
+                        <span><i class="coach-marker is-team"><b>10</b></i> Argentina</span>
+                        <span><i class="coach-marker is-opponent"><b>10</b></i> France</span>
+                        <span><i class="coach-marker is-ball"></i> Ball</span>
+                        <span class="coach-pitch-legend__direction">Argentina attacking <b>→</b></span>
                     </div>
                 </div>
 
                 <div class="coach-tactic-tabs" role="tablist" aria-label="Tactical views">
-                    <button type="button" role="tab" aria-selected="true" data-tactic-tab="attack">Attack pattern</button>
-                    <button type="button" role="tab" aria-selected="false" data-tactic-tab="formation">Formation</button>
-                    <button type="button" role="tab" aria-selected="false" data-tactic-tab="dimensions">Width &amp; depth</button>
-                    <button type="button" role="tab" aria-selected="false" data-tactic-tab="press">Press</button>
-                    <button type="button" role="tab" aria-selected="false" data-tactic-tab="transition">Transitions</button>
+                    <button id="coach-tab-attack" type="button" role="tab" aria-controls="coach-tactical-stage" aria-selected="true" data-tactic-tab="attack">Attack pattern</button>
+                    <button id="coach-tab-formation" type="button" role="tab" aria-controls="coach-tactical-stage" aria-selected="false" data-tactic-tab="formation">Formation</button>
+                    <button id="coach-tab-dimensions" type="button" role="tab" aria-controls="coach-tactical-stage" aria-selected="false" data-tactic-tab="dimensions">Width &amp; depth</button>
+                    <button id="coach-tab-press" type="button" role="tab" aria-controls="coach-tactical-stage" aria-selected="false" data-tactic-tab="press">Press</button>
+                    <button id="coach-tab-transition" type="button" role="tab" aria-controls="coach-tactical-stage" aria-selected="false" data-tactic-tab="transition">Transitions</button>
                 </div>
 
-                <div class="coach-plan-strip" aria-label="Overall tactical plan">
-                    <div><small data-plan-label="0">Base shape</small><strong data-plan-shape>3–2 buildup</strong></div>
-                    <div><small data-plan-label="1">Create</small><strong data-plan-create>Right-side 3v2</strong></div>
-                    <div><small data-plan-label="2">Finish</small><strong data-plan-finish>Low cutback</strong></div>
-                    <div><small data-plan-label="3">On loss</small><strong data-plan-loss>Five-second press</strong></div>
+                <div class="coach-substate-tabs" data-tactic-substates aria-label="Attack phases"></div>
+
+                <div class="coach-plan-strip" data-plan-strip aria-label="Current tactical facts">
+                    <div><small><span data-plan-label="0">Base shape</span><button type="button" data-plan-info="0" aria-label="Explain base shape" hidden>?</button></small><strong data-plan-shape>3–2 buildup</strong></div>
+                    <div><small><span data-plan-label="1">Create</span><button type="button" data-plan-info="1" aria-label="Explain creation metric" hidden>?</button></small><strong data-plan-create>Right-side 3v2</strong></div>
+                    <div><small><span data-plan-label="2">Finish</span><button type="button" data-plan-info="2" aria-label="Explain finishing metric" hidden>?</button></small><strong data-plan-finish>Low cutback</strong></div>
+                    <div><small><span data-plan-label="3">On loss</span><button type="button" data-plan-info="3" aria-label="Explain transition metric" hidden>?</button></small><strong data-plan-loss>Five-second press</strong></div>
                 </div>
+                <p class="coach-metric-definition" data-metric-definition aria-live="polite" hidden></p>
 
                 <div class="coach-pitch-wrap">
-                    <div class="coach-pitch" data-coach-pitch role="img" aria-label="Tactical pitch showing Argentina's right-side overload against France">
-                        <canvas class="coach-pitch__canvas" data-coach-canvas aria-hidden="true"></canvas>
-                        <div class="coach-pitch__line coach-pitch__line--half"></div>
-                        <div class="coach-pitch__circle"></div>
-                        <div class="coach-pitch__box coach-pitch__box--left"></div>
-                        <div class="coach-pitch__box coach-pitch__box--right"></div>
-                        <div class="coach-pitch__six coach-pitch__six--left"></div>
-                        <div class="coach-pitch__six coach-pitch__six--right"></div>
-                        <div class="coach-pitch__arc coach-pitch__arc--left"></div>
-                        <div class="coach-pitch__arc coach-pitch__arc--right"></div>
-                        <div class="coach-pitch__goal coach-pitch__goal--left"></div>
-                        <div class="coach-pitch__goal coach-pitch__goal--right"></div>
-                        <div class="coach-pitch__spot coach-pitch__spot--left"></div>
-                        <div class="coach-pitch__spot coach-pitch__spot--right"></div>
-                        <div class="coach-pitch__target" data-target-zone>
-                            <span class="sr-only">Target area</span>
+                    <div id="coach-tactical-stage" class="coach-pitch" data-coach-pitch role="tabpanel" aria-labelledby="coach-tab-attack" aria-label="Argentina tactical pitch. Argentina attacks from left to right; Argentina's right side is the lower half.">
+                        <svg class="coach-pitch__svg" data-tactical-svg viewBox="0 0 105 68" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="coach-pitch-title coach-pitch-description">
+                            <title id="coach-pitch-title">Argentina tactical plan against France</title>
+                            <desc id="coach-pitch-description" data-pitch-description>Argentina builds from left to right into a right-side overload.</desc>
+                            <defs>
+                                <marker id="coach-arrow-blue" markerWidth="5" markerHeight="5" refX="4.2" refY="2.5" orient="auto-start-reverse" markerUnits="strokeWidth"><path d="M0,0 L5,2.5 L0,5 Z"></path></marker>
+                                <marker id="coach-arrow-red" markerWidth="5" markerHeight="5" refX="4.2" refY="2.5" orient="auto-start-reverse" markerUnits="strokeWidth"><path d="M0,0 L5,2.5 L0,5 Z"></path></marker>
+                                <marker id="coach-arrow-green" markerWidth="5" markerHeight="5" refX="4.2" refY="2.5" orient="auto-start-reverse" markerUnits="strokeWidth"><path d="M0,0 L5,2.5 L0,5 Z"></path></marker>
+                            </defs>
+                            <g class="coach-field-lines" aria-hidden="true">
+                                <rect x="0.4" y="0.4" width="104.2" height="67.2" rx="1"></rect>
+                                <path d="M52.5 0.4V67.6"></path>
+                                <circle cx="52.5" cy="34" r="9.15"></circle>
+                                <circle cx="52.5" cy="34" r="0.45" class="is-filled"></circle>
+                                <path d="M0.4 13.84H16.5V54.16H0.4M104.6 13.84H88.5V54.16H104.6"></path>
+                                <path d="M0.4 24.84H5.5V43.16H0.4M104.6 24.84H99.5V43.16H104.6"></path>
+                                <circle cx="11" cy="34" r="0.35" class="is-filled"></circle>
+                                <circle cx="94" cy="34" r="0.35" class="is-filled"></circle>
+                                <path d="M16.5 27.2A9.15 9.15 0 0 1 16.5 40.8M88.5 27.2A9.15 9.15 0 0 0 88.5 40.8"></path>
+                            </g>
+                            <g data-svg-zones></g>
+                            <g data-svg-completed-actions></g>
+                            <g data-svg-current-actions></g>
+                            <g data-svg-annotations></g>
+                        </svg>
+                        <span class="coach-pitch__edge coach-pitch__edge--left">ARG LEFT</span>
+                        <span class="coach-pitch__edge coach-pitch__edge--right">ARG RIGHT</span>
+                        <span class="coach-pitch__phase" data-pitch-phase>IN POSSESSION</span>
+                        <span class="coach-pitch__direction">ARGENTINA ATTACKING <b>→</b></span>
+                        <div class="coach-notation-key" data-notation-key aria-label="Tactical notation">
+                            <span><i class="is-pass"></i> Pass</span>
+                            <span><i class="is-run"></i> Run</span>
+                            <span><i class="is-press"></i> Press</span>
                         </div>
-                        <div class="coach-pitch__shape" data-shape-label>3–2 build</div>
-                        <div class="coach-pitch__direction" aria-hidden="true">Attacking <span>→</span></div>
-                        <div class="coach-pitch__route coach-pitch__route--pass" data-route="one"></div>
-                        <div class="coach-pitch__route coach-pitch__route--run" data-route="two"></div>
-                        <div class="coach-ball" data-coach-ball style="--x: 10%; --y: 50%" aria-hidden="true"></div>
-
-                        <button class="coach-player is-team" data-team-node="gk" style="--x: 10%; --y: 50%" type="button" aria-label="Emiliano Martínez, goalkeeper"><span>23</span><small>Martínez</small></button>
-                        <button class="coach-player is-team" data-team-node="molina" style="--x: 28%; --y: 20%" type="button" aria-label="Nahuel Molina, right back"><span>26</span><small>Molina</small></button>
-                        <button class="coach-player is-team" data-team-node="romero" style="--x: 28%; --y: 41%" type="button" aria-label="Cristian Romero, center back"><span>13</span><small>Romero</small></button>
-                        <button class="coach-player is-team" data-team-node="otamendi" style="--x: 28%; --y: 61%" type="button" aria-label="Nicolás Otamendi, center back"><span>19</span><small>Otamendi</small></button>
-                        <button class="coach-player is-team" data-team-node="tagliafico" style="--x: 31%; --y: 82%" type="button" aria-label="Nicolás Tagliafico, left back"><span>3</span><small>Tagliafico</small></button>
-                        <button class="coach-player is-team" data-team-node="enzo" style="--x: 47%; --y: 62%" type="button" aria-label="Enzo Fernández, midfielder"><span>24</span><small>Enzo</small></button>
-                        <button class="coach-player is-team" data-team-node="depaul" style="--x: 53%; --y: 34%" type="button" aria-label="Rodrigo De Paul, midfielder"><span>7</span><small>De Paul</small></button>
-                        <button class="coach-player is-team" data-team-node="macallister" style="--x: 58%; --y: 77%" type="button" aria-label="Alexis Mac Allister, midfielder"><span>20</span><small>Mac Allister</small></button>
-                        <button class="coach-player is-team is-gravity" data-team-node="messi" style="--x: 70%; --y: 38%" type="button" aria-label="Lionel Messi, free creator, high gravity"><span>10</span><small>Messi</small></button>
-                        <button class="coach-player is-team" data-team-node="dimaria" style="--x: 76%; --y: 15%" type="button" aria-label="Ángel Di María, wide creator"><span>11</span><small>Di María</small></button>
-                        <button class="coach-player is-team is-focus" data-team-node="forward" data-forward-node style="--x: 83%; --y: 57%" type="button" aria-label="Julián Álvarez, depth runner"><span data-forward-number>9</span><small data-forward-name>Álvarez</small></button>
-
-                        <span class="coach-player is-opponent" data-opponent-node="gk" style="--x: 89%; --y: 50%"><b>1</b></span>
-                        <span class="coach-player is-opponent" data-opponent-node="rb" style="--x: 72%; --y: 17%"><b>22</b></span>
-                        <span class="coach-player is-opponent" data-opponent-node="rcb" style="--x: 74%; --y: 44%"><b>4</b></span>
-                        <span class="coach-player is-opponent" data-opponent-node="lcb" style="--x: 71%; --y: 65%"><b>18</b></span>
-                        <span class="coach-player is-opponent" data-opponent-node="lb" style="--x: 67%; --y: 84%"><b>5</b></span>
-                        <span class="coach-player is-opponent" data-opponent-node="rm" style="--x: 57%; --y: 25%"><b>8</b></span>
-                        <span class="coach-player is-opponent" data-opponent-node="cm" style="--x: 57%; --y: 52%"><b>14</b></span>
-                        <span class="coach-player is-opponent" data-opponent-node="lm" style="--x: 53%; --y: 78%"><b>7</b></span>
-                        <span class="coach-player is-opponent" data-opponent-node="rw" style="--x: 42%; --y: 18%"><b>11</b></span>
-                        <span class="coach-player is-opponent" data-opponent-node="st" style="--x: 39%; --y: 50%"><b>10</b></span>
-                        <span class="coach-player is-opponent" data-opponent-node="lw" style="--x: 42%; --y: 82%"><b>12</b></span>
+                        <div class="coach-pitch__players" data-pitch-players></div>
+                        <span class="coach-marker is-ball coach-pitch__ball" data-coach-ball aria-hidden="true"></span>
+                        <div id="coach-player-tooltip" class="coach-tactical-tooltip" data-tactical-tooltip role="tooltip" hidden></div>
                     </div>
                 </div>
 
                 <div class="coach-animation">
                     <div class="coach-animation__caption" aria-live="polite">
-                        <span data-animation-count>LIVE PATTERN</span>
+                        <span data-animation-count>PHASE 01 / 07</span>
                         <div>
                             <h3 data-animation-title>Set the structure</h3>
                             <p data-animation-copy>Build with three behind the ball and two central outlets. Keep both wings available.</p>
                         </div>
                     </div>
                     <div class="coach-animation__controls">
+                        <button type="button" class="coach-animation__step" data-animation-previous aria-label="Previous tactical step">
+                            <span aria-hidden="true">←</span>
+                            <small>Previous</small>
+                        </button>
                         <button type="button" class="coach-animation__play" data-animation-play aria-pressed="false">
                             <i aria-hidden="true"></i>
-                            <span>Play attack</span>
+                            <span>Play sequence</span>
+                        </button>
+                        <button type="button" class="coach-animation__step" data-animation-next aria-label="Next tactical step">
+                            <small>Next</small>
+                            <span aria-hidden="true">→</span>
                         </button>
                         <label class="coach-animation__speed">
                             <span>Speed</span>
@@ -180,9 +183,9 @@
                     </div>
                 </div>
                 <label class="coach-timeline">
-                    <span class="sr-only">Attack timeline</span>
+                    <span class="sr-only">Tactical sequence timeline</span>
                     <input type="range" min="0" max="100" step="0.1" value="0" data-animation-scrubber aria-label="Review the attack timeline">
-                    <small><span data-animation-time>00:00</span><span>00:12</span></small>
+                    <small><span data-animation-time>00:00</span><span data-animation-duration>00:14</span></small>
                 </label>
             </section>
 

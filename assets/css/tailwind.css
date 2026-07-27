@@ -2309,6 +2309,12 @@
         display: none !important;
     }
 
+    .coach-animation__play[hidden],
+    .coach-animation__speed[hidden],
+    .coach-animation__step[hidden] {
+        display: none !important;
+    }
+
     .coach-animation__speed {
         display: inline-flex;
         align-items: center;
@@ -3416,6 +3422,673 @@
         transform: translate(-50%, -50%) rotate(-45deg);
     }
 
+    /* Tactical visual grammar and correctness layer */
+    .coach-tactics {
+        scroll-margin-top: 8rem;
+    }
+
+    .coach-pitch-legend {
+        align-items: center;
+        gap: 0.9rem 1.4rem;
+    }
+
+    .coach-pitch-legend span {
+        color: var(--ps-muted);
+        font-weight: 600;
+    }
+
+    .coach-marker {
+        --marker-size: clamp(2.6rem, 2.7vw, 3.2rem);
+        display: grid;
+        width: var(--marker-size);
+        aspect-ratio: 1;
+        place-items: center;
+        border-radius: 50%;
+        box-sizing: border-box;
+        box-shadow: 0 0.3rem 0.9rem rgba(0, 0, 0, 0.16);
+        font-style: normal;
+    }
+
+    .coach-marker b {
+        color: inherit;
+        font-size: clamp(0.72rem, 0.8vw, 0.9rem);
+        font-weight: 700;
+        line-height: 1;
+    }
+
+    .coach-marker.is-team {
+        border: 0.24rem solid color-mix(in srgb, #75b9ef 54%, var(--ps-surface));
+        background: linear-gradient(90deg, #eef8ff 0 31%, #75b9ef 31% 66%, #eef8ff 66%);
+        color: #132a42;
+        text-shadow: 0 0.1rem rgba(255, 255, 255, 0.8);
+    }
+
+    .coach-marker.is-opponent {
+        border: 0.2rem solid rgba(255, 255, 255, 0.78);
+        background: linear-gradient(135deg, #263f7c, #111c41);
+        color: #ffffff;
+    }
+
+    .coach-marker.is-ball {
+        --marker-size: clamp(1.35rem, 1.55vw, 1.7rem);
+        border: 0.28rem solid var(--ps-text);
+        background: var(--ps-surface);
+        box-shadow:
+            0 0 0 0.4rem color-mix(in srgb, var(--ps-surface) 60%, transparent),
+            0 0.35rem 0.9rem rgba(0, 0, 0, 0.22);
+    }
+
+    .coach-pitch-legend .coach-marker {
+        --marker-size: 2rem;
+        flex: 0 0 2rem;
+    }
+
+    .coach-pitch-legend .coach-marker.is-ball {
+        --marker-size: 1.55rem;
+        flex-basis: 1.55rem;
+    }
+
+    .coach-pitch-legend__direction {
+        padding-left: 1.2rem;
+        border-left: 0.1rem solid color-mix(in srgb, var(--ps-text) 12%, transparent);
+        color: var(--ps-text) !important;
+    }
+
+    .coach-pitch-legend__direction b {
+        color: var(--ps-accent);
+        font-size: 1.3rem;
+        font-weight: 700;
+    }
+
+    .coach-substate-tabs {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.6rem;
+        margin-top: 1.4rem;
+    }
+
+    .coach-substate-tabs[hidden] {
+        display: none;
+    }
+
+    .coach-substate-tabs button {
+        min-height: 3.6rem;
+        padding: 0 1.15rem;
+        border: 0.1rem solid color-mix(in srgb, var(--ps-text) 9%, transparent);
+        border-radius: 999px;
+        background: transparent;
+        color: var(--ps-muted);
+        cursor: pointer;
+        font-size: 0.95rem;
+        font-weight: 600;
+    }
+
+    .coach-substate-tabs button:hover,
+    .coach-substate-tabs button:focus-visible {
+        border-color: var(--ps-text);
+        color: var(--ps-text);
+    }
+
+    .coach-substate-tabs button.is-selected {
+        border-color: var(--ps-accent);
+        background: color-mix(in srgb, var(--ps-accent) 10%, transparent);
+        color: var(--ps-text);
+    }
+
+    .coach-plan-strip > div {
+        position: relative;
+        transition:
+            background 180ms ease,
+            box-shadow 180ms ease;
+    }
+
+    .coach-plan-strip > div.is-active {
+        background: color-mix(in srgb, var(--ps-accent) 7%, transparent);
+        box-shadow: inset 0 0.2rem var(--ps-accent);
+    }
+
+    .coach-plan-strip small {
+        display: flex;
+        align-items: center;
+        gap: 0.5rem;
+    }
+
+    .coach-plan-strip small button {
+        display: grid;
+        width: 1.7rem;
+        height: 1.7rem;
+        place-items: center;
+        padding: 0;
+        border: 0.1rem solid color-mix(in srgb, var(--ps-text) 22%, transparent);
+        border-radius: 50%;
+        background: transparent;
+        color: var(--ps-muted);
+        cursor: help;
+        font-size: 0.85rem;
+        font-weight: 700;
+        line-height: 1;
+    }
+
+    .coach-metric-definition {
+        min-height: 2.2rem;
+        margin: 1rem 0 -1rem;
+        color: var(--ps-muted);
+        font-size: 1rem;
+        line-height: 1.45;
+    }
+
+    .coach-metric-definition[hidden] {
+        display: none;
+    }
+
+    .coach-pitch {
+        isolation: isolate;
+        aspect-ratio: 105 / 68;
+        overflow: hidden;
+        border: 0.1rem solid var(--coach-line);
+        background:
+            repeating-linear-gradient(90deg, transparent 0 10%, color-mix(in srgb, var(--ps-text) 2.5%, transparent) 10% 20%),
+            var(--coach-pitch);
+    }
+
+    .coach-pitch__svg {
+        position: absolute;
+        z-index: 1;
+        inset: 0;
+        display: block;
+        width: 100%;
+        height: 100%;
+        overflow: visible;
+    }
+
+    .coach-field-lines {
+        fill: none;
+        stroke: var(--coach-line);
+        stroke-width: 0.24;
+        vector-effect: non-scaling-stroke;
+    }
+
+    .coach-field-lines .is-filled {
+        fill: var(--coach-line);
+        stroke: none;
+    }
+
+    #coach-arrow-blue path {
+        fill: var(--ps-accent);
+    }
+
+    #coach-arrow-red path {
+        fill: var(--ps-danger);
+    }
+
+    #coach-arrow-green path {
+        fill: var(--ps-positive);
+    }
+
+    .coach-action {
+        fill: none;
+        stroke-linecap: round;
+        stroke-linejoin: round;
+    }
+
+    .coach-action.is-pass {
+        stroke: var(--ps-accent);
+        stroke-width: 2.4;
+    }
+
+    .coach-action.is-carry {
+        stroke: var(--ps-accent);
+        stroke-width: 3.2;
+        filter: drop-shadow(0 0 0.18rem color-mix(in srgb, var(--ps-accent) 34%, transparent));
+    }
+
+    .coach-action.is-run {
+        stroke: color-mix(in srgb, var(--ps-accent) 88%, var(--ps-text));
+        stroke-width: 2.1;
+        stroke-dasharray: 6 4;
+    }
+
+    .coach-action.is-decoy {
+        stroke: color-mix(in srgb, var(--ps-accent) 55%, var(--ps-text));
+        stroke-width: 1.8;
+        stroke-dasharray: 3 5;
+    }
+
+    .coach-action.is-press,
+    .coach-action.is-recovery {
+        stroke: var(--ps-danger);
+        stroke-width: 2.3;
+        stroke-dasharray: 6 3;
+    }
+
+    .coach-action.is-completed {
+        opacity: 0.24;
+        stroke-width: 1.5;
+    }
+
+    .coach-action-label,
+    .coach-zone-label,
+    .coach-annotation {
+        paint-order: stroke;
+        stroke: color-mix(in srgb, var(--coach-pitch) 90%, var(--ps-surface));
+        stroke-width: 0.65;
+        stroke-linejoin: round;
+        font-family: var(--ps-body);
+        font-size: 1.45px;
+        font-weight: 700;
+        letter-spacing: 0.035em;
+    }
+
+    .coach-action-label.is-pass,
+    .coach-action-label.is-carry,
+    .coach-action-label.is-run,
+    .coach-action-label.is-decoy {
+        fill: var(--ps-accent);
+    }
+
+    .coach-action-label.is-press,
+    .coach-action-label.is-recovery,
+    .coach-annotation.is-press {
+        fill: var(--ps-danger);
+    }
+
+    .coach-zone {
+        stroke-width: 0.22;
+        vector-effect: non-scaling-stroke;
+    }
+
+    .coach-zone.is-neutral {
+        fill: color-mix(in srgb, var(--ps-text) 5%, transparent);
+        stroke: color-mix(in srgb, var(--ps-text) 22%, transparent);
+    }
+
+    .coach-zone.is-lane {
+        fill: color-mix(in srgb, var(--ps-accent) 4%, transparent);
+        stroke: color-mix(in srgb, var(--ps-accent) 24%, transparent);
+    }
+
+    .coach-zone.is-press {
+        fill: color-mix(in srgb, var(--ps-danger) 10%, transparent);
+        stroke: var(--ps-danger);
+        stroke-dasharray: 4 3;
+    }
+
+    .coach-zone.is-protect {
+        fill: color-mix(in srgb, var(--ps-positive) 11%, transparent);
+        stroke: var(--ps-positive);
+    }
+
+    .coach-zone.is-trigger {
+        animation: coach-trigger-pulse 800ms ease-in-out infinite alternate;
+    }
+
+    .coach-zone-label {
+        fill: var(--ps-muted);
+    }
+
+    .coach-zone-label.is-press {
+        fill: var(--ps-danger);
+    }
+
+    .coach-zone-label.is-protect {
+        fill: var(--ps-positive);
+    }
+
+    .coach-zone-label.is-dimension {
+        fill: var(--ps-text);
+        font-size: 1.55px;
+    }
+
+    .coach-measurement {
+        fill: none;
+        stroke-width: 1.8;
+    }
+
+    .coach-measurement.is-dimension {
+        stroke: var(--ps-accent);
+    }
+
+    .coach-measurement.is-press {
+        stroke: var(--ps-danger);
+        stroke-dasharray: 4 3;
+    }
+
+    .coach-annotation {
+        fill: var(--ps-text);
+        font-size: 1.55px;
+    }
+
+    .coach-pitch__players {
+        position: absolute;
+        z-index: 4;
+        inset: 0;
+        pointer-events: none;
+    }
+
+    .coach-player {
+        position: absolute;
+        top: var(--y);
+        left: var(--x);
+        display: grid;
+        width: auto;
+        height: auto;
+        aspect-ratio: auto;
+        place-items: center;
+        padding: 0;
+        border: 0;
+        background: transparent;
+        box-shadow: none;
+        color: var(--ps-text);
+        cursor: pointer;
+        transform: translate(-50%, -50%);
+        transition:
+            top 520ms var(--ps-ease),
+            left 520ms var(--ps-ease);
+        pointer-events: auto;
+    }
+
+    .coach-player.is-team,
+    .coach-player.is-opponent {
+        width: auto;
+        aspect-ratio: auto;
+        border: 0;
+        background: transparent;
+        box-shadow: none;
+        color: var(--ps-text);
+    }
+
+    .coach-player > small,
+    .coach-player.is-team > small {
+        position: absolute;
+        top: calc(100% + 0.3rem);
+        left: 50%;
+        display: block;
+        padding: 0.18rem 0.4rem;
+        border-radius: 0.35rem;
+        background: color-mix(in srgb, var(--ps-surface) 92%, transparent);
+        color: var(--ps-text);
+        font-size: clamp(0.68rem, 0.72vw, 0.82rem);
+        font-weight: 650;
+        line-height: 1.2;
+        white-space: nowrap;
+        opacity: 1;
+        transform: translateX(-50%);
+        pointer-events: none;
+    }
+
+    .coach-player.is-opponent > small {
+        opacity: 0;
+    }
+
+    .coach-player.is-opponent:hover > small,
+    .coach-player.is-opponent:focus-visible > small {
+        opacity: 1;
+    }
+
+    .coach-player.is-team:hover > .coach-marker,
+    .coach-player.is-team:focus-visible > .coach-marker {
+        background: linear-gradient(90deg, #eef8ff 0 31%, #75b9ef 31% 66%, #eef8ff 66%);
+        color: #132a42;
+        box-shadow:
+            0 0 0 0.28rem var(--ps-text),
+            0 0.35rem 1rem rgba(0, 0, 0, 0.18);
+    }
+
+    .coach-player.is-active .coach-marker {
+        box-shadow:
+            0 0 0 0.28rem var(--ps-text),
+            0 0.35rem 1rem rgba(0, 0, 0, 0.18);
+        transform: scale(1.06);
+    }
+
+    .coach-player.is-pressing .coach-marker {
+        box-shadow:
+            0 0 0 0.32rem var(--ps-danger),
+            0 0 0 0.65rem color-mix(in srgb, var(--ps-danger) 16%, transparent);
+    }
+
+    .coach-player.is-protecting .coach-marker {
+        box-shadow:
+            0 0 0 0.32rem var(--ps-positive),
+            0 0 0 0.65rem color-mix(in srgb, var(--ps-positive) 14%, transparent);
+    }
+
+    .coach-player[data-badge]::after {
+        content: attr(data-badge);
+        position: absolute;
+        top: -0.85rem;
+        right: -1rem;
+        display: grid;
+        min-width: 1.7rem;
+        height: 1.7rem;
+        place-items: center;
+        padding: 0 0.2rem;
+        border: 0.16rem solid var(--ps-surface);
+        border-radius: 999px;
+        background: var(--ps-positive);
+        color: #ffffff;
+        font-size: 0.67rem;
+        font-weight: 750;
+        line-height: 1;
+    }
+
+    .coach-player.is-pressing[data-badge]::after {
+        background: var(--ps-danger);
+    }
+
+    .coach-pitch.is-fluid .coach-player,
+    .coach-pitch.is-fluid .coach-pitch__ball {
+        transition: none;
+    }
+
+    .coach-pitch__ball {
+        position: absolute;
+        z-index: 7;
+        top: var(--y);
+        left: var(--x);
+        transform: translate(-50%, -50%);
+        transition:
+            top 160ms linear,
+            left 160ms linear;
+        pointer-events: none;
+    }
+
+    .coach-pitch__phase {
+        position: absolute;
+        z-index: 8;
+        top: 1.1rem;
+        left: 1.1rem;
+        padding: 0.55rem 0.8rem;
+        border-radius: 0.7rem;
+        background: var(--ps-text);
+        color: var(--ps-bg);
+        font-size: 0.85rem;
+        font-weight: 700;
+        letter-spacing: 0.055em;
+    }
+
+    .coach-pitch__direction {
+        z-index: 8;
+        right: 1.1rem;
+        bottom: 1rem;
+        padding: 0.45rem 0.65rem;
+        border-radius: 0.6rem;
+        background: color-mix(in srgb, var(--ps-surface) 88%, transparent);
+        color: var(--ps-text);
+        font-size: 0.78rem;
+        font-weight: 700;
+    }
+
+    .coach-pitch__direction b {
+        color: var(--ps-accent);
+        font-size: 1.1rem;
+    }
+
+    .coach-pitch__edge {
+        position: absolute;
+        z-index: 3;
+        left: 50%;
+        color: color-mix(in srgb, var(--ps-text) 48%, transparent);
+        font-size: 0.7rem;
+        font-weight: 700;
+        letter-spacing: 0.08em;
+        transform: translateX(-50%);
+    }
+
+    .coach-pitch__edge--left {
+        top: 0.45rem;
+    }
+
+    .coach-pitch__edge--right {
+        bottom: 0.4rem;
+    }
+
+    .coach-notation-key {
+        position: absolute;
+        z-index: 8;
+        top: 1.1rem;
+        right: 1.1rem;
+        display: flex;
+        gap: 0.9rem;
+        padding: 0.55rem 0.75rem;
+        border-radius: 0.7rem;
+        background: color-mix(in srgb, var(--ps-surface) 91%, transparent);
+        color: var(--ps-muted);
+        font-size: 0.74rem;
+        font-weight: 650;
+    }
+
+    .coach-notation-key[hidden] {
+        display: none;
+    }
+
+    .coach-notation-key span {
+        display: inline-flex;
+        align-items: center;
+        gap: 0.4rem;
+    }
+
+    .coach-notation-key i {
+        position: relative;
+        width: 1.7rem;
+        height: 0.15rem;
+        background: var(--ps-accent);
+    }
+
+    .coach-notation-key i::after {
+        content: "";
+        position: absolute;
+        top: 50%;
+        right: -0.05rem;
+        width: 0.45rem;
+        height: 0.45rem;
+        border-top: 0.14rem solid currentColor;
+        border-right: 0.14rem solid currentColor;
+        transform: translateY(-50%) rotate(45deg);
+    }
+
+    .coach-notation-key i.is-run {
+        background: repeating-linear-gradient(90deg, var(--ps-accent) 0 0.4rem, transparent 0.4rem 0.7rem);
+        color: var(--ps-accent);
+    }
+
+    .coach-notation-key i.is-press {
+        background: repeating-linear-gradient(90deg, var(--ps-danger) 0 0.4rem, transparent 0.4rem 0.7rem);
+        color: var(--ps-danger);
+    }
+
+    .coach-tactical-tooltip {
+        position: absolute;
+        z-index: 12;
+        top: var(--tooltip-y);
+        left: var(--tooltip-x);
+        display: grid;
+        width: min(24rem, 42%);
+        gap: 0.2rem;
+        padding: 1rem 1.1rem;
+        border: 0.1rem solid color-mix(in srgb, var(--ps-text) 10%, transparent);
+        border-radius: 1rem;
+        background: var(--ps-surface);
+        box-shadow: var(--ps-shadow-soft);
+        color: var(--ps-text);
+        transform: translate(-50%, 2.6rem);
+        pointer-events: none;
+    }
+
+    .coach-tactical-tooltip.is-above {
+        transform: translate(-50%, calc(-100% - 2.6rem));
+    }
+
+    .coach-tactical-tooltip[hidden] {
+        display: none;
+    }
+
+    .coach-tactical-tooltip strong {
+        font-size: 1rem;
+        line-height: 1.25;
+    }
+
+    .coach-tactical-tooltip span {
+        color: var(--ps-accent);
+        font-size: 0.86rem;
+        font-weight: 650;
+    }
+
+    .coach-tactical-tooltip small {
+        color: var(--ps-muted);
+        font-size: 0.82rem;
+        line-height: 1.35;
+    }
+
+    .coach-animation__controls {
+        flex-wrap: wrap;
+        justify-content: flex-end;
+    }
+
+    .coach-animation__step {
+        display: inline-flex;
+        min-height: 4.4rem;
+        align-items: center;
+        gap: 0.55rem;
+        padding: 0 1.15rem;
+        border: 0.1rem solid color-mix(in srgb, var(--ps-text) 10%, transparent);
+        border-radius: 999px;
+        background: var(--ps-bg);
+        color: var(--ps-text);
+        cursor: pointer;
+        font-size: 1.05rem;
+        font-weight: 650;
+    }
+
+    .coach-animation__step small {
+        color: inherit;
+        font-size: 0.9rem;
+    }
+
+    .coach-animation__play {
+        min-height: 4.6rem;
+        padding: 0 1.7rem;
+    }
+
+    .coach-animation__speed select {
+        min-height: 4.4rem;
+    }
+
+    .coach-timeline input {
+        min-height: 2.4rem;
+    }
+
+    @keyframes coach-trigger-pulse {
+        from {
+            stroke-width: 0.25;
+            opacity: 0.65;
+        }
+        to {
+            stroke-width: 0.7;
+            opacity: 1;
+        }
+    }
+
     /* Ordered page-entry animation */
     .js [data-reveal] {
         opacity: 0;
@@ -3596,6 +4269,16 @@
 
         .coach-context__controls {
             justify-content: flex-start;
+        }
+
+        .coach-plan-strip {
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 1.4rem 0;
+        }
+
+        .coach-plan-strip > div:nth-child(3) {
+            padding-left: 0;
+            border-left: 0;
         }
 
         .project-reading-layout {
@@ -3797,6 +4480,29 @@
             justify-content: flex-start;
         }
 
+        .coach-pitch-legend__direction {
+            width: 100%;
+            padding-top: 0.6rem;
+            padding-left: 0;
+            border-top: 0.1rem solid color-mix(in srgb, var(--ps-text) 10%, transparent);
+            border-left: 0;
+        }
+
+        .coach-substate-tabs {
+            flex-wrap: nowrap;
+            overflow-x: auto;
+            padding-bottom: 0.5rem;
+            scrollbar-width: none;
+        }
+
+        .coach-substate-tabs::-webkit-scrollbar {
+            display: none;
+        }
+
+        .coach-substate-tabs button {
+            flex: 0 0 auto;
+        }
+
         .coach-plan-strip {
             grid-template-columns: repeat(2, minmax(0, 1fr));
             gap: 1.4rem 0;
@@ -3815,6 +4521,44 @@
         .coach-animation__controls {
             flex-wrap: wrap;
             justify-content: flex-start;
+        }
+
+        .coach-animation__step {
+            min-height: 4.2rem;
+        }
+
+        .coach-pitch__phase,
+        .coach-notation-key {
+            top: 0.7rem;
+        }
+
+        .coach-pitch__phase {
+            left: 0.7rem;
+        }
+
+        .coach-notation-key {
+            right: 0.7rem;
+            gap: 0.55rem;
+        }
+
+        .coach-player > small,
+        .coach-player.is-team > small {
+            opacity: 0;
+        }
+
+        .coach-player:hover > small,
+        .coach-player:focus-visible > small {
+            opacity: 1;
+        }
+
+        .coach-marker {
+            --marker-size: clamp(2.15rem, 7vw, 2.65rem);
+        }
+
+        .coach-pitch__direction {
+            right: 0.7rem;
+            bottom: 0.6rem;
+            font-size: 0.66rem;
         }
 
         .coach-sequence {
