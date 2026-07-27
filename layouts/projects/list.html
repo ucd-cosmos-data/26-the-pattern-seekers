@@ -5,17 +5,40 @@
         <h1 id="project-index-title" data-reveal data-reveal-delay="90">Projects</h1>
     </header>
 
-    <section
-        class="final-project-placeholder"
+    {{- with .GetPage "worlds-coach-output" }}
+    <a
+        class="coach-feature"
         id="final-project"
+        href="{{ .RelPermalink }}"
         aria-labelledby="final-project-title"
         data-reveal
         data-reveal-delay="170"
     >
-        <p>Final Project</p>
-        <h2 id="final-project-title">Final Project</h2>
-        <span>In progress</span>
-    </section>
+        <div class="coach-feature__copy">
+            <p>Final project · Interactive model output</p>
+            <h2 id="final-project-title">{{ .Title }}</h2>
+            <span>Open coaching room <b aria-hidden="true">↗</b></span>
+        </div>
+        <div class="coach-feature__visual" aria-hidden="true">
+            <div class="coach-feature__score">
+                <small>Recommended</small>
+                <strong>Controlled overload</strong>
+                <em>78% confidence</em>
+            </div>
+            <div class="coach-feature__pitch">
+                <i class="coach-feature__halfway"></i>
+                <i class="coach-feature__circle"></i>
+                <i class="coach-feature__zone"></i>
+                <b style="--x: 17%; --y: 50%"></b>
+                <b style="--x: 37%; --y: 24%"></b>
+                <b style="--x: 39%; --y: 76%"></b>
+                <b style="--x: 61%; --y: 50%"></b>
+                <b class="is-key" style="--x: 76%; --y: 27%"></b>
+                <b style="--x: 82%; --y: 66%"></b>
+            </div>
+        </div>
+    </a>
+    {{- end }}
 
     <h2 class="project-index__section-title" data-reveal data-reveal-delay="190">
         Previous projects
@@ -27,7 +50,7 @@
         data-reveal-start="210"
         data-reveal-step="90"
     >
-        {{- range .RegularPages.ByDate.Reverse }}
+        {{- range where .RegularPages.ByDate.Reverse ".Params.coachOutput" "ne" true }}
         <article class="project-card" data-reveal>
             <a class="project-card__link" href="{{ .RelPermalink }}">
                 <div class="project-card__thumbnail">

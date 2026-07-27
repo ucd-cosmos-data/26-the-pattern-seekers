@@ -649,6 +649,226 @@
         });
     }
 
+    function initializeCoachRoom() {
+        var room = document.querySelector("[data-coach-room]");
+        if (!room) return;
+
+        var stateControl = room.querySelector("[data-coach-state]");
+        var playerControl = room.querySelector("[data-coach-player]");
+        var pitch = room.querySelector("[data-coach-pitch]");
+        var targetZone = room.querySelector("[data-target-zone] span");
+        var planName = room.querySelector("[data-plan-name]");
+        var planWhy = room.querySelector("[data-plan-why]");
+        var confidence = room.querySelector("[data-confidence]");
+        var demoNote = room.querySelector("[data-coach-demo-note]");
+        var playerNote = room.querySelector("[data-player-note]");
+        var optionDetail = room.querySelector("[data-option-detail]");
+        var riskCard = room.querySelector(".coach-effect-grid .is-risk");
+
+        var states = {
+            prematch: {
+                plan: "Controlled possession → right-side overload",
+                confidence: 78,
+                why: "Argentina creates its best chances through patient central attraction before releasing the right side. France's left channel is the clearest route to a high-quality cutback.",
+                effects: {
+                    chance: ["+14%", "78%"],
+                    box: ["+11%", "68%"],
+                    retention: ["+8%", "58%"],
+                    risk: ["+6%", "42%"]
+                },
+                instructions: {
+                    possession: "Build with a 3–2 base. Invite central pressure, then find De Paul or Messi on the right half-space.",
+                    finalThird: "Keep width on the far side. Send the forward across the near centre-back and prioritize low cutbacks.",
+                    out: "Defend in a compact 4–4–2. Screen central access and guide France toward their right side.",
+                    transition: "Enzo protects the centre. Counterpress for five seconds; recover shape if the first wave is broken."
+                },
+                options: { controlled: 64, transition: 58, wide: 54 }
+            },
+            leading: {
+                plan: "Compact control → selective release",
+                confidence: 82,
+                why: "With the lead, the model favors central security over constant pressure. France must advance, creating cleaner release moments without exposing Argentina's rest defence.",
+                effects: {
+                    chance: ["+7%", "54%"],
+                    box: ["−3%", "34%"],
+                    retention: ["+13%", "76%"],
+                    risk: ["−9%", "24%"]
+                },
+                instructions: {
+                    possession: "Slow the restart and keep a 3–2 platform. Circulate until France's midfield line steps beyond the ball.",
+                    finalThird: "Attack only with a clear numerical edge. Keep the far-side winger connected to the recovery structure.",
+                    out: "Set a compact medium block. Protect the centre first and allow low-value circulation outside.",
+                    transition: "First look forward into the space France leaves; otherwise secure possession and reset the block."
+                },
+                options: { controlled: 68, transition: 61, wide: 57 }
+            },
+            drawing: {
+                plan: "Controlled overload → higher fullback",
+                confidence: 75,
+                why: "The original plan remains the best fit, but the right-back can advance earlier. The extra width increases box access without moving both rest-defence players ahead of the ball.",
+                effects: {
+                    chance: ["+16%", "84%"],
+                    box: ["+14%", "77%"],
+                    retention: ["+5%", "48%"],
+                    risk: ["+9%", "53%"]
+                },
+                instructions: {
+                    possession: "Keep the 3–2 build, but release Molina one line earlier when France's winger narrows.",
+                    finalThird: "Create a 3v2 on the right. Occupy the box with two runners and hold the far-side edge.",
+                    out: "Press the first backward pass, then settle into a compact 4–4–2 if the press is bypassed.",
+                    transition: "Counterpress around the right half-space. Enzo and the left-back protect the central escape route."
+                },
+                options: { controlled: 66, transition: 60, wide: 56 }
+            },
+            trailing: {
+                plan: "Aggressive 3–2–5 → immediate counterpress",
+                confidence: 69,
+                why: "The need to score now outweighs transition safety. Five attacking lanes and an aggressive counterpress produce the greatest chance volume, with a clearly higher concession risk.",
+                effects: {
+                    chance: ["+24%", "94%"],
+                    box: ["+21%", "88%"],
+                    retention: ["−4%", "31%"],
+                    risk: ["+18%", "79%"]
+                },
+                instructions: {
+                    possession: "Form a 3–2–5 and pin France's back line. Move the ball quickly enough to prevent the block from resetting.",
+                    finalThird: "Fill all five lanes. Attack the six-yard box with two runners and protect the edge for second balls.",
+                    out: "Press man-oriented from every restart. Force France long and keep the defensive line near halfway.",
+                    transition: "Counterpress immediately with the nearest four players. Accept the one-on-one risk behind the attack."
+                },
+                options: { controlled: 57, transition: 63, wide: 55 }
+            }
+        };
+
+        var optionCopy = {
+            controlled: {
+                target: "Attack this channel",
+                detail: "Selected because it preserves Argentina's strongest possession pattern while targeting France's most vulnerable recovery channel."
+            },
+            transition: {
+                target: "Release behind pressure",
+                detail: "A faster route with more open-field opportunities, but a higher turnover cost and less control over where possession ends."
+            },
+            wide: {
+                target: "Stretch the weak side",
+                detail: "Safer circulation can widen France's block, though it produces fewer central receptions and lower-value final actions."
+            }
+        };
+
+        var playerJobs = {
+            "Martínez": "Martínez · Invite the first press, then find the free centre-back rather than forcing the central pass.",
+            "Molina": "Molina · Hold width, arrive beyond De Paul, and protect the immediate recovery lane after a turnover.",
+            "Romero": "Romero · Step into midfield when unopposed and defend the first forward transition aggressively.",
+            "Otamendi": "Otamendi · Anchor the back three and protect depth while the right side overloads.",
+            "Tagliafico": "Tagliafico · Stay connected as the third defender until the attack is securely established.",
+            "Enzo": "Enzo · Control the tempo, screen the centre, and become the first rest-defence player after possession loss.",
+            "De Paul": "De Paul · Run beyond Messi into the right channel when defenders collapse toward the ball.",
+            "Mac Allister": "Mac Allister · Balance the structure, arrive late at the box edge, and connect the far-side switch.",
+            "Messi": "Messi · Attract pressure in the half-space, turn if free, and release the runner when the second defender commits.",
+            "Di María": "Di María · Preserve weak-side width and attack the back post after the overload reaches the byline.",
+            "Álvarez": "Álvarez · Stretch depth, cross the near centre-back, and attack the cutback zone at speed.",
+            "Lautaro": "Lautaro · Pin both centre-backs, offer a stronger wall pass, and occupy the central finishing lane."
+        };
+
+        function setText(selector, value) {
+            var element = room.querySelector(selector);
+            if (element) element.textContent = value;
+        }
+
+        function updateOptionScores(optionScores) {
+            Object.keys(optionScores).forEach(function (key) {
+                var score = optionScores[key];
+                var label = room.querySelector('[data-option-score="' + key + '"]');
+                var bar = room.querySelector('[data-option="' + key + '"] em');
+                if (label) label.textContent = score + "%";
+                if (bar) bar.style.setProperty("--value", score + "%");
+            });
+        }
+
+        function selectOption(key) {
+            room.querySelectorAll("[data-option]").forEach(function (button) {
+                var selected = button.dataset.option === key;
+                button.classList.toggle("is-selected", selected);
+                button.setAttribute("aria-pressed", String(selected));
+            });
+            pitch.dataset.mode = key;
+            targetZone.textContent = optionCopy[key].target;
+            optionDetail.textContent = optionCopy[key].detail;
+        }
+
+        function updatePlayer() {
+            var lautaro = playerControl.value === "lautaro";
+            var currentState = states[stateControl.value];
+            var adjustedConfidence = currentState.confidence + (lautaro ? -2 : 0);
+            var playerName = lautaro ? "Lautaro Martínez" : "Julián Álvarez";
+            var shortName = lautaro ? "Lautaro" : "Álvarez";
+            var number = lautaro ? "22" : "9";
+
+            confidence.textContent = adjustedConfidence + "%";
+            setText("[data-forward-number]", number);
+            setText("[data-forward-name]", shortName);
+            setText("[data-role-forward-number]", number);
+            setText("[data-role-forward-name]", playerName);
+            setText("[data-role-forward-role]", lautaro ? "Reference striker" : "Depth runner");
+            setText("[data-role-forward-job]", lautaro ? "Pin both centre-backs" : "Pin the centre-back");
+            setText("[data-lineup-fit]", "Lineup fit · " + (lautaro ? "82%" : "86%"));
+
+            var node = room.querySelector("[data-forward-node]");
+            if (node) {
+                node.setAttribute("aria-label", playerName + ", " + (lautaro ? "reference striker" : "depth runner"));
+            }
+            demoNote.textContent = lautaro
+                ? "Demonstration scenario · Recommendation recalculated for Lautaro Martínez"
+                : "Demonstration scenario · Illustrative outputs until the production model is connected";
+        }
+
+        function updateState() {
+            var current = states[stateControl.value];
+            planName.textContent = current.plan;
+            planWhy.textContent = current.why;
+
+            Object.keys(current.effects).forEach(function (key) {
+                var value = room.querySelector('[data-effect="' + key + '"]');
+                var bar = room.querySelector('[data-effect-bar="' + key + '"]');
+                if (value) value.textContent = current.effects[key][0];
+                if (bar) bar.style.setProperty("--value", current.effects[key][1]);
+            });
+
+            setText("[data-in-possession]", current.instructions.possession);
+            setText("[data-final-third]", current.instructions.finalThird);
+            setText("[data-out-possession]", current.instructions.out);
+            setText("[data-transition]", current.instructions.transition);
+            updateOptionScores(current.options);
+            riskCard.classList.toggle("is-safer", current.effects.risk[0].charAt(0) === "−");
+            selectOption(stateControl.value === "trailing" ? "transition" : "controlled");
+            updatePlayer();
+        }
+
+        room.querySelectorAll("[data-option]").forEach(function (button) {
+            button.addEventListener("click", function () {
+                selectOption(button.dataset.option);
+            });
+        });
+
+        room.querySelectorAll("button.coach-player.is-team").forEach(function (button) {
+            button.addEventListener("click", function () {
+                var label = button.querySelector("small");
+                if (!label) return;
+                var name = label.textContent.trim();
+                playerNote.textContent = playerJobs[name] || "Role detail will be available when the production player model is connected.";
+            });
+        });
+
+        stateControl.addEventListener("change", updateState);
+        playerControl.addEventListener("change", function () {
+            updatePlayer();
+            var forwardLabel = playerControl.value === "lautaro" ? "Lautaro" : "Álvarez";
+            playerNote.textContent = playerJobs[forwardLabel];
+        });
+
+        updateState();
+    }
+
     initializeNavigation();
     initializeReveals();
     initializeScrollspy();
@@ -656,4 +876,5 @@
     initializeEmbeddedFigures();
     initializeSignalTrace();
     initializeInterferenceCanvas();
+    initializeCoachRoom();
 })();

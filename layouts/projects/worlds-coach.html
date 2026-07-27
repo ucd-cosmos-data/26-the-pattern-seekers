@@ -1,0 +1,331 @@
+{{- define "main" }}
+<article class="coach-room" data-coach-room aria-labelledby="coach-room-title">
+    <header class="coach-room__hero">
+        <div class="coach-room__hero-inner">
+            {{- partial "breadcrumbs.html" . }}
+            <div class="coach-room__eyebrow" data-reveal data-reveal-delay="70">
+                <span>Model output prototype</span>
+                <span class="coach-room__live-dot">Decision room</span>
+            </div>
+            <h1 id="coach-room-title" data-reveal data-reveal-delay="120">
+                The World's Coach <span>(Output)</span>
+            </h1>
+            <p data-reveal data-reveal-delay="190">
+                From thousands of actions to one game plan: what to play, who performs each
+                role, why it should work, and how to adjust.
+            </p>
+        </div>
+    </header>
+
+    <div class="coach-room__workspace">
+        <section class="coach-context" aria-labelledby="coach-context-title" data-reveal>
+            <div>
+                <p class="coach-kicker" id="coach-context-title">Match context</p>
+                <div class="coach-matchup" aria-label="Argentina versus France">
+                    <span><b>ARG</b> Argentina</span>
+                    <i>vs</i>
+                    <span><b>FRA</b> France</span>
+                </div>
+            </div>
+
+            <div class="coach-context__controls" aria-label="Match scenario">
+                <label>
+                    Match state
+                    <select data-coach-state>
+                        <option value="prematch">Pre-match · 0–0</option>
+                        <option value="leading">Leading · 70'</option>
+                        <option value="drawing">Drawing · 70'</option>
+                        <option value="trailing">Trailing · 70'</option>
+                    </select>
+                </label>
+                <label>
+                    Forward
+                    <select data-coach-player>
+                        <option value="alvarez">Julián Álvarez</option>
+                        <option value="lautaro">Lautaro Martínez</option>
+                    </select>
+                </label>
+            </div>
+        </section>
+
+        <p class="coach-demo-note" data-coach-demo-note>
+            Demonstration scenario · Illustrative outputs until the production model is connected
+        </p>
+
+        <section class="coach-recommendation" aria-labelledby="coach-recommendation-title" data-reveal>
+            <div class="coach-recommendation__topline">
+                <div>
+                    <p class="coach-kicker">Primary recommendation</p>
+                    <h2 id="coach-recommendation-title" data-plan-name>
+                        Controlled possession → right-side overload
+                    </h2>
+                </div>
+                <div class="coach-confidence" aria-label="Model confidence">
+                    <span data-confidence>78%</span>
+                    <small>confidence</small>
+                </div>
+            </div>
+            <p class="coach-recommendation__why" data-plan-why>
+                Argentina creates its best chances through patient central attraction before
+                releasing the right side. France's left channel is the clearest route to a
+                high-quality cutback.
+            </p>
+            <div class="coach-recommendation__signals">
+                <span><i></i> Strong lineup fit</span>
+                <span><i></i> Opponent weakness detected</span>
+                <span><i></i> Stable across model families</span>
+            </div>
+        </section>
+
+        <div class="coach-main-grid">
+            <section class="coach-panel coach-tactics" aria-labelledby="coach-tactics-title" data-reveal>
+                <div class="coach-panel__header">
+                    <div>
+                        <p class="coach-kicker">Tactical map</p>
+                        <h2 id="coach-tactics-title">Where the plan creates the advantage</h2>
+                    </div>
+                    <div class="coach-pitch-legend" aria-label="Pitch legend">
+                        <span><i class="is-team"></i> Argentina</span>
+                        <span><i class="is-opponent"></i> France</span>
+                        <span><i class="is-space"></i> Target space</span>
+                    </div>
+                </div>
+
+                <div class="coach-pitch-wrap">
+                    <div class="coach-pitch" data-coach-pitch role="img" aria-label="Tactical pitch showing Argentina's right-side overload against France">
+                        <div class="coach-pitch__line coach-pitch__line--half"></div>
+                        <div class="coach-pitch__circle"></div>
+                        <div class="coach-pitch__box coach-pitch__box--left"></div>
+                        <div class="coach-pitch__box coach-pitch__box--right"></div>
+                        <div class="coach-pitch__goal coach-pitch__goal--left"></div>
+                        <div class="coach-pitch__goal coach-pitch__goal--right"></div>
+                        <div class="coach-pitch__target" data-target-zone>
+                            <span>Attack this channel</span>
+                        </div>
+                        <div class="coach-pitch__route coach-pitch__route--one"></div>
+                        <div class="coach-pitch__route coach-pitch__route--two"></div>
+
+                        <button class="coach-player is-team" style="--x: 10%; --y: 50%" type="button" aria-label="Emiliano Martínez, goalkeeper"><span>23</span><small>Martínez</small></button>
+                        <button class="coach-player is-team" style="--x: 28%; --y: 20%" type="button" aria-label="Nahuel Molina, right back"><span>26</span><small>Molina</small></button>
+                        <button class="coach-player is-team" style="--x: 28%; --y: 41%" type="button" aria-label="Cristian Romero, center back"><span>13</span><small>Romero</small></button>
+                        <button class="coach-player is-team" style="--x: 28%; --y: 61%" type="button" aria-label="Nicolás Otamendi, center back"><span>19</span><small>Otamendi</small></button>
+                        <button class="coach-player is-team" style="--x: 31%; --y: 82%" type="button" aria-label="Nicolás Tagliafico, left back"><span>3</span><small>Tagliafico</small></button>
+                        <button class="coach-player is-team" style="--x: 47%; --y: 62%" type="button" aria-label="Enzo Fernández, midfielder"><span>24</span><small>Enzo</small></button>
+                        <button class="coach-player is-team" style="--x: 53%; --y: 34%" type="button" aria-label="Rodrigo De Paul, midfielder"><span>7</span><small>De Paul</small></button>
+                        <button class="coach-player is-team" style="--x: 58%; --y: 77%" type="button" aria-label="Alexis Mac Allister, midfielder"><span>20</span><small>Mac Allister</small></button>
+                        <button class="coach-player is-team is-gravity" style="--x: 70%; --y: 38%" type="button" aria-label="Lionel Messi, free creator, high gravity"><span>10</span><small>Messi</small></button>
+                        <button class="coach-player is-team" style="--x: 76%; --y: 15%" type="button" aria-label="Ángel Di María, wide creator"><span>11</span><small>Di María</small></button>
+                        <button class="coach-player is-team is-focus" data-forward-node style="--x: 83%; --y: 57%" type="button" aria-label="Julián Álvarez, depth runner"><span data-forward-number>9</span><small data-forward-name>Álvarez</small></button>
+
+                        <span class="coach-player is-opponent" style="--x: 89%; --y: 50%"><b>1</b></span>
+                        <span class="coach-player is-opponent" style="--x: 72%; --y: 17%"><b>22</b></span>
+                        <span class="coach-player is-opponent" style="--x: 74%; --y: 44%"><b>4</b></span>
+                        <span class="coach-player is-opponent" style="--x: 71%; --y: 65%"><b>18</b></span>
+                        <span class="coach-player is-opponent" style="--x: 67%; --y: 84%"><b>5</b></span>
+                        <span class="coach-player is-opponent" style="--x: 57%; --y: 25%"><b>8</b></span>
+                        <span class="coach-player is-opponent" style="--x: 57%; --y: 52%"><b>14</b></span>
+                        <span class="coach-player is-opponent" style="--x: 53%; --y: 78%"><b>7</b></span>
+                    </div>
+                </div>
+
+                <p class="coach-player-note" data-player-note aria-live="polite">
+                    Select a player to see the job behind their position.
+                </p>
+                <div class="coach-sequence" aria-label="Recommended attacking sequence">
+                    <span><b>1</b> Build in a 3–2</span>
+                    <i aria-hidden="true">→</i>
+                    <span><b>2</b> Draw pressure centrally</span>
+                    <i aria-hidden="true">→</i>
+                    <span><b>3</b> Release right channel</span>
+                    <i aria-hidden="true">→</i>
+                    <span><b>4</b> Finish with a cutback</span>
+                </div>
+            </section>
+
+            <aside class="coach-panel coach-instructions" aria-labelledby="coach-instructions-title" data-reveal>
+                <div class="coach-panel__header">
+                    <div>
+                        <p class="coach-kicker">Coach's brief</p>
+                        <h2 id="coach-instructions-title">Instructions by phase</h2>
+                    </div>
+                </div>
+                <div class="coach-phase-list">
+                    <article>
+                        <span>01</span>
+                        <div>
+                            <h3>In possession</h3>
+                            <p data-in-possession>Build with a 3–2 base. Invite central pressure, then find De Paul or Messi on the right half-space.</p>
+                        </div>
+                    </article>
+                    <article>
+                        <span>02</span>
+                        <div>
+                            <h3>Final third</h3>
+                            <p data-final-third>Keep width on the far side. Send Álvarez across the near centre-back and prioritize low cutbacks.</p>
+                        </div>
+                    </article>
+                    <article>
+                        <span>03</span>
+                        <div>
+                            <h3>Out of possession</h3>
+                            <p data-out-possession>Defend in a compact 4–4–2. Screen central access and guide France toward their right side.</p>
+                        </div>
+                    </article>
+                    <article>
+                        <span>04</span>
+                        <div>
+                            <h3>On transition</h3>
+                            <p data-transition>Enzo protects the centre. Counterpress for five seconds; recover shape if the first wave is broken.</p>
+                        </div>
+                    </article>
+                </div>
+            </aside>
+        </div>
+
+        <section class="coach-panel coach-effects" aria-labelledby="coach-effects-title" data-reveal>
+            <div class="coach-panel__header">
+                <div>
+                    <p class="coach-kicker">Expected effect</p>
+                    <h2 id="coach-effects-title">What changes if we use this plan</h2>
+                </div>
+                <p>Compared with the team's neutral tactical baseline</p>
+            </div>
+            <div class="coach-effect-grid">
+                <article>
+                    <div><span>Chance quality</span><strong data-effect="chance">+14%</strong></div>
+                    <div class="coach-meter"><i data-effect-bar="chance" style="--value: 78%"></i></div>
+                    <small>Higher-quality final actions</small>
+                </article>
+                <article>
+                    <div><span>Box entries</span><strong data-effect="box">+11%</strong></div>
+                    <div class="coach-meter"><i data-effect-bar="box" style="--value: 68%"></i></div>
+                    <small>More controlled entries</small>
+                </article>
+                <article>
+                    <div><span>Possession retention</span><strong data-effect="retention">+8%</strong></div>
+                    <div class="coach-meter"><i data-effect-bar="retention" style="--value: 58%"></i></div>
+                    <small>Under opposition pressure</small>
+                </article>
+                <article class="is-risk">
+                    <div><span>Transition exposure</span><strong data-effect="risk">+6%</strong></div>
+                    <div class="coach-meter"><i data-effect-bar="risk" style="--value: 42%"></i></div>
+                    <small>Primary tactical tradeoff</small>
+                </article>
+            </div>
+        </section>
+
+        <div class="coach-lower-grid">
+            <section class="coach-panel coach-options" aria-labelledby="coach-options-title" data-reveal>
+                <div class="coach-panel__header">
+                    <div>
+                        <p class="coach-kicker">Strategy comparison</p>
+                        <h2 id="coach-options-title">Why this plan wins</h2>
+                    </div>
+                </div>
+                <div class="coach-option-list" data-option-list>
+                    <button type="button" class="is-selected" data-option="controlled" aria-pressed="true">
+                        <span><b>Controlled overload</b><small>Best lineup–opponent fit</small></span>
+                        <i><em style="--value: 64%"></em></i>
+                        <strong data-option-score="controlled">64%</strong>
+                    </button>
+                    <button type="button" data-option="transition" aria-pressed="false">
+                        <span><b>Direct transition</b><small>More volatile; strong fallback</small></span>
+                        <i><em style="--value: 58%"></em></i>
+                        <strong data-option-score="transition">58%</strong>
+                    </button>
+                    <button type="button" data-option="wide" aria-pressed="false">
+                        <span><b>Wide circulation</b><small>Safe, but lower final-third yield</small></span>
+                        <i><em style="--value: 54%"></em></i>
+                        <strong data-option-score="wide">54%</strong>
+                    </button>
+                </div>
+                <p class="coach-option-detail" data-option-detail>
+                    Selected because it preserves Argentina's strongest possession pattern while targeting France's most vulnerable recovery channel.
+                </p>
+            </section>
+
+            <section class="coach-panel coach-gravity" aria-labelledby="coach-gravity-title" data-reveal>
+                <div class="coach-panel__header">
+                    <div>
+                        <p class="coach-kicker">Player gravity</p>
+                        <h2 id="coach-gravity-title">Who bends the defence</h2>
+                    </div>
+                </div>
+                <div class="coach-gravity__hero">
+                    <div class="coach-gravity__orbit" aria-hidden="true">
+                        <span>10</span>
+                        <i style="--angle: 24deg"></i>
+                        <i style="--angle: 138deg"></i>
+                        <i style="--angle: 258deg"></i>
+                    </div>
+                    <div>
+                        <strong>1.7</strong>
+                        <span>extra defenders drawn toward Messi</span>
+                    </div>
+                </div>
+                <div class="coach-gravity__breakdown">
+                    <div><span>Attention residual</span><i><em style="--value: 91%"></em></i><b>High</b></div>
+                    <div><span>Teammate space created</span><i><em style="--value: 82%"></em></i><b>+18%</b></div>
+                    <div><span>Downstream threat</span><i><em style="--value: 76%"></em></i><b>+0.07</b></div>
+                </div>
+                <p>Use Messi as the attractor—not the endpoint. The highest-value outcome appears when the next action attacks the space he creates.</p>
+            </section>
+        </div>
+
+        <section class="coach-panel coach-roles" aria-labelledby="coach-roles-title" data-reveal>
+            <div class="coach-panel__header">
+                <div>
+                    <p class="coach-kicker">Player-specific roles</p>
+                    <h2 id="coach-roles-title">Four jobs that make the plan work</h2>
+                </div>
+                <span data-lineup-fit>Lineup fit · 86%</span>
+            </div>
+            <div class="coach-role-grid">
+                <article>
+                    <span>10</span>
+                    <div><h3>Lionel Messi</h3><p>Free creator</p></div>
+                    <strong>Attract, turn, release</strong>
+                </article>
+                <article>
+                    <span>7</span>
+                    <div><h3>Rodrigo De Paul</h3><p>Right-side runner</p></div>
+                    <strong>Attack the vacated lane</strong>
+                </article>
+                <article>
+                    <span data-role-forward-number>9</span>
+                    <div><h3 data-role-forward-name>Julián Álvarez</h3><p data-role-forward-role>Depth runner</p></div>
+                    <strong data-role-forward-job>Pin the centre-back</strong>
+                </article>
+                <article>
+                    <span>24</span>
+                    <div><h3>Enzo Fernández</h3><p>Rest defence</p></div>
+                    <strong>Protect the central loss</strong>
+                </article>
+            </div>
+        </section>
+
+        <details class="coach-evidence" data-reveal>
+            <summary>
+                <span><b>For analysts</b> Model evidence, uncertainty, and validation</span>
+                <i aria-hidden="true"></i>
+            </summary>
+            <div class="coach-evidence__content">
+                <p>
+                    The coaching layer compares candidate strategies across held-out matches,
+                    then explains the highest-ranked plan in football language. The production
+                    version will display only out-of-sample results here.
+                </p>
+                <div>
+                    <span><small>Recommendation stability</small><strong>4 / 5 model families</strong></span>
+                    <span><small>Comparable possessions</small><strong>1,284</strong></span>
+                    <span><small>Uncertainty band</small><strong>± 6 points</strong></span>
+                </div>
+                <p class="coach-evidence__footnote">
+                    Prototype values are illustrative and are not yet connected to the project's
+                    finalized validation outputs.
+                </p>
+            </div>
+        </details>
+    </div>
+</article>
+{{- end }}

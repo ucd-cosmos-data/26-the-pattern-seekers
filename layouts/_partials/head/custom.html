@@ -4,9 +4,9 @@
 
 <link rel="preload" href="{{ "fonts/Satoshi-Variable.woff2" | relURL }}" as="font" type="font/woff2" crossorigin>
 <link rel="stylesheet" href="{{ "css/tailwind.css" | relURL }}">
-{{- $socialImage := "og.png" | absURL -}}
+{{- $socialImage := default "og.png" .Params.socialImage | absURL -}}
 <meta property="og:image" content="{{ $socialImage }}">
-<meta property="og:image:alt" content="The Pattern Seekers over a two-source water interference pattern">
+<meta property="og:image:alt" content="{{ default "The Pattern Seekers over a two-source water interference pattern" .Params.socialImageAlt }}">
 <meta name="twitter:card" content="summary_large_image">
 <meta name="twitter:image" content="{{ $socialImage }}">
 <script>document.documentElement.classList.add("js");</script>
