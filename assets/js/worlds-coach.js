@@ -807,6 +807,15 @@
     var animationBaseProgress = 0;
     var tooltipPinned = false;
     var currentPositions = model.copyPositions(attackInitial);
+    var playerNodes = {};
+    var activeTooltipId = null;
+    var lastSequenceRender = { view: null, index: -1, triggerVisible: null };
+
+    function invalidateSequenceCache() {
+        lastSequenceRender.view = null;
+        lastSequenceRender.index = -1;
+        lastSequenceRender.triggerVisible = null;
+    }
 
     function setText(selector, value) {
         var element = room.querySelector(selector);
@@ -814,8 +823,10 @@
     }
 
     function formatTime(milliseconds) {
-        var seconds = Math.max(0, Math.round(milliseconds / 1000));
-        return "00:" + String(seconds).padStart(2, "0");
+        var totalSeconds = Math.max(0, Math.round(milliseconds / 1000));
+        var minutes = Math.floor(totalSeconds / 60);
+        var seconds = totalSeconds % 60;
+        return String(minutes).padStart(2, "0") + ":" + String(seconds).padStart(2, "0");
     }
 
     function updateForwardRoster() {
@@ -831,10 +842,8 @@
                 : "Pin the centre-backs and attack the cutback zone."
         };
 
-        var forwardNode = playersLayer.querySelector('[data-player-id="forward"]');
+        var forwardNode = playerNodes.forward;
         if (forwardNode) updatePlayerNode(forwardNode, "forward");
-        setText("[data-forward-number]", String(roster.forward.number));
-        setText("[data-forward-name]", roster.forward.surname);
         setText("[data-role-forward-number]", String(roster.forward.number));
         setText("[data-role-forward-name]", roster.forward.name);
         setText("[data-role-forward-role]", roster.forward.role);
@@ -855,15 +864,22 @@
         node.setAttribute("aria-label", player.name + ", number " + player.number + ", " + player.role + ". " + player.instruction);
     }
 
+    function positionTooltip(id) {
+        var position = currentPositions[id];
+        if (!position) return;
+        var percent = model.pointToPercent(position);
+        tacticalTooltip.style.setProperty("--tooltip-x", percent.x + "%");
+        tacticalTooltip.style.setProperty("--tooltip-y", percent.y + "%");
+        tacticalTooltip.classList.toggle("is-above", percent.y > 42);
+    }
+
     function showPlayerTooltip(node, id, pin) {
         var player = roster[id];
         var position = currentPositions[id];
         if (!player || !position) return;
-        var percent = model.pointToPercent(position);
         tacticalTooltip.innerHTML = "<strong>" + player.name + " · " + player.number + "</strong><span>" + player.role + "</span><small>" + player.instruction + "</small>";
-        tacticalTooltip.style.setProperty("--tooltip-x", percent.x + "%");
-        tacticalTooltip.style.setProperty("--tooltip-y", percent.y + "%");
-        tacticalTooltip.classList.toggle("is-above", percent.y > 42);
+        activeTooltipId = id;
+        positionTooltip(id);
         tacticalTooltip.hidden = false;
         tooltipPinned = Boolean(pin);
         playersLayer.querySelectorAll(".coach-player").forEach(function (playerNode) {
@@ -875,6 +891,7 @@
         if (tooltipPinned && !force) return;
         tacticalTooltip.hidden = true;
         tooltipPinned = false;
+        activeTooltipId = null;
         playersLayer.querySelectorAll(".coach-player").forEach(function (node) {
             node.setAttribute("aria-expanded", "false");
         });
@@ -882,6 +899,7 @@
 
     function createPlayerNodes() {
         playersLayer.innerHTML = "";
+        playerNodes = {};
         Object.keys(roster).forEach(function (id) {
             var player = roster[id];
             var button = document.createElement("button");
@@ -916,6 +934,7 @@
                 event.stopPropagation();
                 showPlayerTooltip(button, id, true);
             });
+            playerNodes[id] = button;
             playersLayer.appendChild(button);
         });
         pitch.addEventListener("click", function () {
@@ -934,7 +953,7 @@
         protect.forEach(function (id, index) { protectIndex[id] = index + 1; });
 
         Object.keys(positions).forEach(function (id) {
-            var node = playersLayer.querySelector('[data-player-id="' + id + '"]');
+            var node = playerNodes[id];
             if (!node) return;
             var percent = model.pointToPercent(positions[id]);
             node.style.setProperty("--x", percent.x + "%");
@@ -1147,51 +1166,71 @@
     function renderSequence(view, progress) {
         var sequence = sequences[view];
         var state = sequenceAtProgress(sequence, progress);
-        var completedActions = [];
-        var countdownAnnotation = [];
 
-        var historyStart = 0;
-        sequence.steps.slice(0, state.index + 1).forEach(function (step, index) {
-            if (step.resetHistory) historyStart = index;
-        });
-        sequence.steps.slice(historyStart, state.index).forEach(function (step) {
-            completedActions = completedActions.concat(step.actions || []);
-        });
-
+        // Per-frame work: only the players and ball move continuously.
         updatePlayerPositions(state.positions, state.step);
         updateBall(state.ball);
-        renderActions(completedActionsLayer, completedActions, true);
-        renderActions(currentActionsLayer, state.step.actions, false);
-        renderZones(
-            state.step.zones,
-            state.step.trigger && state.localProgress >= 0.68 ? state.step.trigger : null
-        );
+        if (!tacticalTooltip.hidden && activeTooltipId) positionTooltip(activeTooltipId);
 
+        var triggerVisible = Boolean(state.step.trigger && state.localProgress >= 0.68);
+        var stepChanged = lastSequenceRender.view !== view || lastSequenceRender.index !== state.index;
+        var triggerChanged = lastSequenceRender.triggerVisible !== triggerVisible;
+
+        // Arrows, zones and step text only change at phase boundaries, so rebuild
+        // them then instead of on every animation frame.
+        if (stepChanged) {
+            var completedActions = [];
+            var historyStart = 0;
+            sequence.steps.slice(0, state.index + 1).forEach(function (step, index) {
+                if (step.resetHistory) historyStart = index;
+            });
+            sequence.steps.slice(historyStart, state.index).forEach(function (step) {
+                completedActions = completedActions.concat(step.actions || []);
+            });
+            renderActions(completedActionsLayer, completedActions, true);
+            renderActions(currentActionsLayer, state.step.actions, false);
+
+            phaseLabel.textContent = state.step.phase;
+            pitchDescription.textContent = state.step.caption;
+            pitch.setAttribute("aria-label", state.step.phase + ". " + state.step.title + ". " + state.step.caption);
+            updateCaption(
+                (view === "attack" ? "PHASE " : "STAGE ") + String(state.index + 1).padStart(2, "0") + " / " + String(sequence.steps.length).padStart(2, "0"),
+                state.step.title,
+                state.step.caption
+            );
+            animationDurationNode.textContent = formatTime(sequence.duration);
+            updateSubstateSelection(state.index);
+        }
+
+        // The press trigger appears mid-step, so refresh zones when it toggles too.
+        if (stepChanged || triggerChanged) {
+            renderZones(state.step.zones, triggerVisible ? state.step.trigger : null);
+        }
+
+        // The counterpress countdown changes every frame; other annotations are static per step.
         if (state.step.countdown) {
-            countdownAnnotation.push({
+            renderAnnotations((state.step.annotations || []).concat([{
                 x: 85,
                 y: 45,
                 label: Math.max(0, Math.ceil(5 * (1 - state.localProgress))) + " s",
                 tone: "press"
-            });
+            }]));
+        } else if (stepChanged) {
+            renderAnnotations(state.step.annotations || []);
         }
-        renderAnnotations((state.step.annotations || []).concat(countdownAnnotation));
-        phaseLabel.textContent = state.step.phase;
-        pitchDescription.textContent = state.step.caption;
-        pitch.setAttribute("aria-label", state.step.phase + ". " + state.step.title + ". " + state.step.caption);
-        updateCaption(
-            (view === "attack" ? "PHASE " : "STAGE ") + String(state.index + 1).padStart(2, "0") + " / " + String(sequence.steps.length).padStart(2, "0"),
-            state.step.title,
-            state.step.caption
-        );
+
         animationScrubber.value = String(progress * 100);
+        animationScrubber.setAttribute("aria-valuetext", formatTime(state.elapsed) + " of " + formatTime(sequence.duration));
         animationTime.textContent = formatTime(state.elapsed);
-        animationDurationNode.textContent = formatTime(sequence.duration);
-        updateSubstateSelection(state.index);
+
+        lastSequenceRender.view = view;
+        lastSequenceRender.index = state.index;
+        lastSequenceRender.triggerVisible = triggerVisible;
         viewProgress[view] = progress;
     }
 
     function renderFormation(index) {
+        invalidateSequenceCache();
         formationIndex = model.clamp(index, 0, formationStates.length - 1);
         var state = formationStates[formationIndex];
         updatePlayerPositions(state.positions, state);
@@ -1259,6 +1298,7 @@
     }
 
     function renderDimensions() {
+        invalidateSequenceCache();
         var positions = formationStates[0].positions;
         updatePlayerPositions(positions, { active: [] });
         updateBall(point(46, 46));
@@ -1416,9 +1456,13 @@
             return;
         }
         var sequence = sequences[activeView];
-        var nextIndex = model.clamp(stepIndexForView(activeView) + direction, 0, sequence.steps.length - 1);
-        var progress = direction > 0 && nextIndex === sequence.steps.length - 1
-            ? sequence.steps[nextIndex].startTime / sequence.duration
+        var lastIndex = sequence.steps.length - 1;
+        var current = stepIndexForView(activeView);
+        var nextIndex = model.clamp(current + direction, 0, lastIndex);
+        // Stepping forward while already on the final phase plays it through to the
+        // end, so the last action completes instead of freezing at its start.
+        var progress = (direction > 0 && current === lastIndex)
+            ? 1
             : sequence.steps[nextIndex].startTime / sequence.duration;
         viewProgress[activeView] = progress;
         renderSequence(activeView, progress);
@@ -1463,11 +1507,13 @@
 
     function updateView(view) {
         stopAnimation("Play sequence");
+        invalidateSequenceCache();
         activeView = view;
         pitch.dataset.view = view;
         room.querySelectorAll("[data-tactic-tab]").forEach(function (button) {
             var selected = button.dataset.tacticTab === view;
             button.setAttribute("aria-selected", String(selected));
+            button.tabIndex = selected ? 0 : -1;
         });
         pitch.setAttribute("aria-labelledby", "coach-tab-" + view);
         updateControlVisibility(view);
@@ -1541,12 +1587,16 @@
                 updateView(button.dataset.tacticTab);
             });
             button.addEventListener("keydown", function (event) {
-                if (event.key !== "ArrowLeft" && event.key !== "ArrowRight") return;
+                var nextIndex;
+                if (event.key === "ArrowRight") nextIndex = (index + 1) % buttons.length;
+                else if (event.key === "ArrowLeft") nextIndex = (index - 1 + buttons.length) % buttons.length;
+                else if (event.key === "Home") nextIndex = 0;
+                else if (event.key === "End") nextIndex = buttons.length - 1;
+                else return;
                 event.preventDefault();
-                var direction = event.key === "ArrowRight" ? 1 : -1;
-                var nextIndex = (index + direction + buttons.length) % buttons.length;
-                buttons[nextIndex].focus();
-                updateView(buttons[nextIndex].dataset.tacticTab);
+                var target = buttons[nextIndex];
+                updateView(target.dataset.tacticTab);
+                target.focus();
             });
         });
 

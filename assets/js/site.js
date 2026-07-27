@@ -135,8 +135,15 @@
             rootMargin: "0px 0px -6% 0px"
         });
 
+        var viewportHeight = window.innerHeight || document.documentElement.clientHeight;
         elements.forEach(function (element) {
-            observer.observe(element);
+            // Content already in view on load (e.g. the hero) is shown immediately so
+            // the page never paints blank while waiting for the observer to fire.
+            if (element.getBoundingClientRect().top < viewportHeight) {
+                element.classList.add("is-visible");
+            } else {
+                observer.observe(element);
+            }
         });
     }
 
