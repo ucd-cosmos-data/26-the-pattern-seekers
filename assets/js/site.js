@@ -663,9 +663,15 @@
         var planWhy = room.querySelector("[data-plan-why]");
         var confidence = room.querySelector("[data-confidence]");
         var demoNote = room.querySelector("[data-coach-demo-note]");
-        var playerNote = room.querySelector("[data-player-note]");
         var optionDetail = room.querySelector("[data-option-detail]");
         var riskCard = room.querySelector(".coach-effect-grid .is-risk");
+        var coachBall = room.querySelector("[data-coach-ball]");
+        var animationPlay = room.querySelector("[data-animation-play]");
+        var animationCount = room.querySelector("[data-animation-count]");
+        var animationTitle = room.querySelector("[data-animation-title]");
+        var animationCopy = room.querySelector("[data-animation-copy]");
+        var animationTimer = null;
+        var animationIndex = 0;
 
         var states = {
             prematch: {
@@ -821,18 +827,202 @@
             }
         };
 
-        var optionVisuals = {
-            controlled: {
-                target: ["5%", "2%", "29%", "42%", "Attack this channel"],
-                routes: [["34%", "53%", "17%", "5deg"], ["36%", "70%", "14%", "37deg"]]
+        var attackAnimations = {
+            prematch: {
+                overview: ["3–2 buildup", "Right-side 3v2", "Low cutback", "Five-second press"],
+                steps: [
+                    {
+                        title: "Set the structure",
+                        copy: "Build with three behind the ball and two central outlets. Keep both wings available.",
+                        shape: "Overall plan · 3–2 buildup",
+                        ball: [10, 50],
+                        involved: ["gk", "romero", "otamendi", "enzo"],
+                        team: {},
+                        opponent: {},
+                        routes: [["49%", "10%", "0%", "0deg", 0], ["30%", "53%", "0%", "0deg", 0]],
+                        targetOpacity: 0.08
+                    },
+                    {
+                        title: "Invite the central press",
+                        copy: "Romero carries forward. Enzo stays available while France's midfield steps toward the ball.",
+                        shape: "Step 2 · draw pressure",
+                        ball: [30, 41],
+                        involved: ["romero", "enzo"],
+                        team: { romero: [30, 41], enzo: [45, 58], depaul: [53, 31] },
+                        opponent: { rm: [47, 25], cm: [48, 49], lm: [46, 75] },
+                        routes: [["50%", "10%", "20%", "-12deg", 1], ["58%", "45%", "12%", "-18deg", 0.75]],
+                        targetOpacity: 0.12
+                    },
+                    {
+                        title: "Create the right-side overload",
+                        copy: "Messi drops toward the ball, De Paul runs beyond him, and Molina holds the outside lane.",
+                        shape: "Step 3 · right-side 3v2",
+                        ball: [69, 38],
+                        involved: ["messi", "depaul", "molina"],
+                        team: { molina: [64, 15], depaul: [63, 29], messi: [69, 38], forward: [79, 57] },
+                        opponent: { rb: [70, 21], rcb: [72, 40], cm: [61, 47] },
+                        routes: [["41%", "30%", "39%", "-4deg", 1], ["31%", "53%", "18%", "-18deg", 1]],
+                        targetOpacity: 0.45
+                    },
+                    {
+                        title: "Release and cut back",
+                        copy: "Molina attacks the outside shoulder. The forward crosses the centre-back and the cutback arrives behind the defensive line.",
+                        shape: "Step 4 · finish the attack",
+                        ball: [87, 43],
+                        involved: ["molina", "forward", "messi", "depaul"],
+                        team: { molina: [84, 18], depaul: [77, 32], messi: [75, 43], forward: [85, 51], dimaria: [79, 78] },
+                        opponent: { rb: [78, 22], rcb: [82, 40], lcb: [81, 60], cm: [69, 48] },
+                        routes: [["38%", "69%", "20%", "5deg", 1], ["18%", "84%", "25%", "78deg", 1]],
+                        targetOpacity: 0.72
+                    }
+                ]
             },
-            transition: {
-                target: ["28%", "3%", "42%", "50%", "Release behind pressure"],
-                routes: [["48%", "42%", "27%", "-16deg"], ["39%", "67%", "18%", "20deg"]]
+            leading: {
+                overview: ["Compact 4–4–2", "Wait for pressure", "Counter release", "Reset if blocked"],
+                steps: [
+                    {
+                        title: "Protect the centre",
+                        copy: "Stay compact behind the ball. Keep Messi and the forward ready to become the first two outlets.",
+                        shape: "Overall plan · compact control",
+                        ball: [39, 58],
+                        involved: ["enzo", "messi", "forward"],
+                        team: {},
+                        opponent: {},
+                        routes: [["58%", "39%", "0%", "0deg", 0], ["39%", "59%", "0%", "0deg", 0]],
+                        targetOpacity: 0.06
+                    },
+                    {
+                        title: "Let France step forward",
+                        copy: "Secure the first pass and allow France's midfield to advance beyond its defensive cover.",
+                        shape: "Step 2 · invite pressure safely",
+                        ball: [42, 31],
+                        involved: ["depaul", "enzo"],
+                        team: { depaul: [42, 31], enzo: [40, 57], messi: [58, 40] },
+                        opponent: { rm: [43, 24], cm: [45, 48], lm: [43, 75] },
+                        routes: [["57%", "39%", "15%", "-54deg", 1], ["40%", "58%", "12%", "-15deg", 0.65]],
+                        targetOpacity: 0.1
+                    },
+                    {
+                        title: "Find the free release player",
+                        copy: "Use Messi between the lines as France's midfield loses contact with its back four.",
+                        shape: "Step 3 · break the pressure",
+                        ball: [61, 39],
+                        involved: ["messi", "forward", "depaul"],
+                        team: { messi: [61, 39], forward: [70, 51], dimaria: [60, 76] },
+                        opponent: { rb: [63, 16], rcb: [69, 39], cm: [52, 49] },
+                        routes: [["31%", "42%", "20%", "20deg", 1], ["51%", "61%", "14%", "15deg", 0.9]],
+                        targetOpacity: 0.38
+                    },
+                    {
+                        title: "Attack only with the clear edge",
+                        copy: "Release the forward into open field. If the lane closes, retain possession and reset the block.",
+                        shape: "Step 4 · selective counter",
+                        ball: [79, 48],
+                        involved: ["forward", "messi", "dimaria"],
+                        team: { forward: [79, 48], messi: [68, 38], dimaria: [70, 72] },
+                        opponent: { rcb: [76, 39], lcb: [76, 61], cm: [60, 49] },
+                        routes: [["39%", "61%", "18%", "14deg", 1], ["72%", "60%", "14%", "-29deg", 0.8]],
+                        targetOpacity: 0.58
+                    }
+                ]
             },
-            wide: {
-                target: ["63%", "2%", "38%", "32%", "Stretch the weak side"],
-                routes: [["72%", "48%", "28%", "8deg"], ["79%", "73%", "13%", "-20deg"]]
+            drawing: {
+                overview: ["3–2 buildup", "Higher right-back", "Two box runners", "3+2 rest defence"],
+                steps: [
+                    {
+                        title: "Hold the 3–2 platform",
+                        copy: "Keep three players behind the ball and two central protectors before committing the right-back.",
+                        shape: "Overall plan · controlled aggression",
+                        ball: [29, 39],
+                        involved: ["romero", "enzo", "depaul"],
+                        team: {},
+                        opponent: {},
+                        routes: [["39%", "29%", "0%", "0deg", 0], ["31%", "62%", "0%", "0deg", 0]],
+                        targetOpacity: 0.08
+                    },
+                    {
+                        title: "Send Molina early",
+                        copy: "Molina advances before France's winger can recover. De Paul supports underneath the run.",
+                        shape: "Step 2 · raise the fullback",
+                        ball: [50, 34],
+                        involved: ["molina", "depaul", "romero"],
+                        team: { molina: [62, 13], depaul: [56, 31], messi: [69, 40] },
+                        opponent: { rm: [54, 22], rb: [71, 18], cm: [57, 49] },
+                        routes: [["39%", "29%", "22%", "-13deg", 1], ["31%", "56%", "17%", "-31deg", 1]],
+                        targetOpacity: 0.28
+                    },
+                    {
+                        title: "Lock in the 3v2",
+                        copy: "Messi receives inside, Molina stays outside, and De Paul runs through the gap between defenders.",
+                        shape: "Step 3 · overload the channel",
+                        ball: [72, 39],
+                        involved: ["messi", "molina", "depaul"],
+                        team: { molina: [72, 14], depaul: [69, 29], messi: [72, 39], forward: [82, 54] },
+                        opponent: { rb: [75, 21], rcb: [78, 41], cm: [65, 48] },
+                        routes: [["34%", "50%", "22%", "8deg", 1], ["29%", "56%", "18%", "-17deg", 1]],
+                        targetOpacity: 0.5
+                    },
+                    {
+                        title: "Fill the box with two runners",
+                        copy: "The forward attacks the near space, Mac Allister arrives late, and the far winger protects the back-post option.",
+                        shape: "Step 4 · two-runner finish",
+                        ball: [88, 47],
+                        involved: ["forward", "macallister", "dimaria", "molina"],
+                        team: { molina: [85, 18], forward: [87, 47], macallister: [80, 63], dimaria: [80, 80], messi: [76, 39] },
+                        opponent: { rcb: [83, 40], lcb: [82, 61], lb: [79, 81], cm: [70, 50] },
+                        routes: [["39%", "72%", "17%", "12deg", 1], ["18%", "85%", "26%", "83deg", 1]],
+                        targetOpacity: 0.74
+                    }
+                ]
+            },
+            trailing: {
+                overview: ["3–2–5 attack", "Pin all five lanes", "Flood the box", "Immediate counterpress"],
+                steps: [
+                    {
+                        title: "Occupy all five attacking lanes",
+                        copy: "Stretch France's back line across the pitch while Enzo and De Paul secure the second ball.",
+                        shape: "Overall plan · aggressive 3–2–5",
+                        ball: [48, 57],
+                        involved: ["enzo", "depaul", "messi"],
+                        team: {},
+                        opponent: {},
+                        routes: [["57%", "48%", "0%", "0deg", 0], ["35%", "50%", "0%", "0deg", 0]],
+                        targetOpacity: 0.2
+                    },
+                    {
+                        title: "Move the block before it settles",
+                        copy: "Play quickly through the two midfielders. Force France's narrow block to shift toward Messi.",
+                        shape: "Step 2 · accelerate circulation",
+                        ball: [61, 36],
+                        involved: ["depaul", "messi", "enzo"],
+                        team: { depaul: [55, 35], messi: [67, 34], enzo: [49, 57] },
+                        opponent: { rm: [63, 24], cm: [65, 48], lm: [64, 74] },
+                        routes: [["57%", "48%", "18%", "-35deg", 1], ["35%", "55%", "16%", "-3deg", 0.8]],
+                        targetOpacity: 0.3
+                    },
+                    {
+                        title: "Pin the line, then find the free lane",
+                        copy: "Five attackers occupy five lanes. The central forward pins both centre-backs while the outside lane opens.",
+                        shape: "Step 3 · pin the last line",
+                        ball: [73, 34],
+                        involved: ["messi", "forward", "molina", "dimaria"],
+                        team: { molina: [74, 9], messi: [73, 34], forward: [85, 51], macallister: [76, 68], dimaria: [74, 89] },
+                        opponent: { rb: [80, 15], rcb: [82, 40], lcb: [82, 61], lb: [80, 85] },
+                        routes: [["36%", "61%", "13%", "-5deg", 1], ["51%", "73%", "14%", "31deg", 0.9]],
+                        targetOpacity: 0.55
+                    },
+                    {
+                        title: "Flood the finish and counterpress",
+                        copy: "Attack the cutback with three players. The nearest four immediately close the ball if the final action is blocked.",
+                        shape: "Step 4 · finish, then lock it in",
+                        ball: [90, 49],
+                        involved: ["forward", "messi", "macallister", "dimaria"],
+                        team: { forward: [88, 48], messi: [80, 36], macallister: [84, 63], dimaria: [83, 78], molina: [85, 17] },
+                        opponent: { rcb: [85, 39], lcb: [85, 60], cm: [73, 49], rb: [83, 19], lb: [82, 80] },
+                        routes: [["34%", "73%", "19%", "25deg", 1], ["17%", "85%", "30%", "83deg", 1]],
+                        targetOpacity: 0.8
+                    }
+                ]
             }
         };
 
@@ -881,6 +1071,7 @@
                 route.style.left = values[1];
                 route.style.width = values[2];
                 route.style.transform = "rotate(" + values[3] + ")";
+                route.style.opacity = values.length > 4 ? String(values[4]) : "1";
             });
         }
 
@@ -901,15 +1092,98 @@
             applyTargetAndRoutes(pitchState);
         }
 
-        function selectOption(key, keepScenarioVisual) {
+        function selectOption(key) {
             room.querySelectorAll("[data-option]").forEach(function (button) {
                 var selected = button.dataset.option === key;
                 button.classList.toggle("is-selected", selected);
                 button.setAttribute("aria-pressed", String(selected));
             });
-            pitch.dataset.mode = key;
-            if (!keepScenarioVisual) applyTargetAndRoutes(optionVisuals[key]);
             optionDetail.textContent = optionCopy[key].detail;
+        }
+
+        function stopAnimation(endLabel) {
+            if (animationTimer) {
+                window.clearInterval(animationTimer);
+                animationTimer = null;
+            }
+            animationPlay.setAttribute("aria-pressed", "false");
+            animationPlay.querySelector("span").textContent = endLabel || "Play attack";
+        }
+
+        function applyAccumulatedPositions(sequence, index) {
+            var base = states[stateControl.value].pitch;
+            setNodePositions("team", base.team);
+            setNodePositions("opponent", base.opponent);
+
+            for (var stepIndex = 0; stepIndex <= index; stepIndex += 1) {
+                var frame = sequence.steps[stepIndex];
+                setNodePositions("team", frame.team);
+                setNodePositions("opponent", frame.opponent);
+            }
+        }
+
+        function applyAnimationFrame(index) {
+            var sequence = attackAnimations[stateControl.value];
+            var frame = sequence.steps[index];
+            animationIndex = index;
+
+            applyAccumulatedPositions(sequence, index);
+            coachBall.style.setProperty("--x", frame.ball[0] + "%");
+            coachBall.style.setProperty("--y", frame.ball[1] + "%");
+            shapeLabel.textContent = frame.shape;
+            targetArea.style.opacity = String(frame.targetOpacity);
+            applyTargetAndRoutes({
+                target: states[stateControl.value].pitch.target,
+                routes: frame.routes
+            });
+
+            room.querySelectorAll("[data-team-node]").forEach(function (node) {
+                node.classList.toggle("is-involved", frame.involved.indexOf(node.dataset.teamNode) !== -1);
+            });
+
+            animationCount.textContent = String(index + 1).padStart(2, "0") + " / 04";
+            animationTitle.textContent = frame.title;
+            animationCopy.textContent = frame.copy;
+            pitch.setAttribute("aria-label", states[stateControl.value].pitch.aria + ". Current step: " + frame.title + ".");
+
+            room.querySelectorAll("[data-animation-step]").forEach(function (button) {
+                var active = Number(button.dataset.animationStep) === index;
+                button.classList.toggle("is-active", active);
+                if (active) {
+                    button.setAttribute("aria-current", "step");
+                } else {
+                    button.removeAttribute("aria-current");
+                }
+            });
+        }
+
+        function updateAnimationOverview() {
+            var overview = attackAnimations[stateControl.value].overview;
+            setText("[data-plan-shape]", overview[0]);
+            setText("[data-plan-create]", overview[1]);
+            setText("[data-plan-finish]", overview[2]);
+            setText("[data-plan-loss]", overview[3]);
+        }
+
+        function startAnimation() {
+            var steps = attackAnimations[stateControl.value].steps;
+
+            if (animationTimer) {
+                stopAnimation("Continue attack");
+                return;
+            }
+
+            if (animationIndex >= steps.length - 1) {
+                applyAnimationFrame(0);
+            }
+
+            animationPlay.setAttribute("aria-pressed", "true");
+            animationPlay.querySelector("span").textContent = "Pause";
+            animationTimer = window.setInterval(function () {
+                var nextIndex = animationIndex + 1;
+                applyAnimationFrame(nextIndex);
+                if (nextIndex >= steps.length - 1) stopAnimation("Replay attack");
+            }, 1800);
         }
 
         function updatePlayer() {
@@ -957,13 +1231,16 @@
             updateOptionScores(current.options);
             riskCard.classList.toggle("is-safer", current.effects.risk[0].charAt(0) === "−");
             applyScenarioPitch(current.pitch);
-            selectOption(stateControl.value === "trailing" ? "transition" : "controlled", true);
+            selectOption(stateControl.value === "trailing" ? "transition" : "controlled");
+            updateAnimationOverview();
+            stopAnimation("Play attack");
+            applyAnimationFrame(0);
             updatePlayer();
         }
 
         room.querySelectorAll("[data-option]").forEach(function (button) {
             button.addEventListener("click", function () {
-                selectOption(button.dataset.option, false);
+                selectOption(button.dataset.option);
             });
         });
 
@@ -972,7 +1249,13 @@
                 var label = button.querySelector("small");
                 if (!label) return;
                 var name = label.textContent.trim();
-                playerNote.textContent = playerJobs[name] || "Role detail will be available when the production player model is connected.";
+                stopAnimation("Play attack");
+                room.querySelectorAll("[data-team-node]").forEach(function (node) {
+                    node.classList.toggle("is-involved", node === button);
+                });
+                animationCount.textContent = "PLAYER ROLE";
+                animationTitle.textContent = name;
+                animationCopy.textContent = playerJobs[name] || "Role detail will be available when the production player model is connected.";
             });
         });
 
@@ -980,10 +1263,26 @@
         playerControl.addEventListener("change", function () {
             updatePlayer();
             var forwardLabel = playerControl.value === "lautaro" ? "Lautaro" : "Álvarez";
-            playerNote.textContent = playerJobs[forwardLabel];
+            stopAnimation("Play attack");
+            animationCount.textContent = "LINEUP CHANGE";
+            animationTitle.textContent = forwardLabel;
+            animationCopy.textContent = playerJobs[forwardLabel];
+        });
+
+        animationPlay.addEventListener("click", startAnimation);
+
+        room.querySelectorAll("[data-animation-step]").forEach(function (button) {
+            button.addEventListener("click", function () {
+                stopAnimation("Play attack");
+                applyAnimationFrame(Number(button.dataset.animationStep));
+            });
         });
 
         updateState();
+
+        window.addEventListener("pagehide", function () {
+            if (animationTimer) window.clearInterval(animationTimer);
+        });
     }
 
     initializeNavigation();

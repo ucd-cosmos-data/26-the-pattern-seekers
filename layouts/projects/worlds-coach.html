@@ -81,14 +81,21 @@
             <section class="coach-panel coach-tactics" aria-labelledby="coach-tactics-title" data-reveal>
                 <div class="coach-panel__header">
                     <div>
-                        <p class="coach-kicker">Tactical map</p>
-                        <h2 id="coach-tactics-title">Where the plan creates the advantage</h2>
+                        <p class="coach-kicker">Animated game plan</p>
+                        <h2 id="coach-tactics-title">See the attack unfold</h2>
                     </div>
                     <div class="coach-pitch-legend" aria-label="Pitch legend">
                         <span><i class="is-team"></i> Argentina</span>
                         <span><i class="is-opponent"></i> France</span>
-                        <span><i class="is-space"></i> Target space</span>
+                        <span><i class="is-ball"></i> Ball</span>
                     </div>
+                </div>
+
+                <div class="coach-plan-strip" aria-label="Overall tactical plan">
+                    <div><small>Base shape</small><strong data-plan-shape>3–2 buildup</strong></div>
+                    <div><small>Create</small><strong data-plan-create>Right-side 3v2</strong></div>
+                    <div><small>Finish</small><strong data-plan-finish>Low cutback</strong></div>
+                    <div><small>On loss</small><strong data-plan-loss>Five-second press</strong></div>
                 </div>
 
                 <div class="coach-pitch-wrap">
@@ -100,11 +107,12 @@
                         <div class="coach-pitch__goal coach-pitch__goal--left"></div>
                         <div class="coach-pitch__goal coach-pitch__goal--right"></div>
                         <div class="coach-pitch__target" data-target-zone>
-                            <span>Attack this channel</span>
+                            <span class="sr-only">Target area</span>
                         </div>
                         <div class="coach-pitch__shape" data-shape-label>3–2 build</div>
-                        <div class="coach-pitch__route coach-pitch__route--one" data-route="one"></div>
-                        <div class="coach-pitch__route coach-pitch__route--two" data-route="two"></div>
+                        <div class="coach-pitch__route coach-pitch__route--pass" data-route="one"></div>
+                        <div class="coach-pitch__route coach-pitch__route--run" data-route="two"></div>
+                        <div class="coach-ball" data-coach-ball style="--x: 10%; --y: 50%" aria-hidden="true"></div>
 
                         <button class="coach-player is-team" data-team-node="gk" style="--x: 10%; --y: 50%" type="button" aria-label="Emiliano Martínez, goalkeeper"><span>23</span><small>Martínez</small></button>
                         <button class="coach-player is-team" data-team-node="molina" style="--x: 28%; --y: 20%" type="button" aria-label="Nahuel Molina, right back"><span>26</span><small>Molina</small></button>
@@ -129,17 +137,26 @@
                     </div>
                 </div>
 
-                <p class="coach-player-note" data-player-note aria-live="polite">
-                    Select a player to see the job behind their position.
-                </p>
-                <div class="coach-sequence" aria-label="Recommended attacking sequence">
-                    <span><b>1</b> Build in a 3–2</span>
-                    <i aria-hidden="true">→</i>
-                    <span><b>2</b> Draw pressure centrally</span>
-                    <i aria-hidden="true">→</i>
-                    <span><b>3</b> Release right channel</span>
-                    <i aria-hidden="true">→</i>
-                    <span><b>4</b> Finish with a cutback</span>
+                <div class="coach-animation">
+                    <div class="coach-animation__caption" aria-live="polite">
+                        <span data-animation-count>01 / 04</span>
+                        <div>
+                            <h3 data-animation-title>Set the structure</h3>
+                            <p data-animation-copy>Build with three behind the ball and two central outlets. Keep both wings available.</p>
+                        </div>
+                    </div>
+                    <div class="coach-animation__controls">
+                        <button type="button" class="coach-animation__play" data-animation-play aria-pressed="false">
+                            <i aria-hidden="true"></i>
+                            <span>Play attack</span>
+                        </button>
+                        <div class="coach-animation__steps" aria-label="Attack steps">
+                            <button type="button" class="is-active" data-animation-step="0" aria-label="Show step 1" aria-current="step"><span>1</span></button>
+                            <button type="button" data-animation-step="1" aria-label="Show step 2"><span>2</span></button>
+                            <button type="button" data-animation-step="2" aria-label="Show step 3"><span>3</span></button>
+                            <button type="button" data-animation-step="3" aria-label="Show step 4"><span>4</span></button>
+                        </div>
+                    </div>
                 </div>
             </section>
 
