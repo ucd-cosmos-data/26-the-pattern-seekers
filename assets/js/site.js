@@ -656,7 +656,9 @@
         var stateControl = room.querySelector("[data-coach-state]");
         var playerControl = room.querySelector("[data-coach-player]");
         var pitch = room.querySelector("[data-coach-pitch]");
-        var targetZone = room.querySelector("[data-target-zone] span");
+        var targetArea = room.querySelector("[data-target-zone]");
+        var targetZone = targetArea.querySelector("span");
+        var shapeLabel = room.querySelector("[data-shape-label]");
         var planName = room.querySelector("[data-plan-name]");
         var planWhy = room.querySelector("[data-plan-why]");
         var confidence = room.querySelector("[data-confidence]");
@@ -682,7 +684,23 @@
                     out: "Defend in a compact 4–4–2. Screen central access and guide France toward their right side.",
                     transition: "Enzo protects the centre. Counterpress for five seconds; recover shape if the first wave is broken."
                 },
-                options: { controlled: 64, transition: 58, wide: 54 }
+                options: { controlled: 64, transition: 58, wide: 54 },
+                pitch: {
+                    shape: "3–2 build · right overload",
+                    aria: "Argentina in a 3–2 buildup creating a right-side overload against France",
+                    target: ["5%", "2%", "29%", "42%", "Attack this channel"],
+                    routes: [["34%", "53%", "17%", "5deg"], ["36%", "70%", "14%", "37deg"]],
+                    team: {
+                        gk: [10, 50], molina: [28, 20], romero: [28, 41],
+                        otamendi: [28, 61], tagliafico: [31, 82], enzo: [47, 62],
+                        depaul: [53, 34], macallister: [58, 77], messi: [70, 38],
+                        dimaria: [76, 15], forward: [83, 57]
+                    },
+                    opponent: {
+                        gk: [89, 50], rb: [72, 17], rcb: [74, 44], lcb: [71, 65],
+                        lb: [67, 84], rm: [57, 25], cm: [57, 52], lm: [53, 78]
+                    }
+                }
             },
             leading: {
                 plan: "Compact control → selective release",
@@ -700,7 +718,23 @@
                     out: "Set a compact medium block. Protect the centre first and allow low-value circulation outside.",
                     transition: "First look forward into the space France leaves; otherwise secure possession and reset the block."
                 },
-                options: { controlled: 68, transition: 61, wide: 57 }
+                options: { controlled: 68, transition: 61, wide: 57 },
+                pitch: {
+                    shape: "4–4–2 mid-block · release",
+                    aria: "Argentina protecting a lead in a compact medium block with two release players",
+                    target: ["23%", "3%", "39%", "56%", "Release into open field"],
+                    routes: [["43%", "43%", "23%", "-9deg"], ["39%", "65%", "18%", "-25deg"]],
+                    team: {
+                        gk: [8, 50], molina: [24, 20], romero: [23, 41],
+                        otamendi: [23, 61], tagliafico: [24, 81], enzo: [39, 58],
+                        depaul: [42, 31], macallister: [41, 76], messi: [59, 39],
+                        dimaria: [55, 78], forward: [68, 52]
+                    },
+                    opponent: {
+                        gk: [90, 50], rb: [66, 16], rcb: [69, 39], lcb: [69, 62],
+                        lb: [65, 84], rm: [48, 23], cm: [50, 49], lm: [47, 77]
+                    }
+                }
             },
             drawing: {
                 plan: "Controlled overload → higher fullback",
@@ -718,7 +752,23 @@
                     out: "Press the first backward pass, then settle into a compact 4–4–2 if the press is bypassed.",
                     transition: "Counterpress around the right half-space. Enzo and the left-back protect the central escape route."
                 },
-                options: { controlled: 66, transition: 60, wide: 56 }
+                options: { controlled: 66, transition: 60, wide: 56 },
+                pitch: {
+                    shape: "3–2 build · higher fullback",
+                    aria: "Argentina drawing level opponents with a higher right-back and a three-player right overload",
+                    target: ["2%", "1%", "31%", "45%", "Create the 3v2"],
+                    routes: [["25%", "55%", "19%", "-12deg"], ["22%", "73%", "15%", "32deg"]],
+                    team: {
+                        gk: [10, 50], molina: [59, 14], romero: [29, 39],
+                        otamendi: [28, 61], tagliafico: [31, 83], enzo: [48, 60],
+                        depaul: [62, 31], macallister: [60, 74], messi: [73, 39],
+                        dimaria: [76, 84], forward: [85, 55]
+                    },
+                    opponent: {
+                        gk: [91, 50], rb: [75, 17], rcb: [77, 42], lcb: [74, 65],
+                        lb: [69, 84], rm: [59, 22], cm: [60, 51], lm: [56, 76]
+                    }
+                }
             },
             trailing: {
                 plan: "Aggressive 3–2–5 → immediate counterpress",
@@ -736,7 +786,23 @@
                     out: "Press man-oriented from every restart. Force France long and keep the defensive line near halfway.",
                     transition: "Counterpress immediately with the nearest four players. Accept the one-on-one risk behind the attack."
                 },
-                options: { controlled: 57, transition: 63, wide: 55 }
+                options: { controlled: 57, transition: 63, wide: 55 },
+                pitch: {
+                    shape: "3–2–5 attack · counterpress",
+                    aria: "Argentina chasing the match in an aggressive 3–2–5 against a deep France block",
+                    target: ["12%", "0%", "27%", "76%", "Flood the last line"],
+                    routes: [["48%", "49%", "25%", "-31deg"], ["50%", "48%", "31%", "19deg"]],
+                    team: {
+                        gk: [9, 50], molina: [70, 10], romero: [29, 30],
+                        otamendi: [28, 51], tagliafico: [30, 72], enzo: [48, 57],
+                        depaul: [50, 35], macallister: [71, 69], messi: [73, 34],
+                        dimaria: [70, 89], forward: [85, 51]
+                    },
+                    opponent: {
+                        gk: [92, 50], rb: [80, 14], rcb: [81, 40], lcb: [81, 61],
+                        lb: [79, 86], rm: [67, 23], cm: [68, 49], lm: [66, 76]
+                    }
+                }
             }
         };
 
@@ -752,6 +818,21 @@
             wide: {
                 target: "Stretch the weak side",
                 detail: "Safer circulation can widen France's block, though it produces fewer central receptions and lower-value final actions."
+            }
+        };
+
+        var optionVisuals = {
+            controlled: {
+                target: ["5%", "2%", "29%", "42%", "Attack this channel"],
+                routes: [["34%", "53%", "17%", "5deg"], ["36%", "70%", "14%", "37deg"]]
+            },
+            transition: {
+                target: ["28%", "3%", "42%", "50%", "Release behind pressure"],
+                routes: [["48%", "42%", "27%", "-16deg"], ["39%", "67%", "18%", "20deg"]]
+            },
+            wide: {
+                target: ["63%", "2%", "38%", "32%", "Stretch the weak side"],
+                routes: [["72%", "48%", "28%", "8deg"], ["79%", "73%", "13%", "-20deg"]]
             }
         };
 
@@ -785,14 +866,49 @@
             });
         }
 
-        function selectOption(key) {
+        function applyTargetAndRoutes(visual) {
+            var target = visual.target;
+            var routes = visual.routes;
+            targetArea.style.top = target[0];
+            targetArea.style.right = target[1];
+            targetArea.style.width = target[2];
+            targetArea.style.height = target[3];
+            targetZone.textContent = target[4];
+
+            room.querySelectorAll("[data-route]").forEach(function (route, index) {
+                var values = routes[index];
+                route.style.top = values[0];
+                route.style.left = values[1];
+                route.style.width = values[2];
+                route.style.transform = "rotate(" + values[3] + ")";
+            });
+        }
+
+        function setNodePositions(kind, positions) {
+            Object.keys(positions).forEach(function (key) {
+                var node = room.querySelector("[data-" + kind + '-node="' + key + '"]');
+                if (!node) return;
+                node.style.setProperty("--x", positions[key][0] + "%");
+                node.style.setProperty("--y", positions[key][1] + "%");
+            });
+        }
+
+        function applyScenarioPitch(pitchState) {
+            setNodePositions("team", pitchState.team);
+            setNodePositions("opponent", pitchState.opponent);
+            shapeLabel.textContent = pitchState.shape;
+            pitch.setAttribute("aria-label", pitchState.aria);
+            applyTargetAndRoutes(pitchState);
+        }
+
+        function selectOption(key, keepScenarioVisual) {
             room.querySelectorAll("[data-option]").forEach(function (button) {
                 var selected = button.dataset.option === key;
                 button.classList.toggle("is-selected", selected);
                 button.setAttribute("aria-pressed", String(selected));
             });
             pitch.dataset.mode = key;
-            targetZone.textContent = optionCopy[key].target;
+            if (!keepScenarioVisual) applyTargetAndRoutes(optionVisuals[key]);
             optionDetail.textContent = optionCopy[key].detail;
         }
 
@@ -840,13 +956,14 @@
             setText("[data-transition]", current.instructions.transition);
             updateOptionScores(current.options);
             riskCard.classList.toggle("is-safer", current.effects.risk[0].charAt(0) === "−");
-            selectOption(stateControl.value === "trailing" ? "transition" : "controlled");
+            applyScenarioPitch(current.pitch);
+            selectOption(stateControl.value === "trailing" ? "transition" : "controlled", true);
             updatePlayer();
         }
 
         room.querySelectorAll("[data-option]").forEach(function (button) {
             button.addEventListener("click", function () {
-                selectOption(button.dataset.option);
+                selectOption(button.dataset.option, false);
             });
         });
 

@@ -102,29 +102,30 @@
                         <div class="coach-pitch__target" data-target-zone>
                             <span>Attack this channel</span>
                         </div>
-                        <div class="coach-pitch__route coach-pitch__route--one"></div>
-                        <div class="coach-pitch__route coach-pitch__route--two"></div>
+                        <div class="coach-pitch__shape" data-shape-label>3–2 build</div>
+                        <div class="coach-pitch__route coach-pitch__route--one" data-route="one"></div>
+                        <div class="coach-pitch__route coach-pitch__route--two" data-route="two"></div>
 
-                        <button class="coach-player is-team" style="--x: 10%; --y: 50%" type="button" aria-label="Emiliano Martínez, goalkeeper"><span>23</span><small>Martínez</small></button>
-                        <button class="coach-player is-team" style="--x: 28%; --y: 20%" type="button" aria-label="Nahuel Molina, right back"><span>26</span><small>Molina</small></button>
-                        <button class="coach-player is-team" style="--x: 28%; --y: 41%" type="button" aria-label="Cristian Romero, center back"><span>13</span><small>Romero</small></button>
-                        <button class="coach-player is-team" style="--x: 28%; --y: 61%" type="button" aria-label="Nicolás Otamendi, center back"><span>19</span><small>Otamendi</small></button>
-                        <button class="coach-player is-team" style="--x: 31%; --y: 82%" type="button" aria-label="Nicolás Tagliafico, left back"><span>3</span><small>Tagliafico</small></button>
-                        <button class="coach-player is-team" style="--x: 47%; --y: 62%" type="button" aria-label="Enzo Fernández, midfielder"><span>24</span><small>Enzo</small></button>
-                        <button class="coach-player is-team" style="--x: 53%; --y: 34%" type="button" aria-label="Rodrigo De Paul, midfielder"><span>7</span><small>De Paul</small></button>
-                        <button class="coach-player is-team" style="--x: 58%; --y: 77%" type="button" aria-label="Alexis Mac Allister, midfielder"><span>20</span><small>Mac Allister</small></button>
-                        <button class="coach-player is-team is-gravity" style="--x: 70%; --y: 38%" type="button" aria-label="Lionel Messi, free creator, high gravity"><span>10</span><small>Messi</small></button>
-                        <button class="coach-player is-team" style="--x: 76%; --y: 15%" type="button" aria-label="Ángel Di María, wide creator"><span>11</span><small>Di María</small></button>
-                        <button class="coach-player is-team is-focus" data-forward-node style="--x: 83%; --y: 57%" type="button" aria-label="Julián Álvarez, depth runner"><span data-forward-number>9</span><small data-forward-name>Álvarez</small></button>
+                        <button class="coach-player is-team" data-team-node="gk" style="--x: 10%; --y: 50%" type="button" aria-label="Emiliano Martínez, goalkeeper"><span>23</span><small>Martínez</small></button>
+                        <button class="coach-player is-team" data-team-node="molina" style="--x: 28%; --y: 20%" type="button" aria-label="Nahuel Molina, right back"><span>26</span><small>Molina</small></button>
+                        <button class="coach-player is-team" data-team-node="romero" style="--x: 28%; --y: 41%" type="button" aria-label="Cristian Romero, center back"><span>13</span><small>Romero</small></button>
+                        <button class="coach-player is-team" data-team-node="otamendi" style="--x: 28%; --y: 61%" type="button" aria-label="Nicolás Otamendi, center back"><span>19</span><small>Otamendi</small></button>
+                        <button class="coach-player is-team" data-team-node="tagliafico" style="--x: 31%; --y: 82%" type="button" aria-label="Nicolás Tagliafico, left back"><span>3</span><small>Tagliafico</small></button>
+                        <button class="coach-player is-team" data-team-node="enzo" style="--x: 47%; --y: 62%" type="button" aria-label="Enzo Fernández, midfielder"><span>24</span><small>Enzo</small></button>
+                        <button class="coach-player is-team" data-team-node="depaul" style="--x: 53%; --y: 34%" type="button" aria-label="Rodrigo De Paul, midfielder"><span>7</span><small>De Paul</small></button>
+                        <button class="coach-player is-team" data-team-node="macallister" style="--x: 58%; --y: 77%" type="button" aria-label="Alexis Mac Allister, midfielder"><span>20</span><small>Mac Allister</small></button>
+                        <button class="coach-player is-team is-gravity" data-team-node="messi" style="--x: 70%; --y: 38%" type="button" aria-label="Lionel Messi, free creator, high gravity"><span>10</span><small>Messi</small></button>
+                        <button class="coach-player is-team" data-team-node="dimaria" style="--x: 76%; --y: 15%" type="button" aria-label="Ángel Di María, wide creator"><span>11</span><small>Di María</small></button>
+                        <button class="coach-player is-team is-focus" data-team-node="forward" data-forward-node style="--x: 83%; --y: 57%" type="button" aria-label="Julián Álvarez, depth runner"><span data-forward-number>9</span><small data-forward-name>Álvarez</small></button>
 
-                        <span class="coach-player is-opponent" style="--x: 89%; --y: 50%"><b>1</b></span>
-                        <span class="coach-player is-opponent" style="--x: 72%; --y: 17%"><b>22</b></span>
-                        <span class="coach-player is-opponent" style="--x: 74%; --y: 44%"><b>4</b></span>
-                        <span class="coach-player is-opponent" style="--x: 71%; --y: 65%"><b>18</b></span>
-                        <span class="coach-player is-opponent" style="--x: 67%; --y: 84%"><b>5</b></span>
-                        <span class="coach-player is-opponent" style="--x: 57%; --y: 25%"><b>8</b></span>
-                        <span class="coach-player is-opponent" style="--x: 57%; --y: 52%"><b>14</b></span>
-                        <span class="coach-player is-opponent" style="--x: 53%; --y: 78%"><b>7</b></span>
+                        <span class="coach-player is-opponent" data-opponent-node="gk" style="--x: 89%; --y: 50%"><b>1</b></span>
+                        <span class="coach-player is-opponent" data-opponent-node="rb" style="--x: 72%; --y: 17%"><b>22</b></span>
+                        <span class="coach-player is-opponent" data-opponent-node="rcb" style="--x: 74%; --y: 44%"><b>4</b></span>
+                        <span class="coach-player is-opponent" data-opponent-node="lcb" style="--x: 71%; --y: 65%"><b>18</b></span>
+                        <span class="coach-player is-opponent" data-opponent-node="lb" style="--x: 67%; --y: 84%"><b>5</b></span>
+                        <span class="coach-player is-opponent" data-opponent-node="rm" style="--x: 57%; --y: 25%"><b>8</b></span>
+                        <span class="coach-player is-opponent" data-opponent-node="cm" style="--x: 57%; --y: 52%"><b>14</b></span>
+                        <span class="coach-player is-opponent" data-opponent-node="lm" style="--x: 53%; --y: 78%"><b>7</b></span>
                     </div>
                 </div>
 
@@ -306,19 +307,46 @@
 
         <details class="coach-evidence" data-reveal>
             <summary>
-                <span><b>For analysts</b> Model evidence, uncertainty, and validation</span>
+                <span class="coach-evidence__summary-copy">
+                    <b>For analysts</b>
+                    <small>Model evidence, uncertainty, and validation</small>
+                </span>
                 <i aria-hidden="true"></i>
             </summary>
             <div class="coach-evidence__content">
-                <p>
-                    The coaching layer compares candidate strategies across held-out matches,
-                    then explains the highest-ranked plan in football language. The production
-                    version will display only out-of-sample results here.
-                </p>
-                <div>
-                    <span><small>Recommendation stability</small><strong>4 / 5 model families</strong></span>
-                    <span><small>Comparable possessions</small><strong>1,284</strong></span>
-                    <span><small>Uncertainty band</small><strong>± 6 points</strong></span>
+                <div class="coach-evidence__intro">
+                    <div>
+                        <p class="coach-kicker">How to read this</p>
+                        <h3>Evidence behind the recommendation</h3>
+                        <p>
+                            Candidate strategies are compared on held-out matches. The production
+                            version will report only out-of-sample results and will separate model
+                            confidence from tactical upside.
+                        </p>
+                    </div>
+                    <span><i></i> Prototype evidence</span>
+                </div>
+                <dl class="coach-evidence__metrics">
+                    <div>
+                        <dt>Recommendation stability</dt>
+                        <dd>4 / 5 <small>model families agree</small></dd>
+                    </div>
+                    <div>
+                        <dt>Comparable possessions</dt>
+                        <dd>1,284 <small>in the reference set</small></dd>
+                    </div>
+                    <div>
+                        <dt>Uncertainty band</dt>
+                        <dd>± 6 <small>percentage points</small></dd>
+                    </div>
+                </dl>
+                <div class="coach-evidence__checks">
+                    <p class="coach-kicker">Required before match use</p>
+                    <div>
+                        <span><b>01</b> Leave-one-match-out validation</span>
+                        <span><b>02</b> Lineup and opponent sensitivity</span>
+                        <span><b>03</b> Calibration by game state</span>
+                    </div>
                 </div>
                 <p class="coach-evidence__footnote">
                     Prototype values are illustrative and are not yet connected to the project's
