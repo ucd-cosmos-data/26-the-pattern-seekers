@@ -1482,6 +1482,128 @@
         animationFrame = window.requestAnimationFrame(animationTick);
     }
 
+    var presentationInitialized = false;
+
+    function initializePresentation() {
+        if (presentationInitialized || !presentationPanel) return;
+        presentationInitialized = true;
+
+        var reveals = Array.prototype.slice.call(
+            presentationPanel.querySelectorAll("[data-pres-reveal]")
+        );
+        var chapters = Array.prototype.slice.call(
+            presentationPanel.querySelectorAll("[data-pres-chapter]")
+        );
+        var indexLinks = Array.prototype.slice.call(
+            presentationPanel.querySelectorAll("[data-pres-jump]")
+        );
+        var progressNode = presentationPanel.querySelector("[data-pres-progress]");
+
+        function formatCount(value) {
+            return String(value).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+        }
+
+        function runCounter(node) {
+            if (node.dataset.done) return;
+            node.dataset.done = "true";
+            var target = Number(node.dataset.count) || 0;
+            if (reducedMotion.matches) {
+                node.textContent = formatCount(target);
+                return;
+            }
+            var start = performance.now();
+            var duration = 1300;
+            function tick(now) {
+                var progress = Math.min(1, (now - start) / duration);
+                var eased = 1 - Math.pow(1 - progress, 3);
+                node.textContent = formatCount(Math.round(target * eased));
+                if (progress < 1) window.requestAnimationFrame(tick);
+            }
+            window.requestAnimationFrame(tick);
+        }
+
+        function revealNode(node) {
+            node.classList.add("is-in");
+            Array.prototype.forEach.call(
+                node.querySelectorAll("[data-count]"),
+                runCounter
+            );
+        }
+
+        if (reducedMotion.matches || !("IntersectionObserver" in window)) {
+            reveals.forEach(revealNode);
+        } else {
+            var observer = new IntersectionObserver(
+                function (entries) {
+                    entries.forEach(function (entry) {
+                        if (!entry.isIntersecting) return;
+                        revealNode(entry.target);
+                        observer.unobserve(entry.target);
+                    });
+                },
+                { threshold: 0.16, rootMargin: "0px 0px -8% 0px" }
+            );
+            reveals.forEach(function (node) {
+                observer.observe(node);
+            });
+        }
+
+        indexLinks.forEach(function (link) {
+            link.addEventListener("click", function (event) {
+                var target = presentationPanel.querySelector(
+                    link.getAttribute("href")
+                );
+                if (!target) return;
+                event.preventDefault();
+                // The theme sets `scroll-behavior: smooth` globally, so reduced
+                // motion needs an explicit instant scroll, not "auto".
+                target.scrollIntoView({
+                    behavior: reducedMotion.matches ? "instant" : "smooth",
+                    block: "start"
+                });
+            });
+        });
+
+        var progressTicking = false;
+
+        function updatePresentationProgress() {
+            progressTicking = false;
+            if (presentationPanel.hidden) return;
+            var rect = presentationPanel.getBoundingClientRect();
+            var viewport = window.innerHeight || 1;
+            var total = Math.max(1, rect.height - viewport);
+            var progress = Math.min(1, Math.max(0, -rect.top / total));
+            if (progressNode) {
+                progressNode.style.setProperty("--pres-progress", String(progress));
+            }
+            var activeIndex = -1;
+            chapters.forEach(function (chapter, index) {
+                if (chapter.getBoundingClientRect().top < viewport * 0.45) {
+                    activeIndex = index;
+                }
+            });
+            // chapters[0] is the hero and the last entry is the coda; index
+            // links map to chapters[1..6].
+            var effective = Math.min(activeIndex, indexLinks.length);
+            indexLinks.forEach(function (link, index) {
+                if (index + 1 === effective) link.setAttribute("aria-current", "true");
+                else link.removeAttribute("aria-current");
+            });
+        }
+
+        function requestPresentationProgress() {
+            if (progressTicking) return;
+            progressTicking = true;
+            window.requestAnimationFrame(updatePresentationProgress);
+        }
+
+        window.addEventListener("scroll", requestPresentationProgress, {
+            passive: true
+        });
+        window.addEventListener("resize", requestPresentationProgress);
+        requestPresentationProgress();
+    }
+
     function updateControlVisibility(view) {
         var hasSequence = view === "attack" || view === "press" || view === "transition";
         animationControls.hidden = false;
@@ -1508,7 +1630,10 @@
         var isPresentation = view === "presentation";
         if (presentationPanel) presentationPanel.hidden = !isPresentation;
         tacticalStage.hidden = isPresentation;
-        if (isPresentation) return;
+        if (isPresentation) {
+            initializePresentation();
+            return;
+        }
 
         tacticalStage.setAttribute("aria-labelledby", "coach-tab-" + view);
         updateControlVisibility(view);
