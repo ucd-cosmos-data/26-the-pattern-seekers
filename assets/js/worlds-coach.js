@@ -702,6 +702,7 @@
     var stateControl = room.querySelector("[data-coach-state]");
     var playerControl = room.querySelector("[data-coach-player]");
     var tacticalStage = room.querySelector("[data-tactical-stage]");
+    var presentationPanel = room.querySelector("[data-presentation-panel]");
     var pitch = room.querySelector("[data-coach-pitch]");
     var playersLayer = room.querySelector("[data-pitch-players]");
     var ballNode = room.querySelector("[data-coach-ball]");
@@ -1501,6 +1502,14 @@
             button.setAttribute("aria-selected", String(selected));
             button.tabIndex = selected ? 0 : -1;
         });
+
+        // "Presentation" is static content, not a tactical view: swap the pitch
+        // stage for the presentation panel and skip the sequence rendering.
+        var isPresentation = view === "presentation";
+        if (presentationPanel) presentationPanel.hidden = !isPresentation;
+        tacticalStage.hidden = isPresentation;
+        if (isPresentation) return;
+
         tacticalStage.setAttribute("aria-labelledby", "coach-tab-" + view);
         updateControlVisibility(view);
         buildSubstateControls(view);

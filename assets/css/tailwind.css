@@ -2071,6 +2071,46 @@
         margin-top: 2.4rem;
     }
 
+    .coach-presentation {
+        display: grid;
+        place-items: center;
+        min-height: 26rem;
+        margin-top: 2.4rem;
+        padding: clamp(2rem, 5vw, 4rem);
+        border-radius: 1.4rem;
+        border: 1px dashed color-mix(in srgb, var(--ps-muted) 45%, transparent);
+        background: var(--ps-surface);
+        text-align: center;
+    }
+
+    .coach-presentation__placeholder {
+        display: grid;
+        gap: 0.7rem;
+        max-width: 34rem;
+    }
+
+    .coach-presentation__eyebrow {
+        margin: 0;
+        font-size: 0.8rem;
+        font-weight: 600;
+        letter-spacing: 0.16em;
+        text-transform: uppercase;
+        color: var(--ps-muted);
+    }
+
+    .coach-presentation__placeholder h3 {
+        margin: 0;
+        font-size: clamp(1.6rem, 2.6vw, 2.2rem);
+        font-weight: 500;
+        letter-spacing: -0.02em;
+        color: var(--ps-text);
+    }
+
+    .coach-presentation__placeholder p:last-child {
+        margin: 0;
+        color: var(--ps-muted);
+    }
+
     .coach-playback {
         display: flex;
         min-width: 0;

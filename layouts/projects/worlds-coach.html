@@ -102,6 +102,17 @@
                     >
                         Transition
                     </button>
+                    <button
+                        id="coach-tab-presentation"
+                        type="button"
+                        role="tab"
+                        aria-controls="coach-presentation-panel"
+                        aria-selected="false"
+                        tabindex="-1"
+                        data-tactic-tab="presentation"
+                    >
+                        Presentation
+                    </button>
                 </div>
             </div>
 
@@ -273,6 +284,21 @@
                             >
                         </label>
                     </div>
+                </div>
+            </div>
+
+            <div
+                id="coach-presentation-panel"
+                class="coach-presentation"
+                role="tabpanel"
+                aria-labelledby="coach-tab-presentation"
+                data-presentation-panel
+                hidden
+            >
+                <div class="coach-presentation__placeholder">
+                    <p class="coach-presentation__eyebrow">Presentation</p>
+                    <h3>Coming soon</h3>
+                    <p>Our project presentation will live here.</p>
                 </div>
             </div>
         </section>
