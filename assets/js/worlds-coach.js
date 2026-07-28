@@ -703,6 +703,7 @@
     var playerControl = room.querySelector("[data-coach-player]");
     var tacticalStage = room.querySelector("[data-tactical-stage]");
     var presentationPanel = room.querySelector("[data-presentation-panel]");
+    var coachTool = room.querySelector("[data-coach-tool]");
     var pitch = room.querySelector("[data-coach-pitch]");
     var playersLayer = room.querySelector("[data-pitch-players]");
     var ballNode = room.querySelector("[data-coach-ball]");
@@ -1604,6 +1605,44 @@
         requestPresentationProgress();
     }
 
+    var activeMode = "tool";
+
+    function setMode(mode, options) {
+        var opts = options || {};
+        if (mode === activeMode && !opts.force) return;
+        activeMode = mode;
+        var isPresentation = mode === "presentation";
+
+        if (isPresentation) stopAnimation("Play sequence");
+        if (coachTool) coachTool.hidden = isPresentation;
+        if (presentationPanel) presentationPanel.hidden = !isPresentation;
+
+        room.querySelectorAll("[data-coach-mode]").forEach(function (button) {
+            var selected = button.dataset.coachMode === mode;
+            button.setAttribute("aria-selected", String(selected));
+            button.tabIndex = selected ? 0 : -1;
+        });
+
+        if (isPresentation) initializePresentation();
+
+        // Fade the newly shown view in (retrigger the animation each switch).
+        var shown = isPresentation ? presentationPanel : coachTool;
+        if (shown && !opts.silent) {
+            shown.classList.remove("is-mode-enter");
+            void shown.offsetWidth;
+            shown.classList.add("is-mode-enter");
+        }
+
+        // Bring the top of the newly shown view into view.
+        if (!opts.silent && shown) {
+            var top = shown.getBoundingClientRect().top + window.scrollY - 12;
+            window.scrollTo({
+                top: Math.max(0, top),
+                behavior: reducedMotion.matches ? "instant" : "smooth"
+            });
+        }
+    }
+
     function updateControlVisibility(view) {
         var hasSequence = view === "attack" || view === "press" || view === "transition";
         animationControls.hidden = false;
@@ -1627,14 +1666,6 @@
 
         // "Presentation" is static content, not a tactical view: swap the pitch
         // stage for the presentation panel and skip the sequence rendering.
-        var isPresentation = view === "presentation";
-        if (presentationPanel) presentationPanel.hidden = !isPresentation;
-        tacticalStage.hidden = isPresentation;
-        if (isPresentation) {
-            initializePresentation();
-            return;
-        }
-
         tacticalStage.setAttribute("aria-labelledby", "coach-tab-" + view);
         updateControlVisibility(view);
         buildSubstateControls(view);
@@ -1661,6 +1692,24 @@
     function initializeInteractions() {
         createPlayerNodes();
         updateForwardRoster();
+
+        room.querySelectorAll("[data-coach-mode]").forEach(function (button, index, buttons) {
+            button.addEventListener("click", function () {
+                setMode(button.dataset.coachMode);
+            });
+            button.addEventListener("keydown", function (event) {
+                var nextIndex;
+                if (event.key === "ArrowRight") nextIndex = (index + 1) % buttons.length;
+                else if (event.key === "ArrowLeft") nextIndex = (index - 1 + buttons.length) % buttons.length;
+                else if (event.key === "Home") nextIndex = 0;
+                else if (event.key === "End") nextIndex = buttons.length - 1;
+                else return;
+                event.preventDefault();
+                var target = buttons[nextIndex];
+                setMode(target.dataset.coachMode);
+                target.focus();
+            });
+        });
 
         room.querySelectorAll("[data-tactic-tab]").forEach(function (button, index, buttons) {
             button.addEventListener("click", function () {

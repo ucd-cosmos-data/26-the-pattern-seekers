@@ -5,10 +5,34 @@
             {{- partial "breadcrumbs.html" . }}
             <h1 id="coach-room-title">The World's Coach</h1>
             <p>We built a prototype that turned match data into one game plan.</p>
+            <div class="coach-modes" role="tablist" aria-label="Choose view">
+                <button
+                    id="coach-mode-tool"
+                    type="button"
+                    role="tab"
+                    aria-selected="true"
+                    tabindex="0"
+                    aria-controls="coach-tool"
+                    data-coach-mode="tool"
+                >
+                    Interactive coach
+                </button>
+                <button
+                    id="coach-mode-presentation"
+                    type="button"
+                    role="tab"
+                    aria-selected="false"
+                    tabindex="-1"
+                    aria-controls="coach-presentation-panel"
+                    data-coach-mode="presentation"
+                >
+                    Presentation
+                </button>
+            </div>
         </div>
     </header>
 
-    <div class="coach-room__workspace">
+    <div class="coach-room__workspace" id="coach-tool" data-coach-tool>
         <div class="coach-overview">
             <section class="coach-context" aria-label="Match context">
                 <div>
@@ -101,17 +125,6 @@
                         data-tactic-tab="transition"
                     >
                         Transition
-                    </button>
-                    <button
-                        id="coach-tab-presentation"
-                        type="button"
-                        role="tab"
-                        aria-controls="coach-presentation-panel"
-                        aria-selected="false"
-                        tabindex="-1"
-                        data-tactic-tab="presentation"
-                    >
-                        Presentation
                     </button>
                 </div>
             </div>
@@ -286,353 +299,6 @@
                     </div>
                 </div>
             </div>
-
-            <div
-                id="coach-presentation-panel"
-                class="coach-presentation"
-                role="tabpanel"
-                aria-labelledby="coach-tab-presentation"
-                data-presentation-panel
-                hidden
-            >
-                <nav class="pres-index" aria-label="Presentation chapters">
-                    <a href="#pres-acquire" data-pres-jump>01 Acquire</a>
-                    <a href="#pres-engineer" data-pres-jump>02 Engineer</a>
-                    <a href="#pres-discover" data-pres-jump>03 Discover</a>
-                    <a href="#pres-model" data-pres-jump>04 Model</a>
-                    <a href="#pres-validate" data-pres-jump>05 Validate</a>
-                    <a href="#pres-deliver" data-pres-jump>06 Deliver</a>
-                    <i class="pres-index__progress" data-pres-progress aria-hidden="true"></i>
-                </nav>
-
-                <header class="pres-hero" data-pres-chapter>
-                    <p class="pres-kicker" data-pres-reveal>Case study — how we built it</p>
-                    <h3 class="pres-display pres-reveal--lines" data-pres-reveal aria-label="Sixty-four matches. One game plan.">
-                        <span class="pres-line"><span>Sixty-four matches.</span></span>
-                        <span class="pres-line" style="--pres-delay: 110ms"><span>One game plan.</span></span>
-                    </h3>
-                    <p class="pres-serif pres-hero__sub" data-pres-reveal style="--pres-delay: 220ms">
-                        How four students turned the 2022 World Cup&rsquo;s raw event feed into a
-                        coaching engine &mdash; acquisition to deployment, every step audited.
-                    </p>
-                    <dl class="pres-stats" data-pres-reveal style="--pres-delay: 300ms">
-                        <div><dt>Matches</dt><dd><span data-count="64">0</span></dd></div>
-                        <div><dt>Possessions</dt><dd><span data-count="11016">0</span></dd></div>
-                        <div><dt>Actions scored</dt><dd><span data-count="233529">0</span></dd></div>
-                        <div><dt>Players rated</dt><dd><span data-count="142">0</span></dd></div>
-                    </dl>
-                </header>
-
-                <section class="pres-chapter" id="pres-acquire" data-pres-chapter>
-                    <div class="pres-chapter__meta">
-                        <p class="pres-kicker" data-pres-reveal>Acquire</p>
-                        <span class="pres-chapter__num" aria-hidden="true" data-pres-reveal>01</span>
-                    </div>
-                    <div class="pres-chapter__body">
-                        <h3 class="pres-title" data-pres-reveal>Start with every touch of the tournament.</h3>
-                        <div class="pres-copy" data-pres-reveal style="--pres-delay: 90ms">
-                            <p>
-                                StatsBomb publishes its full event data for the 2022 World Cup as open
-                                research data. We pulled every on-ball action from all 64 matches into
-                                one flat table, then joined the 360 freeze-frames &mdash; a snapshot of
-                                where every visible defender stood at the instant each action happened.
-                            </p>
-                            <p>
-                                The freeze-frames are the difference between knowing <em>what</em> a team
-                                did and knowing <em>what it did under pressure</em>.
-                            </p>
-                        </div>
-                        <div class="pres-manifest" data-pres-reveal style="--pres-delay: 160ms">
-                            <div class="pres-manifest__row">
-                                <span>Event feed</span>
-                                <span>Every on-ball action, all 64 matches</span>
-                                <span>86 MB</span>
-                            </div>
-                            <div class="pres-manifest__row">
-                                <span>360 freeze-frames</span>
-                                <span>Defender coordinates per action</span>
-                                <span>87.1% joined</span>
-                            </div>
-                            <div class="pres-manifest__row">
-                                <span>Match manifest</span>
-                                <span>Fixtures, stages, lineups</span>
-                                <span>64 rows</span>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="pres-chapter" id="pres-engineer" data-pres-chapter>
-                    <div class="pres-chapter__meta">
-                        <p class="pres-kicker" data-pres-reveal>Engineer</p>
-                        <span class="pres-chapter__num" aria-hidden="true" data-pres-reveal>02</span>
-                    </div>
-                    <div class="pres-chapter__body">
-                        <h3 class="pres-title" data-pres-reveal>Events are noise. Possessions are sentences.</h3>
-                        <div class="pres-copy" data-pres-reveal style="--pres-delay: 90ms">
-                            <p>
-                                We collapsed the feed into 11,016 possessions &mdash; one row per
-                                uninterrupted spell of play &mdash; and described each with 22 attacking
-                                features (tempo, directness, width, pressure) plus 14 defensive-shape
-                                measures computed from the freeze-frames.
-                            </p>
-                            <p>
-                                Outcomes never enter the inputs. Shots, goals and xG are excluded from
-                                every feature by contract &mdash; the leakage firewall went in on day
-                                one, not after review.
-                            </p>
-                        </div>
-                        <div class="pres-flow" data-pres-reveal style="--pres-delay: 160ms" role="img" aria-label="Raw events are grouped into possessions, then described by features.">
-                            <div class="pres-flow__node">
-                                <span>Raw feed</span>
-                                <strong>Event stream</strong>
-                                <em>per-match, per-action</em>
-                            </div>
-                            <span class="pres-flow__arrow" aria-hidden="true"></span>
-                            <div class="pres-flow__node">
-                                <span>Grouped</span>
-                                <strong>11,016 possessions</strong>
-                                <em>one row per spell</em>
-                            </div>
-                            <span class="pres-flow__arrow" aria-hidden="true"></span>
-                            <div class="pres-flow__node">
-                                <span>Described</span>
-                                <strong>22 + 14 features</strong>
-                                <em>attack &middot; defensive shape</em>
-                            </div>
-                        </div>
-                        <div class="pres-tags" data-pres-reveal style="--pres-delay: 220ms" aria-label="Sample engineered features">
-                            <span>duration_log</span><span>directness_ratio</span><span>progression_speed</span>
-                            <span>width_span_y</span><span>cross_share</span><span>under_pressure_rate</span>
-                            <span>back_line_height</span><span>hull_area_per_defender</span>
-                            <span>defenders_behind_ball</span><span>counterpress_rate</span>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="pres-chapter" id="pres-discover" data-pres-chapter>
-                    <div class="pres-chapter__meta">
-                        <p class="pres-kicker" data-pres-reveal>Discover</p>
-                        <span class="pres-chapter__num" aria-hidden="true" data-pres-reveal>03</span>
-                    </div>
-                    <div class="pres-chapter__body">
-                        <h3 class="pres-title" data-pres-reveal>We let the tournament name its own styles.</h3>
-                        <div class="pres-copy" data-pres-reveal style="--pres-delay: 90ms">
-                            <p>
-                                No preassigned tactical classes. K-means clustering over the engineered
-                                features &mdash; cluster counts chosen by internal validation and
-                                bootstrap stability, names assigned afterwards from each centroid&rsquo;s
-                                fingerprint. The defensive solution is near-deterministic: stability
-                                0.9999 across reruns.
-                            </p>
-                        </div>
-                        <div class="pres-bars" data-pres-reveal style="--pres-delay: 140ms">
-                            <p class="pres-bars__head">Attacking possessions &mdash; three styles</p>
-                            <div class="pres-bar" style="--w: 50.2%">
-                                <span class="pres-bar__label">Patient Build-up</span>
-                                <span class="pres-bar__track"><i class="pres-bar__fill"></i></span>
-                                <span class="pres-bar__value">50.2%</span>
-                            </div>
-                            <div class="pres-bar" style="--w: 34.6%; --pres-delay: 120ms">
-                                <span class="pres-bar__label">Short Under Pressure</span>
-                                <span class="pres-bar__track"><i class="pres-bar__fill"></i></span>
-                                <span class="pres-bar__value">34.6%</span>
-                            </div>
-                            <div class="pres-bar" style="--w: 15.2%; --pres-delay: 240ms">
-                                <span class="pres-bar__label">Direct Long Play</span>
-                                <span class="pres-bar__track"><i class="pres-bar__fill"></i></span>
-                                <span class="pres-bar__value">15.2%</span>
-                            </div>
-                        </div>
-                        <div class="pres-bars is-accent" data-pres-reveal style="--pres-delay: 200ms">
-                            <p class="pres-bars__head">Defensive responses &mdash; four shapes</p>
-                            <div class="pres-bar" style="--w: 52.6%">
-                                <span class="pres-bar__label">Wide Retreating Block</span>
-                                <span class="pres-bar__track"><i class="pres-bar__fill"></i></span>
-                                <span class="pres-bar__value">52.6%</span>
-                            </div>
-                            <div class="pres-bar" style="--w: 32.2%; --pres-delay: 120ms">
-                                <span class="pres-bar__label">Compact Pressure Block</span>
-                                <span class="pres-bar__track"><i class="pres-bar__fill"></i></span>
-                                <span class="pres-bar__value">32.2%</span>
-                            </div>
-                            <div class="pres-bar" style="--w: 7.7%; --pres-delay: 240ms">
-                                <span class="pres-bar__label">High-Intensity Press</span>
-                                <span class="pres-bar__track"><i class="pres-bar__fill"></i></span>
-                                <span class="pres-bar__value">7.7%</span>
-                            </div>
-                            <div class="pres-bar" style="--w: 7.5%; --pres-delay: 360ms">
-                                <span class="pres-bar__label">Set-Piece Compact Shape</span>
-                                <span class="pres-bar__track"><i class="pres-bar__fill"></i></span>
-                                <span class="pres-bar__value">7.5%</span>
-                            </div>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="pres-chapter pres-chapter--dark" id="pres-model" data-pres-chapter>
-                    <div class="pres-chapter__meta">
-                        <p class="pres-kicker" data-pres-reveal>Model</p>
-                        <span class="pres-chapter__num" aria-hidden="true" data-pres-reveal>04</span>
-                    </div>
-                    <div class="pres-chapter__body">
-                        <h3 class="pres-title" data-pres-reveal>Predict the possession. Price every touch.</h3>
-                        <p class="pres-serif pres-quote" data-pres-reveal style="--pres-delay: 90ms">
-                            Shots happen in 12.5% of possessions. A model that always says
-                            &ldquo;no shot&rdquo; is 87% accurate and completely useless &mdash; so we
-                            select and report on precision-recall, not accuracy.
-                        </p>
-                        <div class="pres-specs" data-pres-reveal style="--pres-delay: 160ms">
-                            <article class="pres-spec">
-                                <header><span>Target A</span><strong>Shot</strong><em>soft vote &middot; LR + XGBoost</em></header>
-                                <div class="pres-spec__row"><span>PR-AUC</span><strong>0.532</strong><em>95% CI 0.499&ndash;0.568</em></div>
-                                <div class="pres-spec__row"><span>ROC-AUC</span><strong>0.893</strong><em>&nbsp;</em></div>
-                                <div class="pres-spec__row"><span>Operating point</span><strong>thr 0.40</strong><em>precision 0.57 &middot; recall 0.41</em></div>
-                            </article>
-                            <article class="pres-spec">
-                                <header><span>Target B</span><strong>Box entry</strong><em>histogram gradient boosting</em></header>
-                                <div class="pres-spec__row"><span>PR-AUC</span><strong>0.830</strong><em>95% CI 0.818&ndash;0.844</em></div>
-                                <div class="pres-spec__row"><span>ROC-AUC</span><strong>0.904</strong><em>&nbsp;</em></div>
-                                <div class="pres-spec__row"><span>Operating point</span><strong>thr 0.63</strong><em>precision 0.82 &middot; recall 0.60</em></div>
-                            </article>
-                        </div>
-                        <div class="pres-copy" data-pres-reveal style="--pres-delay: 200ms">
-                            <p>
-                                Separately, a 360-VAEP pipeline prices every single action: an
-                                isotonic-calibrated XGBoost estimates the probability that a goal
-                                follows within the next three actions &mdash; for and against &mdash;
-                                from strictly pre-action features. Cross-fitted expected threat adds
-                                positional value. The target fires 0.118% of the time; low error is
-                                cheap under that imbalance, which is why we publish PR-AUC and
-                                calibration alongside it.
-                            </p>
-                        </div>
-                        <div class="pres-spec is-wide" data-pres-reveal style="--pres-delay: 240ms">
-                            <header><span>Player value</span><strong>360-VAEP + xT</strong><em>every rated action, out of fold</em></header>
-                            <div class="pres-spec__row"><span>Dev OOF ROC-AUC</span><strong>0.949</strong><em>untouched test 0.967</em></div>
-                            <div class="pres-spec__row"><span>Rating</span><strong>50 / 30 / 20</strong><em>VAEP&frasl;90 &middot; VAEP&frasl;touch &middot; xT&frasl;90</em></div>
-                            <div class="pres-spec__row"><span>Shrinkage</span><strong>min &frasl; (min + 300)</strong><em>toward position-group mean &middot; 142 players &ge; 300&prime;</em></div>
-                        </div>
-                        <figure class="pres-artifact" data-pres-reveal style="--pres-delay: 280ms">
-                            <img src="{{ "projects/worlds-coach-output/vaep_vs_xt_scatter.png" | relURL }}" alt="Scatter plot of VAEP per 90 against expected threat per 90 for every rated player" loading="lazy" width="1280" height="960" />
-                            <figcaption>Pipeline output &mdash; VAEP&frasl;90 &times; xT&frasl;90, every rated player.</figcaption>
-                        </figure>
-                    </div>
-                </section>
-
-                <section class="pres-chapter" id="pres-validate" data-pres-chapter>
-                    <div class="pres-chapter__meta">
-                        <p class="pres-kicker" data-pres-reveal>Validate</p>
-                        <span class="pres-chapter__num" aria-hidden="true" data-pres-reveal>05</span>
-                    </div>
-                    <div class="pres-chapter__body">
-                        <h3 class="pres-title" data-pres-reveal>Then we tried to break it.</h3>
-                        <div class="pres-copy" data-pres-reveal style="--pres-delay: 90ms">
-                            <p>
-                                Folds are whole matches &mdash; no match ever straddles train and
-                                validation. Ten matches sit in a vault that is opened exactly once, for
-                                the final number. Post-action fields in the feature set don&rsquo;t
-                                warn; they raise.
-                            </p>
-                        </div>
-                        <div class="pres-folds" data-pres-reveal style="--pres-delay: 150ms" role="img" aria-label="64 match cells: five development folds and a ten-match test vault.">
-                            <div class="pres-folds__grid">
-                                {{- range $i := seq 1 64 }}<i{{ if gt $i 54 }} class="is-test"{{ end }}></i>{{- end }}
-                            </div>
-                            <div class="pres-folds__legend">
-                                <span>5 match-level folds &middot; 54 matches</span>
-                                <span class="is-test">Vault &middot; 10 &mdash; opened once</span>
-                            </div>
-                        </div>
-                        <div class="pres-copy" data-pres-reveal style="--pres-delay: 190ms">
-                            <p>
-                                Selection optimism was measured, not assumed: a nested cross-validation
-                                with fold-local clustering re-ran the whole exercise without the model
-                                ever influencing its own scoreboard. Shot: 0.527 &plusmn; 0.033 nested
-                                against 0.532 pooled. Box entry: 0.833 &plusmn; 0.014 against 0.830.
-                                The gap is noise &mdash; the headline numbers hold.
-                            </p>
-                            <p>
-                                And every player grade ships with its own error bar: a 2,000-replicate
-                                match bootstrap reruns the exact rating formula on resampled
-                                tournaments. Twelve of eighteen teams have a statistically clear
-                                number&nbsp;one. Argentina doesn&rsquo;t.
-                            </p>
-                        </div>
-                        <div class="pres-intervals" data-pres-reveal style="--pres-delay: 230ms">
-                            <p class="pres-bars__head">Final rating, 95% interval &mdash; is the team&rsquo;s #1 real?</p>
-                            <div class="pres-intervals__group">
-                                <p>Argentina <strong>P(#1) = 63% &mdash; a lean</strong></p>
-                                <div class="pres-interval">
-                                    <span class="pres-interval__name">Messi</span>
-                                    <span class="pres-interval__track"><i style="left: 17.4%; width: 68.9%"></i><b style="left: 51.4%"></b></span>
-                                    <span class="pres-interval__value">0.330</span>
-                                </div>
-                                <div class="pres-interval">
-                                    <span class="pres-interval__name">&Aacute;lvarez</span>
-                                    <span class="pres-interval__track"><i style="left: 10.0%; width: 67.7%"></i><b style="left: 40.3%"></b></span>
-                                    <span class="pres-interval__value">0.291</span>
-                                </div>
-                            </div>
-                            <div class="pres-intervals__group">
-                                <p>France <strong>P(#1) = 94% &mdash; clear</strong></p>
-                                <div class="pres-interval">
-                                    <span class="pres-interval__name">Mbapp&eacute;</span>
-                                    <span class="pres-interval__track"><i style="left: 17.4%; width: 62.6%"></i><b style="left: 46.6%"></b></span>
-                                    <span class="pres-interval__value">0.313</span>
-                                </div>
-                                <div class="pres-interval">
-                                    <span class="pres-interval__name">Giroud</span>
-                                    <span class="pres-interval__track"><i style="left: 11.7%; width: 25.7%"></i><b style="left: 25.1%"></b></span>
-                                    <span class="pres-interval__value">0.238</span>
-                                </div>
-                            </div>
-                            <p class="pres-intervals__note">
-                                Intervals share match draws, so the joint test &mdash; not visual
-                                overlap &mdash; is the verdict. Ghana&rsquo;s top spot is a coin flip.
-                            </p>
-                        </div>
-                    </div>
-                </section>
-
-                <section class="pres-chapter" id="pres-deliver" data-pres-chapter>
-                    <div class="pres-chapter__meta">
-                        <p class="pres-kicker" data-pres-reveal>Deliver</p>
-                        <span class="pres-chapter__num" aria-hidden="true" data-pres-reveal>06</span>
-                    </div>
-                    <div class="pres-chapter__body">
-                        <h3 class="pres-title" data-pres-reveal>You&rsquo;re standing in the deliverable.</h3>
-                        <div class="pres-copy" data-pres-reveal style="--pres-delay: 90ms">
-                            <p>
-                                The other four tabs on this page are the product: scenario in, plan out,
-                                a seven-phase attacking sequence you can scrub like film. Behind it sit
-                                36 annotated team dossiers &mdash; every grade printed with its
-                                confidence interval &mdash; and a single ordered pipeline of twenty-odd
-                                scripts that rebuilds everything from the raw feed, ending in an
-                                acceptance gate that fails loudly.
-                            </p>
-                        </div>
-                        <figure class="pres-artifact is-plain" data-pres-reveal style="--pres-delay: 150ms">
-                            <img src="{{ "projects/worlds-coach-output/messi_heatmap.svg" | relURL }}" alt="Event and 360 spatial heatmap for Lionel Messi from the team dossiers" loading="lazy" width="640" height="500" />
-                            <figcaption>Dossier artifact &mdash; L. Messi, event + 360 spatial heatmap.</figcaption>
-                        </figure>
-                        <div class="pres-links" data-pres-reveal style="--pres-delay: 200ms">
-                            <a href="https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis" rel="noopener">Analysis &amp; notebooks <span aria-hidden="true">&nearr;</span></a>
-                            <a href="https://github.com/ucd-cosmos-data/26-the-pattern-seekers" rel="noopener">Website source <span aria-hidden="true">&nearr;</span></a>
-                        </div>
-                    </div>
-                </section>
-
-                <footer class="pres-coda" data-pres-chapter>
-                    <p class="pres-serif pres-coda__line" data-pres-reveal>
-                        Retrospective, one tournament, honest about both.
-                    </p>
-                    <div class="pres-coda__meta" data-pres-reveal style="--pres-delay: 120ms">
-                        <span>Next &mdash; possession-start live features &middot; a second competition &middot; calibration transfer</span>
-                        <span>Pattern Seekers &middot; COSMOS Cluster 26 &middot; UC Davis &middot; 2026</span>
-                    </div>
-                </footer>
-            </div>
         </section>
 
         <section class="coach-panel coach-roles" aria-labelledby="coach-roles-title">
@@ -701,5 +367,352 @@
             </footer>
         </section>
     </div>
+
+    <section
+        id="coach-presentation-panel"
+        class="coach-presentation"
+        role="tabpanel"
+        aria-labelledby="coach-mode-presentation"
+        data-presentation-panel
+        hidden
+    >
+        <nav class="pres-index" aria-label="Presentation chapters">
+            <a href="#pres-acquire" data-pres-jump>01 Acquire</a>
+            <a href="#pres-engineer" data-pres-jump>02 Engineer</a>
+            <a href="#pres-discover" data-pres-jump>03 Discover</a>
+            <a href="#pres-model" data-pres-jump>04 Model</a>
+            <a href="#pres-validate" data-pres-jump>05 Validate</a>
+            <a href="#pres-deliver" data-pres-jump>06 Deliver</a>
+            <i class="pres-index__progress" data-pres-progress aria-hidden="true"></i>
+        </nav>
+
+        <header class="pres-hero" data-pres-chapter>
+            <p class="pres-kicker" data-pres-reveal>Case study — how we built it</p>
+            <h3 class="pres-display pres-reveal--lines" data-pres-reveal aria-label="Sixty-four matches. One game plan.">
+                <span class="pres-line"><span>Sixty-four matches.</span></span>
+                <span class="pres-line" style="--pres-delay: 110ms"><span>One game plan.</span></span>
+            </h3>
+            <p class="pres-serif pres-hero__sub" data-pres-reveal style="--pres-delay: 220ms">
+                How four students turned the 2022 World Cup&rsquo;s raw event feed into a
+                coaching engine &mdash; acquisition to deployment, every step audited.
+            </p>
+            <dl class="pres-stats" data-pres-reveal style="--pres-delay: 300ms">
+                <div><dt>Matches</dt><dd><span data-count="64">0</span></dd></div>
+                <div><dt>Possessions</dt><dd><span data-count="11016">0</span></dd></div>
+                <div><dt>Actions scored</dt><dd><span data-count="233529">0</span></dd></div>
+                <div><dt>Players rated</dt><dd><span data-count="142">0</span></dd></div>
+            </dl>
+        </header>
+
+        <section class="pres-chapter" id="pres-acquire" data-pres-chapter>
+            <div class="pres-chapter__meta">
+                <p class="pres-kicker" data-pres-reveal>Acquire</p>
+                <span class="pres-chapter__num" aria-hidden="true" data-pres-reveal>01</span>
+            </div>
+            <div class="pres-chapter__body">
+                <h3 class="pres-title" data-pres-reveal>Start with every touch of the tournament.</h3>
+                <div class="pres-copy" data-pres-reveal style="--pres-delay: 90ms">
+                    <p>
+                        StatsBomb publishes its full event data for the 2022 World Cup as open
+                        research data. We pulled every on-ball action from all 64 matches into
+                        one flat table, then joined the 360 freeze-frames &mdash; a snapshot of
+                        where every visible defender stood at the instant each action happened.
+                    </p>
+                    <p>
+                        The freeze-frames are the difference between knowing <em>what</em> a team
+                        did and knowing <em>what it did under pressure</em>.
+                    </p>
+                </div>
+                <div class="pres-manifest" data-pres-reveal style="--pres-delay: 160ms">
+                    <div class="pres-manifest__row">
+                        <span>Event feed</span>
+                        <span>Every on-ball action, all 64 matches</span>
+                        <span>86 MB</span>
+                    </div>
+                    <div class="pres-manifest__row">
+                        <span>360 freeze-frames</span>
+                        <span>Defender coordinates per action</span>
+                        <span>87.1% joined</span>
+                    </div>
+                    <div class="pres-manifest__row">
+                        <span>Match manifest</span>
+                        <span>Fixtures, stages, lineups</span>
+                        <span>64 rows</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="pres-chapter" id="pres-engineer" data-pres-chapter>
+            <div class="pres-chapter__meta">
+                <p class="pres-kicker" data-pres-reveal>Engineer</p>
+                <span class="pres-chapter__num" aria-hidden="true" data-pres-reveal>02</span>
+            </div>
+            <div class="pres-chapter__body">
+                <h3 class="pres-title" data-pres-reveal>Events are noise. Possessions are sentences.</h3>
+                <div class="pres-copy" data-pres-reveal style="--pres-delay: 90ms">
+                    <p>
+                        We collapsed the feed into 11,016 possessions &mdash; one row per
+                        uninterrupted spell of play &mdash; and described each with 22 attacking
+                        features (tempo, directness, width, pressure) plus 14 defensive-shape
+                        measures computed from the freeze-frames.
+                    </p>
+                    <p>
+                        Outcomes never enter the inputs. Shots, goals and xG are excluded from
+                        every feature by contract &mdash; the leakage firewall went in on day
+                        one, not after review.
+                    </p>
+                </div>
+                <div class="pres-flow" data-pres-reveal style="--pres-delay: 160ms" role="img" aria-label="Raw events are grouped into possessions, then described by features.">
+                    <div class="pres-flow__node">
+                        <span>Raw feed</span>
+                        <strong>Event stream</strong>
+                        <em>per-match, per-action</em>
+                    </div>
+                    <span class="pres-flow__arrow" aria-hidden="true"></span>
+                    <div class="pres-flow__node">
+                        <span>Grouped</span>
+                        <strong>11,016 possessions</strong>
+                        <em>one row per spell</em>
+                    </div>
+                    <span class="pres-flow__arrow" aria-hidden="true"></span>
+                    <div class="pres-flow__node">
+                        <span>Described</span>
+                        <strong>22 + 14 features</strong>
+                        <em>attack &middot; defensive shape</em>
+                    </div>
+                </div>
+                <div class="pres-tags" data-pres-reveal style="--pres-delay: 220ms" aria-label="Sample engineered features">
+                    <span>duration_log</span><span>directness_ratio</span><span>progression_speed</span>
+                    <span>width_span_y</span><span>cross_share</span><span>under_pressure_rate</span>
+                    <span>back_line_height</span><span>hull_area_per_defender</span>
+                    <span>defenders_behind_ball</span><span>counterpress_rate</span>
+                </div>
+            </div>
+        </section>
+
+        <section class="pres-chapter" id="pres-discover" data-pres-chapter>
+            <div class="pres-chapter__meta">
+                <p class="pres-kicker" data-pres-reveal>Discover</p>
+                <span class="pres-chapter__num" aria-hidden="true" data-pres-reveal>03</span>
+            </div>
+            <div class="pres-chapter__body">
+                <h3 class="pres-title" data-pres-reveal>We let the tournament name its own styles.</h3>
+                <div class="pres-copy" data-pres-reveal style="--pres-delay: 90ms">
+                    <p>
+                        No preassigned tactical classes. K-means clustering over the engineered
+                        features &mdash; cluster counts chosen by internal validation and
+                        bootstrap stability, names assigned afterwards from each centroid&rsquo;s
+                        fingerprint. The defensive solution is near-deterministic: stability
+                        0.9999 across reruns.
+                    </p>
+                </div>
+                <div class="pres-bars" data-pres-reveal style="--pres-delay: 140ms">
+                    <p class="pres-bars__head">Attacking possessions &mdash; three styles</p>
+                    <div class="pres-bar" style="--w: 50.2%">
+                        <span class="pres-bar__label">Patient Build-up</span>
+                        <span class="pres-bar__track"><i class="pres-bar__fill"></i></span>
+                        <span class="pres-bar__value">50.2%</span>
+                    </div>
+                    <div class="pres-bar" style="--w: 34.6%; --pres-delay: 120ms">
+                        <span class="pres-bar__label">Short Under Pressure</span>
+                        <span class="pres-bar__track"><i class="pres-bar__fill"></i></span>
+                        <span class="pres-bar__value">34.6%</span>
+                    </div>
+                    <div class="pres-bar" style="--w: 15.2%; --pres-delay: 240ms">
+                        <span class="pres-bar__label">Direct Long Play</span>
+                        <span class="pres-bar__track"><i class="pres-bar__fill"></i></span>
+                        <span class="pres-bar__value">15.2%</span>
+                    </div>
+                </div>
+                <div class="pres-bars is-accent" data-pres-reveal style="--pres-delay: 200ms">
+                    <p class="pres-bars__head">Defensive responses &mdash; four shapes</p>
+                    <div class="pres-bar" style="--w: 52.6%">
+                        <span class="pres-bar__label">Wide Retreating Block</span>
+                        <span class="pres-bar__track"><i class="pres-bar__fill"></i></span>
+                        <span class="pres-bar__value">52.6%</span>
+                    </div>
+                    <div class="pres-bar" style="--w: 32.2%; --pres-delay: 120ms">
+                        <span class="pres-bar__label">Compact Pressure Block</span>
+                        <span class="pres-bar__track"><i class="pres-bar__fill"></i></span>
+                        <span class="pres-bar__value">32.2%</span>
+                    </div>
+                    <div class="pres-bar" style="--w: 7.7%; --pres-delay: 240ms">
+                        <span class="pres-bar__label">High-Intensity Press</span>
+                        <span class="pres-bar__track"><i class="pres-bar__fill"></i></span>
+                        <span class="pres-bar__value">7.7%</span>
+                    </div>
+                    <div class="pres-bar" style="--w: 7.5%; --pres-delay: 360ms">
+                        <span class="pres-bar__label">Set-Piece Compact Shape</span>
+                        <span class="pres-bar__track"><i class="pres-bar__fill"></i></span>
+                        <span class="pres-bar__value">7.5%</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <section class="pres-chapter pres-chapter--dark" id="pres-model" data-pres-chapter>
+            <div class="pres-chapter__meta">
+                <p class="pres-kicker" data-pres-reveal>Model</p>
+                <span class="pres-chapter__num" aria-hidden="true" data-pres-reveal>04</span>
+            </div>
+            <div class="pres-chapter__body">
+                <h3 class="pres-title" data-pres-reveal>Predict the possession. Price every touch.</h3>
+                <p class="pres-serif pres-quote" data-pres-reveal style="--pres-delay: 90ms">
+                    Shots happen in 12.5% of possessions. A model that always says
+                    &ldquo;no shot&rdquo; is 87% accurate and completely useless &mdash; so we
+                    select and report on precision-recall, not accuracy.
+                </p>
+                <div class="pres-specs" data-pres-reveal style="--pres-delay: 160ms">
+                    <article class="pres-spec">
+                        <header><span>Target A</span><strong>Shot</strong><em>soft vote &middot; LR + XGBoost</em></header>
+                        <div class="pres-spec__row"><span>PR-AUC</span><strong>0.532</strong><em>95% CI 0.499&ndash;0.568</em></div>
+                        <div class="pres-spec__row"><span>ROC-AUC</span><strong>0.893</strong><em>&nbsp;</em></div>
+                        <div class="pres-spec__row"><span>Operating point</span><strong>thr 0.40</strong><em>precision 0.57 &middot; recall 0.41</em></div>
+                    </article>
+                    <article class="pres-spec">
+                        <header><span>Target B</span><strong>Box entry</strong><em>histogram gradient boosting</em></header>
+                        <div class="pres-spec__row"><span>PR-AUC</span><strong>0.830</strong><em>95% CI 0.818&ndash;0.844</em></div>
+                        <div class="pres-spec__row"><span>ROC-AUC</span><strong>0.904</strong><em>&nbsp;</em></div>
+                        <div class="pres-spec__row"><span>Operating point</span><strong>thr 0.63</strong><em>precision 0.82 &middot; recall 0.60</em></div>
+                    </article>
+                </div>
+                <div class="pres-copy" data-pres-reveal style="--pres-delay: 200ms">
+                    <p>
+                        Separately, a 360-VAEP pipeline prices every single action: an
+                        isotonic-calibrated XGBoost estimates the probability that a goal
+                        follows within the next three actions &mdash; for and against &mdash;
+                        from strictly pre-action features. Cross-fitted expected threat adds
+                        positional value. The target fires 0.118% of the time; low error is
+                        cheap under that imbalance, which is why we publish PR-AUC and
+                        calibration alongside it.
+                    </p>
+                </div>
+                <div class="pres-spec is-wide" data-pres-reveal style="--pres-delay: 240ms">
+                    <header><span>Player value</span><strong>360-VAEP + xT</strong><em>every rated action, out of fold</em></header>
+                    <div class="pres-spec__row"><span>Dev OOF ROC-AUC</span><strong>0.949</strong><em>untouched test 0.967</em></div>
+                    <div class="pres-spec__row"><span>Rating</span><strong>50 / 30 / 20</strong><em>VAEP&frasl;90 &middot; VAEP&frasl;touch &middot; xT&frasl;90</em></div>
+                    <div class="pres-spec__row"><span>Shrinkage</span><strong>min &frasl; (min + 300)</strong><em>toward position-group mean &middot; 142 players &ge; 300&prime;</em></div>
+                </div>
+                <figure class="pres-artifact" data-pres-reveal style="--pres-delay: 280ms">
+                    <img src="{{ "projects/worlds-coach-output/vaep_vs_xt_scatter.png" | relURL }}" alt="Scatter plot of VAEP per 90 against expected threat per 90 for every rated player" loading="lazy" width="1280" height="960" />
+                    <figcaption>Pipeline output &mdash; VAEP&frasl;90 &times; xT&frasl;90, every rated player.</figcaption>
+                </figure>
+            </div>
+        </section>
+
+        <section class="pres-chapter" id="pres-validate" data-pres-chapter>
+            <div class="pres-chapter__meta">
+                <p class="pres-kicker" data-pres-reveal>Validate</p>
+                <span class="pres-chapter__num" aria-hidden="true" data-pres-reveal>05</span>
+            </div>
+            <div class="pres-chapter__body">
+                <h3 class="pres-title" data-pres-reveal>Then we tried to break it.</h3>
+                <div class="pres-copy" data-pres-reveal style="--pres-delay: 90ms">
+                    <p>
+                        Folds are whole matches &mdash; no match ever straddles train and
+                        validation. Ten matches sit in a vault that is opened exactly once, for
+                        the final number. Post-action fields in the feature set don&rsquo;t
+                        warn; they raise.
+                    </p>
+                </div>
+                <div class="pres-folds" data-pres-reveal style="--pres-delay: 150ms" role="img" aria-label="64 match cells: five development folds and a ten-match test vault.">
+                    <div class="pres-folds__grid">
+                        {{- range $i := seq 1 64 }}<i{{ if gt $i 54 }} class="is-test"{{ end }}></i>{{- end }}
+                    </div>
+                    <div class="pres-folds__legend">
+                        <span>5 match-level folds &middot; 54 matches</span>
+                        <span class="is-test">Vault &middot; 10 &mdash; opened once</span>
+                    </div>
+                </div>
+                <div class="pres-copy" data-pres-reveal style="--pres-delay: 190ms">
+                    <p>
+                        Selection optimism was measured, not assumed: a nested cross-validation
+                        with fold-local clustering re-ran the whole exercise without the model
+                        ever influencing its own scoreboard. Shot: 0.527 &plusmn; 0.033 nested
+                        against 0.532 pooled. Box entry: 0.833 &plusmn; 0.014 against 0.830.
+                        The gap is noise &mdash; the headline numbers hold.
+                    </p>
+                    <p>
+                        And every player grade ships with its own error bar: a 2,000-replicate
+                        match bootstrap reruns the exact rating formula on resampled
+                        tournaments. Twelve of eighteen teams have a statistically clear
+                        number&nbsp;one. Argentina doesn&rsquo;t.
+                    </p>
+                </div>
+                <div class="pres-intervals" data-pres-reveal style="--pres-delay: 230ms">
+                    <p class="pres-bars__head">Final rating, 95% interval &mdash; is the team&rsquo;s #1 real?</p>
+                    <div class="pres-intervals__group">
+                        <p>Argentina <strong>P(#1) = 63% &mdash; a lean</strong></p>
+                        <div class="pres-interval">
+                            <span class="pres-interval__name">Messi</span>
+                            <span class="pres-interval__track"><i style="left: 17.4%; width: 68.9%"></i><b style="left: 51.4%"></b></span>
+                            <span class="pres-interval__value">0.330</span>
+                        </div>
+                        <div class="pres-interval">
+                            <span class="pres-interval__name">&Aacute;lvarez</span>
+                            <span class="pres-interval__track"><i style="left: 10.0%; width: 67.7%"></i><b style="left: 40.3%"></b></span>
+                            <span class="pres-interval__value">0.291</span>
+                        </div>
+                    </div>
+                    <div class="pres-intervals__group">
+                        <p>France <strong>P(#1) = 94% &mdash; clear</strong></p>
+                        <div class="pres-interval">
+                            <span class="pres-interval__name">Mbapp&eacute;</span>
+                            <span class="pres-interval__track"><i style="left: 17.4%; width: 62.6%"></i><b style="left: 46.6%"></b></span>
+                            <span class="pres-interval__value">0.313</span>
+                        </div>
+                        <div class="pres-interval">
+                            <span class="pres-interval__name">Giroud</span>
+                            <span class="pres-interval__track"><i style="left: 11.7%; width: 25.7%"></i><b style="left: 25.1%"></b></span>
+                            <span class="pres-interval__value">0.238</span>
+                        </div>
+                    </div>
+                    <p class="pres-intervals__note">
+                        Intervals share match draws, so the joint test &mdash; not visual
+                        overlap &mdash; is the verdict. Ghana&rsquo;s top spot is a coin flip.
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <section class="pres-chapter" id="pres-deliver" data-pres-chapter>
+            <div class="pres-chapter__meta">
+                <p class="pres-kicker" data-pres-reveal>Deliver</p>
+                <span class="pres-chapter__num" aria-hidden="true" data-pres-reveal>06</span>
+            </div>
+            <div class="pres-chapter__body">
+                <h3 class="pres-title" data-pres-reveal>You&rsquo;re standing in the deliverable.</h3>
+                <div class="pres-copy" data-pres-reveal style="--pres-delay: 90ms">
+                    <p>
+                        The <em>Interactive coach</em> view on this page is the product: scenario
+                        in, plan out, a seven-phase attacking sequence you can scrub like film.
+                        Behind it sit 36 annotated team dossiers &mdash; every grade printed with
+                        its confidence interval &mdash; and a single ordered pipeline of
+                        twenty-odd scripts that rebuilds everything from the raw feed, ending in
+                        an acceptance gate that fails loudly.
+                    </p>
+                </div>
+                <figure class="pres-artifact is-plain" data-pres-reveal style="--pres-delay: 150ms">
+                    <img src="{{ "projects/worlds-coach-output/messi_heatmap.svg" | relURL }}" alt="Event and 360 spatial heatmap for Lionel Messi from the team dossiers" loading="lazy" width="640" height="500" />
+                    <figcaption>Dossier artifact &mdash; L. Messi, event + 360 spatial heatmap.</figcaption>
+                </figure>
+                <div class="pres-links" data-pres-reveal style="--pres-delay: 200ms">
+                    <a href="https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis" rel="noopener">Analysis &amp; notebooks <span aria-hidden="true">&nearr;</span></a>
+                    <a href="https://github.com/ucd-cosmos-data/26-the-pattern-seekers" rel="noopener">Website source <span aria-hidden="true">&nearr;</span></a>
+                </div>
+            </div>
+        </section>
+
+        <footer class="pres-coda" data-pres-chapter>
+            <p class="pres-serif pres-coda__line" data-pres-reveal>
+                Retrospective, one tournament, honest about both.
+            </p>
+            <div class="pres-coda__meta" data-pres-reveal style="--pres-delay: 120ms">
+                <span>Next &mdash; possession-start live features &middot; a second competition &middot; calibration transfer</span>
+                <span>Pattern Seekers &middot; COSMOS Cluster 26 &middot; UC Davis &middot; 2026</span>
+            </div>
+        </footer>
+    </section>
 </article>
 {{- end }}

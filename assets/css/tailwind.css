@@ -2071,6 +2071,68 @@
         margin-top: 2.4rem;
     }
 
+    /* ===== Top-level mode switch: Interactive coach vs Presentation ===== */
+    .coach-modes {
+        display: inline-flex;
+        gap: 0.3rem;
+        margin-top: clamp(1.6rem, 3vw, 2.6rem);
+        padding: 0.35rem;
+        border-radius: 1.4rem;
+        background: var(--ps-surface);
+        box-shadow: var(--ps-shadow-soft);
+    }
+
+    .coach-modes button {
+        min-height: 3.4rem;
+        padding: 0 1.6rem;
+        border: 0;
+        border-radius: 1.05rem;
+        background: transparent;
+        color: var(--ps-muted);
+        font: inherit;
+        font-size: 1rem;
+        font-weight: 600;
+        letter-spacing: -0.01em;
+        cursor: pointer;
+        transition:
+            background 0.4s var(--ps-ease),
+            color 0.4s var(--ps-ease);
+    }
+
+    .coach-modes button[aria-selected="true"] {
+        background: var(--ps-text);
+        color: var(--ps-bg);
+    }
+
+    .coach-modes button:not([aria-selected="true"]):hover {
+        color: var(--ps-text);
+    }
+
+    [data-coach-tool][hidden] {
+        display: none !important;
+    }
+
+    @keyframes coachModeIn {
+        from {
+            opacity: 0;
+            transform: translateY(12px);
+        }
+        to {
+            opacity: 1;
+            transform: none;
+        }
+    }
+
+    .is-mode-enter {
+        animation: coachModeIn 0.55s var(--ps-ease);
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+        .is-mode-enter {
+            animation: none;
+        }
+    }
+
     /* ===== Presentation — editorial case study =====
        Technical-dossier aesthetic: Satoshi display type, system serif italics,
        monospace data labels, hairline rules, masked line reveals. */
