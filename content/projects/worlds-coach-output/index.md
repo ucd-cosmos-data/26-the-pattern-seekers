@@ -1,5 +1,5 @@
 ---
-title: "The World's Coach (Output)"
+title: "The World's Coach"
 date: 2026-07-27
 description: "An interactive look at how the coaching model turns team, opponent, lineup, and match-state data into a specific game plan."
 author: "Pattern Seekers"

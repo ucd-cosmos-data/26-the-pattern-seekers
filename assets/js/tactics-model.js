@@ -106,6 +106,46 @@
         };
     }
 
+    function pathWaypointProgress(path, waypointIndex) {
+        if (!path || path.length < 2) return 0;
+        var index = clamp(Math.round(waypointIndex), 0, path.length - 1);
+        var totalDistance = 0;
+        var waypointDistance = 0;
+        var pathIndex;
+
+        for (pathIndex = 1; pathIndex < path.length; pathIndex += 1) {
+            var segmentDistance = distance(path[pathIndex - 1], path[pathIndex]);
+            totalDistance += segmentDistance;
+            if (pathIndex <= index) waypointDistance += segmentDistance;
+        }
+
+        return totalDistance ? waypointDistance / totalDistance : 0;
+    }
+
+    function carrierPositionAtProgress(startPosition, path, waypointIndex, progress) {
+        var receptionProgress = pathWaypointProgress(path, waypointIndex);
+        if (progress < receptionProgress) {
+            return {
+                xMeters: startPosition.xMeters,
+                yMeters: startPosition.yMeters
+            };
+        }
+        return interpolatePath(path, progress);
+    }
+
+    function pointsEqual(pointA, pointB, tolerance) {
+        if (!pointA || !pointB) return false;
+        return distance(pointA, pointB) <= (tolerance === undefined ? 0.001 : tolerance);
+    }
+
+    function isPointOnPitch(point) {
+        return Boolean(point) &&
+            point.xMeters >= 0 &&
+            point.xMeters <= PITCH.length &&
+            point.yMeters >= 0 &&
+            point.yMeters <= PITCH.width;
+    }
+
     function computeMetrics(positions, options) {
         var settings = options || {};
         var selectedIds = settings.selectedIds || Object.keys(positions);
@@ -180,6 +220,10 @@
         mirrorPositionsVertically: mirrorPositionsVertically,
         interpolatePoint: interpolatePoint,
         interpolatePath: interpolatePath,
+        pathWaypointProgress: pathWaypointProgress,
+        carrierPositionAtProgress: carrierPositionAtProgress,
+        pointsEqual: pointsEqual,
+        isPointOnPitch: isPointOnPitch,
         computeMetrics: computeMetrics
     });
 });

@@ -202,10 +202,10 @@
     var attackSteps = [
         {
             id: "attack-structure",
-            label: "1 · Set 3–2",
+            label: "1 · Build 3–2",
             phase: "IN POSSESSION",
-            title: "Set the 3–2 buildup",
-            caption: "Martínez has three defenders ahead, two central connectors, and five clearly occupied attacking lanes.",
+            title: "Build in a 3–2–5",
+            caption: "Three defenders start the move, two midfielders connect, and five attackers stretch France's back line.",
             duration: 1600,
             moves: {},
             ballPath: [point(8, 34)],
@@ -217,10 +217,10 @@
         },
         {
             id: "attack-invite",
-            label: "2 · Invite press",
+            label: "2 · Draw the press",
             phase: "BUILD-UP",
-            title: "Invite the central press",
-            caption: "Martínez passes to Romero; Romero carries forward while Enzo stays behind the first pressure line and France's left midfielder steps toward the ball.",
+            title: "Draw France toward Romero",
+            caption: "Martínez finds Romero. As Romero carries forward, Enzo stays behind France's first line and Rabiot steps out.",
             duration: 2300,
             moves: {
                 romero: point(35, 56),
@@ -228,7 +228,8 @@
                 fra_lm: point(59, 52),
                 fra_st: point(48, 37)
             },
-            ballPath: [point(8, 34), point(25, 56), point(35, 56)],
+            ballPath: [point(8, 34), point(25, 56), point(29, 57), point(35, 56)],
+            ballCarrier: { playerId: "romero", fromWaypoint: 1 },
             active: ["gk", "romero", "enzo"],
             actions: [
                 { type: "pass", label: "PASS", path: [point(8, 34), point(25, 56)] },
@@ -237,10 +238,10 @@
         },
         {
             id: "attack-release",
-            label: "3 · Half-space",
+            label: "3 · Find De Paul",
             phase: "PROGRESSION",
-            title: "Release Argentina's right half-space",
-            caption: "Romero finds De Paul inside the lower half as Messi drops; Rabiot and Hernández shift toward Argentina's right side.",
+            title: "Find De Paul between the lines",
+            caption: "Romero finds De Paul in the right half-space. Messi drops while Rabiot and Hernández shift toward the ball.",
             duration: 1900,
             moves: {
                 depaul: point(49, 49),
@@ -262,8 +263,8 @@
             id: "attack-overload",
             label: "4 · Create 3v2",
             phase: "CREATION",
-            title: "Create the wide 3v2",
-            caption: "De Paul passes to Messi; Molina runs outside, De Paul continues underneath, and France's left-side pair follow to create the visible 3v2.",
+            title: "Create a 3v2 on the right",
+            caption: "De Paul finds Messi. Molina overlaps and De Paul supports underneath, overloading Rabiot and Hernández.",
             duration: 2200,
             moves: {
                 molina: point(80, 64),
@@ -286,10 +287,10 @@
         },
         {
             id: "attack-byline",
-            label: "5 · Attack byline",
+            label: "5 · Release Molina",
             phase: "FINAL THIRD",
-            title: "Release Molina toward the byline",
-            caption: "Messi passes outside to Molina while Álvarez crosses the near centre-back, De Paul protects the return, and France's left defenders retreat.",
+            title: "Release Molina outside",
+            caption: "Messi sends Molina toward the byline. Álvarez attacks the near post while De Paul protects the return pass.",
             duration: 1900,
             moves: {
                 molina: point(89, 62),
@@ -302,16 +303,16 @@
             active: ["messi", "molina", "forward", "depaul"],
             actions: [
                 { type: "pass", label: "PASS", path: [point(71, 51), point(89, 62)] },
-                { type: "run", label: "BYLINE RUN", path: [point(80, 64), point(89, 62)] },
-                { type: "run", label: "NEAR-POST RUN", path: [point(82, 35), point(88, 39)] }
+                { type: "run", label: "BYLINE", path: [point(80, 64), point(89, 62)] },
+                { type: "run", label: "NEAR POST", path: [point(82, 35), point(88, 39)] }
             ]
         },
         {
             id: "attack-cutback",
             label: "6 · Cutback",
             phase: "FINISH",
-            title: "Deliver the low cutback",
-            caption: "Molina cuts the ball behind France's narrowing centre-backs to Álvarez; Mac Allister arrives late for the second ball.",
+            title: "Cut the ball behind France",
+            caption: "Molina cuts back for Álvarez as France narrows. Mac Allister arrives for the second ball.",
             duration: 1800,
             moves: {
                 forward: point(91, 36),
@@ -323,8 +324,8 @@
             ballPath: [point(89, 62), point(91, 36)],
             active: ["molina", "forward", "macallister"],
             actions: [
-                { type: "pass", label: "LOW CUTBACK", path: [point(89, 62), point(91, 36)] },
-                { type: "run", label: "LATE ARRIVAL", path: [point(70, 20), point(83, 23)] }
+                { type: "pass", label: "CUTBACK", path: [point(89, 62), point(91, 36)] },
+                { type: "run", label: "ARRIVE", path: [point(70, 20), point(83, 23)] }
             ],
             zones: [
                 { type: "rect", x: 84, y: 27, width: 12, height: 18, tone: "neutral", label: "CUTBACK ZONE" }
@@ -332,10 +333,10 @@
         },
         {
             id: "attack-reaction",
-            label: "7 · On loss",
+            label: "7 · Counterpress",
             phase: "ON LOSS",
-            title: "Blocked shot: five-second counterpress",
-            caption: "The shot is blocked and possession becomes loose. Messi, Molina, De Paul, Álvarez, and Mac Allister immediately close the ball.",
+            title: "Counterpress the blocked shot",
+            caption: "The shot is blocked. The five nearest attackers close the loose ball for five seconds.",
             duration: 2300,
             moves: {
                 messi: point(84, 46),
@@ -348,10 +349,10 @@
             active: ["messi", "molina", "depaul", "forward", "macallister"],
             pressing: ["messi", "molina", "depaul", "forward", "macallister"],
             actions: [
-                { type: "pass", label: "BLOCKED SHOT", path: [point(91, 36), point(94, 35)] },
-                { type: "press", label: "COUNTERPRESS", path: [point(80, 49), point(86, 43)] },
-                { type: "press", label: "CLOSE", path: [point(89, 62), point(88, 55)] },
-                { type: "press", label: "CLOSE", path: [point(72, 51), point(78, 49)] }
+                { type: "pass", label: "SHOT", path: [point(91, 36), point(94, 35)] },
+                { type: "press", label: "PRESS", path: [point(80, 49), point(86, 43)] },
+                { type: "press", label: "PRESS", path: [point(89, 62), point(88, 55)] },
+                { type: "press", label: "PRESS", path: [point(72, 51), point(78, 49)] }
             ],
             zones: [
                 { type: "circle", cx: 86, cy: 43, radius: 10, tone: "press", label: "5-SECOND PRESSURE AREA" }
@@ -364,8 +365,8 @@
             id: "formation-possession",
             label: "In possession · 3–2–5",
             phase: "IN POSSESSION",
-            title: "Three build, two connect, five occupy the last line",
-            caption: "The vertical bands identify the three-player build line, the two connectors, and the five advanced lanes.",
+            title: "Build in a 3–2–5",
+            caption: "Three defenders start the move, two midfielders connect, and five attackers hold the width.",
             positions: mergePositions(argAttack, fraBlock),
             active: [],
             bands: [
@@ -378,8 +379,8 @@
             id: "formation-out",
             label: "Out of possession · 4–4–2",
             phase: "OUT OF POSSESSION",
-            title: "Four defenders, four midfielders, two forwards",
-            caption: "Each line is grouped by a subtle band, making the compact 4–4–2 readable without shirt-number knowledge.",
+            title: "Defend in a compact 4–4–2",
+            caption: "Two clear lines of four sit behind Álvarez and Messi.",
             positions: mergePositions(arg442, fraBuild),
             active: [],
             bands: [
@@ -392,8 +393,8 @@
             id: "formation-rest",
             label: "Rest defence · 3+2",
             phase: "ATTACKING SECURITY",
-            title: "Exactly three defenders plus two screeners protect the attack",
-            caption: "Tagliafico, Otamendi, and Romero form the first line; Enzo and De Paul screen immediately ahead.",
+            title: "Protect the attack with a 3+2",
+            caption: "Tagliafico, Otamendi, and Romero cover behind Enzo and De Paul.",
             positions: mergePositions(argAttack, fraBlock),
             active: ["tagliafico", "otamendi", "romero", "enzo", "depaul"],
             protect: ["tagliafico", "otamendi", "romero", "enzo", "depaul"],
@@ -406,8 +407,8 @@
             id: "formation-lanes",
             label: "Last line · five lanes",
             phase: "FINAL-THIRD OCCUPATION",
-            title: "One primary occupier in each attacking lane",
-            caption: "Di María, Mac Allister, Álvarez, Messi, and Molina occupy left wing through Argentina's right wing in order.",
+            title: "Occupy all five attacking lanes",
+            caption: "From left to right: Di María, Mac Allister, Álvarez, Messi, and Molina.",
             positions: mergePositions(argAttack, fraBlock),
             active: ["dimaria", "macallister", "forward", "messi", "molina"],
             lanes: [
@@ -437,10 +438,10 @@
     var pressSteps = [
         {
             id: "press-shape",
-            label: "1 · Start 4–4–2",
+            label: "1 · Set 4–4–2",
             phase: "PRESSING",
-            title: "Start in a recognizable 4–4–2",
-            caption: "Álvarez and Messi form the front two. Di María, Mac Allister, Enzo, and De Paul hold the midfield four.",
+            title: "Set the 4–4–2 press",
+            caption: "Álvarez and Messi lead it; Di María, Mac Allister, Enzo, and De Paul hold the line behind.",
             duration: 1800,
             moves: {},
             ballPath: [point(81, 43)],
@@ -453,10 +454,10 @@
         },
         {
             id: "press-trigger",
-            label: "2 · Back pass",
+            label: "2 · Trigger",
             phase: "PRESS TRIGGER",
-            title: "The backward pass activates the press",
-            caption: "Upamecano passes backward to Lloris. Argentina's front two begin to advance, and the red trigger appears only as the goalkeeper prepares to receive.",
+            title: "Trigger on the pass back",
+            caption: "Upamecano's pass to Lloris starts the press. Álvarez and Messi step forward as the goalkeeper receives.",
             duration: 2100,
             moves: {
                 forward: point(67, 29),
@@ -465,16 +466,16 @@
             ballPath: [point(81, 43), point(95, 34)],
             active: ["fra_lcb", "fra_gk", "forward", "messi"],
             actions: [
-                { type: "pass", label: "BACKWARD PASS", path: [point(81, 43), point(95, 34)] }
+                { type: "pass", label: "BACK PASS", path: [point(81, 43), point(95, 34)] }
             ],
             trigger: { cx: 95, cy: 34, radius: 7, label: "PRESS TRIGGER" }
         },
         {
             id: "press-lock",
-            label: "3 · Lock + screen",
+            label: "3 · Force wide",
             phase: "LOCK THE OUTSIDE",
-            title: "Álvarez jumps while screening the pivot",
-            caption: "Álvarez curves his press across Tchouaméni's passing lane and forces Lloris toward Koundé at France's right touchline (top edge).",
+            title: "Force play toward Koundé",
+            caption: "Álvarez curves his run to block Tchouaméni, sending Lloris wide toward Koundé.",
             duration: 2500,
             moves: {
                 forward: point(80, 31),
@@ -487,8 +488,8 @@
             pressing: ["forward", "messi", "dimaria"],
             actions: [
                 { type: "press", label: "CURVED PRESS", path: [point(67, 29), point(73, 24), point(80, 31)] },
-                { type: "press", label: "SECOND WAVE", path: [point(67, 41), point(75, 40)] },
-                { type: "pass", label: "FORCED OUTLET", path: [point(95, 34), point(84, 9)] }
+                { type: "press", label: "SUPPORT PRESS", path: [point(67, 41), point(75, 40)] },
+                { type: "pass", label: "PASS", path: [point(95, 34), point(84, 9)] }
             ],
             zones: [
                 { type: "polygon", points: [point(80, 31), point(72, 27), point(66, 34), point(75, 40)], tone: "press", label: "COVER SHADOW · PIVOT SCREENED" },
@@ -500,10 +501,10 @@
         },
         {
             id: "press-fallback",
-            label: "4 · Press broken",
+            label: "4 · Recover",
             phase: "FALLBACK",
-            title: "If the trigger is beaten, recover the mid-block",
-            caption: "France escapes the first jump. Argentina's front line drops and the team finishes in a compact 4–4–2 behind the 59 m engagement line.",
+            title: "Drop if France breaks the press",
+            caption: "Argentina recovers into a compact 4–4–2 behind the 59 m engagement line.",
             duration: 2600,
             moves: argMidBlock,
             ballPath: [point(84, 9), point(70, 21)],
@@ -534,21 +535,13 @@
         molina: point(89, 63)
     }, fraBlock);
 
-    var counterpressEnd = mergeIntoPositions(transitionInitial, {
-        molina: point(86, 58),
-        depaul: point(78, 50),
-        messi: point(84, 47),
-        forward: point(87, 39),
-        macallister: point(80, 32)
-    });
-
     var transitionSteps = [
         {
             id: "transition-before",
-            label: "1 · Before loss",
+            label: "1 · Protect 3+2",
             phase: "BEFORE LOSS",
-            title: "Three plus two protect the attack",
-            caption: "Tagliafico, Otamendi, and Romero are the protective three; Enzo and De Paul are the two screeners.",
+            title: "Keep a 3+2 behind the attack",
+            caption: "Tagliafico, Otamendi, and Romero form the back three; Enzo and De Paul screen ahead.",
             duration: 1800,
             moves: {},
             ballPath: [point(80, 49)],
@@ -561,10 +554,10 @@
         },
         {
             id: "transition-counterpress",
-            label: "2 · 0–5 seconds",
+            label: "2 · Counterpress",
             phase: "ON LOSS",
-            title: "Five counterpress; five protect the field",
-            caption: "Molina, De Paul, Messi, Álvarez, and Mac Allister close the ball. The back three, Enzo, and Di María protect the central release.",
+            title: "Five press; five protect",
+            caption: "The five nearest players close the ball. The other five protect the centre and France's first forward pass.",
             duration: 5000,
             moves: {
                 molina: point(86, 58),
@@ -593,10 +586,10 @@
         },
         {
             id: "transition-regain",
-            label: "3 · Ball regained",
+            label: "3 · Release",
             phase: "REGAIN",
-            title: "First release into Argentina's right channel",
-            caption: "Messi regains and immediately releases Molina into the lower, Argentina-right channel.",
+            title: "Attack the right channel after the regain",
+            caption: "Messi wins the ball and immediately releases Molina into the right channel.",
             duration: 2300,
             moves: {
                 molina: point(94, 59),
@@ -606,33 +599,11 @@
             ballPath: [point(85, 45), point(94, 59)],
             active: ["messi", "molina", "forward"],
             actions: [
-                { type: "pass", label: "FIRST RELEASE", path: [point(85, 45), point(94, 59)] },
-                { type: "run", label: "RIGHT-CHANNEL RUN", path: [point(86, 58), point(94, 59)] }
+                { type: "pass", label: "RELEASE", path: [point(85, 45), point(94, 59)] },
+                { type: "run", label: "CHANNEL RUN", path: [point(86, 58), point(94, 59)] }
             ],
             zones: [
                 { type: "rect", x: 81, y: 53, width: 22, height: 13, tone: "neutral", label: "ARGENTINA RIGHT CHANNEL" }
-            ]
-        },
-        {
-            id: "transition-recover",
-            label: "4 · Press bypassed",
-            phase: "RECOVERY",
-            title: "Alternative outcome: recover into 4–4–2",
-            caption: "If the counterpress is bypassed, Argentina sprints inside first and finishes in a compact 4–4–2.",
-            duration: 2900,
-            resetPositions: counterpressEnd,
-            resetHistory: true,
-            moves: argMidBlock,
-            ballPath: [point(85, 45), point(65, 34)],
-            active: ["molina", "depaul", "messi", "forward", "macallister", "dimaria"],
-            actions: [
-                { type: "recovery", label: "RECOVER", path: [point(86, 58), point(64, 58), point(42, 58)] },
-                { type: "recovery", label: "RECOVER", path: [point(78, 50), point(64, 53), point(51, 58)] },
-                { type: "recovery", label: "RECOVER", path: [point(84, 47), point(70, 44), point(59, 42)] },
-                { type: "recovery", label: "RECOVER", path: [point(80, 32), point(65, 29), point(51, 27)] }
-            ],
-            zones: [
-                { type: "band", x: 39, y: 6, width: 16, height: 56, tone: "neutral", label: "RECOVERED 4–4–2" }
             ]
         }
     ];
@@ -643,11 +614,42 @@
         var elapsed = 0;
 
         var compiledSteps = steps.map(function (step) {
-            var startPositions = model.copyPositions(step.resetPositions || positions);
+            if (!Number.isFinite(step.duration) || step.duration <= 0) {
+                throw new Error(step.id + " requires a positive duration.");
+            }
+            var startPositions = model.copyPositions(positions);
+            Object.keys(step.moves || {}).forEach(function (id) {
+                if (!startPositions[id]) {
+                    throw new Error(step.id + " moves unknown player " + id + ".");
+                }
+            });
             var endPositions = mergeIntoPositions(startPositions, step.moves || {});
             var ballPath = (step.ballPath || [ball]).map(function (pathPoint) {
                 return point(pathPoint.xMeters, pathPoint.yMeters);
             });
+            if (!model.pointsEqual(ballPath[0], ball)) {
+                throw new Error(step.id + " ball path does not continue from the previous step.");
+            }
+            ballPath.forEach(function (pathPoint) {
+                if (!model.isPointOnPitch(pathPoint)) {
+                    throw new Error(step.id + " contains an out-of-bounds ball coordinate.");
+                }
+            });
+            if (step.ballCarrier) {
+                var carrier = step.ballCarrier;
+                if (!startPositions[carrier.playerId]) {
+                    throw new Error(step.id + " assigns the ball to an unknown player.");
+                }
+                if (carrier.fromWaypoint < 0 || carrier.fromWaypoint >= ballPath.length) {
+                    throw new Error(step.id + " has an invalid carrier waypoint.");
+                }
+                if (!model.pointsEqual(
+                    ballPath[ballPath.length - 1],
+                    endPositions[carrier.playerId]
+                )) {
+                    throw new Error(step.id + " ball carrier does not finish with the ball.");
+                }
+            }
             var compiled = Object.assign({}, step, {
                 startPositions: startPositions,
                 endPositions: endPositions,
@@ -676,95 +678,30 @@
 
     var scenarios = {
         prematch: {
-            plan: "Controlled possession → Argentina-right overload",
+            plan: "Controlled possession, then a right-side overload",
             confidence: 78,
-            why: "Argentina's strongest route is to attract France centrally, release Messi in the right half-space, and send Molina down the lower touchline for the cutback.",
-            effects: {
-                chance: ["+14%", "78%"], box: ["+11%", "68%"], retention: ["+8%", "58%"], risk: ["+6%", "42%"]
-            },
-            instructions: {
-                possession: "Build with a 3–2 base. Invite central pressure, then find De Paul or Messi in Argentina's right half-space.",
-                finalThird: "Molina owns the lower touchline. Álvarez crosses the near centre-back and the cutback arrives behind the line.",
-                out: "Defend in a compact 4–4–2. Screen Tchouaméni and force play toward France's right touchline—the upper edge.",
-                transition: "The nearest five counterpress for five seconds; the back three plus two protect the centre."
-            },
-            options: { controlled: 64, transition: 58, wide: 54 }
+            why: "Draw France inside, release Messi in the right half-space, then send Molina outside for a low cutback."
         },
         leading: {
-            plan: "Compact control → selective right-channel release",
+            plan: "Compact control with selective right-channel releases",
             confidence: 82,
-            why: "With the lead, central security comes first. France must advance, creating cleaner releases into Argentina's lower, right-side channel.",
-            effects: {
-                chance: ["+7%", "54%"], box: ["−3%", "34%"], retention: ["+13%", "76%"], risk: ["−9%", "24%"]
-            },
-            instructions: {
-                possession: "Keep the 3–2 platform and circulate until France's midfield steps beyond the ball.",
-                finalThird: "Attack only with a numerical edge; keep the weak-side winger connected to the recovery structure.",
-                out: "Hold a compact 4–4–2 mid-block and permit only outside circulation.",
-                transition: "Release Argentina's right channel if it is open; otherwise secure possession and reset."
-            },
-            options: { controlled: 68, transition: 61, wide: 57 }
+            why: "Protect the centre first, then use the space France leaves as they advance."
         },
         drawing: {
-            plan: "Controlled overload → earlier Molina release",
+            plan: "Controlled overload with an earlier Molina release",
             confidence: 75,
-            why: "The same right-side route remains strongest, but Molina can advance earlier while the three-plus-two rest defence remains intact.",
-            effects: {
-                chance: ["+16%", "84%"], box: ["+14%", "77%"], retention: ["+5%", "48%"], risk: ["+9%", "53%"]
-            },
-            instructions: {
-                possession: "Keep the 3–2 base and release Molina up Argentina's lower, right touchline when France's winger narrows.",
-                finalThird: "Create the right-side 3v2, occupy the box with two runners, and hold the far-side edge.",
-                out: "Jump on the first backward pass, then recover the 4–4–2 if the press is beaten.",
-                transition: "The right-side triangle closes immediately while Enzo blocks the central escape."
-            },
-            options: { controlled: 66, transition: 60, wide: 56 }
+            why: "Keep the right-side route, but release Molina earlier while the 3–2 rest defence stays intact."
         },
         trailing: {
-            plan: "Aggressive 3–2–5 → immediate counterpress",
+            plan: "Aggressive 3–2–5 with an immediate counterpress",
             confidence: 69,
-            why: "The need to score outweighs some transition safety. Five attacking lanes increase chance volume, with a clearly higher concession risk.",
-            effects: {
-                chance: ["+24%", "94%"], box: ["+21%", "88%"], retention: ["−4%", "31%"], risk: ["+18%", "79%"]
-            },
-            instructions: {
-                possession: "Pin France with a 3–2–5 and move the ball before the block can reset.",
-                finalThird: "Fill all five lanes and attack the cutback with three runners.",
-                out: "Press every restart, screen the pivot, and force the outside pass.",
-                transition: "The nearest five counterpress immediately; the other five protect the direct route to goal."
-            },
-            options: { controlled: 57, transition: 63, wide: 55 }
+            why: "Occupy five attacking lanes and counterpress immediately, accepting more transition risk."
         }
     };
-
-    var viewSummaries = {
-        attack: {
-            labels: ["Base shape", "Create", "Finish", "On loss"],
-            values: ["3–2 buildup", "Argentina-right 3v2", "Low cutback", "Five-player press"]
-        },
-        formation: {
-            labels: ["In possession", "Out of possession", "Rest defence", "Last line"],
-            values: ["3–2–5", "4–4–2", "3 + 2", "Five lanes"]
-        },
-        press: {
-            labels: ["Start shape", "Trigger", "Lock direction", "Fallback"],
-            values: ["4–4–2", "Backward pass", "France right touchline", "Compact mid-block"]
-        },
-        transition: {
-            labels: ["Before loss", "Counterpress", "On regain", "If bypassed"],
-            values: ["3 + 2", "Five players · 5 s", "Argentina right channel", "Recover 4–4–2"]
-        }
-    };
-
-    var metricDefinitions = [
-        "Attacking width is the vertical distance between the widest selected Argentina outfield players.",
-        "Line height is the average distance of the three protective defenders from Argentina's own goal line.",
-        "Team depth is the horizontal distance between the deepest and highest selected Argentina outfield players.",
-        "Weak-side gap is the distance from Argentina's left touchline to the outermost weak-side attacker."
-    ];
 
     var stateControl = room.querySelector("[data-coach-state]");
     var playerControl = room.querySelector("[data-coach-player]");
+    var tacticalStage = room.querySelector("[data-tactical-stage]");
     var pitch = room.querySelector("[data-coach-pitch]");
     var playersLayer = room.querySelector("[data-pitch-players]");
     var ballNode = room.querySelector("[data-coach-ball]");
@@ -773,18 +710,13 @@
     var currentActionsLayer = room.querySelector("[data-svg-current-actions]");
     var annotationsLayer = room.querySelector("[data-svg-annotations]");
     var substateControls = room.querySelector("[data-tactic-substates]");
-    var planStrip = room.querySelector("[data-plan-strip]");
-    var metricDefinition = room.querySelector("[data-metric-definition]");
     var phaseLabel = room.querySelector("[data-pitch-phase]");
     var pitchDescription = room.querySelector("[data-pitch-description]");
-    var notationKey = room.querySelector("[data-notation-key]");
-    var animationCount = room.querySelector("[data-animation-count]");
     var animationTitle = room.querySelector("[data-animation-title]");
     var animationCopy = room.querySelector("[data-animation-copy]");
     var animationPlay = room.querySelector("[data-animation-play]");
     var animationPrevious = room.querySelector("[data-animation-previous]");
     var animationNext = room.querySelector("[data-animation-next]");
-    var animationSpeed = room.querySelector("[data-animation-speed]");
     var animationScrubber = room.querySelector("[data-animation-scrubber]");
     var animationTime = room.querySelector("[data-animation-time]");
     var animationDurationNode = room.querySelector("[data-animation-duration]");
@@ -794,9 +726,7 @@
     var planName = room.querySelector("[data-plan-name]");
     var planWhy = room.querySelector("[data-plan-why]");
     var confidence = room.querySelector("[data-confidence]");
-    var demoNote = room.querySelector("[data-coach-demo-note]");
-    var optionDetail = room.querySelector("[data-option-detail]");
-    var riskCard = room.querySelector(".coach-effect-grid .is-risk");
+    var statusNode = room.querySelector("[data-coach-status]");
     var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
 
     var activeView = "attack";
@@ -810,11 +740,23 @@
     var playerNodes = {};
     var activeTooltipId = null;
     var lastSequenceRender = { view: null, index: -1, triggerVisible: null };
+    var pitchResizeFrame = 0;
+    var pitchResizeObserver = null;
 
     function invalidateSequenceCache() {
         lastSequenceRender.view = null;
         lastSequenceRender.index = -1;
         lastSequenceRender.triggerVisible = null;
+    }
+
+    function queuePitchReflow() {
+        if (pitchResizeFrame) window.cancelAnimationFrame(pitchResizeFrame);
+        pitchResizeFrame = window.requestAnimationFrame(function () {
+            pitchResizeFrame = 0;
+            invalidateSequenceCache();
+            if (activeView === "formation") renderFormation(formationIndex);
+            else renderSequence(activeView, viewProgress[activeView]);
+        });
     }
 
     function setText(selector, value) {
@@ -827,6 +769,11 @@
         var minutes = Math.floor(totalSeconds / 60);
         var seconds = totalSeconds % 60;
         return String(minutes).padStart(2, "0") + ":" + String(seconds).padStart(2, "0");
+    }
+
+    function sentenceCase(value) {
+        var text = String(value || "").toLowerCase();
+        return text.charAt(0).toUpperCase() + text.slice(1);
     }
 
     function updateForwardRoster() {
@@ -848,10 +795,7 @@
         setText("[data-role-forward-name]", roster.forward.name);
         setText("[data-role-forward-role]", roster.forward.role);
         setText("[data-role-forward-job]", lautaro ? "Pin both centre-backs" : "Pin the centre-back");
-        setText("[data-lineup-fit]", "Lineup fit · " + (lautaro ? "82%" : "86%"));
-        demoNote.textContent = lautaro
-            ? "Demonstration scenario · Recommendation recalculated for Lautaro Martínez"
-            : "Demonstration scenario · Illustrative outputs until the production model is connected";
+        setText("[data-lineup-fit]", lautaro ? "82%" : "86%");
     }
 
     function updatePlayerNode(node, id) {
@@ -868,8 +812,8 @@
         var position = currentPositions[id];
         if (!position) return;
         var percent = model.pointToPercent(position);
-        tacticalTooltip.style.setProperty("--tooltip-x", percent.x + "%");
-        tacticalTooltip.style.setProperty("--tooltip-y", percent.y + "%");
+        tacticalTooltip.style.setProperty("--tooltip-x", model.clamp(percent.x, 22, 78) + "%");
+        tacticalTooltip.style.setProperty("--tooltip-y", model.clamp(percent.y, 8, 92) + "%");
         tacticalTooltip.classList.toggle("is-above", percent.y > 42);
     }
 
@@ -995,6 +939,167 @@
         return "url(#coach-arrow-blue)";
     }
 
+    function actionLabelPlacement(action) {
+        var path = action.path;
+        var curved = (action.type === "carry" || action.type === "press") && path.length === 3;
+        var x;
+        var y;
+        var angle;
+
+        if (curved) {
+            var start = path[0];
+            var control = path[1];
+            var end = path[2];
+            x = 0.25 * start.xMeters + 0.5 * control.xMeters + 0.25 * end.xMeters;
+            y = 0.25 * start.yMeters + 0.5 * control.yMeters + 0.25 * end.yMeters;
+            angle = Math.atan2(
+                end.yMeters - start.yMeters,
+                end.xMeters - start.xMeters
+            ) * 180 / Math.PI;
+        } else {
+            var segmentLengths = [];
+            var totalLength = 0;
+            var index;
+
+            for (index = 1; index < path.length; index += 1) {
+                var segmentLength = Math.hypot(
+                    path[index].xMeters - path[index - 1].xMeters,
+                    path[index].yMeters - path[index - 1].yMeters
+                );
+                segmentLengths.push(segmentLength);
+                totalLength += segmentLength;
+            }
+
+            var midpoint = totalLength / 2;
+            var traversed = 0;
+
+            for (index = 0; index < segmentLengths.length; index += 1) {
+                if (traversed + segmentLengths[index] >= midpoint) {
+                    var segmentStart = path[index];
+                    var segmentEnd = path[index + 1];
+                    var segmentProgress = segmentLengths[index]
+                        ? (midpoint - traversed) / segmentLengths[index]
+                        : 0;
+                    x = segmentStart.xMeters +
+                        (segmentEnd.xMeters - segmentStart.xMeters) * segmentProgress;
+                    y = segmentStart.yMeters +
+                        (segmentEnd.yMeters - segmentStart.yMeters) * segmentProgress;
+                    angle = Math.atan2(
+                        segmentEnd.yMeters - segmentStart.yMeters,
+                        segmentEnd.xMeters - segmentStart.xMeters
+                    ) * 180 / Math.PI;
+                    break;
+                }
+                traversed += segmentLengths[index];
+            }
+        }
+
+        if (angle > 90 || angle < -90) angle += 180;
+
+        return { x: x, y: y, angle: angle };
+    }
+
+    function positionActionLabel(label, path, placement) {
+        var labelWidth = label.getComputedTextLength();
+        var fontSize = parseFloat(window.getComputedStyle(label).fontSize) || 1.65;
+        var radians = placement.angle * Math.PI / 180;
+        var halfWidth = Math.abs(Math.cos(radians)) * labelWidth / 2 +
+            Math.abs(Math.sin(radians)) * fontSize / 2;
+        var halfHeight = Math.abs(Math.sin(radians)) * labelWidth / 2 +
+            Math.abs(Math.cos(radians)) * fontSize / 2;
+        var pathLength = path.getTotalLength();
+        var shortPath = pathLength < labelWidth + 7;
+        var baseOffset = shortPath
+            ? Math.max(5.2, fontSize * 2)
+            : Math.max(3.2, fontSize * 1.35);
+        var tangentShift = Math.min(5, pathLength * 0.16);
+        var escapeShift = Math.min(14, Math.max(5, labelWidth * 0.65));
+        var pitchRect = pitch.getBoundingClientRect();
+        var obstacles = Array.from(pitch.querySelectorAll(
+            ".coach-player .coach-marker, [data-coach-ball], " +
+            "[data-svg-current-actions] .coach-action-label"
+        )).filter(function (node) {
+            return node !== label;
+        });
+        var tangent = {
+            x: Math.cos(radians),
+            y: Math.sin(radians)
+        };
+        var normal = {
+            x: -Math.sin(radians),
+            y: Math.cos(radians)
+        };
+
+        function overlapArea(first, second) {
+            var width = Math.max(0, Math.min(first.right, second.right) -
+                Math.max(first.left, second.left));
+            var height = Math.max(0, Math.min(first.bottom, second.bottom) -
+                Math.max(first.top, second.top));
+            return width * height;
+        }
+
+        function scoreCandidate(direction, offset, along) {
+            var x = placement.x + normal.x * offset * direction + tangent.x * along;
+            var y = placement.y + normal.y * offset * direction + tangent.y * along;
+            x = model.clamp(x, halfWidth + 1, model.PITCH.length - halfWidth - 1);
+            y = model.clamp(y, halfHeight + 1, model.PITCH.width - halfHeight - 1);
+
+            label.setAttribute("x", x);
+            label.setAttribute("y", y);
+            label.setAttribute(
+                "transform",
+                "rotate(" + placement.angle + " " + x + " " + y + ")"
+            );
+
+            var rect = label.getBoundingClientRect();
+            var overflow = Math.max(0, pitchRect.left - rect.left) +
+                Math.max(0, rect.right - pitchRect.right) +
+                Math.max(0, pitchRect.top - rect.top) +
+                Math.max(0, rect.bottom - pitchRect.bottom);
+            var collision = obstacles.reduce(function (total, obstacle) {
+                return total + overlapArea(rect, obstacle.getBoundingClientRect());
+            }, 0);
+
+            return {
+                x: x,
+                y: y,
+                score: overflow * 1000 + collision * 10 + offset + Math.abs(along)
+            };
+        }
+
+        var candidates = [];
+        [
+            baseOffset,
+            baseOffset + 2.4,
+            baseOffset + 4.8,
+            baseOffset + 7.2,
+            baseOffset + 9.6
+        ].forEach(function (offset) {
+            [-1, 1].forEach(function (direction) {
+                [
+                    0,
+                    -tangentShift,
+                    tangentShift,
+                    -escapeShift,
+                    escapeShift
+                ].forEach(function (along) {
+                    candidates.push(scoreCandidate(direction, offset, along));
+                });
+            });
+        });
+        var chosen = candidates.reduce(function (best, candidate) {
+            return !best || candidate.score < best.score ? candidate : best;
+        }, null);
+
+        label.setAttribute("x", chosen.x);
+        label.setAttribute("y", chosen.y);
+        label.setAttribute(
+            "transform",
+            "rotate(" + placement.angle + " " + chosen.x + " " + chosen.y + ")"
+        );
+        label.classList.toggle("is-short-path", shortPath);
+    }
+
     function renderActions(layer, actions, completed) {
         layer.innerHTML = "";
         (actions || []).forEach(function (action) {
@@ -1007,26 +1112,19 @@
             });
             path.appendChild(svgElement("title", {}, action.label || action.type));
             layer.appendChild(path);
+
             if (!completed && action.label) {
-                var endpoint = action.path[action.path.length - 1];
-                layer.appendChild(svgElement("text", {
-                    x: endpoint.xMeters,
-                    y: Math.max(3, endpoint.yMeters - 2.2),
+                var placement = actionLabelPlacement(action);
+                var label = svgElement("text", {
+                    x: placement.x,
+                    y: placement.y,
                     class: "coach-action-label is-" + action.type,
-                    "text-anchor": "middle"
-                }, action.label));
+                    "aria-hidden": "true"
+                }, action.label);
+                layer.appendChild(label);
+                positionActionLabel(label, path, placement);
             }
         });
-    }
-
-    function zoneLabel(layer, label, x, y, tone) {
-        if (!label) return;
-        layer.appendChild(svgElement("text", {
-            x: x,
-            y: y,
-            class: "coach-zone-label is-" + (tone || "neutral"),
-            "text-anchor": "middle"
-        }, label));
     }
 
     function addSvgTitle(shape, label) {
@@ -1048,7 +1146,6 @@
                 });
                 addSvgTitle(shape, zone.label);
                 zonesLayer.appendChild(shape);
-                zoneLabel(zonesLayer, zone.label, zone.x + zone.width / 2, Math.max(3.2, zone.y + 3.2), zone.tone);
             } else if (zone.type === "circle") {
                 shape = svgElement("circle", {
                     cx: zone.cx,
@@ -1058,7 +1155,6 @@
                 });
                 addSvgTitle(shape, zone.label);
                 zonesLayer.appendChild(shape);
-                zoneLabel(zonesLayer, zone.label, zone.cx, Math.max(3.2, zone.cy - zone.radius - 1.5), zone.tone);
             } else if (zone.type === "polygon") {
                 shape = svgElement("polygon", {
                     points: zone.points.map(function (zonePoint) {
@@ -1068,9 +1164,6 @@
                 });
                 addSvgTitle(shape, zone.label);
                 zonesLayer.appendChild(shape);
-                var averageX = zone.points.reduce(function (sum, zonePoint) { return sum + zonePoint.xMeters; }, 0) / zone.points.length;
-                var averageY = zone.points.reduce(function (sum, zonePoint) { return sum + zonePoint.yMeters; }, 0) / zone.points.length;
-                zoneLabel(zonesLayer, zone.label, averageX, averageY, zone.tone);
             } else if (zone.type === "line") {
                 shape = svgElement("line", {
                     x1: zone.x1, y1: zone.y1, x2: zone.x2, y2: zone.y2,
@@ -1079,7 +1172,6 @@
                 });
                 addSvgTitle(shape, zone.label);
                 zonesLayer.appendChild(shape);
-                zoneLabel(zonesLayer, zone.label, zone.x1 + 1.5, (zone.y1 + zone.y2) / 2, zone.tone);
             }
         });
 
@@ -1092,7 +1184,6 @@
             });
             addSvgTitle(triggerShape, revealTrigger.label);
             zonesLayer.appendChild(triggerShape);
-            zoneLabel(zonesLayer, revealTrigger.label, revealTrigger.cx, revealTrigger.cy - revealTrigger.radius - 1.5, "press");
         }
     }
 
@@ -1126,11 +1217,22 @@
             ? model.clamp((elapsed - step.startTime) / step.duration, 0, 1)
             : 1;
         var easedProgress = localProgress * localProgress * (3 - 2 * localProgress);
+        var ball = model.interpolatePath(step.ballPath, localProgress);
         var positions = {};
 
         Object.keys(step.startPositions).forEach(function (id) {
             positions[id] = model.interpolatePoint(step.startPositions[id], step.endPositions[id], easedProgress);
         });
+
+        if (step.ballCarrier) {
+            var carrierId = step.ballCarrier.playerId;
+            positions[carrierId] = model.carrierPositionAtProgress(
+                step.startPositions[carrierId],
+                step.ballPath,
+                step.ballCarrier.fromWaypoint,
+                localProgress
+            );
+        }
 
         return {
             elapsed: elapsed,
@@ -1138,12 +1240,16 @@
             index: index,
             localProgress: localProgress,
             positions: positions,
-            ball: model.interpolatePath(step.ballPath, localProgress)
+            ball: ball
         };
     }
 
-    function updateCaption(label, title, copy) {
-        animationCount.textContent = label;
+    function updateStepButtons(canGoPrevious, canGoNext) {
+        animationPrevious.disabled = !canGoPrevious;
+        animationNext.disabled = !canGoNext;
+    }
+
+    function updateCaption(title, copy) {
         animationTitle.textContent = title;
         animationCopy.textContent = copy;
     }
@@ -1156,11 +1262,6 @@
             if (selected) button.setAttribute("aria-current", "step");
             else button.removeAttribute("aria-current");
         });
-        if (activeView !== "dimensions") {
-            planStrip.querySelectorAll(":scope > div").forEach(function (metric, metricIndex) {
-                metric.classList.toggle("is-active", activeView !== "attack" && metricIndex === Math.min(index, 3));
-            });
-        }
     }
 
     function renderSequence(view, progress) {
@@ -1180,21 +1281,16 @@
         // them then instead of on every animation frame.
         if (stepChanged) {
             var completedActions = [];
-            var historyStart = 0;
-            sequence.steps.slice(0, state.index + 1).forEach(function (step, index) {
-                if (step.resetHistory) historyStart = index;
-            });
-            sequence.steps.slice(historyStart, state.index).forEach(function (step) {
+            sequence.steps.slice(0, state.index).forEach(function (step) {
                 completedActions = completedActions.concat(step.actions || []);
             });
             renderActions(completedActionsLayer, completedActions, true);
             renderActions(currentActionsLayer, state.step.actions, false);
 
-            phaseLabel.textContent = state.step.phase;
+            phaseLabel.textContent = sentenceCase(state.step.phase);
             pitchDescription.textContent = state.step.caption;
             pitch.setAttribute("aria-label", state.step.phase + ". " + state.step.title + ". " + state.step.caption);
             updateCaption(
-                (view === "attack" ? "PHASE " : "STAGE ") + String(state.index + 1).padStart(2, "0") + " / " + String(sequence.steps.length).padStart(2, "0"),
                 state.step.title,
                 state.step.caption
             );
@@ -1207,21 +1303,25 @@
             renderZones(state.step.zones, triggerVisible ? state.step.trigger : null);
         }
 
-        // The counterpress countdown changes every frame; other annotations are static per step.
+        // Only the live counterpress countdown earns on-pitch annotation.
         if (state.step.countdown) {
-            renderAnnotations((state.step.annotations || []).concat([{
+            renderAnnotations([{
                 x: 85,
                 y: 45,
                 label: Math.max(0, Math.ceil(5 * (1 - state.localProgress))) + " s",
                 tone: "press"
-            }]));
+            }]);
         } else if (stepChanged) {
-            renderAnnotations(state.step.annotations || []);
+            annotationsLayer.innerHTML = "";
         }
 
         animationScrubber.value = String(progress * 100);
         animationScrubber.setAttribute("aria-valuetext", formatTime(state.elapsed) + " of " + formatTime(sequence.duration));
         animationTime.textContent = formatTime(state.elapsed);
+        updateStepButtons(
+            state.index > 0 || progress > 0.001,
+            state.index < sequence.steps.length - 1 || progress < 0.999
+        );
 
         lastSequenceRender.view = view;
         lastSequenceRender.index = state.index;
@@ -1268,130 +1368,20 @@
             }));
         }
 
-        phaseLabel.textContent = state.phase;
+        phaseLabel.textContent = sentenceCase(state.phase);
         pitchDescription.textContent = state.caption;
         pitch.setAttribute("aria-label", state.phase + ". " + state.title + ". " + state.caption);
-        updateCaption("STRUCTURE " + String(formationIndex + 1).padStart(2, "0") + " / 04", state.title, state.caption);
+        updateCaption(state.title, state.caption);
         updateSubstateSelection(formationIndex);
-    }
-
-    function dimensionMetrics() {
-        return model.computeMetrics(currentPositions, {
-            selectedIds: ["molina", "romero", "otamendi", "tagliafico", "enzo", "depaul", "macallister", "messi", "dimaria", "forward"],
-            defensiveIds: ["romero", "otamendi", "tagliafico"],
-            weakSideIds: ["dimaria", "macallister", "forward", "messi", "molina"],
-            strongSide: "right"
-        });
-    }
-
-    function dimensionSummary(metrics) {
-        return {
-            labels: ["Attacking width", "Line height", "Team depth", "Weak-side gap"],
-            values: [
-                metrics.attackingWidth + " m",
-                metrics.lineHeight + " m",
-                metrics.teamDepth + " m",
-                metrics.weakSideGap + " m"
-            ],
-            definitions: metricDefinitions
-        };
-    }
-
-    function renderDimensions() {
-        invalidateSequenceCache();
-        var positions = formationStates[0].positions;
-        updatePlayerPositions(positions, { active: [] });
-        updateBall(point(46, 46));
-        completedActionsLayer.innerHTML = "";
-        currentActionsLayer.innerHTML = "";
-        annotationsLayer.innerHTML = "";
-        var metrics = dimensionMetrics();
-        var extents = metrics.extents;
-        zonesLayer.innerHTML = "";
-
-        var measurementData = [
-            {
-                path: "M " + (extents.maximumX + 4) + " " + extents.minimumY + " L " + (extents.maximumX + 4) + " " + extents.maximumY,
-                label: metrics.attackingWidth + " m WIDTH",
-                x: extents.maximumX + 4,
-                y: (extents.minimumY + extents.maximumY) / 2
-            },
-            {
-                path: "M " + extents.minimumX + " " + (extents.maximumY + 3) + " L " + extents.maximumX + " " + (extents.maximumY + 3),
-                label: metrics.teamDepth + " m DEPTH",
-                x: (extents.minimumX + extents.maximumX) / 2,
-                y: extents.maximumY + 3
-            },
-            {
-                path: "M 0 " + 63 + " L " + extents.defensiveLineX + " " + 63,
-                label: metrics.lineHeight + " m LINE HEIGHT",
-                x: extents.defensiveLineX / 2,
-                y: 61
-            },
-            {
-                path: "M 72 " + extents.weakSideTouchlineY + " L 72 " + extents.weakSidePlayerY,
-                label: metrics.weakSideGap + " m WEAK-SIDE GAP",
-                x: 72,
-                y: Math.max(3, extents.weakSidePlayerY / 2)
-            }
-        ];
-
-        measurementData.forEach(function (measurement) {
-            var measurementPath = svgElement("path", {
-                d: measurement.path,
-                class: "coach-measurement is-dimension",
-                "marker-start": "url(#coach-arrow-blue)",
-                "marker-end": "url(#coach-arrow-blue)",
-                "vector-effect": "non-scaling-stroke"
-            });
-            addSvgTitle(measurementPath, measurement.label);
-            zonesLayer.appendChild(measurementPath);
-            zoneLabel(zonesLayer, measurement.label, measurement.x, measurement.y, "dimension");
-        });
-
-        updatePlanStrip(dimensionSummary(metrics), -1);
-        phaseLabel.textContent = "IN-POSSESSION DIMENSIONS";
-        pitchDescription.textContent = "Width, depth, line height, and weak-side gap computed from the displayed Argentina outfield coordinates.";
-        pitch.setAttribute("aria-label", pitchDescription.textContent + " Width " + metrics.attackingWidth + " metres; depth " + metrics.teamDepth + " metres.");
-        updateCaption(
-            "MEASURED LIVE",
-            "Every value comes from the displayed player coordinates",
-            "Goal-to-goal is depth; touchline-to-touchline is width. The summary and pitch labels share the same metric object."
+        updateStepButtons(
+            formationIndex > 0,
+            formationIndex < formationStates.length - 1
         );
-    }
-
-    function updatePlanStrip(summary, activeIndex) {
-        var values = summary.values;
-        summary.labels.forEach(function (label, index) {
-            var labelNode = room.querySelector('[data-plan-label="' + index + '"]');
-            var valueNode = [
-                room.querySelector("[data-plan-shape]"),
-                room.querySelector("[data-plan-create]"),
-                room.querySelector("[data-plan-finish]"),
-                room.querySelector("[data-plan-loss]")
-            ][index];
-            var infoButton = room.querySelector('[data-plan-info="' + index + '"]');
-            labelNode.textContent = label;
-            valueNode.textContent = values[index];
-            infoButton.hidden = !summary.definitions;
-            if (summary.definitions) {
-                infoButton.dataset.definition = summary.definitions[index];
-                infoButton.setAttribute("aria-label", "Explain " + label.toLowerCase());
-            } else {
-                delete infoButton.dataset.definition;
-            }
-        });
-        planStrip.querySelectorAll(":scope > div").forEach(function (metric, index) {
-            metric.classList.toggle("is-active", index === activeIndex);
-        });
-        metricDefinition.hidden = true;
     }
 
     function buildSubstateControls(view) {
         substateControls.innerHTML = "";
-        var states = view === "formation"
-            ? formationStates
-            : (sequences[view] ? sequences[view].steps : []);
+        var states = view === "formation" ? formationStates : [];
         substateControls.hidden = !states.length;
         substateControls.setAttribute("aria-label", view === "formation" ? "Formation structures" : "Tactical sequence stages");
 
@@ -1427,9 +1417,8 @@
 
     function animationTick(timestamp) {
         var sequence = sequences[activeView];
-        var speed = Number(animationSpeed.value) || 1;
         var startElapsed = animationBaseProgress * sequence.duration;
-        var elapsed = startElapsed + (timestamp - animationStartedAt) * speed;
+        var elapsed = startElapsed + (timestamp - animationStartedAt);
         var progress = Math.min(1, elapsed / sequence.duration);
         renderSequence(activeView, progress);
         if (progress >= 1) {
@@ -1449,7 +1438,6 @@
     }
 
     function goToStep(direction) {
-        if (activeView === "dimensions") return;
         stopAnimation("Play sequence");
         if (activeView === "formation") {
             renderFormation(model.clamp(formationIndex + direction, 0, formationStates.length - 1));
@@ -1469,7 +1457,7 @@
     }
 
     function startAnimation() {
-        if (activeView === "dimensions" || activeView === "formation") {
+        if (activeView === "formation") {
             goToStep(1);
             return;
         }
@@ -1495,13 +1483,11 @@
 
     function updateControlVisibility(view) {
         var hasSequence = view === "attack" || view === "press" || view === "transition";
-        animationControls.hidden = view === "dimensions";
+        animationControls.hidden = false;
         animationTimeline.hidden = !hasSequence;
         animationPlay.hidden = view === "formation";
-        animationSpeed.closest("label").hidden = !hasSequence || reducedMotion.matches;
-        animationPrevious.hidden = view === "dimensions";
-        animationNext.hidden = view === "dimensions";
-        notationKey.hidden = view === "formation" || view === "dimensions";
+        animationPrevious.hidden = false;
+        animationNext.hidden = false;
         animationPlay.querySelector("span").textContent = reducedMotion.matches ? "Next step" : "Play sequence";
     }
 
@@ -1515,16 +1501,11 @@
             button.setAttribute("aria-selected", String(selected));
             button.tabIndex = selected ? 0 : -1;
         });
-        pitch.setAttribute("aria-labelledby", "coach-tab-" + view);
+        tacticalStage.setAttribute("aria-labelledby", "coach-tab-" + view);
         updateControlVisibility(view);
         buildSubstateControls(view);
+        animationScrubber.setAttribute("aria-label", "Review the " + view + " timeline");
 
-        if (view === "dimensions") {
-            renderDimensions();
-            return;
-        }
-
-        updatePlanStrip(viewSummaries[view], view === "formation" ? formationIndex : stepIndexForView(view));
         if (view === "formation") {
             renderFormation(formationIndex);
         } else {
@@ -1532,50 +1513,15 @@
         }
     }
 
-    function updateOptionScores(optionScores) {
-        Object.keys(optionScores).forEach(function (key) {
-            var score = optionScores[key];
-            var label = room.querySelector('[data-option-score="' + key + '"]');
-            var bar = room.querySelector('[data-option="' + key + '"] em');
-            if (label) label.textContent = score + "%";
-            if (bar) bar.style.setProperty("--value", score + "%");
-        });
-    }
-
-    function selectOption(key) {
-        var optionCopy = {
-            controlled: "Selected because it preserves Argentina's strongest possession pattern while targeting France's left defensive channel with Argentina's right-side overload.",
-            transition: "A faster route with more open-field opportunities, but a higher turnover cost and less control over where possession ends.",
-            wide: "Safer circulation can widen France's block, though it produces fewer central receptions and lower-value final actions."
-        };
-        room.querySelectorAll("[data-option]").forEach(function (button) {
-            var selected = button.dataset.option === key;
-            button.classList.toggle("is-selected", selected);
-            button.setAttribute("aria-pressed", String(selected));
-        });
-        optionDetail.textContent = optionCopy[key];
-    }
-
     function updateScenario() {
         var scenario = scenarios[stateControl.value];
+        var adjustedConfidence = scenario.confidence + (playerControl.value === "lautaro" ? -2 : 0);
         planName.textContent = scenario.plan;
         planWhy.textContent = scenario.why;
-        confidence.textContent = (scenario.confidence + (playerControl.value === "lautaro" ? -2 : 0)) + "%";
+        confidence.textContent = adjustedConfidence + "%";
 
-        Object.keys(scenario.effects).forEach(function (key) {
-            var value = room.querySelector('[data-effect="' + key + '"]');
-            var bar = room.querySelector('[data-effect-bar="' + key + '"]');
-            if (value) value.textContent = scenario.effects[key][0];
-            if (bar) bar.style.setProperty("--value", scenario.effects[key][1]);
-        });
-        setText("[data-in-possession]", scenario.instructions.possession);
-        setText("[data-final-third]", scenario.instructions.finalThird);
-        setText("[data-out-possession]", scenario.instructions.out);
-        setText("[data-transition]", scenario.instructions.transition);
-        updateOptionScores(scenario.options);
-        riskCard.classList.toggle("is-safer", scenario.effects.risk[0].charAt(0) === "−");
-        selectOption(stateControl.value === "trailing" ? "transition" : "controlled");
         updateView(activeView);
+        statusNode.textContent = "Recommendation updated: " + scenario.plan + ". Illustrative confidence " + adjustedConfidence + "%.";
     }
 
     function initializeInteractions() {
@@ -1600,33 +1546,9 @@
             });
         });
 
-        room.querySelectorAll("[data-option]").forEach(function (button) {
-            button.addEventListener("click", function () {
-                selectOption(button.dataset.option);
-            });
-        });
-
-        room.querySelectorAll("[data-plan-info]").forEach(function (button) {
-            function showDefinition() {
-                if (!button.dataset.definition) return;
-                metricDefinition.textContent = button.dataset.definition;
-                metricDefinition.hidden = false;
-            }
-            button.addEventListener("mouseenter", showDefinition);
-            button.addEventListener("focus", showDefinition);
-            button.addEventListener("click", showDefinition);
-        });
-
         animationPlay.addEventListener("click", startAnimation);
         animationPrevious.addEventListener("click", function () { goToStep(-1); });
         animationNext.addEventListener("click", function () { goToStep(1); });
-        animationSpeed.addEventListener("change", function () {
-            if (!animationFrame) return;
-            window.cancelAnimationFrame(animationFrame);
-            animationBaseProgress = viewProgress[activeView];
-            animationStartedAt = performance.now();
-            animationFrame = window.requestAnimationFrame(animationTick);
-        });
         animationScrubber.addEventListener("input", function () {
             stopAnimation("Continue sequence");
             pitch.classList.add("is-fluid");
@@ -1648,8 +1570,18 @@
             updateControlVisibility(activeView);
         });
 
+        if ("ResizeObserver" in window) {
+            pitchResizeObserver = new ResizeObserver(queuePitchReflow);
+            pitchResizeObserver.observe(pitch);
+        } else {
+            window.addEventListener("resize", queuePitchReflow);
+        }
+
         window.addEventListener("pagehide", function () {
             if (animationFrame) window.cancelAnimationFrame(animationFrame);
+            if (pitchResizeFrame) window.cancelAnimationFrame(pitchResizeFrame);
+            if (pitchResizeObserver) pitchResizeObserver.disconnect();
+            else window.removeEventListener("resize", queuePitchReflow);
         });
         window.addEventListener("onColorSchemeChange", function () {
             updateView(activeView);
