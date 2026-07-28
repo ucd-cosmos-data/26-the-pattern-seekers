@@ -69,3 +69,36 @@ test("path interpolation follows the active tactical action", function () {
 
     assert.deepEqual(point, { xMeters: 30, yMeters: 20 });
 });
+
+test("path waypoint progress identifies the moment a pass reaches its receiver", function () {
+    var path = [
+        { xMeters: 8, yMeters: 34 },
+        { xMeters: 25, yMeters: 56 },
+        { xMeters: 29, yMeters: 57 },
+        { xMeters: 35, yMeters: 56 }
+    ];
+    var receptionProgress = model.pathWaypointProgress(path, 1);
+
+    assert.ok(receptionProgress > 0.7 && receptionProgress < 0.8);
+    assert.deepEqual(
+        model.interpolatePath(path, receptionProgress),
+        { xMeters: 25, yMeters: 56 }
+    );
+    assert.deepEqual(
+        model.carrierPositionAtProgress({ xMeters: 25, yMeters: 56 }, path, 1, 0.5),
+        { xMeters: 25, yMeters: 56 }
+    );
+    assert.deepEqual(
+        model.carrierPositionAtProgress({ xMeters: 25, yMeters: 56 }, path, 1, 0.9),
+        model.interpolatePath(path, 0.9)
+    );
+});
+
+test("sequence coordinates can be validated before rendering", function () {
+    assert.equal(model.pointsEqual(
+        { xMeters: 35, yMeters: 56 },
+        { xMeters: 35.0005, yMeters: 56 }
+    ), true);
+    assert.equal(model.isPointOnPitch({ xMeters: 105, yMeters: 68 }), true);
+    assert.equal(model.isPointOnPitch({ xMeters: 106, yMeters: 34 }), false);
+});

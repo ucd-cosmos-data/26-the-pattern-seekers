@@ -3,401 +3,344 @@
     <header class="coach-room__hero">
         <div class="coach-room__hero-inner">
             {{- partial "breadcrumbs.html" . }}
-            <div class="coach-room__eyebrow" data-reveal data-reveal-delay="70">
-                <span>Model output prototype</span>
-                <span class="coach-room__live-dot">Decision room</span>
-            </div>
-            <h1 id="coach-room-title" data-reveal data-reveal-delay="120">
-                The World's Coach <span>(Output)</span>
-            </h1>
-            <p data-reveal data-reveal-delay="190">
-                From thousands of actions to one game plan: what to play, who performs each
-                role, why it should work, and how to adjust.
-            </p>
+            <h1 id="coach-room-title">The World's Coach</h1>
+            <p>We built a prototype that turned match data into one game plan.</p>
         </div>
     </header>
 
     <div class="coach-room__workspace">
-        <section class="coach-context" aria-labelledby="coach-context-title" data-reveal>
-            <div>
-                <p class="coach-kicker" id="coach-context-title">Match context</p>
-                <div class="coach-matchup" aria-label="Argentina versus France">
-                    <span><b>ARG</b> Argentina</span>
-                    <i>vs</i>
-                    <span><b>FRA</b> France</span>
-                </div>
-            </div>
-
-            <div class="coach-context__controls" aria-label="Match scenario">
-                <label>
-                    Match state
-                    <select data-coach-state>
-                        <option value="prematch">Pre-match · 0–0</option>
-                        <option value="leading">Leading · 70'</option>
-                        <option value="drawing">Drawing · 70'</option>
-                        <option value="trailing">Trailing · 70'</option>
-                    </select>
-                </label>
-                <label>
-                    Forward
-                    <select data-coach-player>
-                        <option value="alvarez">Julián Álvarez</option>
-                        <option value="lautaro">Lautaro Martínez</option>
-                    </select>
-                </label>
-            </div>
-        </section>
-
-        <p class="coach-demo-note" data-coach-demo-note>
-            Demonstration scenario · Illustrative outputs until the production model is connected
-        </p>
-
-        <section class="coach-recommendation" aria-labelledby="coach-recommendation-title" data-reveal>
-            <div class="coach-recommendation__topline">
+        <div class="coach-overview">
+            <section class="coach-context" aria-label="Match context">
                 <div>
-                    <p class="coach-kicker">Primary recommendation</p>
-                    <h2 id="coach-recommendation-title" data-plan-name>
-                        Controlled possession → right-side overload
-                    </h2>
+                    <p class="coach-matchup" aria-label="Argentina versus France">
+                        Argentina vs. France
+                    </p>
                 </div>
-                <div class="coach-confidence" aria-label="Model confidence">
-                    <span data-confidence>78%</span>
-                    <small>confidence</small>
+
+                <div class="coach-context__controls" aria-label="Match scenario">
+                    <label>
+                        Score and time
+                        <select data-coach-state>
+                            <option value="prematch">Pre-match, 0–0</option>
+                            <option value="leading">70', Argentina leading</option>
+                            <option value="drawing">70', level</option>
+                            <option value="trailing">70', Argentina trailing</option>
+                        </select>
+                    </label>
+                    <label>
+                        Forward
+                        <select data-coach-player>
+                            <option value="alvarez">Julián Álvarez</option>
+                            <option value="lautaro">Lautaro Martínez</option>
+                        </select>
+                    </label>
                 </div>
-            </div>
+                <p class="sr-only" data-coach-status aria-live="polite"></p>
+            </section>
+        </div>
+
+        <section class="coach-recommendation" aria-labelledby="coach-recommendation-title">
+            <h2 id="coach-recommendation-title" data-plan-name>
+                Controlled possession, then a right-side overload
+            </h2>
             <p class="coach-recommendation__why" data-plan-why>
-                Argentina creates its best chances through patient central attraction before
-                releasing the right side. France's left channel is the clearest route to a
-                high-quality cutback.
+                Draw France inside, release Messi in the right half-space, then send Molina
+                outside for a low cutback.
             </p>
-            <div class="coach-recommendation__signals">
-                <span><i></i> Strong lineup fit</span>
-                <span><i></i> Opponent weakness detected</span>
-                <span><i></i> Stable across model families</span>
-            </div>
+            <p class="coach-confidence" aria-label="Illustrative confidence">
+                <span data-confidence>78%</span> illustrative confidence<sup
+                    ><a href="#coach-note-1" aria-label="Footnote 1">1</a></sup
+                >
+            </p>
         </section>
 
-        <div class="coach-main-grid">
-            <section class="coach-panel coach-tactics" aria-labelledby="coach-tactics-title" data-reveal>
-                <div class="coach-panel__header">
-                    <div>
-                        <p class="coach-kicker">Animated game plan</p>
-                        <h2 id="coach-tactics-title">See the attack unfold</h2>
-                    </div>
-                    <div class="coach-pitch-legend" aria-label="Pitch legend and direction of play">
-                        <span><i class="coach-marker is-team"><b>10</b></i> Argentina</span>
-                        <span><i class="coach-marker is-opponent"><b>10</b></i> France</span>
-                        <span><i class="coach-marker is-ball"></i> Ball</span>
-                        <span class="coach-pitch-legend__direction">Argentina attacking <b>→</b></span>
-                    </div>
-                </div>
-
+        <section class="coach-panel coach-tactics" aria-labelledby="coach-tactics-title">
+            <div class="coach-panel__header coach-tactics__toolbar">
+                <h2 id="coach-tactics-title">Tactical plan</h2>
                 <div class="coach-tactic-tabs" role="tablist" aria-label="Tactical views">
-                    <button id="coach-tab-attack" type="button" role="tab" aria-controls="coach-tactical-stage" aria-selected="true" tabindex="0" data-tactic-tab="attack">Attack pattern</button>
-                    <button id="coach-tab-formation" type="button" role="tab" aria-controls="coach-tactical-stage" aria-selected="false" tabindex="-1" data-tactic-tab="formation">Formation</button>
-                    <button id="coach-tab-dimensions" type="button" role="tab" aria-controls="coach-tactical-stage" aria-selected="false" tabindex="-1" data-tactic-tab="dimensions">Width &amp; depth</button>
-                    <button id="coach-tab-press" type="button" role="tab" aria-controls="coach-tactical-stage" aria-selected="false" tabindex="-1" data-tactic-tab="press">Press</button>
-                    <button id="coach-tab-transition" type="button" role="tab" aria-controls="coach-tactical-stage" aria-selected="false" tabindex="-1" data-tactic-tab="transition">Transitions</button>
+                    <button
+                        id="coach-tab-attack"
+                        type="button"
+                        role="tab"
+                        aria-controls="coach-tactical-stage"
+                        aria-selected="true"
+                        tabindex="0"
+                        data-tactic-tab="attack"
+                    >
+                        Attack
+                    </button>
+                    <button
+                        id="coach-tab-formation"
+                        type="button"
+                        role="tab"
+                        aria-controls="coach-tactical-stage"
+                        aria-selected="false"
+                        tabindex="-1"
+                        data-tactic-tab="formation"
+                    >
+                        Shape
+                    </button>
+                    <button
+                        id="coach-tab-press"
+                        type="button"
+                        role="tab"
+                        aria-controls="coach-tactical-stage"
+                        aria-selected="false"
+                        tabindex="-1"
+                        data-tactic-tab="press"
+                    >
+                        Press
+                    </button>
+                    <button
+                        id="coach-tab-transition"
+                        type="button"
+                        role="tab"
+                        aria-controls="coach-tactical-stage"
+                        aria-selected="false"
+                        tabindex="-1"
+                        data-tactic-tab="transition"
+                    >
+                        Transition
+                    </button>
                 </div>
+            </div>
 
-                <div class="coach-substate-tabs" data-tactic-substates aria-label="Attack phases"></div>
-
-                <div class="coach-plan-strip" data-plan-strip aria-label="Current tactical facts">
-                    <div><small><span data-plan-label="0">Base shape</span><button type="button" data-plan-info="0" aria-label="Explain base shape" hidden>?</button></small><strong data-plan-shape>3–2 buildup</strong></div>
-                    <div><small><span data-plan-label="1">Create</span><button type="button" data-plan-info="1" aria-label="Explain creation metric" hidden>?</button></small><strong data-plan-create>Right-side 3v2</strong></div>
-                    <div><small><span data-plan-label="2">Finish</span><button type="button" data-plan-info="2" aria-label="Explain finishing metric" hidden>?</button></small><strong data-plan-finish>Low cutback</strong></div>
-                    <div><small><span data-plan-label="3">On loss</span><button type="button" data-plan-info="3" aria-label="Explain transition metric" hidden>?</button></small><strong data-plan-loss>Five-second press</strong></div>
-                </div>
-                <p class="coach-metric-definition" data-metric-definition aria-live="polite" hidden></p>
-
+            <div
+                id="coach-tactical-stage"
+                class="coach-stage"
+                role="tabpanel"
+                aria-labelledby="coach-tab-attack"
+                data-tactical-stage
+            >
                 <div class="coach-pitch-wrap">
-                    <div id="coach-tactical-stage" class="coach-pitch" data-coach-pitch role="tabpanel" aria-labelledby="coach-tab-attack" aria-label="Argentina tactical pitch. Argentina attacks from left to right; Argentina's right side is the lower half.">
-                        <svg class="coach-pitch__svg" data-tactical-svg viewBox="0 0 105 68" preserveAspectRatio="xMidYMid meet" role="img" aria-labelledby="coach-pitch-title coach-pitch-description">
-                            <title id="coach-pitch-title">Argentina tactical plan against France</title>
-                            <desc id="coach-pitch-description" data-pitch-description>Argentina builds from left to right into a right-side overload.</desc>
+                    <div
+                        class="coach-pitch"
+                        data-coach-pitch
+                        role="group"
+                        aria-label="Argentina tactical pitch. Argentina attacks from left to right; Argentina's right side is the lower half."
+                    >
+                        <svg
+                            class="coach-pitch__svg"
+                            data-tactical-svg
+                            viewBox="0 0 105 68"
+                            preserveAspectRatio="xMidYMid meet"
+                            role="img"
+                            aria-labelledby="coach-pitch-title coach-pitch-description"
+                        >
+                            <title id="coach-pitch-title">
+                                Argentina tactical plan against France
+                            </title>
+                            <desc id="coach-pitch-description" data-pitch-description>
+                                Argentina builds from left to right into a right-side overload.
+                            </desc>
                             <defs>
-                                <marker id="coach-arrow-blue" markerWidth="5" markerHeight="5" refX="4.2" refY="2.5" orient="auto-start-reverse" markerUnits="strokeWidth"><path d="M0,0 L5,2.5 L0,5 Z"></path></marker>
-                                <marker id="coach-arrow-red" markerWidth="5" markerHeight="5" refX="4.2" refY="2.5" orient="auto-start-reverse" markerUnits="strokeWidth"><path d="M0,0 L5,2.5 L0,5 Z"></path></marker>
-                                <marker id="coach-arrow-green" markerWidth="5" markerHeight="5" refX="4.2" refY="2.5" orient="auto-start-reverse" markerUnits="strokeWidth"><path d="M0,0 L5,2.5 L0,5 Z"></path></marker>
+                                <marker
+                                    id="coach-arrow-blue"
+                                    markerWidth="5"
+                                    markerHeight="5"
+                                    refX="4.2"
+                                    refY="2.5"
+                                    orient="auto-start-reverse"
+                                    markerUnits="strokeWidth"
+                                >
+                                    <path d="M0,0 L5,2.5 L0,5 Z"></path>
+                                </marker>
+                                <marker
+                                    id="coach-arrow-red"
+                                    markerWidth="5"
+                                    markerHeight="5"
+                                    refX="4.2"
+                                    refY="2.5"
+                                    orient="auto-start-reverse"
+                                    markerUnits="strokeWidth"
+                                >
+                                    <path d="M0,0 L5,2.5 L0,5 Z"></path>
+                                </marker>
+                                <marker
+                                    id="coach-arrow-green"
+                                    markerWidth="5"
+                                    markerHeight="5"
+                                    refX="4.2"
+                                    refY="2.5"
+                                    orient="auto-start-reverse"
+                                    markerUnits="strokeWidth"
+                                >
+                                    <path d="M0,0 L5,2.5 L0,5 Z"></path>
+                                </marker>
                             </defs>
                             <g class="coach-field-lines" aria-hidden="true">
                                 <rect x="0.4" y="0.4" width="104.2" height="67.2" rx="1"></rect>
                                 <path d="M52.5 0.4V67.6"></path>
                                 <circle cx="52.5" cy="34" r="9.15"></circle>
                                 <circle cx="52.5" cy="34" r="0.45" class="is-filled"></circle>
-                                <path d="M0.4 13.84H16.5V54.16H0.4M104.6 13.84H88.5V54.16H104.6"></path>
-                                <path d="M0.4 24.84H5.5V43.16H0.4M104.6 24.84H99.5V43.16H104.6"></path>
+                                <path
+                                    d="M0.4 13.84H16.5V54.16H0.4M104.6 13.84H88.5V54.16H104.6"
+                                ></path>
+                                <path
+                                    d="M0.4 24.84H5.5V43.16H0.4M104.6 24.84H99.5V43.16H104.6"
+                                ></path>
                                 <circle cx="11" cy="34" r="0.35" class="is-filled"></circle>
                                 <circle cx="94" cy="34" r="0.35" class="is-filled"></circle>
-                                <path d="M16.5 27.2A9.15 9.15 0 0 1 16.5 40.8M88.5 27.2A9.15 9.15 0 0 0 88.5 40.8"></path>
+                                <path
+                                    d="M16.5 27.2A9.15 9.15 0 0 1 16.5 40.8M88.5 27.2A9.15 9.15 0 0 0 88.5 40.8"
+                                ></path>
                             </g>
                             <g data-svg-zones></g>
                             <g data-svg-completed-actions></g>
                             <g data-svg-current-actions></g>
                             <g data-svg-annotations></g>
                         </svg>
-                        <span class="coach-pitch__edge coach-pitch__edge--left">ARG LEFT</span>
-                        <span class="coach-pitch__edge coach-pitch__edge--right">ARG RIGHT</span>
-                        <span class="coach-pitch__phase" data-pitch-phase>IN POSSESSION</span>
-                        <span class="coach-pitch__direction">ARGENTINA ATTACKING <b>→</b></span>
-                        <div class="coach-notation-key" data-notation-key aria-label="Tactical notation">
-                            <span><i class="is-pass"></i> Pass</span>
-                            <span><i class="is-run"></i> Run</span>
-                            <span><i class="is-press"></i> Press</span>
-                        </div>
+                        <span class="coach-pitch__direction">Argentina attacks <b>→</b></span>
                         <div class="coach-pitch__players" data-pitch-players></div>
-                        <span class="coach-marker is-ball coach-pitch__ball" data-coach-ball aria-hidden="true"></span>
-                        <div id="coach-player-tooltip" class="coach-tactical-tooltip" data-tactical-tooltip role="tooltip" hidden></div>
+                        <span
+                            class="coach-marker is-ball coach-pitch__ball"
+                            data-coach-ball
+                            aria-hidden="true"
+                        ></span>
+                        <div
+                            id="coach-player-tooltip"
+                            class="coach-tactical-tooltip"
+                            data-tactical-tooltip
+                            role="tooltip"
+                            hidden
+                        ></div>
                     </div>
                 </div>
 
-                <div class="coach-animation">
-                    <div class="coach-animation__caption" aria-live="polite">
-                        <span data-animation-count>PHASE 01 / 07</span>
-                        <div>
-                            <h3 data-animation-title>Set the structure</h3>
-                            <p data-animation-copy>Build with three behind the ball and two central outlets. Keep both wings available.</p>
+                <div class="coach-playback">
+                    <div class="coach-playback__copy">
+                        <span class="coach-playback__phase" data-pitch-phase
+                            >In possession</span
+                        >
+                        <div class="coach-animation__caption" aria-live="polite">
+                            <h3 data-animation-title>Build in a 3–2–5</h3>
+                            <p data-animation-copy>
+                                Three defenders start the move, two midfielders connect, and
+                                five attackers stretch France's back line.
+                            </p>
                         </div>
                     </div>
-                    <div class="coach-animation__controls">
-                        <button type="button" class="coach-animation__step" data-animation-previous aria-label="Previous tactical step">
-                            <span aria-hidden="true">←</span>
-                            <small>Previous</small>
-                        </button>
-                        <button type="button" class="coach-animation__play" data-animation-play aria-pressed="false">
-                            <i aria-hidden="true"></i>
-                            <span>Play sequence</span>
-                        </button>
-                        <button type="button" class="coach-animation__step" data-animation-next aria-label="Next tactical step">
-                            <small>Next</small>
-                            <span aria-hidden="true">→</span>
-                        </button>
-                        <label class="coach-animation__speed">
-                            <span>Speed</span>
-                            <select data-animation-speed aria-label="Animation speed">
-                                <option value="0.75">0.75×</option>
-                                <option value="1" selected>1×</option>
-                                <option value="1.25">1.25×</option>
-                            </select>
+
+                    <div class="coach-playback__dock">
+                        <div
+                            class="coach-substate-tabs"
+                            data-tactic-substates
+                            aria-label="Shape options"
+                        ></div>
+                        <div class="coach-animation__controls">
+                            <button
+                                type="button"
+                                class="coach-animation__step"
+                                data-animation-previous
+                                aria-label="Previous tactical step"
+                            >
+                                <span aria-hidden="true">←</span>
+                                <small>Previous</small>
+                            </button>
+                            <button
+                                type="button"
+                                class="coach-animation__play"
+                                data-animation-play
+                                aria-pressed="false"
+                            >
+                                <i aria-hidden="true"></i>
+                                <span>Play sequence</span>
+                            </button>
+                            <button
+                                type="button"
+                                class="coach-animation__step"
+                                data-animation-next
+                                aria-label="Next tactical step"
+                            >
+                                <small>Next</small>
+                                <span aria-hidden="true">→</span>
+                            </button>
+                        </div>
+                        <label class="coach-timeline">
+                            <span class="sr-only">Tactical sequence timeline</span>
+                            <input
+                                type="range"
+                                min="0"
+                                max="100"
+                                step="0.1"
+                                value="0"
+                                data-animation-scrubber
+                                aria-label="Review the attack timeline"
+                            />
+                            <small
+                                ><span data-animation-time>00:00</span
+                                ><span data-animation-duration>00:14</span></small
+                            >
                         </label>
                     </div>
                 </div>
-                <label class="coach-timeline">
-                    <span class="sr-only">Tactical sequence timeline</span>
-                    <input type="range" min="0" max="100" step="0.1" value="0" data-animation-scrubber aria-label="Review the attack timeline">
-                    <small><span data-animation-time>00:00</span><span data-animation-duration>00:14</span></small>
-                </label>
-            </section>
-
-            <aside class="coach-panel coach-instructions" aria-labelledby="coach-instructions-title" data-reveal>
-                <div class="coach-panel__header">
-                    <div>
-                        <p class="coach-kicker">Coach's brief</p>
-                        <h2 id="coach-instructions-title">Instructions by phase</h2>
-                    </div>
-                </div>
-                <div class="coach-phase-list">
-                    <article>
-                        <span>01</span>
-                        <div>
-                            <h3>In possession</h3>
-                            <p data-in-possession>Build with a 3–2 base. Invite central pressure, then find De Paul or Messi on the right half-space.</p>
-                        </div>
-                    </article>
-                    <article>
-                        <span>02</span>
-                        <div>
-                            <h3>Final third</h3>
-                            <p data-final-third>Keep width on the far side. Send Álvarez across the near centre-back and prioritize low cutbacks.</p>
-                        </div>
-                    </article>
-                    <article>
-                        <span>03</span>
-                        <div>
-                            <h3>Out of possession</h3>
-                            <p data-out-possession>Defend in a compact 4–4–2. Screen central access and guide France toward their right side.</p>
-                        </div>
-                    </article>
-                    <article>
-                        <span>04</span>
-                        <div>
-                            <h3>On transition</h3>
-                            <p data-transition>Enzo protects the centre. Counterpress for five seconds; recover shape if the first wave is broken.</p>
-                        </div>
-                    </article>
-                </div>
-            </aside>
-        </div>
-
-        <section class="coach-panel coach-effects" aria-labelledby="coach-effects-title" data-reveal>
-            <div class="coach-panel__header">
-                <div>
-                    <p class="coach-kicker">Expected effect</p>
-                    <h2 id="coach-effects-title">What changes if we use this plan</h2>
-                </div>
-                <p>Compared with the team's neutral tactical baseline</p>
-            </div>
-            <div class="coach-effect-grid">
-                <article>
-                    <div><span>Chance quality</span><strong data-effect="chance">+14%</strong></div>
-                    <div class="coach-meter"><i data-effect-bar="chance" style="--value: 78%"></i></div>
-                    <small>Higher-quality final actions</small>
-                </article>
-                <article>
-                    <div><span>Box entries</span><strong data-effect="box">+11%</strong></div>
-                    <div class="coach-meter"><i data-effect-bar="box" style="--value: 68%"></i></div>
-                    <small>More controlled entries</small>
-                </article>
-                <article>
-                    <div><span>Possession retention</span><strong data-effect="retention">+8%</strong></div>
-                    <div class="coach-meter"><i data-effect-bar="retention" style="--value: 58%"></i></div>
-                    <small>Under opposition pressure</small>
-                </article>
-                <article class="is-risk">
-                    <div><span>Transition exposure</span><strong data-effect="risk">+6%</strong></div>
-                    <div class="coach-meter"><i data-effect-bar="risk" style="--value: 42%"></i></div>
-                    <small>Primary tactical tradeoff</small>
-                </article>
             </div>
         </section>
 
-        <div class="coach-lower-grid">
-            <section class="coach-panel coach-options" aria-labelledby="coach-options-title" data-reveal>
-                <div class="coach-panel__header">
-                    <div>
-                        <p class="coach-kicker">Strategy comparison</p>
-                        <h2 id="coach-options-title">Why this plan wins</h2>
-                    </div>
-                </div>
-                <div class="coach-option-list" data-option-list>
-                    <button type="button" class="is-selected" data-option="controlled" aria-pressed="true">
-                        <span><b>Controlled overload</b><small>Best lineup–opponent fit</small></span>
-                        <i><em style="--value: 64%"></em></i>
-                        <strong data-option-score="controlled">64%</strong>
-                    </button>
-                    <button type="button" data-option="transition" aria-pressed="false">
-                        <span><b>Direct transition</b><small>More volatile; strong fallback</small></span>
-                        <i><em style="--value: 58%"></em></i>
-                        <strong data-option-score="transition">58%</strong>
-                    </button>
-                    <button type="button" data-option="wide" aria-pressed="false">
-                        <span><b>Wide circulation</b><small>Safe, but lower final-third yield</small></span>
-                        <i><em style="--value: 54%"></em></i>
-                        <strong data-option-score="wide">54%</strong>
-                    </button>
-                </div>
-                <p class="coach-option-detail" data-option-detail>
-                    Selected because it preserves Argentina's strongest possession pattern while targeting France's most vulnerable recovery channel.
-                </p>
-            </section>
-
-            <section class="coach-panel coach-gravity" aria-labelledby="coach-gravity-title" data-reveal>
-                <div class="coach-panel__header">
-                    <div>
-                        <p class="coach-kicker">Player gravity</p>
-                        <h2 id="coach-gravity-title">Who bends the defence</h2>
-                    </div>
-                </div>
-                <div class="coach-gravity__hero">
-                    <div class="coach-gravity__orbit" aria-hidden="true">
-                        <span>10</span>
-                        <i style="--angle: 24deg"></i>
-                        <i style="--angle: 138deg"></i>
-                        <i style="--angle: 258deg"></i>
-                    </div>
-                    <div>
-                        <strong>1.7</strong>
-                        <span>extra defenders drawn toward Messi</span>
-                    </div>
-                </div>
-                <div class="coach-gravity__breakdown">
-                    <div><span>Attention residual</span><i><em style="--value: 91%"></em></i><b>High</b></div>
-                    <div><span>Teammate space created</span><i><em style="--value: 82%"></em></i><b>+18%</b></div>
-                    <div><span>Downstream threat</span><i><em style="--value: 76%"></em></i><b>+0.07</b></div>
-                </div>
-                <p>Use Messi as the attractor—not the endpoint. The highest-value outcome appears when the next action attacks the space he creates.</p>
-            </section>
-        </div>
-
-        <section class="coach-panel coach-roles" aria-labelledby="coach-roles-title" data-reveal>
+        <section class="coach-panel coach-roles" aria-labelledby="coach-roles-title">
             <div class="coach-panel__header">
                 <div>
-                    <p class="coach-kicker">Player-specific roles</p>
-                    <h2 id="coach-roles-title">Four jobs that make the plan work</h2>
+                    <h2 id="coach-roles-title">Player roles</h2>
                 </div>
-                <span data-lineup-fit>Lineup fit · 86%</span>
             </div>
+            <p class="coach-roles__summary">
+                Assignments for the selected lineup.
+                <span
+                    >Illustrative fit <strong data-lineup-fit>86%</strong
+                    ><sup><a href="#coach-note-1" aria-label="Footnote 1">1</a></sup></span
+                >
+            </p>
             <div class="coach-role-grid">
                 <article>
                     <span>10</span>
-                    <div><h3>Lionel Messi</h3><p>Free creator</p></div>
+                    <div>
+                        <h3>Lionel Messi</h3>
+                        <p>Free creator</p>
+                    </div>
                     <strong>Attract, turn, release</strong>
                 </article>
                 <article>
                     <span>7</span>
-                    <div><h3>Rodrigo De Paul</h3><p>Right-side runner</p></div>
+                    <div>
+                        <h3>Rodrigo De Paul</h3>
+                        <p>Right-side runner</p>
+                    </div>
                     <strong>Attack the vacated lane</strong>
                 </article>
                 <article>
                     <span data-role-forward-number>9</span>
-                    <div><h3 data-role-forward-name>Julián Álvarez</h3><p data-role-forward-role>Depth runner</p></div>
+                    <div>
+                        <h3 data-role-forward-name>Julián Álvarez</h3>
+                        <p data-role-forward-role>Depth runner</p>
+                    </div>
                     <strong data-role-forward-job>Pin the centre-back</strong>
                 </article>
                 <article>
                     <span>24</span>
-                    <div><h3>Enzo Fernández</h3><p>Rest defence</p></div>
+                    <div>
+                        <h3>Enzo Fernández</h3>
+                        <p>Rest defence</p>
+                    </div>
                     <strong>Protect the central loss</strong>
                 </article>
             </div>
         </section>
 
-        <section class="coach-evidence" aria-labelledby="coach-evidence-title" data-reveal>
-            <div class="coach-evidence__top">
-                <div>
-                    <p class="coach-kicker">Analyst validation</p>
-                    <h2 id="coach-evidence-title">Evidence behind the recommendation</h2>
-                </div>
-                <span><i></i> Prototype evidence</span>
-            </div>
-            <div class="coach-evidence__content">
-                <div class="coach-evidence__intro">
-                    <div>
-                        <p class="coach-kicker">How to read this</p>
-                        <h3>Confidence is not certainty</h3>
-                        <p>
-                            Candidate strategies are compared on held-out matches. The production
-                            version will report only out-of-sample results and will separate model
-                            confidence from tactical upside.
-                        </p>
-                    </div>
-                </div>
-                <dl class="coach-evidence__metrics">
-                    <div>
-                        <dt>Recommendation stability</dt>
-                        <dd>4 / 5 <small>model families agree</small></dd>
-                    </div>
-                    <div>
-                        <dt>Comparable possessions</dt>
-                        <dd>1,284 <small>in the reference set</small></dd>
-                    </div>
-                    <div>
-                        <dt>Uncertainty band</dt>
-                        <dd>± 6 <small>percentage points</small></dd>
-                    </div>
-                </dl>
-                <div class="coach-evidence__checks">
-                    <p class="coach-kicker">Required before match use</p>
-                    <div>
-                        <span><b>01</b> Leave-one-match-out validation</span>
-                        <span><b>02</b> Lineup and opponent sensitivity</span>
-                        <span><b>03</b> Calibration by game state</span>
-                    </div>
-                </div>
-                <p class="coach-evidence__footnote">
-                    Prototype values are illustrative and are not yet connected to the project's
-                    finalized validation outputs.
-                </p>
-            </div>
+        <section class="coach-limitations" aria-labelledby="coach-limitations-title">
+            <h2 id="coach-limitations-title">Limitations</h2>
+            <p>
+                Before match use, the prototype still needed held-out match testing, lineup
+                sensitivity checks, and calibrated confidence.
+            </p>
+
+            <footer class="coach-footnotes" aria-label="Notes">
+                <ol>
+                    <li id="coach-note-1">
+                        Confidence and lineup-fit values were illustrative; production model
+                        outputs were not connected.
+                    </li>
+                </ol>
+            </footer>
         </section>
     </div>
 </article>

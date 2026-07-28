@@ -887,7 +887,11 @@
         padding: clamp(3rem, 6vw, 8rem);
         border-radius: clamp(2.6rem, 4vw, 5.2rem);
         background:
-            radial-gradient(circle at 78% 25%, color-mix(in srgb, var(--ps-accent) 17%, transparent), transparent 28%),
+            radial-gradient(
+                circle at 78% 25%,
+                color-mix(in srgb, var(--ps-accent) 17%, transparent),
+                transparent 28%
+            ),
             var(--ps-surface);
         box-shadow: var(--ps-shadow);
         color: var(--ps-text);
@@ -1008,7 +1012,12 @@
         border: 0.1rem solid color-mix(in srgb, var(--ps-text) 18%, transparent);
         border-radius: 2.2rem;
         background:
-            linear-gradient(90deg, transparent 49.8%, color-mix(in srgb, var(--ps-text) 14%, transparent) 49.8% 50.2%, transparent 50.2%),
+            linear-gradient(
+                90deg,
+                transparent 49.8%,
+                color-mix(in srgb, var(--ps-text) 14%, transparent) 49.8% 50.2%,
+                transparent 50.2%
+            ),
             color-mix(in srgb, var(--ps-positive) 16%, var(--ps-surface));
     }
 
@@ -1413,94 +1422,56 @@
 
     /* The World's Coach */
     .coach-room {
-        --coach-pitch: color-mix(in srgb, var(--ps-positive) 14%, var(--ps-surface));
-        --coach-line: color-mix(in srgb, var(--ps-text) 19%, transparent);
+        --coach-pitch: #e7e8ec;
+        --coach-line: #9b9ea6;
+        --coach-home: #161617;
+        --coach-home-number: #ffffff;
+        --coach-away: #ffffff;
+        --coach-away-number: #161617;
+        --coach-away-line: #62666f;
+        --coach-ball: #ffffff;
+        --coach-ball-line: #161617;
+        --coach-content: 112rem;
+        --coach-reading: 88rem;
+        --coach-section-space: clamp(7rem, 8vw, 10rem);
         overflow: clip;
         background: var(--ps-bg);
     }
 
-    .coach-room__hero {
-        position: relative;
-        min-height: 54rem;
-        overflow: hidden;
-        background:
-            radial-gradient(ellipse 42% 62% at 78% 34%, color-mix(in srgb, var(--ps-accent) 20%, transparent), transparent 70%),
-            radial-gradient(ellipse 32% 42% at 92% 90%, color-mix(in srgb, var(--ps-positive) 14%, transparent), transparent 72%),
-            var(--ps-bg);
+    :root[data-scheme="dark"] .coach-room {
+        --coach-pitch: #1b1d21;
+        --coach-line: #555961;
+        --coach-home: #f5f5f7;
+        --coach-home-number: #161617;
+        --coach-away: #292b31;
+        --coach-away-number: #f5f5f7;
+        --coach-away-line: #aeb1b9;
+        --coach-ball: #f5f5f7;
+        --coach-ball-line: #161617;
     }
 
-    .coach-room__hero::after {
-        content: "";
-        position: absolute;
-        top: 7rem;
-        right: max(2.4rem, calc((100vw - 128rem) / 2));
-        width: min(40vw, 56rem);
-        aspect-ratio: 1.55;
-        border: 0.1rem solid color-mix(in srgb, var(--ps-text) 8%, transparent);
-        border-radius: 3.2rem;
-        background:
-            linear-gradient(90deg, transparent 49.9%, color-mix(in srgb, var(--ps-text) 8%, transparent) 49.9% 50.1%, transparent 50.1%),
-            linear-gradient(color-mix(in srgb, var(--ps-text) 3%, transparent) 50%, transparent 50%);
-        transform: perspective(90rem) rotateX(62deg) rotateZ(-10deg);
-        transform-origin: center;
-        opacity: 0.8;
+    .coach-room__hero {
+        position: relative;
+        min-height: auto;
+        overflow: hidden;
+        background: var(--ps-bg);
     }
 
     .coach-room__hero-inner {
         position: relative;
         z-index: 1;
-        width: min(100% - 4.8rem, 128rem);
+        width: min(100% - 4.8rem, var(--coach-content));
         margin: 0 auto;
-        padding: clamp(7rem, 9vw, 11rem) 0 8rem;
-    }
-
-    .coach-room__eyebrow {
-        display: flex;
-        max-width: 62rem;
-        align-items: center;
-        gap: 1.2rem;
-        margin-top: 3rem;
-        color: var(--ps-muted);
-        font-size: 1.15rem;
-        font-weight: 650;
-        letter-spacing: 0.07em;
-        text-transform: uppercase;
-    }
-
-    .coach-room__eyebrow span {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.8rem;
-    }
-
-    .coach-room__eyebrow span + span::before {
-        content: "";
-        width: 0.35rem;
-        height: 0.35rem;
-        border-radius: 50%;
-        background: var(--ps-faint);
-    }
-
-    .coach-room__live-dot::after {
-        content: "";
-        width: 0.65rem;
-        height: 0.65rem;
-        border-radius: 50%;
-        background: var(--ps-positive);
-        box-shadow: 0 0 0 0.5rem color-mix(in srgb, var(--ps-positive) 13%, transparent);
+        padding: clamp(6rem, 8vw, 9rem) 0 clamp(5rem, 7vw, 8rem);
     }
 
     .coach-room__hero h1 {
         max-width: 9.5em;
-        margin: 2.1rem 0 0;
-        font-size: clamp(5.5rem, 9.4vw, 12rem);
+        margin: 4.8rem 0 0;
+        font-size: clamp(4.8rem, 7vw, 6rem);
         font-weight: 500;
-        line-height: 0.84;
-        letter-spacing: -0.07em;
-    }
-
-    .coach-room__hero h1 span {
-        color: var(--ps-faint);
+        line-height: 0.92;
+        letter-spacing: -0.04em;
     }
 
     .coach-room__hero-inner > p {
@@ -1511,10 +1482,26 @@
         line-height: 1.55;
     }
 
+    .coach-room sup {
+        margin-left: 0.2em;
+        font-size: 0.65em;
+        vertical-align: super;
+    }
+
+    .coach-room sup a {
+        color: inherit;
+        text-decoration: none;
+    }
+
     .coach-room__workspace {
-        width: min(100% - 4.8rem, 140rem);
-        margin: -4rem auto 0;
+        width: min(100% - 4.8rem, 128rem);
+        margin: 0 auto;
         padding: 0 0 clamp(10rem, 12vw, 16rem);
+    }
+
+    .coach-overview {
+        width: min(100%, var(--coach-content));
+        margin: 0 auto var(--coach-section-space);
     }
 
     .coach-context {
@@ -1524,19 +1511,7 @@
         align-items: end;
         justify-content: space-between;
         gap: 3rem;
-        padding: clamp(2.4rem, 3.5vw, 4rem);
-        border-radius: 2.8rem;
-        background: var(--ps-surface);
-        box-shadow: var(--ps-shadow);
-    }
-
-    .coach-kicker {
-        margin: 0 0 0.8rem;
-        color: var(--ps-faint);
-        font-size: 1.05rem;
-        font-weight: 650;
-        letter-spacing: 0.09em;
-        text-transform: uppercase;
+        padding: 0;
     }
 
     .coach-matchup {
@@ -1544,36 +1519,11 @@
         flex-wrap: wrap;
         align-items: center;
         gap: 1.2rem;
+        margin: 0;
         font-family: var(--ps-display);
-        font-size: clamp(2rem, 2.4vw, 3rem);
+        font-size: clamp(4.5rem, 2.4vw, 5.5rem);
         font-weight: 500;
         letter-spacing: -0.035em;
-    }
-
-    .coach-matchup span {
-        display: inline-flex;
-        align-items: center;
-        gap: 1rem;
-    }
-
-    .coach-matchup b {
-        display: grid;
-        width: 3.8rem;
-        height: 3.8rem;
-        place-items: center;
-        border-radius: 50%;
-        background: var(--ps-surface-2);
-        color: var(--ps-muted);
-        font-size: 0.95rem;
-        font-weight: 700;
-        letter-spacing: 0.04em;
-    }
-
-    .coach-matchup i {
-        color: var(--ps-faint);
-        font-size: 1.3rem;
-        font-style: normal;
-        font-weight: 500;
     }
 
     .coach-context__controls {
@@ -1595,128 +1545,58 @@
         min-width: 17rem;
         min-height: 4.4rem;
         padding: 0 3.8rem 0 1.3rem;
-        border: 0.1rem solid color-mix(in srgb, var(--ps-text) 10%, transparent);
+        border: 0;
         border-radius: 1.2rem;
-        background: var(--ps-bg);
+        background: var(--ps-surface);
         color: var(--ps-text);
         cursor: pointer;
         font-size: 1.25rem;
         font-weight: 550;
     }
 
-    .coach-demo-note {
-        margin: 1.4rem 0 3rem;
-        color: var(--ps-faint);
-        font-size: 1.1rem;
-        text-align: right;
-    }
-
     .coach-recommendation {
         position: relative;
         overflow: hidden;
-        margin-bottom: 2rem;
-        padding: clamp(3rem, 5vw, 6rem);
-        border-radius: 3.2rem;
-        background: var(--ps-text);
-        box-shadow: var(--ps-shadow);
-        color: var(--ps-bg);
-    }
-
-    .coach-recommendation::after {
-        content: "";
-        position: absolute;
-        top: -60%;
-        right: -8%;
-        width: 48rem;
-        aspect-ratio: 1;
-        border-radius: 50%;
-        background: color-mix(in srgb, var(--ps-accent) 30%, transparent);
-        filter: blur(6rem);
-        pointer-events: none;
-    }
-
-    .coach-recommendation__topline {
-        position: relative;
-        z-index: 1;
-        display: grid;
-        grid-template-columns: minmax(0, 1fr) auto;
-        align-items: start;
-        gap: 4rem;
-    }
-
-    .coach-recommendation .coach-kicker {
-        color: color-mix(in srgb, var(--ps-bg) 64%, transparent);
+        margin: clamp(4rem, 5vw, 6rem) 0;
+        padding: 0;
+        background: transparent;
+        color: var(--ps-text);
     }
 
     .coach-recommendation h2 {
-        max-width: 13em;
         margin: 0;
-        font-size: clamp(3.8rem, 5.5vw, 7rem);
+        font-size: clamp(2.4rem, 2.8vw, 3.8rem);
         font-weight: 500;
-        line-height: 0.94;
-        letter-spacing: -0.055em;
+        line-height: 1;
+        letter-spacing: -0.03em;
     }
 
     .coach-confidence {
-        display: grid;
-        min-width: 10rem;
-        text-align: right;
+        margin: 1.6rem 0 0;
+        color: var(--ps-faint);
+        font-size: 1.1rem;
+        line-height: 1.5;
     }
 
     .coach-confidence span {
-        font-family: var(--ps-display);
-        font-size: clamp(4rem, 5vw, 6.4rem);
-        font-weight: 500;
-        letter-spacing: -0.06em;
-        line-height: 0.9;
-    }
-
-    .coach-confidence small {
-        margin-top: 0.8rem;
-        color: color-mix(in srgb, var(--ps-bg) 58%, transparent);
-        font-size: 1.1rem;
+        color: var(--ps-text);
+        font-weight: 650;
     }
 
     .coach-recommendation__why {
         position: relative;
         z-index: 1;
-        max-width: 82rem;
-        margin: 2.6rem 0 0;
-        color: color-mix(in srgb, var(--ps-bg) 78%, transparent);
+        margin: 1.8rem 0 0;
+        color: var(--ps-muted);
         font-size: clamp(1.55rem, 1.6vw, 1.9rem);
         line-height: 1.65;
     }
 
-    .coach-recommendation__signals {
-        position: relative;
-        z-index: 1;
-        display: flex;
-        flex-wrap: wrap;
-        gap: 1rem 2rem;
-        margin-top: 3rem;
-        color: color-mix(in srgb, var(--ps-bg) 68%, transparent);
-        font-size: 1.15rem;
-    }
-
-    .coach-recommendation__signals span {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.7rem;
-    }
-
-    .coach-recommendation__signals i {
-        width: 0.65rem;
-        height: 0.65rem;
-        border-radius: 50%;
-        background: var(--ps-positive);
-        box-shadow: 0 0 0 0.45rem color-mix(in srgb, var(--ps-positive) 16%, transparent);
-    }
-
     .coach-panel {
         min-width: 0;
-        border-radius: 2.8rem;
-        background: var(--ps-surface);
-        box-shadow: var(--ps-shadow-soft);
+        border-radius: 0;
+        background: transparent;
+        box-shadow: none;
     }
 
     .coach-panel__header {
@@ -1731,54 +1611,15 @@
         font-size: clamp(2.4rem, 2.8vw, 3.8rem);
         font-weight: 500;
         line-height: 1;
-        letter-spacing: -0.045em;
-    }
-
-    .coach-main-grid {
-        display: grid;
-        grid-template-columns: minmax(0, 1.75fr) minmax(32rem, 0.75fr);
-        gap: 2rem;
+        letter-spacing: -0.03em;
     }
 
     .coach-tactics {
-        padding: clamp(2.4rem, 3.5vw, 4rem);
-    }
-
-    .coach-pitch-legend {
-        display: flex;
-        flex-wrap: wrap;
-        justify-content: flex-end;
-        gap: 1.2rem;
-        color: var(--ps-faint);
-        font-size: 1.05rem;
-    }
-
-    .coach-pitch-legend span {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.55rem;
-    }
-
-    .coach-pitch-legend i {
-        width: 0.8rem;
-        height: 0.8rem;
-        border-radius: 50%;
-        background: var(--ps-text);
-    }
-
-    .coach-pitch-legend i.is-opponent {
-        border: 0.1rem solid var(--ps-muted);
+        width: min(100%, 118rem);
+        margin: 0 auto;
+        padding: 0;
+        border-radius: 0;
         background: transparent;
-    }
-
-    .coach-pitch-legend i.is-space {
-        border-radius: 0.2rem;
-        background: var(--ps-accent);
-    }
-
-    .coach-pitch-legend i.is-ball {
-        border: 0.2rem solid var(--ps-text);
-        background: var(--ps-surface);
     }
 
     .coach-tactic-tabs {
@@ -1795,12 +1636,12 @@
     }
 
     .coach-tactic-tabs button {
-        min-height: 3.8rem;
+        min-height: 4.2rem;
         flex: 0 0 auto;
-        padding: 0 1.35rem;
+        padding: 0 1.5rem;
         border: 0;
-        border-radius: 999px;
-        background: var(--ps-bg);
+        border-radius: 1.2rem;
+        background: transparent;
         color: var(--ps-muted);
         cursor: pointer;
         font-size: 1.05rem;
@@ -1809,52 +1650,13 @@
     }
 
     .coach-tactic-tabs button[aria-selected="true"] {
-        background: var(--ps-text);
-        color: var(--ps-bg);
-    }
-
-    .coach-plan-strip {
-        display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 0;
-        margin-top: 2.6rem;
-        padding: 1.6rem 0;
-        border-top: 0.1rem solid color-mix(in srgb, var(--ps-text) 8%, transparent);
-        border-bottom: 0.1rem solid color-mix(in srgb, var(--ps-text) 8%, transparent);
-    }
-
-    .coach-plan-strip > div {
-        min-width: 0;
-        padding: 0 1.6rem;
-        border-left: 0.1rem solid color-mix(in srgb, var(--ps-text) 8%, transparent);
-    }
-
-    .coach-plan-strip > div:first-child {
-        padding-left: 0;
-        border-left: 0;
-    }
-
-    .coach-plan-strip small,
-    .coach-plan-strip strong {
-        display: block;
-    }
-
-    .coach-plan-strip small {
-        color: var(--ps-faint);
-        font-size: 0.9rem;
-        font-weight: 600;
-    }
-
-    .coach-plan-strip strong {
-        margin-top: 0.35rem;
+        background: var(--ps-surface);
         color: var(--ps-text);
-        font-size: 1.1rem;
-        font-weight: 600;
-        line-height: 1.3;
     }
 
     .coach-pitch-wrap {
-        margin-top: 3rem;
+        min-width: 0;
+        margin: 0;
     }
 
     .coach-pitch {
@@ -1862,9 +1664,13 @@
         aspect-ratio: 1.55;
         overflow: hidden;
         border: 0.1rem solid var(--coach-line);
-        border-radius: 2rem;
+        border-radius: 1.2rem;
         background:
-            repeating-linear-gradient(90deg, transparent 0 10%, color-mix(in srgb, var(--ps-text) 2.6%, transparent) 10% 20%),
+            repeating-linear-gradient(
+                90deg,
+                transparent 0 10%,
+                color-mix(in srgb, var(--ps-text) 2.6%, transparent) 10% 20%
+            ),
             var(--coach-pitch);
     }
 
@@ -2008,7 +1814,11 @@
         width: 29%;
         height: 42%;
         border-radius: 45% 55% 42% 58%;
-        background: radial-gradient(circle at center, color-mix(in srgb, var(--ps-accent) 28%, transparent), transparent 68%);
+        background: radial-gradient(
+            circle at center,
+            color-mix(in srgb, var(--ps-accent) 28%, transparent),
+            transparent 68%
+        );
         transition:
             top 520ms var(--ps-ease),
             right 520ms var(--ps-ease),
@@ -2038,7 +1848,7 @@
         padding: 0.55rem 0.85rem;
         border-radius: 999px;
         background: color-mix(in srgb, var(--ps-surface) 84%, transparent);
-        box-shadow: 0 0.4rem 1.4rem rgba(0, 0, 0, 0.08);
+        box-shadow: none;
         color: var(--ps-muted);
         font-size: 0.9rem;
         font-weight: 650;
@@ -2163,9 +1973,7 @@
         border: 0.25rem solid color-mix(in srgb, #75b9ef 42%, var(--ps-surface));
         border-radius: 50%;
         background: linear-gradient(90deg, #eef8ff 0 31%, #75b9ef 31% 66%, #eef8ff 66%);
-        box-shadow:
-            inset 0 0 0 0.08rem rgba(16, 44, 73, 0.2),
-            0 0.35rem 1rem rgba(0, 0, 0, 0.18);
+        box-shadow: none;
         color: #132a42;
         font-size: clamp(0.8rem, 1vw, 1rem);
         font-weight: 700;
@@ -2216,9 +2024,7 @@
     .coach-player.is-team.is-involved > span {
         background: var(--ps-accent);
         color: #ffffff;
-        box-shadow:
-            0 0 0 0.6rem color-mix(in srgb, var(--ps-accent) 12%, transparent),
-            0 0.35rem 1rem rgba(0, 0, 0, 0.16);
+        outline: 0.3rem solid color-mix(in srgb, var(--ps-accent) 45%, transparent);
     }
 
     .coach-player.is-opponent {
@@ -2229,7 +2035,7 @@
         border: 0.14rem solid color-mix(in srgb, #ffffff 72%, transparent);
         border-radius: 50%;
         background: linear-gradient(135deg, #263f7c, #111c41);
-        box-shadow: 0 0.35rem 1rem rgba(0, 0, 0, 0.1);
+        box-shadow: none;
         color: #ffffff;
     }
 
@@ -2250,37 +2056,40 @@
         border: 0.25rem solid var(--ps-text);
         border-radius: 50%;
         background: var(--ps-surface);
-        box-shadow:
-            0 0 0 0.55rem color-mix(in srgb, var(--ps-surface) 52%, transparent),
-            0 0.4rem 1.2rem rgba(0, 0, 0, 0.22);
+        box-shadow: none;
         transform: translate(-50%, -50%);
         transition:
             top 620ms var(--ps-ease),
             left 620ms var(--ps-ease);
     }
 
-    .coach-animation {
+    .coach-stage {
         display: grid;
-        grid-template-columns: minmax(0, 1fr) auto;
-        align-items: center;
-        gap: 2.5rem;
-        margin-top: 2rem;
-        padding-top: 2rem;
-        border-top: 0.1rem solid color-mix(in srgb, var(--ps-text) 8%, transparent);
+        grid-template-columns: minmax(0, 1fr) minmax(24rem, 28rem);
+        align-items: stretch;
+        gap: clamp(2rem, 3vw, 3.2rem);
+        margin-top: 2.4rem;
+    }
+
+    .coach-playback {
+        display: flex;
+        min-width: 0;
+        flex-direction: column;
+        padding-left: clamp(2rem, 2.5vw, 3rem);
+    }
+
+    .coach-animation {
+        display: flex;
+        min-height: 100%;
+        flex-direction: column;
+        gap: 2.4rem;
+        margin: 0;
+        padding: 0;
+        border: 0;
     }
 
     .coach-animation__caption {
-        display: grid;
-        grid-template-columns: 4.6rem minmax(0, 1fr);
-        gap: 1.4rem;
-        align-items: start;
-    }
-
-    .coach-animation__caption > span {
-        color: var(--ps-accent);
-        font-size: 0.95rem;
-        font-weight: 650;
-        letter-spacing: 0.04em;
+        display: block;
     }
 
     .coach-animation__caption h3 {
@@ -2291,7 +2100,7 @@
     }
 
     .coach-animation__caption p {
-        max-width: 58rem;
+        max-width: 32rem;
         margin: 0.35rem 0 0;
         color: var(--ps-muted);
         font-size: 1.1rem;
@@ -2299,9 +2108,11 @@
     }
 
     .coach-animation__controls {
-        display: flex;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
         align-items: center;
-        gap: 1.2rem;
+        gap: 0.8rem;
+        margin-top: auto;
     }
 
     .coach-animation__controls[hidden],
@@ -2310,40 +2121,21 @@
     }
 
     .coach-animation__play[hidden],
-    .coach-animation__speed[hidden],
     .coach-animation__step[hidden] {
         display: none !important;
     }
 
-    .coach-animation__speed {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.6rem;
-        color: var(--ps-faint);
-        font-size: 0.9rem;
-        font-weight: 600;
-    }
-
-    .coach-animation__speed select {
-        min-height: 3.4rem;
-        padding: 0 2.8rem 0 1rem;
-        border: 0.1rem solid color-mix(in srgb, var(--ps-text) 10%, transparent);
-        border-radius: 999px;
-        background: var(--ps-bg);
-        color: var(--ps-text);
-        cursor: pointer;
-        font-size: 0.95rem;
-        font-weight: 600;
-    }
-
     .coach-animation__play {
         display: inline-flex;
+        grid-column: 1 / -1;
+        grid-row: 1;
         min-height: 4rem;
+        justify-content: center;
         align-items: center;
         gap: 0.8rem;
         padding: 0 1.4rem;
         border: 0;
-        border-radius: 999px;
+        border-radius: 1.2rem;
         background: var(--ps-text);
         color: var(--ps-bg);
         cursor: pointer;
@@ -2396,7 +2188,7 @@
     .coach-timeline {
         display: grid;
         gap: 0.7rem;
-        margin-top: 1.6rem;
+        margin-top: 1.8rem;
     }
 
     .coach-timeline input {
@@ -2452,349 +2244,38 @@
         font-style: normal;
     }
 
-    .coach-instructions {
-        padding: clamp(2.4rem, 3.5vw, 4rem);
-    }
-
-    .coach-phase-list {
-        margin-top: 2.5rem;
-    }
-
-    .coach-phase-list article {
-        display: grid;
-        grid-template-columns: 2.8rem 1fr;
-        gap: 1.4rem;
-        padding: 1.9rem 0;
-        border-top: 0.1rem solid color-mix(in srgb, var(--ps-text) 8%, transparent);
-    }
-
-    .coach-phase-list article > span {
-        color: var(--ps-faint);
-        font-family: var(--ps-display);
-        font-size: 1.05rem;
-        font-weight: 600;
-    }
-
-    .coach-phase-list h3 {
-        margin: 0;
-        font-size: 1.45rem;
-        font-weight: 600;
-        letter-spacing: -0.02em;
-    }
-
-    .coach-phase-list p {
-        margin: 0.5rem 0 0;
-        color: var(--ps-muted);
-        font-size: 1.25rem;
-        line-height: 1.55;
-    }
-
-    .coach-effects {
-        margin-top: 2rem;
-        padding: clamp(2.4rem, 3.5vw, 4rem);
-    }
-
-    .coach-effects .coach-panel__header > p {
-        max-width: 28rem;
-        margin: 0;
-        color: var(--ps-faint);
-        font-size: 1.15rem;
-        line-height: 1.5;
-        text-align: right;
-    }
-
-    .coach-effect-grid {
-        display: grid;
-        grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 1.2rem;
-        margin-top: 3rem;
-    }
-
-    .coach-effect-grid article {
-        min-width: 0;
-        padding: 1.8rem;
-        border-radius: 1.8rem;
-        background: var(--ps-bg);
-    }
-
-    .coach-effect-grid article > div:first-child {
-        display: flex;
-        align-items: baseline;
-        justify-content: space-between;
-        gap: 1rem;
-    }
-
-    .coach-effect-grid span {
-        color: var(--ps-muted);
-        font-size: 1.1rem;
-    }
-
-    .coach-effect-grid strong {
-        color: var(--ps-positive);
-        font-family: var(--ps-display);
-        font-size: 2.2rem;
-        font-weight: 500;
-        letter-spacing: -0.04em;
-    }
-
-    .coach-effect-grid .is-risk strong {
-        color: var(--ps-danger);
-    }
-
-    .coach-effect-grid .is-risk.is-safer strong {
-        color: var(--ps-positive);
-    }
-
-    .coach-effect-grid small {
-        display: block;
-        margin-top: 0.8rem;
-        color: var(--ps-faint);
-        font-size: 0.95rem;
-    }
-
-    .coach-meter {
-        height: 0.45rem;
-        overflow: hidden;
-        margin-top: 1.5rem;
-        border-radius: 999px;
-        background: var(--ps-surface-2);
-    }
-
-    .coach-meter i {
-        display: block;
-        width: var(--value);
-        height: 100%;
-        border-radius: inherit;
-        background: var(--ps-positive);
-        transition: width 480ms var(--ps-ease);
-    }
-
-    .coach-effect-grid .is-risk .coach-meter i {
-        background: var(--ps-danger);
-    }
-
-    .coach-effect-grid .is-risk.is-safer .coach-meter i {
-        background: var(--ps-positive);
-    }
-
-    .coach-lower-grid {
-        display: grid;
-        grid-template-columns: minmax(0, 1.2fr) minmax(32rem, 0.8fr);
-        gap: 2rem;
-        margin-top: 2rem;
-    }
-
-    .coach-options,
-    .coach-gravity,
     .coach-roles {
-        padding: clamp(2.4rem, 3.5vw, 4rem);
+        padding: 0;
     }
 
-    .coach-option-list {
-        display: grid;
-        margin-top: 2.6rem;
+    .coach-roles {
+        width: min(100%, var(--coach-content));
+        margin: var(--coach-section-space) auto 0;
     }
 
-    .coach-option-list button {
-        display: grid;
-        min-width: 0;
-        grid-template-columns: minmax(16rem, 1fr) minmax(10rem, 0.7fr) 4.5rem;
-        align-items: center;
-        gap: 1.6rem;
-        padding: 1.6rem 0;
-        border: 0;
-        border-top: 0.1rem solid color-mix(in srgb, var(--ps-text) 8%, transparent);
-        background: transparent;
-        color: var(--ps-text);
-        cursor: pointer;
-        text-align: left;
-    }
-
-    .coach-option-list button > span {
-        display: grid;
-    }
-
-    .coach-option-list b {
-        font-size: 1.35rem;
-        font-weight: 600;
-    }
-
-    .coach-option-list small {
-        margin-top: 0.3rem;
+    .coach-roles__summary {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 0.5rem 1.2rem;
+        margin: 1.4rem 0 0;
         color: var(--ps-faint);
-        font-size: 1rem;
-    }
-
-    .coach-option-list button > i,
-    .coach-gravity__breakdown div > i {
-        height: 0.45rem;
-        overflow: hidden;
-        border-radius: 999px;
-        background: var(--ps-surface-2);
-    }
-
-    .coach-option-list button > i em,
-    .coach-gravity__breakdown div > i em {
-        display: block;
-        width: var(--value);
-        height: 100%;
-        border-radius: inherit;
-        background: var(--ps-faint);
-    }
-
-    .coach-option-list button.is-selected > i em {
-        background: var(--ps-accent);
-    }
-
-    .coach-option-list button > strong {
-        justify-self: end;
-        color: var(--ps-muted);
-        font-family: var(--ps-display);
-        font-size: 1.8rem;
-        font-weight: 500;
-    }
-
-    .coach-option-list button.is-selected > strong {
-        color: var(--ps-text);
-    }
-
-    .coach-option-list button:hover b {
-        color: var(--ps-accent);
-    }
-
-    .coach-option-detail {
-        min-height: 4.6rem;
-        margin: 1.8rem 0 0;
-        padding: 1.4rem 1.6rem;
-        border-radius: 1.4rem;
-        background: var(--ps-bg);
-        color: var(--ps-muted);
-        font-size: 1.15rem;
-        line-height: 1.55;
-    }
-
-    .coach-gravity__hero {
-        display: grid;
-        grid-template-columns: 12rem 1fr;
-        align-items: center;
-        gap: 2.5rem;
-        margin-top: 2.4rem;
-        padding: 2rem 0;
-    }
-
-    .coach-gravity__orbit {
-        position: relative;
-        display: grid;
-        width: 11rem;
-        aspect-ratio: 1;
-        place-items: center;
-        border: 0.1rem solid color-mix(in srgb, var(--ps-accent) 25%, transparent);
-        border-radius: 50%;
-        box-shadow: inset 0 0 4rem color-mix(in srgb, var(--ps-accent) 8%, transparent);
-    }
-
-    .coach-gravity__orbit::after {
-        content: "";
-        position: absolute;
-        inset: 1.8rem;
-        border: 0.1rem solid color-mix(in srgb, var(--ps-accent) 15%, transparent);
-        border-radius: 50%;
-    }
-
-    .coach-gravity__orbit span {
-        position: relative;
-        z-index: 2;
-        display: grid;
-        width: 4.4rem;
-        aspect-ratio: 1;
-        place-items: center;
-        border-radius: 50%;
-        background: var(--ps-text);
-        color: var(--ps-bg);
-        font-size: 1.3rem;
-        font-weight: 700;
-    }
-
-    .coach-gravity__orbit i {
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 1.5rem;
-        aspect-ratio: 1;
-        border: 0.15rem solid var(--ps-muted);
-        border-radius: 50%;
-        background: var(--ps-surface);
-        transform: translate(-50%, -50%) rotate(var(--angle)) translateX(4.4rem);
-    }
-
-    .coach-gravity__hero > div:last-child {
-        display: grid;
-    }
-
-    .coach-gravity__hero strong {
-        font-family: var(--ps-display);
-        font-size: 4.6rem;
-        font-weight: 500;
-        letter-spacing: -0.06em;
-        line-height: 1;
-    }
-
-    .coach-gravity__hero > div:last-child span {
-        max-width: 18rem;
-        margin-top: 0.6rem;
-        color: var(--ps-muted);
-        font-size: 1.15rem;
-        line-height: 1.45;
-    }
-
-    .coach-gravity__breakdown {
-        display: grid;
-        gap: 1rem;
-    }
-
-    .coach-gravity__breakdown > div {
-        display: grid;
-        grid-template-columns: minmax(12rem, 1fr) minmax(7rem, 0.65fr) 4.5rem;
-        align-items: center;
-        gap: 1rem;
-        color: var(--ps-muted);
-        font-size: 1rem;
-    }
-
-    .coach-gravity__breakdown div > i em {
-        background: var(--ps-accent);
-    }
-
-    .coach-gravity__breakdown b {
-        justify-self: end;
-        color: var(--ps-text);
-        font-weight: 600;
-    }
-
-    .coach-gravity > p {
-        margin: 2rem 0 0;
-        color: var(--ps-muted);
         font-size: 1.2rem;
         line-height: 1.55;
     }
 
-    .coach-roles {
-        margin-top: 2rem;
+    .coach-roles__summary span {
+        color: var(--ps-muted);
     }
 
-    .coach-roles .coach-panel__header > span {
-        padding: 0.7rem 1.1rem;
-        border-radius: 999px;
-        background: var(--ps-bg);
-        color: var(--ps-positive);
-        font-size: 1.05rem;
-        font-weight: 600;
+    .coach-roles__summary strong {
+        color: var(--ps-text);
+        font-weight: 650;
     }
 
     .coach-role-grid {
         display: grid;
         grid-template-columns: repeat(4, minmax(0, 1fr));
-        gap: 1.2rem;
+        gap: clamp(2rem, 4vw, 5rem);
         margin-top: 3rem;
     }
 
@@ -2803,9 +2284,9 @@
         min-width: 0;
         grid-template-columns: 3.4rem 1fr;
         gap: 1.2rem;
-        padding: 1.8rem;
-        border-radius: 1.8rem;
-        background: var(--ps-bg);
+        padding: 0;
+        border-radius: 0;
+        background: transparent;
     }
 
     .coach-role-grid article > span {
@@ -2816,8 +2297,8 @@
         border-radius: 50%;
         background: var(--ps-text);
         color: var(--ps-bg);
-        font-size: 0.95rem;
-        font-weight: 700;
+        font-size: 1.5rem;
+        font-weight: 500;
     }
 
     .coach-role-grid h3 {
@@ -2841,250 +2322,42 @@
         font-weight: 500;
     }
 
-    .coach-evidence {
-        margin-top: 2rem;
-        border-radius: 2.4rem;
-        background: var(--ps-surface);
-        box-shadow: var(--ps-shadow-soft);
+    .coach-limitations {
+        width: min(100%, var(--coach-content));
+        margin: var(--coach-section-space) auto 0;
     }
 
-    .coach-evidence__top {
-        display: flex;
-        align-items: end;
-        justify-content: space-between;
-        gap: 2rem;
-        padding: clamp(2.6rem, 4vw, 4.6rem);
-    }
-
-    .coach-evidence__top h2 {
-        max-width: 13em;
+    .coach-limitations h2 {
         margin: 0;
-        font-size: clamp(2.8rem, 4vw, 4.8rem);
+        font-size: clamp(2.4rem, 2.8vw, 3.8rem);
         font-weight: 500;
-        line-height: 0.96;
-        letter-spacing: -0.05em;
+        line-height: 1;
+        letter-spacing: -0.03em;
     }
 
-    .coach-evidence__top > span {
-        display: inline-flex;
-        min-height: 3.4rem;
-        align-items: center;
-        gap: 0.7rem;
-        padding: 0 1.2rem;
-        border-radius: 999px;
-        background: color-mix(in srgb, var(--ps-accent) 10%, var(--ps-bg));
+    .coach-limitations > p {
+        margin: 1.6rem 0 0;
         color: var(--ps-muted);
-        font-size: 1rem;
-        font-weight: 600;
-        white-space: nowrap;
-    }
-
-    .coach-evidence__top > span i {
-        width: 0.65rem;
-        height: 0.65rem;
-        border-radius: 50%;
-        background: var(--ps-accent);
-        box-shadow: 0 0 0 0.4rem color-mix(in srgb, var(--ps-accent) 12%, transparent);
-    }
-
-    .coach-evidence summary {
-        display: flex;
-        min-height: 8rem;
-        align-items: center;
-        justify-content: space-between;
-        gap: 2rem;
-        padding: 0 clamp(2.4rem, 3.5vw, 4rem);
-        color: var(--ps-muted);
-        cursor: pointer;
-        font-size: 1.25rem;
-        list-style: none;
-    }
-
-    .coach-evidence summary::-webkit-details-marker {
-        display: none;
-    }
-
-    .coach-evidence summary b {
-        color: var(--ps-text);
-        font-weight: 600;
-    }
-
-    .coach-evidence__summary-copy {
-        display: grid;
-        gap: 0.3rem;
-    }
-
-    .coach-evidence__summary-copy b {
-        font-size: 1.35rem;
-    }
-
-    .coach-evidence__summary-copy small {
-        color: var(--ps-faint);
-        font-size: 1.05rem;
-        font-weight: 500;
-    }
-
-    .coach-evidence summary i {
-        position: relative;
-        width: 2rem;
-        height: 2rem;
-        flex: 0 0 2rem;
-    }
-
-    .coach-evidence summary i::before,
-    .coach-evidence summary i::after {
-        content: "";
-        position: absolute;
-        top: 50%;
-        left: 50%;
-        width: 1.2rem;
-        height: 0.15rem;
-        border-radius: 999px;
-        background: var(--ps-text);
-        transform: translate(-50%, -50%);
-    }
-
-    .coach-evidence summary i::after {
-        transform: translate(-50%, -50%) rotate(90deg);
-        transition: transform 220ms var(--ps-ease);
-    }
-
-    .coach-evidence[open] summary i::after {
-        transform: translate(-50%, -50%) rotate(0deg);
-    }
-
-    .coach-evidence__content {
-        padding: clamp(2.6rem, 4vw, 4.6rem);
-        border-top: 0.1rem solid color-mix(in srgb, var(--ps-text) 8%, transparent);
-    }
-
-    .coach-evidence__intro {
-        display: block;
-    }
-
-    .coach-evidence__intro h3 {
-        max-width: 14em;
-        margin: 0;
-        font-size: clamp(2.5rem, 3.4vw, 4.2rem);
-        font-weight: 500;
-        line-height: 0.98;
-        letter-spacing: -0.045em;
-    }
-
-    .coach-evidence__intro > div > p:last-child {
-        max-width: 68rem;
-        margin: 1.4rem 0 0;
-        color: var(--ps-muted);
-        font-size: 1.2rem;
+        font-size: 1.45rem;
         line-height: 1.65;
     }
 
-    .coach-evidence__intro > span {
-        display: inline-flex;
-        min-height: 3.4rem;
-        align-items: center;
-        gap: 0.7rem;
-        padding: 0 1.2rem;
-        border-radius: 999px;
-        background: color-mix(in srgb, var(--ps-accent) 10%, var(--ps-bg));
-        color: var(--ps-muted);
-        font-size: 1rem;
-        font-weight: 600;
-        white-space: nowrap;
-    }
-
-    .coach-evidence__intro > span i {
-        width: 0.65rem;
-        height: 0.65rem;
-        border-radius: 50%;
-        background: var(--ps-accent);
-        box-shadow: 0 0 0 0.4rem color-mix(in srgb, var(--ps-accent) 12%, transparent);
-    }
-
-    .coach-evidence__metrics {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 0;
-        margin: 3.6rem 0 0;
-        padding: 2.4rem 0;
-        border-top: 0.1rem solid color-mix(in srgb, var(--ps-text) 8%, transparent);
-        border-bottom: 0.1rem solid color-mix(in srgb, var(--ps-text) 8%, transparent);
-    }
-
-    .coach-evidence__metrics > div {
-        min-width: 0;
-        padding: 0 2.4rem;
-        border-left: 0.1rem solid color-mix(in srgb, var(--ps-text) 8%, transparent);
-    }
-
-    .coach-evidence__metrics > div:first-child {
-        padding-left: 0;
-        border-left: 0;
-    }
-
-    .coach-evidence__metrics dt {
+    .coach-footnotes {
+        max-width: 66rem;
+        margin-top: 2rem;
+        padding: 0;
         color: var(--ps-faint);
         font-size: 1rem;
-        font-weight: 600;
+        line-height: 1.6;
     }
 
-    .coach-evidence__metrics dd {
-        display: grid;
-        gap: 0.35rem;
-        margin: 0.8rem 0 0;
-        color: var(--ps-text);
-        font-family: var(--ps-display);
-        font-size: clamp(2.4rem, 3vw, 3.5rem);
-        font-weight: 500;
-        letter-spacing: -0.045em;
-        line-height: 1;
+    .coach-footnotes ol {
+        margin: 0;
+        padding-left: 1.8rem;
     }
 
-    .coach-evidence__metrics dd small {
-        color: var(--ps-faint);
-        font-family: var(--ps-body);
-        font-size: 0.95rem;
-        font-weight: 500;
-        letter-spacing: 0;
-        line-height: 1.4;
-    }
-
-    .coach-evidence__checks {
-        margin-top: 3rem;
-    }
-
-    .coach-evidence__checks > div {
-        display: grid;
-        grid-template-columns: repeat(3, minmax(0, 1fr));
-        gap: 1rem;
-        margin-top: 1.2rem;
-    }
-
-    .coach-evidence__checks span {
-        display: flex;
-        min-width: 0;
-        align-items: center;
-        gap: 1rem;
-        padding: 1.3rem 1.5rem;
-        border-radius: 1.2rem;
-        background: var(--ps-bg);
-        color: var(--ps-muted);
-        font-size: 1.05rem;
-        line-height: 1.4;
-    }
-
-    .coach-evidence__checks b {
-        color: var(--ps-faint);
-        font-size: 0.9rem;
-        font-weight: 650;
-    }
-
-    .coach-evidence__content .coach-evidence__footnote {
-        max-width: 75rem;
-        margin: 2.6rem 0 0;
-        color: var(--ps-faint);
-        font-size: 1.05rem;
-        line-height: 1.55;
+    .coach-footnotes li + li {
+        margin-top: 0.7rem;
     }
 
     /* Logs */
@@ -3424,17 +2697,125 @@
 
     /* Tactical visual grammar and correctness layer */
     .coach-tactics {
+        --coach-divider: color-mix(in srgb, var(--ps-text) 12%, transparent);
+        width: min(100%, 118rem);
+        margin: 0 auto;
         scroll-margin-top: 8rem;
     }
 
-    .coach-pitch-legend {
-        align-items: center;
-        gap: 0.9rem 1.4rem;
+    .coach-tactics__toolbar {
+        display: grid;
+        grid-template-columns: minmax(0, 1fr) minmax(40rem, 0.72fr);
+        align-items: end;
+        gap: clamp(2rem, 4vw, 5rem);
+        margin-bottom: 2.4rem;
     }
 
-    .coach-pitch-legend span {
-        color: var(--ps-muted);
+    .coach-tactic-tabs {
+        display: grid;
+        grid-template-columns: repeat(4, minmax(0, 1fr));
+        gap: 0.4rem;
+        margin: 0;
+        overflow: hidden;
+        padding: 0.4rem;
+        border: 0.1rem solid var(--coach-divider);
+        border-radius: 1.6rem;
+        background: var(--ps-surface);
+    }
+
+    .coach-tactic-tabs button {
+        min-width: 0;
+        min-height: 4.4rem;
+        padding: 0 1rem;
+        border-radius: 1.2rem;
+        font-size: 1.05rem;
+        transition:
+            background-color 180ms var(--ps-ease),
+            color 180ms var(--ps-ease);
+    }
+
+    .coach-tactic-tabs button:hover {
+        color: var(--ps-text);
+    }
+
+    .coach-tactic-tabs button[aria-selected="true"] {
+        background: var(--ps-text);
+        color: var(--ps-bg);
+    }
+
+    .coach-tactic-tabs button:focus-visible,
+    .coach-substate-tabs button:focus-visible,
+    .coach-animation__play:focus-visible,
+    .coach-animation__step:focus-visible,
+    .coach-player:focus-visible {
+        outline: 0.2rem solid var(--ps-accent);
+        outline-offset: 0.2rem;
+    }
+
+    .coach-stage {
+        display: grid;
+        min-width: 0;
+        grid-template-columns: minmax(0, 1fr) minmax(26rem, 31rem);
+        align-items: stretch;
+        gap: clamp(2.4rem, 4vw, 4.8rem);
+        margin: 0;
+        padding: 2.4rem 0;
+        border-top: 0.1rem solid var(--coach-divider);
+        border-bottom: 0.1rem solid var(--coach-divider);
+    }
+
+    .coach-pitch-wrap {
+        min-width: 0;
+        margin: 0;
+    }
+
+    .coach-playback {
+        display: flex;
+        min-width: 0;
+        min-height: 0;
+        flex-direction: column;
+        padding-left: clamp(2.4rem, 3vw, 3.6rem);
+        border-left: 0.1rem solid var(--coach-divider);
+    }
+
+    .coach-playback__copy {
+        min-block-size: 12.5rem;
+    }
+
+    .coach-playback__phase {
+        display: block;
+        margin-bottom: 1.1rem;
+        color: var(--ps-accent);
+        font-size: 1rem;
+        font-weight: 650;
+    }
+
+    .coach-animation__caption {
+        display: block;
+    }
+
+    .coach-animation__caption h3 {
+        margin: 0;
+        font-size: clamp(1.8rem, 1.8vw, 2.25rem);
         font-weight: 600;
+        letter-spacing: -0.02em;
+        line-height: 1.15;
+    }
+
+    .coach-animation__caption p {
+        max-width: 36rem;
+        margin: 0.8rem 0 0;
+        color: var(--ps-muted);
+        font-size: 1.2rem;
+        line-height: 1.6;
+    }
+
+    .coach-playback__dock {
+        display: flex;
+        min-block-size: 18.5rem;
+        flex-direction: column;
+        justify-content: flex-end;
+        margin-top: auto;
     }
 
     .coach-marker {
@@ -3445,7 +2826,7 @@
         place-items: center;
         border-radius: 50%;
         box-sizing: border-box;
-        box-shadow: 0 0.3rem 0.9rem rgba(0, 0, 0, 0.16);
+        box-shadow: none;
         font-style: normal;
     }
 
@@ -3456,55 +2837,39 @@
         line-height: 1;
     }
 
-    .coach-marker.is-team {
-        border: 0.24rem solid color-mix(in srgb, #75b9ef 54%, var(--ps-surface));
-        background: linear-gradient(90deg, #eef8ff 0 31%, #75b9ef 31% 66%, #eef8ff 66%);
-        color: #132a42;
-        text-shadow: 0 0.1rem rgba(255, 255, 255, 0.8);
+    .coach-player.is-team > .coach-marker {
+        width: var(--marker-size);
+        border: 0.18rem solid var(--coach-home);
+        background: var(--coach-home);
+        color: var(--coach-home-number);
+        text-shadow: none;
     }
 
-    .coach-marker.is-opponent {
-        border: 0.2rem solid rgba(255, 255, 255, 0.78);
-        background: linear-gradient(135deg, #263f7c, #111c41);
-        color: #ffffff;
+    .coach-player.is-opponent > .coach-marker {
+        width: var(--marker-size);
+        border: 0.18rem solid var(--coach-away-line);
+        background: var(--coach-away);
+        color: var(--coach-away-number);
+    }
+
+    .coach-player.is-team > .coach-marker b,
+    .coach-player.is-opponent > .coach-marker b {
+        color: inherit;
     }
 
     .coach-marker.is-ball {
-        --marker-size: clamp(1.35rem, 1.55vw, 1.7rem);
-        border: 0.28rem solid var(--ps-text);
-        background: var(--ps-surface);
-        box-shadow:
-            0 0 0 0.4rem color-mix(in srgb, var(--ps-surface) 60%, transparent),
-            0 0.35rem 0.9rem rgba(0, 0, 0, 0.22);
-    }
-
-    .coach-pitch-legend .coach-marker {
-        --marker-size: 2rem;
-        flex: 0 0 2rem;
-    }
-
-    .coach-pitch-legend .coach-marker.is-ball {
-        --marker-size: 1.55rem;
-        flex-basis: 1.55rem;
-    }
-
-    .coach-pitch-legend__direction {
-        padding-left: 1.2rem;
-        border-left: 0.1rem solid color-mix(in srgb, var(--ps-text) 12%, transparent);
-        color: var(--ps-text) !important;
-    }
-
-    .coach-pitch-legend__direction b {
-        color: var(--ps-accent);
-        font-size: 1.3rem;
-        font-weight: 700;
+        --marker-size: clamp(1.2rem, 1.4vw, 1.55rem);
+        border: 0.22rem solid var(--coach-ball-line);
+        background: var(--coach-ball);
+        box-shadow: none;
     }
 
     .coach-substate-tabs {
-        display: flex;
-        flex-wrap: wrap;
-        gap: 0.6rem;
-        margin-top: 1.4rem;
+        display: grid;
+        grid-template-columns: 1fr;
+        gap: 0;
+        margin: 0 0 auto;
+        padding-bottom: 1.8rem;
     }
 
     .coach-substate-tabs[hidden] {
@@ -3512,88 +2877,44 @@
     }
 
     .coach-substate-tabs button {
-        min-height: 3.6rem;
-        padding: 0 1.15rem;
-        border: 0.1rem solid color-mix(in srgb, var(--ps-text) 9%, transparent);
-        border-radius: 999px;
+        min-height: 3.9rem;
+        padding: 0;
+        border: 0;
+        border-bottom: 0.1rem solid var(--coach-divider);
+        border-radius: 0;
         background: transparent;
         color: var(--ps-muted);
         cursor: pointer;
         font-size: 0.95rem;
         font-weight: 600;
+        text-align: left;
     }
 
     .coach-substate-tabs button:hover,
     .coach-substate-tabs button:focus-visible {
-        border-color: var(--ps-text);
         color: var(--ps-text);
     }
 
     .coach-substate-tabs button.is-selected {
-        border-color: var(--ps-accent);
-        background: color-mix(in srgb, var(--ps-accent) 10%, transparent);
-        color: var(--ps-text);
-    }
-
-    .coach-plan-strip > div {
-        position: relative;
-        transition:
-            background 180ms ease,
-            box-shadow 180ms ease;
-    }
-
-    .coach-plan-strip > div.is-active {
-        background: color-mix(in srgb, var(--ps-accent) 7%, transparent);
-        box-shadow: inset 0 0.2rem var(--ps-accent);
-    }
-
-    .coach-plan-strip small {
-        display: flex;
-        align-items: center;
-        gap: 0.5rem;
-    }
-
-    .coach-plan-strip small button {
-        display: grid;
-        width: 1.7rem;
-        height: 1.7rem;
-        place-items: center;
-        padding: 0;
-        border: 0.1rem solid color-mix(in srgb, var(--ps-text) 22%, transparent);
-        border-radius: 50%;
         background: transparent;
-        color: var(--ps-muted);
-        cursor: help;
-        font-size: 0.85rem;
+        color: var(--ps-text);
         font-weight: 700;
-        line-height: 1;
-    }
-
-    .coach-metric-definition {
-        min-height: 2.2rem;
-        margin: 1rem 0 -1rem;
-        color: var(--ps-muted);
-        font-size: 1rem;
-        line-height: 1.45;
-    }
-
-    .coach-metric-definition[hidden] {
-        display: none;
     }
 
     .coach-pitch {
+        position: relative;
         isolation: isolate;
+        contain: layout paint;
         aspect-ratio: 105 / 68;
         overflow: hidden;
-        border: 0.1rem solid var(--coach-line);
-        background:
-            repeating-linear-gradient(90deg, transparent 0 10%, color-mix(in srgb, var(--ps-text) 2.5%, transparent) 10% 20%),
-            var(--coach-pitch);
+        border: 0;
+        border-radius: 1.6rem;
+        background: var(--coach-pitch);
     }
 
     .coach-pitch__svg {
         position: absolute;
-        z-index: 1;
+        z-index: 0;
         inset: 0;
         display: block;
         width: 100%;
@@ -3613,16 +2934,13 @@
         stroke: none;
     }
 
-    #coach-arrow-blue path {
+    #coach-arrow-blue path,
+    #coach-arrow-red path {
         fill: var(--ps-accent);
     }
 
-    #coach-arrow-red path {
-        fill: var(--ps-danger);
-    }
-
     #coach-arrow-green path {
-        fill: var(--ps-positive);
+        fill: var(--ps-accent);
     }
 
     .coach-action {
@@ -3633,63 +2951,53 @@
 
     .coach-action.is-pass {
         stroke: var(--ps-accent);
-        stroke-width: 2.4;
+        stroke-width: 1.9;
     }
 
     .coach-action.is-carry {
         stroke: var(--ps-accent);
-        stroke-width: 3.2;
-        filter: drop-shadow(0 0 0.18rem color-mix(in srgb, var(--ps-accent) 34%, transparent));
+        stroke-width: 2.2;
     }
 
     .coach-action.is-run {
-        stroke: color-mix(in srgb, var(--ps-accent) 88%, var(--ps-text));
-        stroke-width: 2.1;
-        stroke-dasharray: 6 4;
+        stroke: var(--ps-accent);
+        stroke-width: 1.8;
+        stroke-dasharray: 5 4;
     }
 
     .coach-action.is-decoy {
-        stroke: color-mix(in srgb, var(--ps-accent) 55%, var(--ps-text));
-        stroke-width: 1.8;
-        stroke-dasharray: 3 5;
+        stroke: color-mix(in srgb, var(--ps-accent) 62%, transparent);
+        stroke-width: 1.6;
+        stroke-dasharray: 2 4;
     }
 
     .coach-action.is-press,
     .coach-action.is-recovery {
-        stroke: var(--ps-danger);
-        stroke-width: 2.3;
-        stroke-dasharray: 6 3;
+        stroke: var(--ps-accent);
+        stroke-width: 1.8;
+        stroke-dasharray: 2 3;
     }
 
     .coach-action.is-completed {
-        opacity: 0.24;
-        stroke-width: 1.5;
+        opacity: 0.16;
+        stroke-width: 1.3;
     }
 
-    .coach-action-label,
-    .coach-zone-label,
-    .coach-annotation {
-        paint-order: stroke;
-        stroke: color-mix(in srgb, var(--coach-pitch) 90%, var(--ps-surface));
-        stroke-width: 0.65;
-        stroke-linejoin: round;
-        font-family: var(--ps-body);
-        font-size: 1.45px;
-        font-weight: 700;
+    .coach-zone-label {
+        display: none;
+    }
+
+    .coach-action-label {
+        fill: var(--ps-text);
+        stroke: var(--coach-pitch);
+        stroke-width: 0.9;
+        paint-order: stroke fill;
+        font-size: 1.65px;
+        font-weight: 760;
         letter-spacing: 0.035em;
-    }
-
-    .coach-action-label.is-pass,
-    .coach-action-label.is-carry,
-    .coach-action-label.is-run,
-    .coach-action-label.is-decoy {
-        fill: var(--ps-accent);
-    }
-
-    .coach-action-label.is-press,
-    .coach-action-label.is-recovery,
-    .coach-annotation.is-press {
-        fill: var(--ps-danger);
+        text-anchor: middle;
+        dominant-baseline: central;
+        pointer-events: none;
     }
 
     .coach-zone {
@@ -3698,69 +3006,51 @@
     }
 
     .coach-zone.is-neutral {
-        fill: color-mix(in srgb, var(--ps-text) 5%, transparent);
-        stroke: color-mix(in srgb, var(--ps-text) 22%, transparent);
+        fill: color-mix(in srgb, var(--ps-text) 2%, transparent);
+        stroke: color-mix(in srgb, var(--ps-text) 18%, transparent);
     }
 
     .coach-zone.is-lane {
-        fill: color-mix(in srgb, var(--ps-accent) 4%, transparent);
-        stroke: color-mix(in srgb, var(--ps-accent) 24%, transparent);
+        fill: transparent;
+        stroke: color-mix(in srgb, var(--ps-text) 18%, transparent);
+        stroke-dasharray: 2 3;
     }
 
     .coach-zone.is-press {
-        fill: color-mix(in srgb, var(--ps-danger) 10%, transparent);
-        stroke: var(--ps-danger);
-        stroke-dasharray: 4 3;
+        fill: transparent;
+        stroke: color-mix(in srgb, var(--ps-accent) 62%, transparent);
+        stroke-dasharray: 2 3;
     }
 
     .coach-zone.is-protect {
-        fill: color-mix(in srgb, var(--ps-positive) 11%, transparent);
-        stroke: var(--ps-positive);
+        fill: transparent;
+        stroke: color-mix(in srgb, var(--ps-text) 28%, transparent);
     }
 
     .coach-zone.is-trigger {
-        animation: coach-trigger-pulse 800ms ease-in-out infinite alternate;
-    }
-
-    .coach-zone-label {
-        fill: var(--ps-muted);
-    }
-
-    .coach-zone-label.is-press {
-        fill: var(--ps-danger);
-    }
-
-    .coach-zone-label.is-protect {
-        fill: var(--ps-positive);
-    }
-
-    .coach-zone-label.is-dimension {
-        fill: var(--ps-text);
-        font-size: 1.55px;
+        animation: none;
     }
 
     .coach-measurement {
         fill: none;
-        stroke-width: 1.8;
-    }
-
-    .coach-measurement.is-dimension {
-        stroke: var(--ps-accent);
+        stroke-width: 1.4;
     }
 
     .coach-measurement.is-press {
-        stroke: var(--ps-danger);
-        stroke-dasharray: 4 3;
+        stroke: var(--ps-accent);
+        stroke-dasharray: 2 3;
     }
 
     .coach-annotation {
-        fill: var(--ps-text);
-        font-size: 1.55px;
+        fill: var(--ps-accent);
+        font-family: var(--ps-body);
+        font-size: 1.45px;
+        font-weight: 700;
     }
 
     .coach-pitch__players {
         position: absolute;
-        z-index: 4;
+        z-index: 2;
         inset: 0;
         pointer-events: none;
     }
@@ -3770,9 +3060,9 @@
         top: var(--y);
         left: var(--x);
         display: grid;
-        width: auto;
-        height: auto;
-        aspect-ratio: auto;
+        width: 4.4rem;
+        height: 4.4rem;
+        aspect-ratio: 1;
         place-items: center;
         padding: 0;
         border: 0;
@@ -3789,8 +3079,9 @@
 
     .coach-player.is-team,
     .coach-player.is-opponent {
-        width: auto;
-        aspect-ratio: auto;
+        width: 4.4rem;
+        height: 4.4rem;
+        aspect-ratio: 1;
         border: 0;
         background: transparent;
         box-shadow: none;
@@ -3811,46 +3102,43 @@
         font-weight: 650;
         line-height: 1.2;
         white-space: nowrap;
-        opacity: 1;
-        transform: translateX(-50%);
+        opacity: 0;
+        transform: translate(-50%, 0.2rem);
+        transition:
+            opacity 160ms var(--ps-ease),
+            transform 160ms var(--ps-ease);
         pointer-events: none;
     }
 
-    .coach-player.is-opponent > small {
-        opacity: 0;
-    }
-
+    .coach-player.is-team:hover > small,
+    .coach-player.is-team:focus-visible > small,
     .coach-player.is-opponent:hover > small,
     .coach-player.is-opponent:focus-visible > small {
         opacity: 1;
+        transform: translate(-50%, 0);
     }
 
     .coach-player.is-team:hover > .coach-marker,
     .coach-player.is-team:focus-visible > .coach-marker {
-        background: linear-gradient(90deg, #eef8ff 0 31%, #75b9ef 31% 66%, #eef8ff 66%);
-        color: #132a42;
-        box-shadow:
-            0 0 0 0.28rem var(--ps-text),
-            0 0.35rem 1rem rgba(0, 0, 0, 0.18);
+        background: var(--ps-text);
+        color: var(--ps-bg);
+        outline: 0.22rem solid var(--ps-accent);
+        outline-offset: 0.12rem;
     }
 
     .coach-player.is-active .coach-marker {
-        box-shadow:
-            0 0 0 0.28rem var(--ps-text),
-            0 0.35rem 1rem rgba(0, 0, 0, 0.18);
-        transform: scale(1.06);
+        outline: 0.22rem solid var(--ps-accent);
+        outline-offset: 0.12rem;
     }
 
     .coach-player.is-pressing .coach-marker {
-        box-shadow:
-            0 0 0 0.32rem var(--ps-danger),
-            0 0 0 0.65rem color-mix(in srgb, var(--ps-danger) 16%, transparent);
+        outline: 0.22rem dashed var(--ps-accent);
+        outline-offset: 0.12rem;
     }
 
     .coach-player.is-protecting .coach-marker {
-        box-shadow:
-            0 0 0 0.32rem var(--ps-positive),
-            0 0 0 0.65rem color-mix(in srgb, var(--ps-positive) 14%, transparent);
+        outline: 0.22rem solid color-mix(in srgb, var(--ps-text) 58%, transparent);
+        outline-offset: 0.12rem;
     }
 
     .coach-player[data-badge]::after {
@@ -3865,15 +3153,11 @@
         padding: 0 0.2rem;
         border: 0.16rem solid var(--ps-surface);
         border-radius: 999px;
-        background: var(--ps-positive);
-        color: #ffffff;
+        background: var(--ps-text);
+        color: var(--ps-bg);
         font-size: 0.67rem;
         font-weight: 750;
         line-height: 1;
-    }
-
-    .coach-player.is-pressing[data-badge]::after {
-        background: var(--ps-danger);
     }
 
     .coach-pitch.is-fluid .coach-player,
@@ -3883,7 +3167,7 @@
 
     .coach-pitch__ball {
         position: absolute;
-        z-index: 7;
+        z-index: 3;
         top: var(--y);
         left: var(--x);
         transform: translate(-50%, -50%);
@@ -3893,30 +3177,18 @@
         pointer-events: none;
     }
 
-    .coach-pitch__phase {
-        position: absolute;
-        z-index: 8;
-        top: 1.1rem;
-        left: 1.1rem;
-        padding: 0.55rem 0.8rem;
-        border-radius: 0.7rem;
-        background: var(--ps-text);
-        color: var(--ps-bg);
-        font-size: 0.85rem;
-        font-weight: 700;
-        letter-spacing: 0.055em;
-    }
-
     .coach-pitch__direction {
-        z-index: 8;
+        z-index: 4;
         right: 1.1rem;
         bottom: 1rem;
-        padding: 0.45rem 0.65rem;
-        border-radius: 0.6rem;
-        background: color-mix(in srgb, var(--ps-surface) 88%, transparent);
-        color: var(--ps-text);
+        padding: 0;
+        border-radius: 0;
+        background: transparent;
+        color: var(--ps-muted);
         font-size: 0.78rem;
-        font-weight: 700;
+        font-weight: 600;
+        letter-spacing: 0;
+        text-transform: none;
     }
 
     .coach-pitch__direction b {
@@ -3924,82 +3196,9 @@
         font-size: 1.1rem;
     }
 
-    .coach-pitch__edge {
-        position: absolute;
-        z-index: 3;
-        left: 50%;
-        color: color-mix(in srgb, var(--ps-text) 48%, transparent);
-        font-size: 0.7rem;
-        font-weight: 700;
-        letter-spacing: 0.08em;
-        transform: translateX(-50%);
-    }
-
-    .coach-pitch__edge--left {
-        top: 0.45rem;
-    }
-
-    .coach-pitch__edge--right {
-        bottom: 0.4rem;
-    }
-
-    .coach-notation-key {
-        position: absolute;
-        z-index: 8;
-        top: 1.1rem;
-        right: 1.1rem;
-        display: flex;
-        gap: 0.9rem;
-        padding: 0.55rem 0.75rem;
-        border-radius: 0.7rem;
-        background: color-mix(in srgb, var(--ps-surface) 91%, transparent);
-        color: var(--ps-muted);
-        font-size: 0.74rem;
-        font-weight: 650;
-    }
-
-    .coach-notation-key[hidden] {
-        display: none;
-    }
-
-    .coach-notation-key span {
-        display: inline-flex;
-        align-items: center;
-        gap: 0.4rem;
-    }
-
-    .coach-notation-key i {
-        position: relative;
-        width: 1.7rem;
-        height: 0.15rem;
-        background: var(--ps-accent);
-    }
-
-    .coach-notation-key i::after {
-        content: "";
-        position: absolute;
-        top: 50%;
-        right: -0.05rem;
-        width: 0.45rem;
-        height: 0.45rem;
-        border-top: 0.14rem solid currentColor;
-        border-right: 0.14rem solid currentColor;
-        transform: translateY(-50%) rotate(45deg);
-    }
-
-    .coach-notation-key i.is-run {
-        background: repeating-linear-gradient(90deg, var(--ps-accent) 0 0.4rem, transparent 0.4rem 0.7rem);
-        color: var(--ps-accent);
-    }
-
-    .coach-notation-key i.is-press {
-        background: repeating-linear-gradient(90deg, var(--ps-danger) 0 0.4rem, transparent 0.4rem 0.7rem);
-        color: var(--ps-danger);
-    }
-
     .coach-tactical-tooltip {
         position: absolute;
-        z-index: 12;
+        z-index: 5;
         top: var(--tooltip-y);
         left: var(--tooltip-x);
         display: grid;
@@ -4009,7 +3208,7 @@
         border: 0.1rem solid color-mix(in srgb, var(--ps-text) 10%, transparent);
         border-radius: 1rem;
         background: var(--ps-surface);
-        box-shadow: var(--ps-shadow-soft);
+        box-shadow: 0 1rem 2.6rem rgba(0, 0, 0, 0.18);
         color: var(--ps-text);
         transform: translate(-50%, 2.6rem);
         pointer-events: none;
@@ -4041,23 +3240,39 @@
     }
 
     .coach-animation__controls {
-        flex-wrap: wrap;
-        justify-content: flex-end;
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: 0.8rem;
+        margin: 0;
     }
 
     .coach-animation__step {
         display: inline-flex;
+        width: 100%;
         min-height: 4.4rem;
+        justify-content: center;
         align-items: center;
         gap: 0.55rem;
         padding: 0 1.15rem;
-        border: 0.1rem solid color-mix(in srgb, var(--ps-text) 10%, transparent);
-        border-radius: 999px;
-        background: var(--ps-bg);
+        border: 0;
+        border-radius: 1.2rem;
+        background: var(--ps-surface);
         color: var(--ps-text);
         cursor: pointer;
         font-size: 1.05rem;
         font-weight: 650;
+        transition:
+            background-color 180ms var(--ps-ease),
+            color 180ms var(--ps-ease);
+    }
+
+    .coach-animation__step:not(:disabled):hover {
+        background: var(--ps-surface-2);
+    }
+
+    .coach-animation__step:disabled {
+        opacity: 0.42;
+        cursor: not-allowed;
     }
 
     .coach-animation__step small {
@@ -4066,27 +3281,34 @@
     }
 
     .coach-animation__play {
+        grid-column: 1 / -1;
+        grid-row: 1;
+        width: 100%;
         min-height: 4.6rem;
         padding: 0 1.7rem;
+        transition:
+            background-color 180ms var(--ps-ease),
+            color 180ms var(--ps-ease);
     }
 
-    .coach-animation__speed select {
-        min-height: 4.4rem;
+    .coach-animation__play:hover {
+        background: var(--ps-accent);
+        color: #ffffff;
+    }
+
+    .coach-timeline {
+        display: grid;
+        gap: 0.6rem;
+        margin: 1.4rem 0 0;
     }
 
     .coach-timeline input {
         min-height: 2.4rem;
     }
 
-    @keyframes coach-trigger-pulse {
-        from {
-            stroke-width: 0.25;
-            opacity: 0.65;
-        }
-        to {
-            stroke-width: 0.7;
-            opacity: 1;
-        }
+    .coach-timeline input:focus-visible {
+        outline: 0.2rem solid var(--ps-accent);
+        outline-offset: 0.3rem;
     }
 
     /* Ordered page-entry animation */
@@ -4148,12 +3370,6 @@
             grid-template-columns: repeat(2, minmax(0, 1fr));
         }
 
-        .coach-main-grid,
-        .coach-lower-grid {
-            grid-template-columns: 1fr;
-        }
-
-        .coach-effect-grid,
         .coach-role-grid {
             grid-template-columns: repeat(2, minmax(0, 1fr));
         }
@@ -4256,12 +3472,6 @@
             justify-self: center;
         }
 
-        .coach-room__hero::after {
-            right: -8rem;
-            width: 58rem;
-            opacity: 0.5;
-        }
-
         .coach-context {
             align-items: stretch;
             flex-direction: column;
@@ -4271,14 +3481,30 @@
             justify-content: flex-start;
         }
 
-        .coach-plan-strip {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 1.4rem 0;
+        .coach-tactics__toolbar {
+            grid-template-columns: 1fr;
+            align-items: start;
+            gap: 1.8rem;
         }
 
-        .coach-plan-strip > div:nth-child(3) {
-            padding-left: 0;
+        .coach-stage {
+            grid-template-columns: 1fr;
+        }
+
+        .coach-playback {
+            margin-top: 0.4rem;
+            padding: 2.4rem 0 0;
+            border-top: 0.1rem solid var(--coach-divider);
             border-left: 0;
+        }
+
+        .coach-playback__copy {
+            min-block-size: 0;
+        }
+
+        .coach-playback__dock {
+            min-block-size: 0;
+            margin-top: 2.4rem;
         }
 
         .project-reading-layout {
@@ -4432,15 +3658,20 @@
         }
 
         .coach-room__hero {
-            min-height: 48rem;
+            min-height: auto;
         }
 
         .coach-room__hero h1 {
-            font-size: clamp(5rem, 15vw, 8rem);
+            font-size: clamp(4.6rem, 15vw, 6rem);
         }
 
         .coach-room__workspace {
-            margin-top: -2rem;
+            margin-top: 0;
+        }
+
+        .coach-tactics {
+            padding: 0;
+            border-radius: 0;
         }
 
         .coach-context__controls {
@@ -4453,92 +3684,25 @@
             min-width: 0;
         }
 
-        .coach-recommendation__topline {
-            grid-template-columns: 1fr;
-            gap: 2.5rem;
-        }
-
-        .coach-confidence {
-            grid-auto-flow: column;
-            grid-template-columns: auto 1fr;
-            align-items: baseline;
-            justify-content: start;
-            gap: 0.8rem;
-            text-align: left;
-        }
-
-        .coach-confidence small {
-            margin: 0;
-        }
-
         .coach-panel__header {
             align-items: start;
-            flex-direction: column;
-        }
-
-        .coach-pitch-legend {
-            justify-content: flex-start;
-        }
-
-        .coach-pitch-legend__direction {
-            width: 100%;
-            padding-top: 0.6rem;
-            padding-left: 0;
-            border-top: 0.1rem solid color-mix(in srgb, var(--ps-text) 10%, transparent);
-            border-left: 0;
         }
 
         .coach-substate-tabs {
-            flex-wrap: nowrap;
-            overflow-x: auto;
-            padding-bottom: 0.5rem;
-            scrollbar-width: none;
-        }
-
-        .coach-substate-tabs::-webkit-scrollbar {
-            display: none;
-        }
-
-        .coach-substate-tabs button {
-            flex: 0 0 auto;
-        }
-
-        .coach-plan-strip {
-            grid-template-columns: repeat(2, minmax(0, 1fr));
-            gap: 1.4rem 0;
-        }
-
-        .coach-plan-strip > div:nth-child(3) {
-            padding-left: 0;
-            border-left: 0;
-        }
-
-        .coach-animation {
-            grid-template-columns: 1fr;
-            gap: 1.8rem;
+            padding-bottom: 1.6rem;
         }
 
         .coach-animation__controls {
-            flex-wrap: wrap;
-            justify-content: flex-start;
+            width: 100%;
         }
 
         .coach-animation__step {
             min-height: 4.2rem;
         }
 
-        .coach-pitch__phase,
-        .coach-notation-key {
-            top: 0.7rem;
-        }
-
-        .coach-pitch__phase {
-            left: 0.7rem;
-        }
-
-        .coach-notation-key {
-            right: 0.7rem;
-            gap: 0.55rem;
+        .coach-action-label {
+            font-size: 2.65px;
+            letter-spacing: 0.02em;
         }
 
         .coach-player > small,
@@ -4572,73 +3736,8 @@
             display: none;
         }
 
-        .coach-effect-grid,
         .coach-role-grid {
             grid-template-columns: 1fr;
-        }
-
-        .coach-effects .coach-panel__header > p {
-            text-align: left;
-        }
-
-        .coach-option-list button {
-            grid-template-columns: minmax(12rem, 1fr) 4.5rem;
-        }
-
-        .coach-option-list button > i {
-            grid-column: 1 / -1;
-            grid-row: 2;
-        }
-
-        .coach-option-list button > strong {
-            grid-column: 2;
-            grid-row: 1;
-        }
-
-        .coach-gravity__hero {
-            grid-template-columns: 10rem 1fr;
-        }
-
-        .coach-gravity__orbit {
-            width: 9.5rem;
-        }
-
-        .coach-gravity__orbit i {
-            transform: translate(-50%, -50%) rotate(var(--angle)) translateX(3.8rem);
-        }
-
-        .coach-evidence__intro,
-        .coach-evidence__metrics,
-        .coach-evidence__checks > div {
-            grid-template-columns: 1fr;
-        }
-
-        .coach-evidence__intro > span {
-            justify-self: start;
-        }
-
-        .coach-evidence__top {
-            align-items: flex-start;
-            flex-direction: column;
-        }
-
-        .coach-evidence__metrics > div {
-            padding: 1.6rem 0;
-            border-top: 0.1rem solid color-mix(in srgb, var(--ps-text) 8%, transparent);
-            border-left: 0;
-        }
-
-        .coach-evidence__metrics > div:first-child {
-            padding-top: 0;
-            border-top: 0;
-        }
-
-        .coach-evidence__metrics > div:last-child {
-            padding-bottom: 0;
-        }
-
-        .coach-evidence summary {
-            min-height: 7rem;
         }
 
         .project-header {
@@ -4685,6 +3784,41 @@
 
         .log-card {
             border-radius: 2.2rem;
+        }
+    }
+
+    @media (forced-colors: active) {
+        .coach-pitch {
+            border: 0.1rem solid CanvasText;
+            background: Canvas;
+        }
+
+        .coach-field-lines {
+            stroke: CanvasText;
+        }
+
+        .coach-player.is-team > .coach-marker {
+            border-color: CanvasText;
+            background: CanvasText;
+            color: Canvas;
+        }
+
+        .coach-player.is-opponent > .coach-marker,
+        .coach-marker.is-ball {
+            border-color: CanvasText;
+            background: Canvas;
+            color: CanvasText;
+        }
+
+        .coach-action,
+        .coach-zone,
+        .coach-measurement {
+            stroke: Highlight;
+        }
+
+        .coach-action-label {
+            fill: CanvasText;
+            stroke: Canvas;
         }
     }
 
