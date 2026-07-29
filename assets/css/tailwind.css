@@ -2071,6 +2071,272 @@
         margin-top: 2.4rem;
     }
 
+    /* ===== Matchup picker + head-to-head breakdown ===== */
+    .matchup__head h2 {
+        margin: 0;
+        font-family: var(--ps-display);
+        font-size: clamp(1.8rem, 3vw, 2.6rem);
+        font-weight: 500;
+        letter-spacing: -0.02em;
+    }
+
+    .matchup__head p {
+        margin: 0.5rem 0 0;
+        color: var(--ps-muted);
+    }
+
+    .matchup__picker {
+        display: flex;
+        flex-wrap: wrap;
+        align-items: end;
+        gap: 1rem 1.4rem;
+        margin-top: 1.8rem;
+    }
+
+    .matchup__team {
+        display: grid;
+        gap: 0.5rem;
+        flex: 1 1 16rem;
+    }
+
+    .matchup__team span {
+        font-size: 0.78rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--ps-muted);
+    }
+
+    .matchup__team select {
+        min-height: 3.6rem;
+        padding: 0 1rem;
+        border: 1px solid color-mix(in srgb, var(--ps-muted) 30%, transparent);
+        border-radius: 1rem;
+        background: var(--ps-surface);
+        color: var(--ps-text);
+        font: inherit;
+        font-size: 1.02rem;
+        font-weight: 500;
+        cursor: pointer;
+    }
+
+    .matchup__vs {
+        padding-bottom: 1rem;
+        font-family: var(--ps-display);
+        font-size: 1.2rem;
+        color: var(--ps-muted);
+    }
+
+    .matchup__breakdown {
+        margin-top: 2rem;
+    }
+
+    .matchup-h2h {
+        display: grid;
+        grid-template-columns: 1fr auto 1fr;
+        align-items: center;
+        gap: 1rem;
+        padding: 1.6rem clamp(1.2rem, 3vw, 2.2rem);
+        border-radius: 1.4rem;
+        background: var(--ps-surface);
+        box-shadow: var(--ps-shadow-soft);
+    }
+
+    .matchup-h2h__side {
+        display: grid;
+        gap: 0.2rem;
+        min-width: 0;
+    }
+
+    .matchup-h2h__side.is-right {
+        text-align: right;
+    }
+
+    .matchup-h2h__team {
+        font-size: 0.76rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--ps-muted);
+    }
+
+    .matchup-h2h__side strong {
+        font-family: var(--ps-display);
+        font-size: clamp(1.1rem, 2vw, 1.55rem);
+        font-weight: 500;
+        letter-spacing: -0.02em;
+    }
+
+    .matchup-h2h__side em {
+        font-style: normal;
+        font-size: 0.85rem;
+        color: var(--ps-muted);
+    }
+
+    .matchup-h2h__vs {
+        font-family: var(--ps-display);
+        font-size: 1.1rem;
+        color: var(--ps-faint);
+    }
+
+    .matchup-cards {
+        display: grid;
+        grid-template-columns: repeat(2, minmax(0, 1fr));
+        gap: clamp(1rem, 2.5vw, 2rem);
+        margin-top: 1.4rem;
+    }
+
+    .matchup-card {
+        border: 1px solid color-mix(in srgb, var(--ps-muted) 20%, transparent);
+        border-radius: 1.4rem;
+        padding: 1.4rem 1.5rem;
+        background: var(--ps-surface);
+    }
+
+    .matchup-card__head {
+        display: flex;
+        align-items: end;
+        justify-content: space-between;
+        gap: 1rem;
+        padding-bottom: 1rem;
+        border-bottom: 1px solid color-mix(in srgb, var(--ps-muted) 18%, transparent);
+    }
+
+    .matchup-card__head h3 {
+        margin: 0;
+        font-family: var(--ps-display);
+        font-size: clamp(1.3rem, 2vw, 1.7rem);
+        font-weight: 500;
+        letter-spacing: -0.02em;
+    }
+
+    .matchup-card__head dl {
+        display: flex;
+        gap: 1.2rem;
+        margin: 0;
+        text-align: right;
+    }
+
+    .matchup-card__head dt {
+        font-size: 0.66rem;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+        color: var(--ps-muted);
+    }
+
+    .matchup-card__head dd {
+        margin: 0.15rem 0 0;
+        font-family: var(--ps-display);
+        font-weight: 500;
+        font-variant-numeric: tabular-nums;
+    }
+
+    .matchup-card__list {
+        list-style: none;
+        margin: 0.4rem 0 0;
+        padding: 0;
+    }
+
+    .matchup-player {
+        display: grid;
+        grid-template-columns: 1.6rem minmax(0, 1fr) minmax(4rem, 8rem) auto;
+        align-items: center;
+        gap: 0.9rem;
+        padding: 0.55rem 0;
+        border-bottom: 1px solid color-mix(in srgb, var(--ps-muted) 12%, transparent);
+    }
+
+    .matchup-player:last-child {
+        border-bottom: 0;
+    }
+
+    .matchup-player__rank {
+        font-size: 0.8rem;
+        font-variant-numeric: tabular-nums;
+        color: var(--ps-faint);
+        text-align: right;
+    }
+
+    .matchup-player__name {
+        min-width: 0;
+        display: grid;
+        line-height: 1.2;
+    }
+
+    .matchup-player__name em {
+        font-style: normal;
+        font-size: 0.74rem;
+        color: var(--ps-muted);
+        white-space: nowrap;
+        overflow: hidden;
+        text-overflow: ellipsis;
+    }
+
+    .matchup-player__bar {
+        height: 0.5rem;
+        border-radius: 1rem;
+        background: color-mix(in srgb, var(--ps-muted) 14%, transparent);
+        overflow: hidden;
+    }
+
+    .matchup-player__bar i {
+        display: block;
+        width: var(--w, 0%);
+        height: 100%;
+        background: var(--ps-accent);
+    }
+
+    .matchup-player__rating {
+        font-family: var(--ps-display);
+        font-size: 0.95rem;
+        font-weight: 500;
+        font-variant-numeric: tabular-nums;
+    }
+
+    .matchup-card.is-empty .matchup-card__empty {
+        margin: 1.2rem 0 0;
+        color: var(--ps-muted);
+        font-size: 0.95rem;
+    }
+
+    .coach-showcase {
+        margin-top: clamp(2rem, 4vw, 3.4rem);
+        padding-top: clamp(2rem, 4vw, 3rem);
+        border-top: 1px solid color-mix(in srgb, var(--ps-muted) 20%, transparent);
+    }
+
+    .coach-showcase__label {
+        margin: 0 0 1.4rem;
+        font-size: 0.82rem;
+        color: var(--ps-muted);
+    }
+
+    .coach-showcase__label span {
+        display: inline-block;
+        margin-right: 0.6rem;
+        padding: 0.2rem 0.6rem;
+        border-radius: 0.6rem;
+        background: var(--ps-text);
+        color: var(--ps-bg);
+        font-size: 0.66rem;
+        font-weight: 600;
+        letter-spacing: 0.08em;
+        text-transform: uppercase;
+    }
+
+    @media (max-width: 720px) {
+        .matchup-cards {
+            grid-template-columns: 1fr;
+        }
+
+        .matchup-player {
+            grid-template-columns: 1.4rem minmax(0, 1fr) auto;
+        }
+
+        .matchup-player__bar {
+            display: none;
+        }
+    }
+
     /* ===== Top-level mode switch: Interactive coach vs Presentation ===== */
     .coach-modes {
         display: inline-flex;
