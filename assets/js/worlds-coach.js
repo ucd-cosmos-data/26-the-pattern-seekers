@@ -1897,6 +1897,7 @@
     function initializeInteractions() {
         createPlayerNodes();
         updateForwardRoster();
+        initializeMatchup();
 
         // Static role cards (the forward card is refreshed by updateForwardRoster).
         room.querySelectorAll("[data-role-card]").forEach(function (card) {
