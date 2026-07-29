@@ -168,35 +168,42 @@
     // Load the tooltip photo: ESPN first, Wikipedia thumbnail as fallback, then
     // hide the frame entirely if neither resolves. Guards against a stale async
     // result landing on a tooltip that has since moved to another player.
-    function loadPlayerPhoto(img, id, espnUrl) {
-        function fail() {
-            if (activeTooltipId === id && img.isConnected) {
-                img.remove();
-                tacticalTooltip.classList.remove("has-photo");
-            }
-        }
+    function loadPhotoInto(img, id, onFail) {
+        onFail = onFail || function () {};
         function tryWikipedia() {
             var title = wikiTitleFor(id);
-            if (!title) return fail();
+            if (!title) return onFail();
             fetch("https://en.wikipedia.org/api/rest_v1/page/summary/" + encodeURIComponent(title.replace(/ /g, "_")))
                 .then(function (response) { return response.ok ? response.json() : Promise.reject(); })
                 .then(function (data) {
                     var source = data && data.thumbnail && data.thumbnail.source;
-                    if (source && activeTooltipId === id && img.isConnected) {
-                        img.onerror = fail;
+                    if (source) {
+                        img.onerror = onFail;
                         img.src = source;
                     } else {
-                        fail();
+                        onFail();
                     }
                 })
-                .catch(fail);
+                .catch(onFail);
         }
+        var espnUrl = headshotUrl(id);
         if (espnUrl) {
             img.onerror = tryWikipedia;
             img.src = espnUrl;
         } else {
             tryWikipedia();
         }
+    }
+
+    // Fill a role-card avatar; the number badge stays visible either way.
+    function loadRolePhoto(card) {
+        var img = card.querySelector(".coach-role-photo");
+        if (!img) return;
+        img.onload = function () { card.classList.add("has-photo"); };
+        loadPhotoInto(img, card.dataset.roleCard, function () {
+            card.classList.remove("has-photo");
+            img.removeAttribute("src");
+        });
     }
 
     var argAttack = {
@@ -870,6 +877,9 @@
         setText("[data-role-forward-role]", roster.forward.role);
         setText("[data-role-forward-job]", lautaro ? "Pin both centre-backs" : "Pin the centre-back");
         setText("[data-lineup-fit]", lautaro ? "82%" : "86%");
+
+        var forwardCard = room.querySelector('[data-role-card="forward"]');
+        if (forwardCard) loadRolePhoto(forwardCard);
     }
 
     function updatePlayerNode(node, id) {
@@ -901,7 +911,13 @@
             "</strong><span>" + player.role + "</span><small>" + player.instruction + "</small></div>";
         tacticalTooltip.classList.add("has-photo");
         activeTooltipId = id;
-        loadPlayerPhoto(tacticalTooltip.querySelector(".coach-tooltip-photo"), id, headshotUrl(id));
+        var tooltipPhoto = tacticalTooltip.querySelector(".coach-tooltip-photo");
+        loadPhotoInto(tooltipPhoto, id, function () {
+            if (activeTooltipId === id && tooltipPhoto.isConnected) {
+                tooltipPhoto.remove();
+                tacticalTooltip.classList.remove("has-photo");
+            }
+        });
         positionTooltip(id);
         tacticalTooltip.hidden = false;
         tooltipPinned = Boolean(pin);
@@ -1881,6 +1897,11 @@
     function initializeInteractions() {
         createPlayerNodes();
         updateForwardRoster();
+
+        // Static role cards (the forward card is refreshed by updateForwardRoster).
+        room.querySelectorAll("[data-role-card]").forEach(function (card) {
+            if (card.dataset.roleCard !== "forward") loadRolePhoto(card);
+        });
         initializeMatchup();
 
         room.querySelectorAll("[data-coach-mode]").forEach(function (button, index, buttons) {
