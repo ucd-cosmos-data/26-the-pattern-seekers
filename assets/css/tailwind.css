@@ -1424,13 +1424,17 @@
     .coach-room {
         --coach-pitch: #e7e8ec;
         --coach-line: #9b9ea6;
-        --coach-home: #161617;
-        --coach-home-number: #ffffff;
-        --coach-away: #ffffff;
-        --coach-away-number: #161617;
-        --coach-away-line: #62666f;
+        /* Argentina flag light blue */
+        --coach-home: #75aadb;
+        --coach-home-number: #0b3563;
+        /* France flag blue */
+        --coach-away: #11408f;
+        --coach-away-number: #ffffff;
+        --coach-away-line: #0a2e69;
         --coach-ball: #ffffff;
         --coach-ball-line: #161617;
+        /* Ball-path highlight: warm, so it never collides with the blue teams */
+        --coach-action: #b04708;
         --coach-content: 112rem;
         --coach-reading: 88rem;
         --coach-section-space: clamp(7rem, 8vw, 10rem);
@@ -1441,13 +1445,17 @@
     :root[data-scheme="dark"] .coach-room {
         --coach-pitch: #1b1d21;
         --coach-line: #555961;
-        --coach-home: #f5f5f7;
-        --coach-home-number: #161617;
-        --coach-away: #292b31;
-        --coach-away-number: #f5f5f7;
-        --coach-away-line: #aeb1b9;
+        /* Argentina flag light blue */
+        --coach-home: #86bbe8;
+        --coach-home-number: #0a2a4d;
+        /* France flag blue */
+        --coach-away: #2f6fc4;
+        --coach-away-number: #ffffff;
+        --coach-away-line: #8fc0ef;
         --coach-ball: #f5f5f7;
         --coach-ball-line: #161617;
+        /* Ball-path highlight: warm, so it never collides with the blue teams */
+        --coach-action: #f0a542;
     }
 
     .coach-room__hero {
@@ -3854,11 +3862,11 @@
 
     #coach-arrow-blue path,
     #coach-arrow-red path {
-        fill: var(--ps-accent);
+        fill: var(--coach-action);
     }
 
     #coach-arrow-green path {
-        fill: var(--ps-accent);
+        fill: var(--coach-action);
     }
 
     .coach-action {
@@ -3868,31 +3876,31 @@
     }
 
     .coach-action.is-pass {
-        stroke: var(--ps-accent);
-        stroke-width: 1.9;
+        stroke: var(--coach-action);
+        stroke-width: 2;
     }
 
     .coach-action.is-carry {
-        stroke: var(--ps-accent);
-        stroke-width: 2.2;
+        stroke: var(--coach-action);
+        stroke-width: 2.3;
     }
 
     .coach-action.is-run {
-        stroke: var(--ps-accent);
-        stroke-width: 1.8;
+        stroke: var(--coach-action);
+        stroke-width: 1.9;
         stroke-dasharray: 5 4;
     }
 
     .coach-action.is-decoy {
-        stroke: color-mix(in srgb, var(--ps-accent) 62%, transparent);
+        stroke: color-mix(in srgb, var(--coach-action) 66%, transparent);
         stroke-width: 1.6;
         stroke-dasharray: 2 4;
     }
 
     .coach-action.is-press,
     .coach-action.is-recovery {
-        stroke: var(--ps-accent);
-        stroke-width: 1.8;
+        stroke: var(--coach-action);
+        stroke-width: 1.9;
         stroke-dasharray: 2 3;
     }
 
@@ -4155,6 +4163,28 @@
         color: var(--ps-muted);
         font-size: 0.82rem;
         line-height: 1.35;
+    }
+
+    .coach-tactical-tooltip.has-photo {
+        grid-template-columns: auto minmax(0, 1fr);
+        align-items: center;
+        gap: 0.15rem 0.95rem;
+    }
+
+    .coach-tooltip-copy {
+        display: grid;
+        gap: 0.2rem;
+        min-width: 0;
+    }
+
+    .coach-tooltip-photo {
+        width: 3.9rem;
+        height: 3.9rem;
+        border-radius: 50%;
+        object-fit: cover;
+        object-position: top center;
+        background: color-mix(in srgb, var(--ps-accent) 12%, var(--ps-surface));
+        border: 0.1rem solid color-mix(in srgb, var(--ps-text) 12%, transparent);
     }
 
     .coach-animation__controls {

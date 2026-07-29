@@ -127,6 +127,78 @@
         }
     };
 
+    // ESPN athlete ids → headshot at a.espncdn.com/i/headshots/soccer/players/full/{id}.png
+    var espnIds = {
+        gk: 158626, molina: 164826, romero: 96970, otamendi: 119289, tagliafico: 145190,
+        enzo: 285450, depaul: 174466, macallister: 249299, messi: 45843, dimaria: 108223,
+        forward: 277206, lautaro: 219713,
+        fra_gk: 43372, fra_rb: 231692, fra_rcb: 153053, fra_lcb: 222793, fra_lb: 233621,
+        fra_rm: 140416, fra_cm: 265919, fra_lm: 176203, fra_rw: 229744, fra_st: 88965, fra_lw: 231388
+    };
+
+    function headshotUrl(id) {
+        var espn = id === "forward" && playerControl && playerControl.value === "lautaro"
+            ? espnIds.lautaro
+            : espnIds[id];
+        return espn
+            ? "https://a.espncdn.com/i/headshots/soccer/players/full/" + espn + ".png"
+            : "";
+    }
+
+    // Fallback source: ESPN only has cutout headshots for the players it actively
+    // covers (Messi, MLS), so every other player falls back to a Wikipedia photo.
+    var wikiTitles = {
+        gk: "Emiliano Martínez", molina: "Nahuel Molina", romero: "Cristian Romero",
+        otamendi: "Nicolás Otamendi", tagliafico: "Nicolás Tagliafico", enzo: "Enzo Fernández",
+        depaul: "Rodrigo De Paul", macallister: "Alexis Mac Allister", messi: "Lionel Messi",
+        dimaria: "Ángel Di María", forward: "Julián Álvarez", lautaro: "Lautaro Martínez",
+        fra_gk: "Hugo Lloris", fra_rb: "Jules Koundé", fra_rcb: "Raphaël Varane",
+        fra_lcb: "Dayot Upamecano", fra_lb: "Théo Hernández", fra_rm: "Antoine Griezmann",
+        fra_cm: "Aurélien Tchouaméni", fra_lm: "Adrien Rabiot", fra_rw: "Ousmane Dembélé",
+        fra_st: "Olivier Giroud", fra_lw: "Kylian Mbappé"
+    };
+
+    function wikiTitleFor(id) {
+        if (id === "forward" && playerControl && playerControl.value === "lautaro") {
+            return wikiTitles.lautaro;
+        }
+        return wikiTitles[id];
+    }
+
+    // Load the tooltip photo: ESPN first, Wikipedia thumbnail as fallback, then
+    // hide the frame entirely if neither resolves. Guards against a stale async
+    // result landing on a tooltip that has since moved to another player.
+    function loadPlayerPhoto(img, id, espnUrl) {
+        function fail() {
+            if (activeTooltipId === id && img.isConnected) {
+                img.remove();
+                tacticalTooltip.classList.remove("has-photo");
+            }
+        }
+        function tryWikipedia() {
+            var title = wikiTitleFor(id);
+            if (!title) return fail();
+            fetch("https://en.wikipedia.org/api/rest_v1/page/summary/" + encodeURIComponent(title.replace(/ /g, "_")))
+                .then(function (response) { return response.ok ? response.json() : Promise.reject(); })
+                .then(function (data) {
+                    var source = data && data.thumbnail && data.thumbnail.source;
+                    if (source && activeTooltipId === id && img.isConnected) {
+                        img.onerror = fail;
+                        img.src = source;
+                    } else {
+                        fail();
+                    }
+                })
+                .catch(fail);
+        }
+        if (espnUrl) {
+            img.onerror = tryWikipedia;
+            img.src = espnUrl;
+        } else {
+            tryWikipedia();
+        }
+    }
+
     var argAttack = {
         gk: point(8, 34),
         tagliafico: point(25, 12),
@@ -823,8 +895,13 @@
         var player = roster[id];
         var position = currentPositions[id];
         if (!player || !position) return;
-        tacticalTooltip.innerHTML = "<strong>" + player.name + " · " + player.number + "</strong><span>" + player.role + "</span><small>" + player.instruction + "</small>";
+        tacticalTooltip.innerHTML =
+            '<img class="coach-tooltip-photo" alt="">' +
+            '<div class="coach-tooltip-copy"><strong>' + player.name + " · " + player.number +
+            "</strong><span>" + player.role + "</span><small>" + player.instruction + "</small></div>";
+        tacticalTooltip.classList.add("has-photo");
         activeTooltipId = id;
+        loadPlayerPhoto(tacticalTooltip.querySelector(".coach-tooltip-photo"), id, headshotUrl(id));
         positionTooltip(id);
         tacticalTooltip.hidden = false;
         tooltipPinned = Boolean(pin);
@@ -1605,6 +1682,118 @@
         requestPresentationProgress();
     }
 
+    function escapeHtml(value) {
+        return String(value == null ? "" : value).replace(/[&<>"]/g, function (character) {
+            return {
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                "\"": "&quot;"
+            }[character];
+        });
+    }
+
+    function formatRating(value) {
+        return value == null ? "—" : value.toFixed(3);
+    }
+
+    function initializeMatchup() {
+        var dataNode = room.querySelector("[data-matchup-data]");
+        var teamASelect = room.querySelector("[data-team-a]");
+        var teamBSelect = room.querySelector("[data-team-b]");
+        var breakdown = room.querySelector("[data-matchup-breakdown]");
+        var showcase = room.querySelector("[data-featured-showcase]");
+        if (!dataNode || !teamASelect || !teamBSelect || !breakdown) return;
+
+        var data;
+        try {
+            data = JSON.parse(dataNode.textContent);
+        } catch (error) {
+            return;
+        }
+        var teams = (data && data.teams) || [];
+        if (!teams.length) return;
+
+        var byCode = {};
+        teams.forEach(function (team) { byCode[team.code] = team; });
+
+        var optionsHtml = teams.map(function (team) {
+            return "<option value=\"" + team.code + "\">" + escapeHtml(team.name) +
+                (team.rated_count ? "" : " — no rated players yet") + "</option>";
+        }).join("");
+        teamASelect.innerHTML = optionsHtml;
+        teamBSelect.innerHTML = optionsHtml;
+        teamASelect.value = byCode.ARG ? "ARG" : teams[0].code;
+        teamBSelect.value = byCode.FRA ? "FRA" : teams[Math.min(1, teams.length - 1)].code;
+
+        function playerRowHtml(player, index, topRating) {
+            var width = Math.max(6, Math.round(((player.rating || 0) / (topRating || 1)) * 100));
+            var subtitle = player.role || player.position || "";
+            return "<li class=\"matchup-player\">" +
+                "<span class=\"matchup-player__rank\">" + (player.team_rank || index + 1) + "</span>" +
+                "<span class=\"matchup-player__name\">" + escapeHtml(player.name) +
+                (subtitle ? "<em>" + escapeHtml(subtitle) + "</em>" : "") + "</span>" +
+                "<span class=\"matchup-player__bar\"><i style=\"--w: " + width + "%\"></i></span>" +
+                "<span class=\"matchup-player__rating\">" + formatRating(player.rating) + "</span>" +
+                "</li>";
+        }
+
+        function teamCardHtml(team) {
+            if (!team.rated_count) {
+                return "<article class=\"matchup-card is-empty\">" +
+                    "<div class=\"matchup-card__head\"><h3>" + escapeHtml(team.name) + "</h3></div>" +
+                    "<p class=\"matchup-card__empty\">No players have cleared the rating floor yet — this squad fills in as more players are rated.</p>" +
+                    "</article>";
+            }
+            var rows = team.players.map(function (player, index) {
+                return playerRowHtml(player, index, team.top_rating);
+            }).join("");
+            return "<article class=\"matchup-card\">" +
+                "<div class=\"matchup-card__head\"><h3>" + escapeHtml(team.name) + "</h3>" +
+                "<dl><div><dt>Rated</dt><dd>" + team.rated_count + "</dd></div>" +
+                "<div><dt>Avg</dt><dd>" + formatRating(team.avg_rating) + "</dd></div></dl></div>" +
+                "<ol class=\"matchup-card__list\">" + rows + "</ol></article>";
+        }
+
+        function topLine(team) {
+            var top = team.players && team.players[0];
+            return top
+                ? "<strong>" + escapeHtml(top.name) + "</strong><em>top rated · " + formatRating(top.rating) + "</em>"
+                : "<em>No rated players yet</em>";
+        }
+
+        function headToHeadHtml(teamA, teamB) {
+            return "<div class=\"matchup-h2h\">" +
+                "<div class=\"matchup-h2h__side\"><span class=\"matchup-h2h__team\">" +
+                escapeHtml(teamA.name) + "</span>" + topLine(teamA) + "</div>" +
+                "<span class=\"matchup-h2h__vs\" aria-hidden=\"true\">vs</span>" +
+                "<div class=\"matchup-h2h__side is-right\"><span class=\"matchup-h2h__team\">" +
+                escapeHtml(teamB.name) + "</span>" + topLine(teamB) + "</div>" +
+                "</div>";
+        }
+
+        function render() {
+            if (teamASelect.value === teamBSelect.value) {
+                // Nudge the opponent to a different team so a matchup is always valid.
+                var alternate = teams.find(function (team) { return team.code !== teamASelect.value; });
+                if (alternate) teamBSelect.value = alternate.code;
+            }
+            var teamA = byCode[teamASelect.value];
+            var teamB = byCode[teamBSelect.value];
+            if (!teamA || !teamB) return;
+            breakdown.innerHTML = headToHeadHtml(teamA, teamB) +
+                "<div class=\"matchup-cards\">" + teamCardHtml(teamA) + teamCardHtml(teamB) + "</div>";
+            if (showcase) {
+                var pair = [teamASelect.value, teamBSelect.value].slice().sort().join("-");
+                showcase.hidden = pair !== "ARG-FRA";
+            }
+        }
+
+        teamASelect.addEventListener("change", render);
+        teamBSelect.addEventListener("change", render);
+        render();
+    }
+
     var activeMode = "tool";
 
     function setMode(mode, options) {
@@ -1692,6 +1881,7 @@
     function initializeInteractions() {
         createPlayerNodes();
         updateForwardRoster();
+        initializeMatchup();
 
         room.querySelectorAll("[data-coach-mode]").forEach(function (button, index, buttons) {
             button.addEventListener("click", function () {
