@@ -1514,9 +1514,10 @@
     }
 
     .coach-room {
-        /* Warm-dark pitch that belongs to the Qatar canvas. */
-        --coach-pitch: #1d1218;
-        --coach-line: rgba(247, 242, 233, 0.32);
+        /* Gold Qatar pitch with a separate visual channel for field geometry,
+           tactical actions, and player interaction states. */
+        --coach-pitch: var(--qatar-gold);
+        --coach-line: rgba(33, 7, 16, 0.46);
         /* Argentina flag stripes (horizontal) */
         --coach-home: #74acdf;
         --coach-home-flag: linear-gradient(180deg, #74acdf 0 33.4%, #ffffff 33.4% 66.6%, #74acdf 66.6%);
@@ -1528,9 +1529,8 @@
         --coach-away-line: #8fc0ef;
         --coach-ball: #ffffff;
         --coach-ball-line: #161617;
-        /* Ball-path highlight: bright amber — high contrast on the dark pitch,
-           never collides with either flag's colours */
-        --coach-action: #f0a542;
+        --coach-action: var(--qatar-maroon);
+        --coach-focus: #145e58;
         --coach-content: 112rem;
         --coach-reading: 88rem;
         --coach-section-space: clamp(7rem, 8vw, 10rem);
@@ -1554,8 +1554,8 @@
 
     :root[data-scheme="dark"] .coach-room {
         /* The room carries one Qatar identity in both site schemes. */
-        --coach-pitch: #1d1218;
-        --coach-line: rgba(247, 242, 233, 0.32);
+        --coach-pitch: var(--qatar-gold);
+        --coach-line: rgba(33, 7, 16, 0.46);
         --coach-home: #74acdf;
         --coach-home-number: #0b3563;
         --coach-away: #2f6fc4;
@@ -1563,7 +1563,8 @@
         --coach-away-line: #8fc0ef;
         --coach-ball: #ffffff;
         --coach-ball-line: #161617;
-        --coach-action: #f0a542;
+        --coach-action: var(--qatar-maroon);
+        --coach-focus: #145e58;
     }
 
     .coach-room__hero {
@@ -4240,6 +4241,10 @@
         outline-offset: 0.2rem;
     }
 
+    .coach-player:focus-visible {
+        outline-color: var(--coach-focus);
+    }
+
     .coach-stage {
         display: grid;
         min-width: 0;
@@ -4400,8 +4405,7 @@
         contain: layout paint;
         aspect-ratio: 105 / 68;
         overflow: hidden;
-        /* Subtle frame against the dark canvas — border, not shadow. */
-        border: 0.1rem solid rgba(247, 242, 233, 0.16);
+        border: 0.1rem solid rgba(33, 7, 16, 0.52);
         border-radius: 1.6rem;
         background: var(--coach-pitch);
     }
@@ -4482,7 +4486,7 @@
     }
 
     .coach-action-label {
-        fill: var(--ps-text);
+        fill: var(--qatar-black);
         stroke: var(--coach-pitch);
         stroke-width: 0.9;
         paint-order: stroke fill;
@@ -4500,25 +4504,25 @@
     }
 
     .coach-zone.is-neutral {
-        fill: color-mix(in srgb, var(--ps-text) 2%, transparent);
-        stroke: color-mix(in srgb, var(--ps-text) 18%, transparent);
+        fill: color-mix(in srgb, var(--qatar-black) 3%, transparent);
+        stroke: color-mix(in srgb, var(--qatar-black) 24%, transparent);
     }
 
     .coach-zone.is-lane {
         fill: transparent;
-        stroke: color-mix(in srgb, var(--ps-text) 18%, transparent);
+        stroke: color-mix(in srgb, var(--qatar-black) 28%, transparent);
         stroke-dasharray: 2 3;
     }
 
     .coach-zone.is-press {
         fill: transparent;
-        stroke: color-mix(in srgb, var(--ps-accent) 62%, transparent);
+        stroke: color-mix(in srgb, var(--coach-action) 72%, transparent);
         stroke-dasharray: 2 3;
     }
 
     .coach-zone.is-protect {
         fill: transparent;
-        stroke: color-mix(in srgb, var(--ps-text) 28%, transparent);
+        stroke: color-mix(in srgb, var(--qatar-black) 42%, transparent);
     }
 
     .coach-zone.is-trigger {
@@ -4531,12 +4535,12 @@
     }
 
     .coach-measurement.is-press {
-        stroke: var(--ps-accent);
+        stroke: var(--coach-action);
         stroke-dasharray: 2 3;
     }
 
     .coach-annotation {
-        fill: var(--ps-accent);
+        fill: var(--coach-action);
         font-family: var(--ps-body);
         font-size: 1.45px;
         font-weight: 700;
@@ -4616,23 +4620,23 @@
     .coach-player.is-team:focus-visible > .coach-marker,
     .coach-player.is-opponent:hover > .coach-marker,
     .coach-player.is-opponent:focus-visible > .coach-marker {
-        /* Keep the flag visible — highlight with the gold ring instead. */
-        outline: 0.24rem solid var(--ps-accent);
+        /* Teal stays separate from both the burgundy pass route and gold field. */
+        outline: 0.24rem solid var(--coach-focus);
         outline-offset: 0.14rem;
     }
 
     .coach-player.is-active .coach-marker {
-        outline: 0.22rem solid var(--ps-accent);
+        outline: 0.22rem solid var(--coach-focus);
         outline-offset: 0.12rem;
     }
 
     .coach-player.is-pressing .coach-marker {
-        outline: 0.22rem dashed var(--ps-accent);
+        outline: 0.22rem dashed var(--coach-focus);
         outline-offset: 0.12rem;
     }
 
     .coach-player.is-protecting .coach-marker {
-        outline: 0.22rem solid color-mix(in srgb, var(--ps-text) 58%, transparent);
+        outline: 0.22rem solid var(--qatar-black);
         outline-offset: 0.12rem;
     }
 
@@ -4646,10 +4650,10 @@
         height: 2rem;
         place-items: center;
         padding: 0 0.3rem;
-        border: 0.16rem solid var(--ps-surface);
+        border: 0.16rem solid var(--qatar-cream);
         border-radius: 999px;
-        background: var(--ps-accent);
-        color: #241207;
+        background: var(--coach-focus);
+        color: var(--qatar-cream);
         font-size: 1.05rem;
         font-weight: 750;
         line-height: 1;
@@ -4679,7 +4683,7 @@
         padding: 0;
         border-radius: 0;
         background: transparent;
-        color: var(--ps-muted);
+        color: color-mix(in srgb, var(--qatar-black) 68%, transparent);
         font-size: 0.78rem;
         font-weight: 600;
         letter-spacing: 0;
@@ -4687,7 +4691,7 @@
     }
 
     .coach-pitch__direction b {
-        color: var(--ps-accent);
+        color: var(--coach-action);
         font-size: 1.1rem;
     }
 
@@ -4700,13 +4704,13 @@
         width: min(24rem, 42%);
         gap: 0.2rem;
         padding: 1rem 1.1rem;
-        border: 0.1rem solid color-mix(in srgb, var(--ps-text) 10%, transparent);
+        border: 0.1rem solid color-mix(in srgb, var(--qatar-cream) 18%, transparent);
         border-radius: 1rem;
         background: var(--ps-surface);
         box-shadow: 0 1rem 2.6rem rgba(0, 0, 0, 0.18);
         color: var(--ps-text);
         transform: translate(-50%, 2.6rem);
-        pointer-events: none;
+        pointer-events: auto;
     }
 
     .coach-tactical-tooltip.is-above {
@@ -4744,6 +4748,29 @@
         display: grid;
         gap: 0.2rem;
         min-width: 0;
+    }
+
+    .coach-report-link {
+        display: inline-flex;
+        width: fit-content;
+        align-items: center;
+        margin-top: 0.45rem;
+        padding: 0.45rem 0.65rem;
+        border-radius: 0.55rem;
+        background: var(--qatar-maroon);
+        color: var(--qatar-cream);
+        font-size: 0.78rem;
+        font-weight: 700;
+        line-height: 1.2;
+        text-decoration: none;
+    }
+
+    .coach-report-link:hover,
+    .coach-report-link:focus-visible {
+        background: color-mix(in srgb, var(--qatar-maroon) 82%, var(--qatar-black));
+        color: var(--qatar-cream);
+        outline: 0.16rem solid var(--coach-focus);
+        outline-offset: 0.12rem;
     }
 
     .coach-tooltip-photo {
@@ -5383,4 +5410,477 @@
 .coach-feature,
 .coach-feature .coach-feature__copy h2 {
     color: var(--ps-text);
+}
+
+/* The Stack stylesheet is unlayered, so these project-specific link colors
+   must also be unlayered to keep the complete Qatar breadcrumb consistent. */
+.coach-room .breadcrumbs,
+.coach-room .breadcrumbs a,
+.coach-room .breadcrumbs a:hover,
+.coach-room .breadcrumbs [aria-current="page"] {
+    color: var(--qatar-cream);
+}
+
+.coach-room .coach-report-link,
+.coach-room .coach-report-link:hover,
+.coach-room .coach-report-link:focus-visible {
+    color: var(--qatar-cream);
+}
+
+body:has(.player-report-page) {
+    --ps-bg: #150a10;
+    --ps-bg-rgb: 21, 10, 16;
+    --ps-surface: #241219;
+    --ps-surface-2: #331a25;
+    --ps-text: #f7f2e9;
+    --ps-muted: rgba(247, 242, 233, 0.68);
+    --ps-faint: rgba(247, 242, 233, 0.44);
+    --ps-accent: #d9b65d;
+    --ps-nav: rgba(21, 10, 16, 0.82);
+    background: var(--ps-bg);
+    color: var(--ps-text);
+}
+
+body:has(.player-report-page) .site-nav {
+    border-bottom: 0.1rem solid rgba(217, 182, 93, 0.18);
+    background: rgba(58, 9, 28, 0.98);
+    color: #f7f2e9;
+    -webkit-backdrop-filter: none;
+    backdrop-filter: none;
+}
+
+body:has(.player-report-page) .site-nav__brand,
+body:has(.player-report-page) .site-nav__desktop a {
+    color: #f7f2e9;
+}
+
+body:has(.player-report-page) .site-nav__desktop a:hover {
+    color: #d9b65d;
+}
+
+body:has(.player-report-page) .theme-toggle {
+    background: #8a1538;
+    color: #f7f2e9;
+}
+
+.player-report-page {
+    min-height: calc(100svh - 5.6rem);
+    background: var(--ps-bg);
+    color: var(--ps-text);
+}
+
+.player-report-shell {
+    width: min(100% - 4.8rem, 100rem);
+    margin: 0 auto;
+}
+
+.player-report-hero {
+    position: relative;
+    overflow: hidden;
+    padding: clamp(6rem, 8vw, 10rem) 0 clamp(5rem, 7vw, 8rem);
+    background:
+        radial-gradient(100% 140% at 85% -20%, rgba(138, 21, 56, 0.58), transparent 58%),
+        linear-gradient(165deg, #4b0d27 0%, #210710 62%, #150a10 100%);
+}
+
+.player-report-hero::after {
+    content: "";
+    position: absolute;
+    inset: 0;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 240 240'%3E%3Cg fill='none' stroke='%23ecd79b' stroke-width='1'%3E%3Ccircle cx='120' cy='120' r='52'/%3E%3Ccircle cx='120' cy='120' r='84'/%3E%3Cpath d='M0 120h62M178 120h62M120 0v62M120 178v62'/%3E%3C/g%3E%3C/svg%3E");
+    background-size: 44rem;
+    opacity: 0.045;
+    pointer-events: none;
+}
+
+.player-report-hero .player-report-shell {
+    position: relative;
+    z-index: 1;
+}
+
+.player-report-hero__grid {
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) minmax(22rem, 30rem);
+    align-items: end;
+    gap: clamp(2.4rem, 5vw, 7rem);
+}
+
+.player-report-hero__copy {
+    min-width: 0;
+}
+
+.player-report-back {
+    display: inline-flex;
+    color: #f7f2e9;
+    font-size: 1.3rem;
+    font-weight: 650;
+    text-decoration: none;
+}
+
+.player-report-back:hover {
+    color: #d9b65d;
+}
+
+.player-report-hero p {
+    margin: clamp(4rem, 6vw, 7rem) 0 1.2rem;
+    color: #d9b65d;
+    font-family: "Geist Mono", ui-monospace, monospace;
+    font-size: 1.15rem;
+    font-weight: 650;
+    letter-spacing: 0.18em;
+    text-transform: uppercase;
+}
+
+.player-report-hero h1 {
+    max-width: 12em;
+    margin: 0;
+    color: #f7f2e9;
+    font-family: "Geist", var(--ps-display);
+    font-size: clamp(4.8rem, 7vw, 8.4rem);
+    font-weight: 540;
+    line-height: 0.94;
+    letter-spacing: -0.055em;
+}
+
+.player-report-headshot {
+    position: relative;
+    width: min(100%, 29rem);
+    align-self: end;
+    justify-self: end;
+    margin: 0 0 -2rem;
+    opacity: 0;
+    transform: translateY(1.2rem);
+    transition:
+        opacity 360ms ease,
+        transform 520ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+.player-report-headshot.is-loaded {
+    opacity: 1;
+    transform: translateY(0);
+}
+
+.player-report-headshot__portrait {
+    position: relative;
+    display: block;
+    overflow: hidden;
+    width: 100%;
+    aspect-ratio: 1;
+    border: 0.2rem solid rgba(217, 182, 93, 0.7);
+    border-radius: 50%;
+    background:
+        radial-gradient(circle at 50% 35%, rgba(247, 242, 233, 0.13), transparent 55%),
+        rgba(21, 10, 16, 0.68);
+    box-shadow:
+        0 0 0 1.2rem rgba(217, 182, 93, 0.07),
+        0 3rem 7rem rgba(0, 0, 0, 0.4);
+}
+
+.player-report-headshot__portrait::after {
+    content: "";
+    position: absolute;
+    right: 0;
+    bottom: 0;
+    left: 0;
+    height: 35%;
+    background: linear-gradient(to top, rgba(21, 10, 16, 0.4), transparent);
+    pointer-events: none;
+}
+
+.player-report-headshot img {
+    display: block;
+    width: 100%;
+    height: 100%;
+    object-fit: contain;
+    object-position: center bottom;
+}
+
+.player-report-headshot.is-photo-fallback img {
+    object-fit: cover;
+    object-position: center top;
+}
+
+.player-report-headshot__number {
+    position: absolute;
+    right: 0.6rem;
+    bottom: 1.4rem;
+    display: grid;
+    width: 5.4rem;
+    height: 5.4rem;
+    place-items: center;
+    border: 0.3rem solid #f7f2e9;
+    border-radius: 50%;
+    background: #8a1538;
+    color: #f7f2e9;
+    font-family: "Geist Mono", ui-monospace, monospace;
+    font-size: 1.8rem;
+    font-weight: 760;
+    line-height: 1;
+    box-shadow: 0 1.2rem 2.8rem rgba(0, 0, 0, 0.3);
+}
+
+.player-report-layout {
+    padding: clamp(5rem, 7vw, 8rem) 0 clamp(9rem, 12vw, 14rem);
+}
+
+.player-report-summary {
+    position: relative;
+    overflow: hidden;
+    margin-bottom: clamp(6rem, 8vw, 9rem);
+    padding: clamp(2.8rem, 4vw, 4.8rem);
+    border: 0.1rem solid rgba(217, 182, 93, 0.28);
+    border-radius: 2.4rem;
+    background:
+        linear-gradient(135deg, rgba(138, 21, 56, 0.28), transparent 58%),
+        #241219;
+    box-shadow: 0 2.8rem 7rem rgba(0, 0, 0, 0.2);
+}
+
+.player-report-summary::before {
+    content: "";
+    position: absolute;
+    top: 0;
+    right: 0;
+    left: 0;
+    height: 0.3rem;
+    background: #d9b65d;
+}
+
+.player-report-summary__eyebrow {
+    margin: 0 0 1rem;
+    color: #d9b65d;
+    font-family: "Geist Mono", ui-monospace, monospace;
+    font-size: 1.05rem;
+    font-weight: 700;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+}
+
+.player-report-summary h2 {
+    margin: 0;
+    color: #f7f2e9;
+    font-size: clamp(3rem, 4vw, 4.6rem);
+    font-weight: 560;
+    line-height: 1.05;
+    letter-spacing: -0.04em;
+}
+
+.player-report-summary__overview {
+    max-width: 76rem;
+    margin: 1.6rem 0 0;
+    color: rgba(247, 242, 233, 0.82);
+    font-size: clamp(1.7rem, 2vw, 2.1rem);
+    line-height: 1.55;
+}
+
+.player-report-summary__grid {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 1.6rem;
+    margin-top: clamp(2.8rem, 4vw, 4rem);
+}
+
+.player-report-summary__column {
+    padding: 2.2rem;
+    border: 0.1rem solid rgba(247, 242, 233, 0.1);
+    border-radius: 1.6rem;
+    background: rgba(21, 10, 16, 0.58);
+}
+
+.player-report-summary__column h3 {
+    margin: 0 0 1.4rem;
+    color: #f7f2e9;
+    font-size: 1.6rem;
+    font-weight: 700;
+}
+
+.player-report-summary__column ul {
+    display: grid;
+    gap: 1.2rem;
+    margin: 0;
+    padding: 0;
+    list-style: none;
+}
+
+.player-report-summary__column li {
+    position: relative;
+    margin: 0;
+    padding-left: 2rem;
+    color: rgba(247, 242, 233, 0.74);
+    font-size: 1.45rem;
+    line-height: 1.5;
+}
+
+.player-report-summary__column li::before {
+    content: "";
+    position: absolute;
+    top: 0.68em;
+    left: 0;
+    width: 0.7rem;
+    height: 0.7rem;
+    border-radius: 50%;
+    background: #d9b65d;
+}
+
+.player-report-summary__column.is-watchout li::before {
+    background: #b46879;
+}
+
+.player-report-summary__note {
+    margin: 2.2rem 0 0;
+    color: rgba(247, 242, 233, 0.44);
+    font-size: 1.2rem;
+}
+
+.player-report-content {
+    color: var(--ps-muted);
+    font-family: "Geist", var(--ps-body);
+    font-size: 1.6rem;
+    line-height: 1.65;
+}
+
+.player-report-content h2 {
+    margin: clamp(4rem, 6vw, 7rem) 0 2.2rem;
+    padding-top: clamp(3rem, 4vw, 4.5rem);
+    border-top: 0.1rem solid rgba(247, 242, 233, 0.16);
+    color: var(--ps-text);
+    font-size: clamp(2.8rem, 4vw, 4.4rem);
+    font-weight: 560;
+    line-height: 1.05;
+    letter-spacing: -0.035em;
+}
+
+.player-report-content table {
+    width: 100%;
+    overflow: hidden;
+    border-collapse: collapse;
+    border: 0.1rem solid rgba(247, 242, 233, 0.14);
+    border-radius: 1.6rem;
+    background: var(--ps-surface);
+    color: var(--ps-text);
+}
+
+.player-report-content th,
+.player-report-content td {
+    padding: 1.3rem 1.6rem;
+    border-bottom: 0.1rem solid rgba(247, 242, 233, 0.1);
+    text-align: left;
+}
+
+.player-report-content th {
+    color: #d9b65d;
+    font-family: "Geist Mono", ui-monospace, monospace;
+    font-size: 1.05rem;
+    letter-spacing: 0.12em;
+    text-transform: uppercase;
+}
+
+.player-report-content th:last-child,
+.player-report-content td:last-child {
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+}
+
+.player-report-content tr:last-child td {
+    border-bottom: 0;
+}
+
+.player-report-content ul {
+    display: grid;
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 0;
+    margin: 0;
+    padding: 0;
+    border-top: 0.1rem solid rgba(247, 242, 233, 0.14);
+    list-style: none;
+}
+
+.player-report-content li {
+    padding: 1.15rem 0;
+    border-bottom: 0.1rem solid rgba(247, 242, 233, 0.1);
+}
+
+.player-report-content li:nth-child(odd) {
+    padding-right: 2rem;
+}
+
+.player-report-content li:nth-child(even) {
+    padding-left: 2rem;
+    border-left: 0.1rem solid rgba(247, 242, 233, 0.1);
+}
+
+.player-report-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 2rem;
+    margin-top: clamp(6rem, 8vw, 10rem);
+    padding-top: 2.4rem;
+    border-top: 0.1rem solid rgba(247, 242, 233, 0.16);
+    color: var(--ps-faint);
+    font-size: 1.25rem;
+}
+
+.player-report-footer p {
+    margin: 0;
+}
+
+.player-report-footer a {
+    flex: none;
+    color: #d9b65d;
+    font-weight: 700;
+    text-decoration: none;
+}
+
+.player-report-footer a:hover {
+    color: #f7f2e9;
+}
+
+@media (max-width: 680px) {
+    .player-report-shell {
+        width: calc(100% - 3.2rem);
+    }
+
+    .player-report-content ul {
+        grid-template-columns: 1fr;
+    }
+
+    .player-report-summary__grid {
+        grid-template-columns: 1fr;
+    }
+
+    .player-report-content li:nth-child(odd),
+    .player-report-content li:nth-child(even) {
+        padding-right: 0;
+        padding-left: 0;
+        border-left: 0;
+    }
+
+    .player-report-footer {
+        align-items: flex-start;
+        flex-direction: column;
+    }
+}
+
+/* Transient state while a generated game plan is being built. */
+.coach-pitch.is-formulating {
+    opacity: 0.55;
+    transition: opacity 0.24s var(--ps-ease);
+}
+.coach-pitch.is-formulating::after {
+    content: "Formulating game plan…";
+    position: absolute;
+    inset: 0;
+    z-index: 5;
+    display: grid;
+    place-items: center;
+    font-family: var(--q-mono, ui-monospace, monospace);
+    font-size: 1.3rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--qatar-gold, #d9b65d);
+    background: color-mix(in srgb, var(--qatar-black, #100b0e) 42%, transparent);
+}
+@media (prefers-reduced-motion: reduce) {
+    .coach-pitch.is-formulating { transition: none; }
 }
