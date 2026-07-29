@@ -979,6 +979,14 @@
 
     function applyMatchup(ourCode, oppCode) {
         currentMatchup = { ourCode: ourCode, oppCode: oppCode };
+        var ourName = (teamsByCode[ourCode] && teamsByCode[ourCode].name) || ourCode;
+        var oppName = (teamsByCode[oppCode] && teamsByCode[oppCode].name) || oppCode;
+        var titleEl = room.querySelector("#coach-pitch-title");
+        if (titleEl) titleEl.textContent = ourName + " tactical plan against " + oppName;
+        if (pitch) {
+            pitch.setAttribute("aria-label", ourName + " tactical pitch. " + ourName +
+                " attacks from left to right; " + ourName + "'s right side is the lower half.");
+        }
         applyPlan(stateControl.value, true);
     }
     var pitchResizeFrame = 0;
@@ -1996,7 +2004,51 @@
 
         var showcaseLabel = showcase ? showcase.querySelector(".coach-showcase__label") : null;
         var matchupTitleNode = room.querySelector(".coach-matchup");
+        var fixturesNode = room.querySelector("[data-fixtures]");
         var formulateTimer = null;
+
+        // Knockout fixtures as one-tap picks right at the board, so switching
+        // matchup is obvious (not just the dropdowns above).
+        function renderFixtures() {
+            if (!fixturesNode || !window.WorldsCoachPlanner) return;
+            var rounds = [];
+            var byRound = {};
+            window.WorldsCoachPlanner.KNOCKOUTS.forEach(function (fx) {
+                if (!byRound[fx.round]) { byRound[fx.round] = []; rounds.push(fx.round); }
+                byRound[fx.round].push(fx);
+            });
+            fixturesNode.innerHTML = rounds.map(function (round) {
+                var picks = byRound[round].map(function (fx) {
+                    return "<button type=\"button\" class=\"coach-fixtures__pick\" " +
+                        "data-fx-a=\"" + fx.teamA + "\" data-fx-b=\"" + fx.teamB + "\" aria-pressed=\"false\">" +
+                        escapeHtml(fx.teamA) + " v " + escapeHtml(fx.teamB) + "</button>";
+                }).join("");
+                return "<div class=\"coach-fixtures__group\">" +
+                    "<span class=\"coach-fixtures__round\">" + escapeHtml(round) + "</span>" +
+                    picks + "</div>";
+            }).join("");
+        }
+
+        function markActiveFixture() {
+            if (!fixturesNode) return;
+            var a = teamASelect.value, b = teamBSelect.value;
+            fixturesNode.querySelectorAll("[data-fx-a]").forEach(function (btn) {
+                var match = (btn.dataset.fxA === a && btn.dataset.fxB === b) ||
+                    (btn.dataset.fxA === b && btn.dataset.fxB === a);
+                btn.classList.toggle("is-active", match);
+                btn.setAttribute("aria-pressed", String(match));
+            });
+        }
+
+        if (fixturesNode) {
+            fixturesNode.addEventListener("click", function (event) {
+                var btn = event.target.closest("[data-fx-a]");
+                if (!btn) return;
+                teamASelect.value = btn.dataset.fxA;
+                teamBSelect.value = btn.dataset.fxB;
+                render(true);
+            });
+        }
 
         // Drive the tactical board from the selected matchup. The head-to-head
         // ratings card above is rendered separately and always stays in sync.
@@ -2036,11 +2088,13 @@
             if (!teamA || !teamB) return;
             breakdown.innerHTML = headToHeadHtml(teamA, teamB) +
                 "<div class=\"matchup-cards\">" + teamCardHtml(teamA) + teamCardHtml(teamB) + "</div>";
+            markActiveFixture();
             driveCoach(teamASelect.value, teamBSelect.value, teamA, teamB, animate);
         }
 
         teamASelect.addEventListener("change", function () { render(true); });
         teamBSelect.addEventListener("change", function () { render(true); });
+        renderFixtures();
         render(false);
     }
 

@@ -5884,3 +5884,55 @@ body:has(.player-report-page) .theme-toggle {
 @media (prefers-reduced-motion: reduce) {
     .coach-pitch.is-formulating { transition: none; }
 }
+
+/* Knockout fixture quick-pick at the board. */
+.coach-fixtures {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1.4rem 2rem;
+    margin: 1.6rem 0 0.4rem;
+    padding-bottom: 0.4rem;
+}
+.coach-fixtures__group {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 0.5rem;
+}
+.coach-fixtures__round {
+    margin-right: 0.4rem;
+    font-family: var(--q-mono, ui-monospace, monospace);
+    font-size: 1.05rem;
+    letter-spacing: 0.14em;
+    text-transform: uppercase;
+    color: var(--qatar-gold, #d9b65d);
+}
+.coach-fixtures__pick {
+    min-height: 3.4rem;
+    padding: 0 1.2rem;
+    border: 0.1rem solid rgba(247, 242, 233, 0.2);
+    border-radius: 1rem;
+    background: rgba(247, 242, 233, 0.05);
+    color: var(--qatar-cream, #f7f2e9);
+    font-size: 1.25rem;
+    font-weight: 600;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition:
+        background-color 180ms var(--ps-ease),
+        border-color 180ms var(--ps-ease),
+        color 180ms var(--ps-ease);
+}
+.coach-fixtures__pick:hover {
+    border-color: rgba(217, 182, 93, 0.6);
+    background: rgba(217, 182, 93, 0.12);
+}
+.coach-fixtures__pick.is-active {
+    border-color: var(--qatar-gold, #d9b65d);
+    background: var(--qatar-maroon, #8a1538);
+    color: var(--qatar-cream, #f7f2e9);
+}
+.coach-fixtures__pick:focus-visible {
+    outline: 0.2rem solid var(--qatar-gold, #d9b65d);
+    outline-offset: 0.2rem;
+}

@@ -34,6 +34,11 @@
 
     <div class="coach-room__workspace" id="coach-tool" data-coach-tool>
         <script type="application/json" data-matchup-data>{{ (resources.Get "matchups.json").Content | safeJS }}</script>
+        <script
+            type="application/json"
+            data-player-report-data
+            data-report-base="{{ "projects/worlds-coach-output/reports/" | relURL }}"
+        >{{ (resources.Get "player-reports.json").Content | safeJS }}</script>
 
         <section class="matchup" data-matchup aria-labelledby="matchup-title">
             <div class="matchup__head">
@@ -58,6 +63,7 @@
             <p class="coach-showcase__label">
                 <span>Featured</span> Full interactive tactical plan &mdash; Argentina vs France
             </p>
+            <div class="coach-fixtures" data-fixtures role="group" aria-label="Pick a knockout fixture"></div>
         <div class="coach-overview">
             <section class="coach-context" aria-label="Match context">
                 <div>
@@ -250,7 +256,8 @@
                             id="coach-player-tooltip"
                             class="coach-tactical-tooltip"
                             data-tactical-tooltip
-                            role="tooltip"
+                            role="dialog"
+                            aria-label="Player details"
                             hidden
                         ></div>
                     </div>
@@ -772,5 +779,6 @@
             </div>
         </footer>
     </section>
+
 </article>
 {{- end }}
