@@ -1514,19 +1514,23 @@
     }
 
     .coach-room {
-        --coach-pitch: #e7e8ec;
-        --coach-line: #9b9ea6;
-        /* Argentina flag light blue */
-        --coach-home: #75aadb;
+        /* Warm-dark pitch that belongs to the Qatar canvas. */
+        --coach-pitch: #1d1218;
+        --coach-line: rgba(247, 242, 233, 0.32);
+        /* Argentina flag stripes (horizontal) */
+        --coach-home: #74acdf;
+        --coach-home-flag: linear-gradient(180deg, #74acdf 0 33.4%, #ffffff 33.4% 66.6%, #74acdf 66.6%);
         --coach-home-number: #0b3563;
-        /* France flag blue */
-        --coach-away: #11408f;
-        --coach-away-number: #ffffff;
-        --coach-away-line: #0a2e69;
+        /* France flag stripes (vertical) */
+        --coach-away: #2f6fc4;
+        --coach-away-flag: linear-gradient(90deg, #002395 0 33.4%, #ffffff 33.4% 66.6%, #ed2939 66.6%);
+        --coach-away-number: #10203f;
+        --coach-away-line: #8fc0ef;
         --coach-ball: #ffffff;
         --coach-ball-line: #161617;
-        /* Ball-path highlight: warm, so it never collides with the blue teams */
-        --coach-action: #b04708;
+        /* Ball-path highlight: bright amber — high contrast on the dark pitch,
+           never collides with either flag's colours */
+        --coach-action: #f0a542;
         --coach-content: 112rem;
         --coach-reading: 88rem;
         --coach-section-space: clamp(7rem, 8vw, 10rem);
@@ -1549,18 +1553,16 @@
     }
 
     :root[data-scheme="dark"] .coach-room {
-        --coach-pitch: #1b1d21;
-        --coach-line: #555961;
-        /* Argentina flag light blue */
-        --coach-home: #86bbe8;
-        --coach-home-number: #0a2a4d;
-        /* France flag blue */
+        /* The room carries one Qatar identity in both site schemes. */
+        --coach-pitch: #1d1218;
+        --coach-line: rgba(247, 242, 233, 0.32);
+        --coach-home: #74acdf;
+        --coach-home-number: #0b3563;
         --coach-away: #2f6fc4;
-        --coach-away-number: #ffffff;
+        --coach-away-number: #10203f;
         --coach-away-line: #8fc0ef;
-        --coach-ball: #f5f5f7;
+        --coach-ball: #ffffff;
         --coach-ball-line: #161617;
-        /* Ball-path highlight: warm, so it never collides with the blue teams */
         --coach-action: #f0a542;
     }
 
@@ -2133,13 +2135,13 @@
 
     .coach-player.is-team:hover > span,
     .coach-player.is-team:focus-visible > span {
-        background: var(--ps-accent);
-        color: #241207;
+        outline: 0.24rem solid var(--ps-accent);
+        outline-offset: 0.14rem;
     }
 
     .coach-player.is-team.is-focus > span {
-        background: var(--ps-accent);
-        color: #241207;
+        outline: 0.24rem solid var(--ps-accent);
+        outline-offset: 0.14rem;
     }
 
     .coach-player.is-team.is-gravity::before,
@@ -2148,9 +2150,8 @@
     }
 
     .coach-player.is-team.is-involved > span {
-        background: var(--ps-accent);
-        color: #241207;
-        outline: 0.3rem solid color-mix(in srgb, var(--ps-accent) 45%, transparent);
+        outline: 0.3rem solid var(--ps-accent);
+        outline-offset: 0.14rem;
     }
 
     .coach-player.is-opponent {
@@ -4293,7 +4294,7 @@
         max-width: 36rem;
         margin: 0.8rem 0 0;
         color: var(--ps-muted);
-        font-size: 1.2rem;
+        font-size: 1.4rem;
         line-height: 1.6;
     }
 
@@ -4306,37 +4307,42 @@
     }
 
     .coach-marker {
-        --marker-size: clamp(2.6rem, 2.7vw, 3.2rem);
+        --marker-size: clamp(2.8rem, 3vw, 3.5rem);
         display: grid;
         width: var(--marker-size);
         aspect-ratio: 1;
         place-items: center;
         border-radius: 50%;
         box-sizing: border-box;
-        box-shadow: none;
+        box-shadow: 0 0.2rem 0.6rem rgba(0, 0, 0, 0.35);
         font-style: normal;
     }
 
     .coach-marker b {
         color: inherit;
-        font-size: clamp(0.72rem, 0.8vw, 0.9rem);
+        font-size: clamp(1.1rem, 1.2vw, 1.35rem);
         font-weight: 700;
         line-height: 1;
     }
 
     .coach-player.is-team > .coach-marker {
         width: var(--marker-size);
-        border: 0.18rem solid var(--coach-home);
-        background: var(--coach-home);
+        border: 0.16rem solid rgba(255, 255, 255, 0.92);
+        background: var(--coach-home-flag);
         color: var(--coach-home-number);
-        text-shadow: none;
+        text-shadow:
+            0 0 0.35rem rgba(255, 255, 255, 0.9),
+            0 0 0.12rem rgba(255, 255, 255, 0.95);
     }
 
     .coach-player.is-opponent > .coach-marker {
         width: var(--marker-size);
-        border: 0.18rem solid var(--coach-away-line);
-        background: var(--coach-away);
+        border: 0.16rem solid rgba(255, 255, 255, 0.92);
+        background: var(--coach-away-flag);
         color: var(--coach-away-number);
+        text-shadow:
+            0 0 0.35rem rgba(255, 255, 255, 0.9),
+            0 0 0.12rem rgba(255, 255, 255, 0.95);
     }
 
     .coach-player.is-team > .coach-marker b,
@@ -4582,11 +4588,11 @@
         top: calc(100% + 0.3rem);
         left: 50%;
         display: block;
-        padding: 0.18rem 0.4rem;
-        border-radius: 0.35rem;
-        background: color-mix(in srgb, var(--ps-surface) 92%, transparent);
+        padding: 0.25rem 0.55rem;
+        border-radius: 0.45rem;
+        background: color-mix(in srgb, var(--ps-surface) 94%, transparent);
         color: var(--ps-text);
-        font-size: clamp(0.68rem, 0.72vw, 0.82rem);
+        font-size: clamp(1.05rem, 1.1vw, 1.25rem);
         font-weight: 650;
         line-height: 1.2;
         white-space: nowrap;
@@ -4607,11 +4613,12 @@
     }
 
     .coach-player.is-team:hover > .coach-marker,
-    .coach-player.is-team:focus-visible > .coach-marker {
-        background: var(--ps-text);
-        color: var(--ps-bg);
-        outline: 0.22rem solid var(--ps-accent);
-        outline-offset: 0.12rem;
+    .coach-player.is-team:focus-visible > .coach-marker,
+    .coach-player.is-opponent:hover > .coach-marker,
+    .coach-player.is-opponent:focus-visible > .coach-marker {
+        /* Keep the flag visible — highlight with the gold ring instead. */
+        outline: 0.24rem solid var(--ps-accent);
+        outline-offset: 0.14rem;
     }
 
     .coach-player.is-active .coach-marker {
@@ -4632,18 +4639,18 @@
     .coach-player[data-badge]::after {
         content: attr(data-badge);
         position: absolute;
-        top: -0.85rem;
-        right: -1rem;
+        top: -0.95rem;
+        right: -1.1rem;
         display: grid;
-        min-width: 1.7rem;
-        height: 1.7rem;
+        min-width: 2rem;
+        height: 2rem;
         place-items: center;
-        padding: 0 0.2rem;
+        padding: 0 0.3rem;
         border: 0.16rem solid var(--ps-surface);
         border-radius: 999px;
-        background: var(--ps-text);
-        color: var(--ps-bg);
-        font-size: 0.67rem;
+        background: var(--ps-accent);
+        color: #241207;
+        font-size: 1.05rem;
         font-weight: 750;
         line-height: 1;
     }
