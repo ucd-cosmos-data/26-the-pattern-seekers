@@ -127,6 +127,85 @@
         }
     };
 
+    // ESPN athlete ids → headshot at a.espncdn.com/i/headshots/soccer/players/full/{id}.png
+    var espnIds = {
+        gk: 158626, molina: 164826, romero: 96970, otamendi: 119289, tagliafico: 145190,
+        enzo: 285450, depaul: 174466, macallister: 249299, messi: 45843, dimaria: 108223,
+        forward: 277206, lautaro: 219713,
+        fra_gk: 43372, fra_rb: 231692, fra_rcb: 153053, fra_lcb: 222793, fra_lb: 233621,
+        fra_rm: 140416, fra_cm: 265919, fra_lm: 176203, fra_rw: 229744, fra_st: 88965, fra_lw: 231388
+    };
+
+    function headshotUrl(id) {
+        var espn = id === "forward" && playerControl && playerControl.value === "lautaro"
+            ? espnIds.lautaro
+            : espnIds[id];
+        return espn
+            ? "https://a.espncdn.com/i/headshots/soccer/players/full/" + espn + ".png"
+            : "";
+    }
+
+    // Fallback source: ESPN only has cutout headshots for the players it actively
+    // covers (Messi, MLS), so every other player falls back to a Wikipedia photo.
+    var wikiTitles = {
+        gk: "Emiliano Martínez", molina: "Nahuel Molina", romero: "Cristian Romero",
+        otamendi: "Nicolás Otamendi", tagliafico: "Nicolás Tagliafico", enzo: "Enzo Fernández",
+        depaul: "Rodrigo De Paul", macallister: "Alexis Mac Allister", messi: "Lionel Messi",
+        dimaria: "Ángel Di María", forward: "Julián Álvarez", lautaro: "Lautaro Martínez",
+        fra_gk: "Hugo Lloris", fra_rb: "Jules Koundé", fra_rcb: "Raphaël Varane",
+        fra_lcb: "Dayot Upamecano", fra_lb: "Théo Hernández", fra_rm: "Antoine Griezmann",
+        fra_cm: "Aurélien Tchouaméni", fra_lm: "Adrien Rabiot", fra_rw: "Ousmane Dembélé",
+        fra_st: "Olivier Giroud", fra_lw: "Kylian Mbappé"
+    };
+
+    function wikiTitleFor(id) {
+        if (id === "forward" && playerControl && playerControl.value === "lautaro") {
+            return wikiTitles.lautaro;
+        }
+        return wikiTitles[id];
+    }
+
+    // Load the tooltip photo: ESPN first, Wikipedia thumbnail as fallback, then
+    // hide the frame entirely if neither resolves. Guards against a stale async
+    // result landing on a tooltip that has since moved to another player.
+    function loadPhotoInto(img, id, onFail) {
+        onFail = onFail || function () {};
+        function tryWikipedia() {
+            var title = wikiTitleFor(id);
+            if (!title) return onFail();
+            fetch("https://en.wikipedia.org/api/rest_v1/page/summary/" + encodeURIComponent(title.replace(/ /g, "_")))
+                .then(function (response) { return response.ok ? response.json() : Promise.reject(); })
+                .then(function (data) {
+                    var source = data && data.thumbnail && data.thumbnail.source;
+                    if (source) {
+                        img.onerror = onFail;
+                        img.src = source;
+                    } else {
+                        onFail();
+                    }
+                })
+                .catch(onFail);
+        }
+        var espnUrl = headshotUrl(id);
+        if (espnUrl) {
+            img.onerror = tryWikipedia;
+            img.src = espnUrl;
+        } else {
+            tryWikipedia();
+        }
+    }
+
+    // Fill a role-card avatar; the number badge stays visible either way.
+    function loadRolePhoto(card) {
+        var img = card.querySelector(".coach-role-photo");
+        if (!img) return;
+        img.onload = function () { card.classList.add("has-photo"); };
+        loadPhotoInto(img, card.dataset.roleCard, function () {
+            card.classList.remove("has-photo");
+            img.removeAttribute("src");
+        });
+    }
+
     var argAttack = {
         gk: point(8, 34),
         tagliafico: point(25, 12),
@@ -798,6 +877,9 @@
         setText("[data-role-forward-role]", roster.forward.role);
         setText("[data-role-forward-job]", lautaro ? "Pin both centre-backs" : "Pin the centre-back");
         setText("[data-lineup-fit]", lautaro ? "82%" : "86%");
+
+        var forwardCard = room.querySelector('[data-role-card="forward"]');
+        if (forwardCard) loadRolePhoto(forwardCard);
     }
 
     function updatePlayerNode(node, id) {
@@ -823,8 +905,19 @@
         var player = roster[id];
         var position = currentPositions[id];
         if (!player || !position) return;
-        tacticalTooltip.innerHTML = "<strong>" + player.name + " · " + player.number + "</strong><span>" + player.role + "</span><small>" + player.instruction + "</small>";
+        tacticalTooltip.innerHTML =
+            '<img class="coach-tooltip-photo" alt="">' +
+            '<div class="coach-tooltip-copy"><strong>' + player.name + " · " + player.number +
+            "</strong><span>" + player.role + "</span><small>" + player.instruction + "</small></div>";
+        tacticalTooltip.classList.add("has-photo");
         activeTooltipId = id;
+        var tooltipPhoto = tacticalTooltip.querySelector(".coach-tooltip-photo");
+        loadPhotoInto(tooltipPhoto, id, function () {
+            if (activeTooltipId === id && tooltipPhoto.isConnected) {
+                tooltipPhoto.remove();
+                tacticalTooltip.classList.remove("has-photo");
+            }
+        });
         positionTooltip(id);
         tacticalTooltip.hidden = false;
         tooltipPinned = Boolean(pin);
@@ -1697,6 +1790,7 @@
 
         function render() {
             if (teamASelect.value === teamBSelect.value) {
+                // Nudge the opponent to a different team so a matchup is always valid.
                 var alternate = teams.find(function (team) { return team.code !== teamASelect.value; });
                 if (alternate) teamBSelect.value = alternate.code;
             }
@@ -1803,6 +1897,12 @@
     function initializeInteractions() {
         createPlayerNodes();
         updateForwardRoster();
+        initializeMatchup();
+
+        // Static role cards (the forward card is refreshed by updateForwardRoster).
+        room.querySelectorAll("[data-role-card]").forEach(function (card) {
+            if (card.dataset.roleCard !== "forward") loadRolePhoto(card);
+        });
         initializeMatchup();
 
         room.querySelectorAll("[data-coach-mode]").forEach(function (button, index, buttons) {
