@@ -33,6 +33,31 @@
     </header>
 
     <div class="coach-room__workspace" id="coach-tool" data-coach-tool>
+        <script type="application/json" data-matchup-data>{{ (resources.Get "matchups.json").Content | safeJS }}</script>
+
+        <section class="matchup" data-matchup aria-labelledby="matchup-title">
+            <div class="matchup__head">
+                <h2 id="matchup-title">Choose a matchup</h2>
+                <p>Pick two teams to compare their rated squads head-to-head.</p>
+            </div>
+            <div class="matchup__picker">
+                <label class="matchup__team">
+                    <span>Team</span>
+                    <select data-team-a aria-label="First team"></select>
+                </label>
+                <span class="matchup__vs" aria-hidden="true">vs</span>
+                <label class="matchup__team">
+                    <span>Opponent</span>
+                    <select data-team-b aria-label="Second team"></select>
+                </label>
+            </div>
+            <div class="matchup__breakdown" data-matchup-breakdown aria-live="polite"></div>
+        </section>
+
+        <div class="coach-showcase" data-featured-showcase>
+            <p class="coach-showcase__label">
+                <span>Featured</span> Full interactive tactical plan &mdash; Argentina vs France
+            </p>
         <div class="coach-overview">
             <section class="coach-context" aria-label="Match context">
                 <div>
@@ -366,6 +391,7 @@
                 </ol>
             </footer>
         </section>
+        </div>
     </div>
 
     <section

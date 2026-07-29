@@ -1,0 +1,1844 @@
+{
+  "generated_from": "player_leaderboard.csv + player_rating_uncertainty.csv",
+  "team_count": 32,
+  "rated_player_count": 142,
+  "unmapped_teams": [],
+  "teams": [
+    {
+      "code": "ARG",
+      "name": "Argentina",
+      "rated_count": 13,
+      "avg_rating": 0.5849,
+      "top_rating": 0.8371,
+      "players": [
+        {
+          "id": "5503",
+          "name": "Lionel Andrés Messi Cuccittini",
+          "position": "Attacking Midfield/Wing",
+          "role": "Progressive Winger",
+          "rating": 0.8371,
+          "team_rank": 1,
+          "global_rank": 1,
+          "position_rank": 1,
+          "minutes": 733
+        },
+        {
+          "id": "29560",
+          "name": "Julián Álvarez",
+          "position": "Forward",
+          "role": "Target Forward",
+          "rating": 0.7526,
+          "team_rank": 2,
+          "global_rank": 3,
+          "position_rank": 2,
+          "minutes": 485
+        },
+        {
+          "id": "2995",
+          "name": "Ángel Fabián Di María Hernández",
+          "position": "Central/Wide Midfield",
+          "role": "Progressive Winger",
+          "rating": 0.7329,
+          "team_rank": 3,
+          "global_rank": 5,
+          "position_rank": 2,
+          "minutes": 304
+        },
+        {
+          "id": "19597",
+          "name": "Marcos Javier Acuña",
+          "position": "Fullback/Wingback",
+          "role": "Attacking Wingback",
+          "rating": 0.6948,
+          "team_rank": 4,
+          "global_rank": 10,
+          "position_rank": 2,
+          "minutes": 397
+        },
+        {
+          "id": "5507",
+          "name": "Nicolás Alejandro Tagliafico",
+          "position": "Fullback/Wingback",
+          "role": "Wide Creator",
+          "rating": 0.6573,
+          "team_rank": 5,
+          "global_rank": 18,
+          "position_rank": 6,
+          "minutes": 393
+        },
+        {
+          "id": "7797",
+          "name": "Rodrigo Javier De Paul",
+          "position": "Defensive Midfield",
+          "role": "Box-to-Box / Engine Midfielder",
+          "rating": 0.6436,
+          "team_rank": 6,
+          "global_rank": 26,
+          "position_rank": 4,
+          "minutes": 634
+        },
+        {
+          "id": "29201",
+          "name": "Nahuel Molina Lucero",
+          "position": "Fullback/Wingback",
+          "role": "Box-to-Box Runner",
+          "rating": 0.5343,
+          "team_rank": 7,
+          "global_rank": 69,
+          "position_rank": 21,
+          "minutes": 594
+        },
+        {
+          "id": "27886",
+          "name": "Alexis Mac Allister",
+          "position": "Central/Wide Midfield",
+          "role": "Ball-Winner",
+          "rating": 0.5159,
+          "team_rank": 8,
+          "global_rank": 73,
+          "position_rank": 7,
+          "minutes": 552
+        },
+        {
+          "id": "38718",
+          "name": "Enzo Fernandez",
+          "position": "Defensive Midfield",
+          "role": "Ball-Winner",
+          "rating": 0.4966,
+          "team_rank": 9,
+          "global_rank": 86,
+          "position_rank": 14,
+          "minutes": 601
+        },
+        {
+          "id": "27768",
+          "name": "Lisandro Martínez",
+          "position": "Center Back",
+          "role": "Sweeper CB",
+          "rating": 0.477,
+          "team_rank": 10,
+          "global_rank": 96,
+          "position_rank": 20,
+          "minutes": 334
+        },
+        {
+          "id": "6909",
+          "name": "Damián Emiliano Martínez",
+          "position": "Goalkeeper",
+          "role": "Goalkeeper",
+          "rating": 0.4747,
+          "team_rank": 11,
+          "global_rank": null,
+          "position_rank": 11,
+          "minutes": 733
+        },
+        {
+          "id": "3090",
+          "name": "Nicolás Hernán Otamendi",
+          "position": "Center Back",
+          "role": "Deep Playmaker",
+          "rating": 0.4533,
+          "team_rank": 12,
+          "global_rank": 105,
+          "position_rank": 26,
+          "minutes": 733
+        },
+        {
+          "id": "20572",
+          "name": "Cristian Gabriel Romero",
+          "position": "Center Back",
+          "role": "Deep Playmaker",
+          "rating": 0.3336,
+          "team_rank": 13,
+          "global_rank": 125,
+          "position_rank": 37,
+          "minutes": 575
+        }
+      ]
+    },
+    {
+      "code": "AUS",
+      "name": "Australia",
+      "rated_count": 7,
+      "avg_rating": 0.4823,
+      "top_rating": 0.6183,
+      "players": [
+        {
+          "id": "5481",
+          "name": "Mathew Leckie",
+          "position": "Central/Wide Midfield",
+          "role": "Target Forward",
+          "rating": 0.6183,
+          "team_rank": 1,
+          "global_rank": 35,
+          "position_rank": 3,
+          "minutes": 341
+        },
+        {
+          "id": "5479",
+          "name": "Aziz Eraltay Behich",
+          "position": "Fullback/Wingback",
+          "role": "Wide Creator",
+          "rating": 0.6064,
+          "team_rank": 2,
+          "global_rank": 40,
+          "position_rank": 14,
+          "minutes": 386
+        },
+        {
+          "id": "3240",
+          "name": "Mathew Ryan",
+          "position": "Goalkeeper",
+          "role": "Goalkeeper",
+          "rating": 0.5583,
+          "team_rank": 3,
+          "global_rank": null,
+          "position_rank": 7,
+          "minutes": 386
+        },
+        {
+          "id": "3281",
+          "name": "Aaron Mooy",
+          "position": "Defensive Midfield",
+          "role": "Box-to-Box Runner",
+          "rating": 0.4732,
+          "team_rank": 4,
+          "global_rank": 97,
+          "position_rank": 16,
+          "minutes": 386
+        },
+        {
+          "id": "5490",
+          "name": "Jackson Irvine",
+          "position": "Forward",
+          "role": "Ball-Winner",
+          "rating": 0.3902,
+          "team_rank": 5,
+          "global_rank": 118,
+          "position_rank": 12,
+          "minutes": 373
+        },
+        {
+          "id": "33495",
+          "name": "Kye Rowles",
+          "position": "Center Back",
+          "role": "Sweeper CB",
+          "rating": 0.3659,
+          "team_rank": 6,
+          "global_rank": 121,
+          "position_rank": 34,
+          "minutes": 386
+        },
+        {
+          "id": "22293",
+          "name": "Harry Souttar",
+          "position": "Center Back",
+          "role": "Sweeper CB",
+          "rating": 0.3638,
+          "team_rank": 7,
+          "global_rank": 124,
+          "position_rank": 36,
+          "minutes": 386
+        }
+      ]
+    },
+    {
+      "code": "BEL",
+      "name": "Belgium",
+      "rated_count": 0,
+      "avg_rating": null,
+      "top_rating": null,
+      "players": []
+    },
+    {
+      "code": "BRA",
+      "name": "Brazil",
+      "rated_count": 9,
+      "avg_rating": 0.6066,
+      "top_rating": 0.7354,
+      "players": [
+        {
+          "id": "18395",
+          "name": "Vinícius José Paixão de Oliveira Júnior",
+          "position": "Central/Wide Midfield",
+          "role": "Progressive Winger",
+          "rating": 0.7354,
+          "team_rank": 1,
+          "global_rank": 4,
+          "position_rank": 1,
+          "minutes": 306
+        },
+        {
+          "id": "3280",
+          "name": "Richarlison de Andrade",
+          "position": "Forward",
+          "role": "Target Forward",
+          "rating": 0.7289,
+          "team_rank": 2,
+          "global_rank": 7,
+          "position_rank": 3,
+          "minutes": 328
+        },
+        {
+          "id": "10595",
+          "name": "Raphael Dias Belloli",
+          "position": "Attacking Midfield/Wing",
+          "role": "Progressive Winger",
+          "rating": 0.6537,
+          "team_rank": 3,
+          "global_rank": 20,
+          "position_rank": 5,
+          "minutes": 330
+        },
+        {
+          "id": "22600",
+          "name": "Lucas Tolentino Coelho de Lima",
+          "position": "Defensive Midfield",
+          "role": "Ball-Winner",
+          "rating": 0.6459,
+          "team_rank": 4,
+          "global_rank": 25,
+          "position_rank": 3,
+          "minutes": 318
+        },
+        {
+          "id": "4372",
+          "name": "Marcos Aoás Corrêa",
+          "position": "Center Back",
+          "role": "Ball-Playing Centre-Back",
+          "rating": 0.5648,
+          "team_rank": 5,
+          "global_rank": 60,
+          "position_rank": 7,
+          "minutes": 455
+        },
+        {
+          "id": "13620",
+          "name": "Éder Gabriel Militão",
+          "position": "Fullback/Wingback",
+          "role": "Box-to-Box Runner",
+          "rating": 0.558,
+          "team_rank": 6,
+          "global_rank": 61,
+          "position_rank": 20,
+          "minutes": 363
+        },
+        {
+          "id": "5539",
+          "name": "Carlos Henrique Casimiro",
+          "position": "Defensive Midfield",
+          "role": "Box-to-Box / Engine Midfielder",
+          "rating": 0.555,
+          "team_rank": 7,
+          "global_rank": 62,
+          "position_rank": 6,
+          "minutes": 409
+        },
+        {
+          "id": "3295",
+          "name": "Thiago Emiliano da Silva",
+          "position": "Center Back",
+          "role": "Deep Playmaker",
+          "rating": 0.5434,
+          "team_rank": 8,
+          "global_rank": 66,
+          "position_rank": 9,
+          "minutes": 409
+        },
+        {
+          "id": "5547",
+          "name": "Alisson Ramsés Becker",
+          "position": "Goalkeeper",
+          "role": "Goalkeeper",
+          "rating": 0.4744,
+          "team_rank": 9,
+          "global_rank": null,
+          "position_rank": 12,
+          "minutes": 394
+        }
+      ]
+    },
+    {
+      "code": "CMR",
+      "name": "Cameroon",
+      "rated_count": 0,
+      "avg_rating": null,
+      "top_rating": null,
+      "players": []
+    },
+    {
+      "code": "CAN",
+      "name": "Canada",
+      "rated_count": 0,
+      "avg_rating": null,
+      "top_rating": null,
+      "players": []
+    },
+    {
+      "code": "CRC",
+      "name": "Costa Rica",
+      "rated_count": 0,
+      "avg_rating": null,
+      "top_rating": null,
+      "players": []
+    },
+    {
+      "code": "CRO",
+      "name": "Croatia",
+      "rated_count": 10,
+      "avg_rating": 0.5188,
+      "top_rating": 0.617,
+      "players": [
+        {
+          "id": "12625",
+          "name": "Borna Sosa",
+          "position": "Fullback/Wingback",
+          "role": "Wide Creator",
+          "rating": 0.617,
+          "team_rank": 1,
+          "global_rank": 36,
+          "position_rank": 13,
+          "minutes": 440
+        },
+        {
+          "id": "5474",
+          "name": "Ivan Perišić",
+          "position": "Attacking Midfield/Wing",
+          "role": "Wide Creator",
+          "rating": 0.6081,
+          "team_rank": 2,
+          "global_rank": 38,
+          "position_rank": 8,
+          "minutes": 686
+        },
+        {
+          "id": "5460",
+          "name": "Andrej Kramarić",
+          "position": "Attacking Midfield/Wing",
+          "role": "Target Forward",
+          "rating": 0.5837,
+          "team_rank": 3,
+          "global_rank": 48,
+          "position_rank": 10,
+          "minutes": 478
+        },
+        {
+          "id": "16531",
+          "name": "Dominik Livaković",
+          "position": "Goalkeeper",
+          "role": "Goalkeeper",
+          "rating": 0.5503,
+          "team_rank": 4,
+          "global_rank": null,
+          "position_rank": 8,
+          "minutes": 720
+        },
+        {
+          "id": "33018",
+          "name": "Joško Gvardiol",
+          "position": "Center Back",
+          "role": "Ball-Playing Centre-Back",
+          "rating": 0.5028,
+          "team_rank": 5,
+          "global_rank": 80,
+          "position_rank": 15,
+          "minutes": 720
+        },
+        {
+          "id": "29163",
+          "name": "Josip Juranović",
+          "position": "Fullback/Wingback",
+          "role": "Attacking Wingback",
+          "rating": 0.4912,
+          "team_rank": 6,
+          "global_rank": 87,
+          "position_rank": 24,
+          "minutes": 624
+        },
+        {
+          "id": "5456",
+          "name": "Mateo Kovačić",
+          "position": "Central/Wide Midfield",
+          "role": "Box-to-Box / Engine Midfielder",
+          "rating": 0.4852,
+          "team_rank": 7,
+          "global_rank": 90,
+          "position_rank": 10,
+          "minutes": 649
+        },
+        {
+          "id": "3471",
+          "name": "Dejan Lovren",
+          "position": "Center Back",
+          "role": "Deep Playmaker",
+          "rating": 0.4645,
+          "team_rank": 8,
+          "global_rank": 99,
+          "position_rank": 22,
+          "minutes": 624
+        },
+        {
+          "id": "5463",
+          "name": "Luka Modrić",
+          "position": "Central/Wide Midfield",
+          "role": "Deep Playmaker / Metronome",
+          "rating": 0.4437,
+          "team_rank": 9,
+          "global_rank": 109,
+          "position_rank": 11,
+          "minutes": 672
+        },
+        {
+          "id": "5469",
+          "name": "Marcelo Brozović",
+          "position": "Defensive Midfield",
+          "role": "Box-to-Box / Engine Midfielder",
+          "rating": 0.4419,
+          "team_rank": 10,
+          "global_rank": 110,
+          "position_rank": 18,
+          "minutes": 569
+        }
+      ]
+    },
+    {
+      "code": "DEN",
+      "name": "Denmark",
+      "rated_count": 0,
+      "avg_rating": null,
+      "top_rating": null,
+      "players": []
+    },
+    {
+      "code": "ECU",
+      "name": "Ecuador",
+      "rated_count": 0,
+      "avg_rating": null,
+      "top_rating": null,
+      "players": []
+    },
+    {
+      "code": "ENG",
+      "name": "England",
+      "rated_count": 7,
+      "avg_rating": 0.5666,
+      "top_rating": 0.6766,
+      "players": [
+        {
+          "id": "30714",
+          "name": "Jude Bellingham",
+          "position": "Defensive Midfield",
+          "role": "Box-to-Box / Engine Midfielder",
+          "rating": 0.6766,
+          "team_rank": 1,
+          "global_rank": 13,
+          "position_rank": 1,
+          "minutes": 441
+        },
+        {
+          "id": "3382",
+          "name": "Luke Shaw",
+          "position": "Fullback/Wingback",
+          "role": "Attacking Wingback",
+          "rating": 0.6671,
+          "team_rank": 2,
+          "global_rank": 14,
+          "position_rank": 4,
+          "minutes": 457
+        },
+        {
+          "id": "3336",
+          "name": "Harry Maguire",
+          "position": "Center Back",
+          "role": "Deep Playmaker",
+          "rating": 0.6336,
+          "team_rank": 3,
+          "global_rank": 28,
+          "position_rank": 1,
+          "minutes": 453
+        },
+        {
+          "id": "10955",
+          "name": "Harry Kane",
+          "position": "Forward",
+          "role": "Target Forward",
+          "rating": 0.5879,
+          "team_rank": 4,
+          "global_rank": 47,
+          "position_rank": 9,
+          "minutes": 421
+        },
+        {
+          "id": "3244",
+          "name": "John Stones",
+          "position": "Center Back",
+          "role": "Ball-Playing Centre-Back",
+          "rating": 0.5345,
+          "team_rank": 5,
+          "global_rank": 68,
+          "position_rank": 11,
+          "minutes": 464
+        },
+        {
+          "id": "3943",
+          "name": "Declan Rice",
+          "position": "Defensive Midfield",
+          "role": "Ball-Winner",
+          "rating": 0.4604,
+          "team_rank": 6,
+          "global_rank": 102,
+          "position_rank": 17,
+          "minutes": 449
+        },
+        {
+          "id": "3468",
+          "name": "Jordan Pickford",
+          "position": "Goalkeeper",
+          "role": "Goalkeeper",
+          "rating": 0.4061,
+          "team_rank": 7,
+          "global_rank": null,
+          "position_rank": 16,
+          "minutes": 486
+        }
+      ]
+    },
+    {
+      "code": "FRA",
+      "name": "France",
+      "rated_count": 12,
+      "avg_rating": 0.5718,
+      "top_rating": 0.8258,
+      "players": [
+        {
+          "id": "3009",
+          "name": "Kylian Mbappé Lottin",
+          "position": "Forward",
+          "role": "Progressive Winger",
+          "rating": 0.8258,
+          "team_rank": 1,
+          "global_rank": 2,
+          "position_rank": 1,
+          "minutes": 654
+        },
+        {
+          "id": "6704",
+          "name": "Theo Bernard François Hernández",
+          "position": "Fullback/Wingback",
+          "role": "Attacking Wingback",
+          "rating": 0.6874,
+          "team_rank": 2,
+          "global_rank": 12,
+          "position_rank": 3,
+          "minutes": 548
+        },
+        {
+          "id": "3026",
+          "name": "Adrien Rabiot",
+          "position": "Defensive Midfield",
+          "role": "Ball-Winner",
+          "rating": 0.6586,
+          "team_rank": 3,
+          "global_rank": 17,
+          "position_rank": 2,
+          "minutes": 529
+        },
+        {
+          "id": "3604",
+          "name": "Olivier Giroud",
+          "position": "Forward",
+          "role": "Target Forward / Penalty-Box Anchor",
+          "rating": 0.6245,
+          "team_rank": 4,
+          "global_rank": 31,
+          "position_rank": 8,
+          "minutes": 432
+        },
+        {
+          "id": "5487",
+          "name": "Antoine Griezmann",
+          "position": "Attacking Midfield/Wing",
+          "role": "Hybrid Playmaker / Roaming Creator",
+          "rating": 0.5794,
+          "team_rank": 5,
+          "global_rank": 51,
+          "position_rank": 12,
+          "minutes": 586
+        },
+        {
+          "id": "5477",
+          "name": "Ousmane Dembélé",
+          "position": "Attacking Midfield/Wing",
+          "role": "Progressive Winger",
+          "rating": 0.5705,
+          "team_rank": 6,
+          "global_rank": 55,
+          "position_rank": 14,
+          "minutes": 448
+        },
+        {
+          "id": "11135",
+          "name": "Ibrahima Konaté",
+          "position": "Center Back",
+          "role": "Ball-Playing Centre-Back",
+          "rating": 0.5418,
+          "team_rank": 7,
+          "global_rank": 67,
+          "position_rank": 10,
+          "minutes": 330
+        },
+        {
+          "id": "10481",
+          "name": "Aurélien Djani Tchouaméni",
+          "position": "Defensive Midfield",
+          "role": "Holding / Controlling Midfielder",
+          "rating": 0.513,
+          "team_rank": 8,
+          "global_rank": 76,
+          "position_rank": 11,
+          "minutes": 662
+        },
+        {
+          "id": "5485",
+          "name": "Raphaël Varane",
+          "position": "Center Back",
+          "role": "Deep Playmaker",
+          "rating": 0.5046,
+          "team_rank": 9,
+          "global_rank": 77,
+          "position_rank": 14,
+          "minutes": 544
+        },
+        {
+          "id": "4445",
+          "name": "Jules Koundé",
+          "position": "Fullback/Wingback",
+          "role": "Box-to-Box Runner",
+          "rating": 0.4613,
+          "team_rank": 10,
+          "global_rank": 101,
+          "position_rank": 25,
+          "minutes": 514
+        },
+        {
+          "id": "3099",
+          "name": "Hugo Lloris",
+          "position": "Goalkeeper",
+          "role": "Goalkeeper",
+          "rating": 0.4493,
+          "team_rank": 11,
+          "global_rank": null,
+          "position_rank": 14,
+          "minutes": 614
+        },
+        {
+          "id": "8519",
+          "name": "Dayotchanculle Upamecano",
+          "position": "Center Back",
+          "role": "Deep Playmaker",
+          "rating": 0.4452,
+          "team_rank": 12,
+          "global_rank": 108,
+          "position_rank": 29,
+          "minutes": 518
+        }
+      ]
+    },
+    {
+      "code": "GER",
+      "name": "Germany",
+      "rated_count": 0,
+      "avg_rating": null,
+      "top_rating": null,
+      "players": []
+    },
+    {
+      "code": "GHA",
+      "name": "Ghana",
+      "rated_count": 4,
+      "avg_rating": 0.4387,
+      "top_rating": 0.5546,
+      "players": [
+        {
+          "id": "30519",
+          "name": "Mohamed Salisu",
+          "position": "Center Back",
+          "role": "Sweeper CB",
+          "rating": 0.5546,
+          "team_rank": 1,
+          "global_rank": 63,
+          "position_rank": 8,
+          "minutes": 301
+        },
+        {
+          "id": "8108",
+          "name": "Lawrence Ati-Zigi",
+          "position": "Goalkeeper",
+          "role": "Goalkeeper",
+          "rating": 0.4223,
+          "team_rank": 2,
+          "global_rank": null,
+          "position_rank": 15,
+          "minutes": 301
+        },
+        {
+          "id": "6383",
+          "name": "Thomas Teye Partey",
+          "position": "Defensive Midfield",
+          "role": "Ball-Winner",
+          "rating": 0.4125,
+          "team_rank": 3,
+          "global_rank": 114,
+          "position_rank": 20,
+          "minutes": 301
+        },
+        {
+          "id": "3709",
+          "name": "Daniel Amartey",
+          "position": "Center Back",
+          "role": "Sweeper CB",
+          "rating": 0.3654,
+          "team_rank": 4,
+          "global_rank": 123,
+          "position_rank": 35,
+          "minutes": 301
+        }
+      ]
+    },
+    {
+      "code": "IRN",
+      "name": "Iran",
+      "rated_count": 3,
+      "avg_rating": 0.5288,
+      "top_rating": 0.6492,
+      "players": [
+        {
+          "id": "5226",
+          "name": "Mehdi Taremi",
+          "position": "Forward",
+          "role": "Target Forward",
+          "rating": 0.6492,
+          "team_rank": 1,
+          "global_rank": 22,
+          "position_rank": 6,
+          "minutes": 305
+        },
+        {
+          "id": "5220",
+          "name": "Morteza Pouraliganji",
+          "position": "Center Back",
+          "role": "Sweeper CB",
+          "rating": 0.5266,
+          "team_rank": 2,
+          "global_rank": 71,
+          "position_rank": 13,
+          "minutes": 305
+        },
+        {
+          "id": "5228",
+          "name": "Seyed Majid Hosseini",
+          "position": "Center Back",
+          "role": "Sweeper CB",
+          "rating": 0.4105,
+          "team_rank": 3,
+          "global_rank": 116,
+          "position_rank": 31,
+          "minutes": 305
+        }
+      ]
+    },
+    {
+      "code": "JPN",
+      "name": "Japan",
+      "rated_count": 5,
+      "avg_rating": 0.5129,
+      "top_rating": 0.5802,
+      "players": [
+        {
+          "id": "23527",
+          "name": "Junya Ito",
+          "position": "Fullback/Wingback",
+          "role": "Attacking Wingback",
+          "rating": 0.5802,
+          "team_rank": 1,
+          "global_rank": 49,
+          "position_rank": 17,
+          "minutes": 346
+        },
+        {
+          "id": "25719",
+          "name": "Shūichi Gonda",
+          "position": "Goalkeeper",
+          "role": "Goalkeeper",
+          "rating": 0.5397,
+          "team_rank": 2,
+          "global_rank": null,
+          "position_rank": 9,
+          "minutes": 412
+        },
+        {
+          "id": "9411",
+          "name": "Daichi Kamada",
+          "position": "Attacking Midfield/Wing",
+          "role": "Target Forward",
+          "rating": 0.499,
+          "team_rank": 3,
+          "global_rank": 85,
+          "position_rank": 15,
+          "minutes": 337
+        },
+        {
+          "id": "23721",
+          "name": "Wataru Endo",
+          "position": "Defensive Midfield",
+          "role": "Ball-Winner",
+          "rating": 0.4856,
+          "team_rank": 4,
+          "global_rank": 89,
+          "position_rank": 15,
+          "minutes": 326
+        },
+        {
+          "id": "3300",
+          "name": "Maya Yoshida",
+          "position": "Center Back",
+          "role": "Sweeper CB",
+          "rating": 0.4598,
+          "team_rank": 5,
+          "global_rank": 103,
+          "position_rank": 24,
+          "minutes": 412
+        }
+      ]
+    },
+    {
+      "code": "MEX",
+      "name": "Mexico",
+      "rated_count": 0,
+      "avg_rating": null,
+      "top_rating": null,
+      "players": []
+    },
+    {
+      "code": "MAR",
+      "name": "Morocco",
+      "rated_count": 13,
+      "avg_rating": 0.4895,
+      "top_rating": 0.6202,
+      "players": [
+        {
+          "id": "31295",
+          "name": "Yahia Attiyat allah",
+          "position": "Fullback/Wingback",
+          "role": "Wide Creator",
+          "rating": 0.6202,
+          "team_rank": 1,
+          "global_rank": 34,
+          "position_rank": 12,
+          "minutes": 350
+        },
+        {
+          "id": "3625",
+          "name": "Sofiane Boufal",
+          "position": "Central/Wide Midfield",
+          "role": "Box-to-Box / Engine Midfielder",
+          "rating": 0.6071,
+          "team_rank": 2,
+          "global_rank": 39,
+          "position_rank": 4,
+          "minutes": 476
+        },
+        {
+          "id": "15890",
+          "name": "Noussair Mazraoui",
+          "position": "Fullback/Wingback",
+          "role": "Wide Creator",
+          "rating": 0.5972,
+          "team_rank": 3,
+          "global_rank": 43,
+          "position_rank": 16,
+          "minutes": 376
+        },
+        {
+          "id": "6785",
+          "name": "Yassine Bounou",
+          "position": "Goalkeeper",
+          "role": "Goalkeeper",
+          "rating": 0.5796,
+          "team_rank": 4,
+          "global_rank": null,
+          "position_rank": 6,
+          "minutes": 603
+        },
+        {
+          "id": "5245",
+          "name": "Achraf Hakimi Mouh",
+          "position": "Fullback/Wingback",
+          "role": "Attacking Wingback",
+          "rating": 0.5007,
+          "team_rank": 5,
+          "global_rank": 84,
+          "position_rank": 23,
+          "minutes": 660
+        },
+        {
+          "id": "46258",
+          "name": "Azzedine Ounahi",
+          "position": "Central/Wide Midfield",
+          "role": "Box-to-Box / Engine Midfielder",
+          "rating": 0.4905,
+          "team_rank": 6,
+          "global_rank": 88,
+          "position_rank": 9,
+          "minutes": 589
+        },
+        {
+          "id": "7459",
+          "name": "Jawad El Yamiq",
+          "position": "Center Back",
+          "role": "Sweeper CB",
+          "rating": 0.4827,
+          "team_rank": 7,
+          "global_rank": 91,
+          "position_rank": 17,
+          "minutes": 335
+        },
+        {
+          "id": "6301",
+          "name": "Youssef En-Nesyri",
+          "position": "Forward",
+          "role": "Target Forward / Penalty-Box Anchor",
+          "rating": 0.4783,
+          "team_rank": 8,
+          "global_rank": 95,
+          "position_rank": 11,
+          "minutes": 553
+        },
+        {
+          "id": "5219",
+          "name": "Romain Saïss",
+          "position": "Center Back",
+          "role": "Sweeper CB",
+          "rating": 0.4662,
+          "team_rank": 9,
+          "global_rank": 98,
+          "position_rank": 21,
+          "minutes": 485
+        },
+        {
+          "id": "5237",
+          "name": "Hakim Ziyech",
+          "position": "Attacking Midfield/Wing",
+          "role": "Box-to-Box Runner",
+          "rating": 0.4273,
+          "team_rank": 10,
+          "global_rank": 113,
+          "position_rank": 17,
+          "minutes": 662
+        },
+        {
+          "id": "12149",
+          "name": "Nayef Aguerd",
+          "position": "Center Back",
+          "role": "Sweeper CB",
+          "rating": 0.4073,
+          "team_rank": 11,
+          "global_rank": 117,
+          "position_rank": 32,
+          "minutes": 369
+        },
+        {
+          "id": "5234",
+          "name": "Sofyan Amrabat",
+          "position": "Defensive Midfield",
+          "role": "Box-to-Box / Engine Midfielder",
+          "rating": 0.3773,
+          "team_rank": 12,
+          "global_rank": 120,
+          "position_rank": 21,
+          "minutes": 698
+        },
+        {
+          "id": "23774",
+          "name": "Selim Amallah",
+          "position": "Central/Wide Midfield",
+          "role": "Ball-Winner",
+          "rating": 0.3291,
+          "team_rank": 13,
+          "global_rank": 126,
+          "position_rank": 13,
+          "minutes": 423
+        }
+      ]
+    },
+    {
+      "code": "NED",
+      "name": "Netherlands",
+      "rated_count": 9,
+      "avg_rating": 0.5625,
+      "top_rating": 0.726,
+      "players": [
+        {
+          "id": "2988",
+          "name": "Memphis Depay",
+          "position": "Forward",
+          "role": "Target Forward",
+          "rating": 0.726,
+          "team_rank": 1,
+          "global_rank": 8,
+          "position_rank": 4,
+          "minutes": 315
+        },
+        {
+          "id": "3311",
+          "name": "Daley Blind",
+          "position": "Fullback/Wingback",
+          "role": "Wide Creator",
+          "rating": 0.6665,
+          "team_rank": 2,
+          "global_rank": 15,
+          "position_rank": 5,
+          "minutes": 452
+        },
+        {
+          "id": "8125",
+          "name": "Denzel Dumfries",
+          "position": "Fullback/Wingback",
+          "role": "Attacking Wingback",
+          "rating": 0.6312,
+          "team_rank": 3,
+          "global_rank": 29,
+          "position_rank": 10,
+          "minutes": 509
+        },
+        {
+          "id": "20750",
+          "name": "Cody Mathès Gakpo",
+          "position": "Attacking Midfield/Wing",
+          "role": "Progressive Winger",
+          "rating": 0.5976,
+          "team_rank": 4,
+          "global_rank": 42,
+          "position_rank": 9,
+          "minutes": 460
+        },
+        {
+          "id": "8326",
+          "name": "Andries Noppert",
+          "position": "Goalkeeper",
+          "role": "Goalkeeper",
+          "rating": 0.5806,
+          "team_rank": 5,
+          "global_rank": null,
+          "position_rank": 5,
+          "minutes": 509
+        },
+        {
+          "id": "8118",
+          "name": "Frenkie de Jong",
+          "position": "Defensive Midfield",
+          "role": "Box-to-Box / Engine Midfielder",
+          "rating": 0.5482,
+          "team_rank": 6,
+          "global_rank": 65,
+          "position_rank": 8,
+          "minutes": 499
+        },
+        {
+          "id": "21809",
+          "name": "Jurriën David Norman Timber",
+          "position": "Center Back",
+          "role": "Deep Playmaker",
+          "rating": 0.4512,
+          "team_rank": 7,
+          "global_rank": 106,
+          "position_rank": 27,
+          "minutes": 409
+        },
+        {
+          "id": "3306",
+          "name": "Nathan Aké",
+          "position": "Center Back",
+          "role": "Deep Playmaker",
+          "rating": 0.4488,
+          "team_rank": 8,
+          "global_rank": 107,
+          "position_rank": 28,
+          "minutes": 506
+        },
+        {
+          "id": "3669",
+          "name": "Virgil van Dijk",
+          "position": "Center Back",
+          "role": "Sweeper CB",
+          "rating": 0.4124,
+          "team_rank": 9,
+          "global_rank": 115,
+          "position_rank": 30,
+          "minutes": 509
+        }
+      ]
+    },
+    {
+      "code": "POL",
+      "name": "Poland",
+      "rated_count": 8,
+      "avg_rating": 0.5186,
+      "top_rating": 0.6371,
+      "players": [
+        {
+          "id": "5669",
+          "name": "Wojciech Szczęsny",
+          "position": "Goalkeeper",
+          "role": "Goalkeeper",
+          "rating": 0.6371,
+          "team_rank": 1,
+          "global_rank": null,
+          "position_rank": 2,
+          "minutes": 389
+        },
+        {
+          "id": "5668",
+          "name": "Robert Lewandowski",
+          "position": "Forward",
+          "role": "Target Forward / Penalty-Box Anchor",
+          "rating": 0.626,
+          "team_rank": 2,
+          "global_rank": 30,
+          "position_rank": 7,
+          "minutes": 389
+        },
+        {
+          "id": "5673",
+          "name": "Bartosz Bereszyński",
+          "position": "Fullback/Wingback",
+          "role": "Wide Creator",
+          "rating": 0.5679,
+          "team_rank": 3,
+          "global_rank": 57,
+          "position_rank": 19,
+          "minutes": 365
+        },
+        {
+          "id": "3637",
+          "name": "Grzegorz Krychowiak",
+          "position": "Defensive Midfield",
+          "role": "Ball-Winner",
+          "rating": 0.5033,
+          "team_rank": 4,
+          "global_rank": 78,
+          "position_rank": 12,
+          "minutes": 347
+        },
+        {
+          "id": "5660",
+          "name": "Piotr Zieliński",
+          "position": "Central/Wide Midfield",
+          "role": "Ball-Winner",
+          "rating": 0.503,
+          "team_rank": 5,
+          "global_rank": 79,
+          "position_rank": 8,
+          "minutes": 344
+        },
+        {
+          "id": "3034",
+          "name": "Kamil Glik",
+          "position": "Center Back",
+          "role": "Sweeper CB",
+          "rating": 0.4824,
+          "team_rank": 6,
+          "global_rank": 92,
+          "position_rank": 18,
+          "minutes": 389
+        },
+        {
+          "id": "44166",
+          "name": "Jakub Piotr Kiwior",
+          "position": "Center Back",
+          "role": "Sweeper CB",
+          "rating": 0.4631,
+          "team_rank": 7,
+          "global_rank": 100,
+          "position_rank": 23,
+          "minutes": 376
+        },
+        {
+          "id": "4734",
+          "name": "Matty Cash",
+          "position": "Fullback/Wingback",
+          "role": "Box-to-Box Runner",
+          "rating": 0.3659,
+          "team_rank": 8,
+          "global_rank": 122,
+          "position_rank": 26,
+          "minutes": 389
+        }
+      ]
+    },
+    {
+      "code": "POR",
+      "name": "Portugal",
+      "rated_count": 9,
+      "avg_rating": 0.6077,
+      "top_rating": 0.7296,
+      "players": [
+        {
+          "id": "5209",
+          "name": "Raphaël Adelino José Guerreiro",
+          "position": "Fullback/Wingback",
+          "role": "Wide Creator",
+          "rating": 0.7296,
+          "team_rank": 1,
+          "global_rank": 6,
+          "position_rank": 1,
+          "minutes": 303
+        },
+        {
+          "id": "5207",
+          "name": "Cristiano Ronaldo dos Santos Aveiro",
+          "position": "Forward",
+          "role": "Target Forward",
+          "rating": 0.6632,
+          "team_rank": 2,
+          "global_rank": 16,
+          "position_rank": 5,
+          "minutes": 302
+        },
+        {
+          "id": "7005",
+          "name": "João Pedro Cavaco Cancelo",
+          "position": "Fullback/Wingback",
+          "role": "Box-to-Box Runner",
+          "rating": 0.6406,
+          "team_rank": 3,
+          "global_rank": 27,
+          "position_rank": 9,
+          "minutes": 344
+        },
+        {
+          "id": "12041",
+          "name": "João Félix Sequeira",
+          "position": "Attacking Midfield/Wing",
+          "role": "Target Forward",
+          "rating": 0.6119,
+          "team_rank": 4,
+          "global_rank": 37,
+          "position_rank": 7,
+          "minutes": 340
+        },
+        {
+          "id": "20016",
+          "name": "Kléper Laveran Lima Ferreira",
+          "position": "Center Back",
+          "role": "Sweeper CB",
+          "rating": 0.5942,
+          "team_rank": 5,
+          "global_rank": 44,
+          "position_rank": 3,
+          "minutes": 389
+        },
+        {
+          "id": "32975",
+          "name": "Diogo Meireles Costa",
+          "position": "Goalkeeper",
+          "role": "Goalkeeper",
+          "rating": 0.5835,
+          "team_rank": 6,
+          "global_rank": null,
+          "position_rank": 4,
+          "minutes": 489
+        },
+        {
+          "id": "5204",
+          "name": "Bruno Miguel Borges Fernandes",
+          "position": "Attacking Midfield/Wing",
+          "role": "Hybrid Playmaker / Roaming Creator",
+          "rating": 0.58,
+          "team_rank": 7,
+          "global_rank": 50,
+          "position_rank": 11,
+          "minutes": 384
+        },
+        {
+          "id": "3193",
+          "name": "Bernardo Mota Veiga de Carvalho e Silva",
+          "position": "Central/Wide Midfield",
+          "role": "Box-to-Box / Engine Midfielder",
+          "rating": 0.5649,
+          "team_rank": 8,
+          "global_rank": 59,
+          "position_rank": 5,
+          "minutes": 382
+        },
+        {
+          "id": "5206",
+          "name": "Rúben Santos Gato Alves Dias",
+          "position": "Center Back",
+          "role": "Sweeper CB",
+          "rating": 0.5016,
+          "team_rank": 9,
+          "global_rank": 81,
+          "position_rank": 16,
+          "minutes": 392
+        }
+      ]
+    },
+    {
+      "code": "QAT",
+      "name": "Qatar",
+      "rated_count": 0,
+      "avg_rating": null,
+      "top_rating": null,
+      "players": []
+    },
+    {
+      "code": "KSA",
+      "name": "Saudi Arabia",
+      "rated_count": 0,
+      "avg_rating": null,
+      "top_rating": null,
+      "players": []
+    },
+    {
+      "code": "SEN",
+      "name": "Senegal",
+      "rated_count": 6,
+      "avg_rating": 0.55,
+      "top_rating": 0.6553,
+      "players": [
+        {
+          "id": "2941",
+          "name": "Ismaïla Sarr",
+          "position": "Attacking Midfield/Wing",
+          "role": "Target Forward",
+          "rating": 0.6553,
+          "team_rank": 1,
+          "global_rank": 19,
+          "position_rank": 4,
+          "minutes": 365
+        },
+        {
+          "id": "3404",
+          "name": "Youssouf Sabaly",
+          "position": "Fullback/Wingback",
+          "role": "Attacking Wingback",
+          "rating": 0.6216,
+          "team_rank": 2,
+          "global_rank": 33,
+          "position_rank": 11,
+          "minutes": 387
+        },
+        {
+          "id": "5675",
+          "name": "Kalidou Koulibaly",
+          "position": "Center Back",
+          "role": "Sweeper CB",
+          "rating": 0.5927,
+          "team_rank": 3,
+          "global_rank": 45,
+          "position_rank": 4,
+          "minutes": 387
+        },
+        {
+          "id": "8553",
+          "name": "Abdou Diallo",
+          "position": "Center Back",
+          "role": "Sweeper CB",
+          "rating": 0.4803,
+          "team_rank": 4,
+          "global_rank": 93,
+          "position_rank": 19,
+          "minutes": 348
+        },
+        {
+          "id": "20611",
+          "name": "Boulaye Dia",
+          "position": "Attacking Midfield/Wing",
+          "role": "Target Forward",
+          "rating": 0.4795,
+          "team_rank": 5,
+          "global_rank": 94,
+          "position_rank": 16,
+          "minutes": 330
+        },
+        {
+          "id": "7379",
+          "name": "Edouard Mendy",
+          "position": "Goalkeeper",
+          "role": "Goalkeeper",
+          "rating": 0.4703,
+          "team_rank": 6,
+          "global_rank": null,
+          "position_rank": 13,
+          "minutes": 387
+        }
+      ]
+    },
+    {
+      "code": "SRB",
+      "name": "Serbia",
+      "rated_count": 0,
+      "avg_rating": null,
+      "top_rating": null,
+      "players": []
+    },
+    {
+      "code": "KOR",
+      "name": "South Korea",
+      "rated_count": 7,
+      "avg_rating": 0.5782,
+      "top_rating": 0.6518,
+      "players": [
+        {
+          "id": "40538",
+          "name": "Jin-Su Kim",
+          "position": "Fullback/Wingback",
+          "role": "Attacking Wingback",
+          "rating": 0.6518,
+          "team_rank": 1,
+          "global_rank": 21,
+          "position_rank": 7,
+          "minutes": 340
+        },
+        {
+          "id": "5604",
+          "name": "Young-Gwon Kim",
+          "position": "Center Back",
+          "role": "Sweeper CB",
+          "rating": 0.6239,
+          "team_rank": 2,
+          "global_rank": 32,
+          "position_rank": 2,
+          "minutes": 373
+        },
+        {
+          "id": "40672",
+          "name": "Moon-Hwan Kim",
+          "position": "Fullback/Wingback",
+          "role": "Attacking Wingback",
+          "rating": 0.5775,
+          "team_rank": 3,
+          "global_rank": 52,
+          "position_rank": 18,
+          "minutes": 389
+        },
+        {
+          "id": "3083",
+          "name": "Heung-Min Son",
+          "position": "Attacking Midfield/Wing",
+          "role": "Target Forward",
+          "rating": 0.5768,
+          "team_rank": 4,
+          "global_rank": 53,
+          "position_rank": 13,
+          "minutes": 389
+        },
+        {
+          "id": "23763",
+          "name": "In-Beom Hwang",
+          "position": "Defensive Midfield",
+          "role": "Box-to-Box / Engine Midfielder",
+          "rating": 0.5706,
+          "team_rank": 5,
+          "global_rank": 54,
+          "position_rank": 5,
+          "minutes": 360
+        },
+        {
+          "id": "37641",
+          "name": "Seung-Gyu Kim",
+          "position": "Goalkeeper",
+          "role": "Goalkeeper",
+          "rating": 0.5318,
+          "team_rank": 6,
+          "global_rank": null,
+          "position_rank": 10,
+          "minutes": 389
+        },
+        {
+          "id": "5618",
+          "name": "Woo-Young Jung",
+          "position": "Defensive Midfield",
+          "role": "Ball-Winner",
+          "rating": 0.5147,
+          "team_rank": 7,
+          "global_rank": 75,
+          "position_rank": 10,
+          "minutes": 317
+        }
+      ]
+    },
+    {
+      "code": "ESP",
+      "name": "Spain",
+      "rated_count": 6,
+      "avg_rating": 0.5722,
+      "top_rating": 0.691,
+      "players": [
+        {
+          "id": "16532",
+          "name": "Daniel Olmo Carvajal",
+          "position": "Attacking Midfield/Wing",
+          "role": "Progressive Winger",
+          "rating": 0.691,
+          "team_rank": 1,
+          "global_rank": 11,
+          "position_rank": 3,
+          "minutes": 388
+        },
+        {
+          "id": "11748",
+          "name": "Unai Simón Mendibil",
+          "position": "Goalkeeper",
+          "role": "Goalkeeper",
+          "rating": 0.6107,
+          "team_rank": 2,
+          "global_rank": null,
+          "position_rank": 3,
+          "minutes": 413
+        },
+        {
+          "id": "6765",
+          "name": "Rodrigo Hernández Cascante",
+          "position": "Center Back",
+          "role": "Ball-Playing Centre-Back",
+          "rating": 0.5688,
+          "team_rank": 3,
+          "global_rank": 56,
+          "position_rank": 6,
+          "minutes": 413
+        },
+        {
+          "id": "4353",
+          "name": "Aymeric Laporte",
+          "position": "Center Back",
+          "role": "Deep Playmaker",
+          "rating": 0.5273,
+          "team_rank": 4,
+          "global_rank": 70,
+          "position_rank": 12,
+          "minutes": 316
+        },
+        {
+          "id": "30486",
+          "name": "Pedro González López",
+          "position": "Central/Wide Midfield",
+          "role": "Ball-Winner",
+          "rating": 0.5198,
+          "team_rank": 5,
+          "global_rank": 72,
+          "position_rank": 6,
+          "minutes": 372
+        },
+        {
+          "id": "5203",
+          "name": "Sergio Busquets i Burgos",
+          "position": "Defensive Midfield",
+          "role": "Ball-Winner",
+          "rating": 0.5157,
+          "team_rank": 6,
+          "global_rank": 74,
+          "position_rank": 9,
+          "minutes": 379
+        }
+      ]
+    },
+    {
+      "code": "SUI",
+      "name": "Switzerland",
+      "rated_count": 5,
+      "avg_rating": 0.5415,
+      "top_rating": 0.5879,
+      "players": [
+        {
+          "id": "5549",
+          "name": "Manuel Obafemi Akanji",
+          "position": "Center Back",
+          "role": "Ball-Playing Centre-Back",
+          "rating": 0.5879,
+          "team_rank": 1,
+          "global_rank": 46,
+          "position_rank": 5,
+          "minutes": 386
+        },
+        {
+          "id": "5545",
+          "name": "Breel-Donald Embolo",
+          "position": "Forward",
+          "role": "Target Forward",
+          "rating": 0.5661,
+          "team_rank": 2,
+          "global_rank": 58,
+          "position_rank": 10,
+          "minutes": 330
+        },
+        {
+          "id": "3500",
+          "name": "Granit Xhaka",
+          "position": "Defensive Midfield",
+          "role": "Ball-Winner",
+          "rating": 0.5512,
+          "team_rank": 3,
+          "global_rank": 64,
+          "position_rank": 7,
+          "minutes": 386
+        },
+        {
+          "id": "5544",
+          "name": "Ricardo Iván Rodríguez Araya",
+          "position": "Fullback/Wingback",
+          "role": "Wide Creator",
+          "rating": 0.5013,
+          "team_rank": 4,
+          "global_rank": 82,
+          "position_rank": 22,
+          "minutes": 380
+        },
+        {
+          "id": "6983",
+          "name": "Remo Freuler",
+          "position": "Defensive Midfield",
+          "role": "Ball-Winner",
+          "rating": 0.501,
+          "team_rank": 5,
+          "global_rank": 83,
+          "position_rank": 13,
+          "minutes": 346
+        }
+      ]
+    },
+    {
+      "code": "TUN",
+      "name": "Tunisia",
+      "rated_count": 0,
+      "avg_rating": null,
+      "top_rating": null,
+      "players": []
+    },
+    {
+      "code": "USA",
+      "name": "United States",
+      "rated_count": 9,
+      "avg_rating": 0.5502,
+      "top_rating": 0.6972,
+      "players": [
+        {
+          "id": "8246",
+          "name": "Christian Pulisic",
+          "position": "Attacking Midfield/Wing",
+          "role": "Progressive Winger",
+          "rating": 0.6972,
+          "team_rank": 1,
+          "global_rank": 9,
+          "position_rank": 2,
+          "minutes": 336
+        },
+        {
+          "id": "12352",
+          "name": "Matthew Charles Turner",
+          "position": "Goalkeeper",
+          "role": "Goalkeeper",
+          "rating": 0.6497,
+          "team_rank": 2,
+          "global_rank": null,
+          "position_rank": 1,
+          "minutes": 391
+        },
+        {
+          "id": "3377",
+          "name": "Timothy Weah",
+          "position": "Attacking Midfield/Wing",
+          "role": "Progressive Winger",
+          "rating": 0.6484,
+          "team_rank": 3,
+          "global_rank": 23,
+          "position_rank": 6,
+          "minutes": 317
+        },
+        {
+          "id": "21881",
+          "name": "Sergino Dest",
+          "position": "Fullback/Wingback",
+          "role": "Attacking Wingback",
+          "rating": 0.6472,
+          "team_rank": 4,
+          "global_rank": 24,
+          "position_rank": 8,
+          "minutes": 307
+        },
+        {
+          "id": "4614",
+          "name": "Antonee Robinson",
+          "position": "Fullback/Wingback",
+          "role": "Attacking Wingback",
+          "rating": 0.6006,
+          "team_rank": 5,
+          "global_rank": 41,
+          "position_rank": 15,
+          "minutes": 386
+        },
+        {
+          "id": "18242",
+          "name": "Tim Ream",
+          "position": "Center Back",
+          "role": "Ball-Playing Centre-Back",
+          "rating": 0.4543,
+          "team_rank": 6,
+          "global_rank": 104,
+          "position_rank": 25,
+          "minutes": 391
+        },
+        {
+          "id": "12751",
+          "name": "Tyler Adams",
+          "position": "Defensive Midfield",
+          "role": "Holding / Controlling Midfielder",
+          "rating": 0.4335,
+          "team_rank": 7,
+          "global_rank": 111,
+          "position_rank": 19,
+          "minutes": 391
+        },
+        {
+          "id": "38792",
+          "name": "Yunus Dimoara Musah",
+          "position": "Central/Wide Midfield",
+          "role": "Box-to-Box / Engine Midfielder",
+          "rating": 0.431,
+          "team_rank": 8,
+          "global_rank": 112,
+          "position_rank": 12,
+          "minutes": 364
+        },
+        {
+          "id": "12524",
+          "name": "Walker Zimmerman",
+          "position": "Center Back",
+          "role": "Deep Playmaker",
+          "rating": 0.3898,
+          "team_rank": 9,
+          "global_rank": 119,
+          "position_rank": 33,
+          "minutes": 310
+        }
+      ]
+    },
+    {
+      "code": "URU",
+      "name": "Uruguay",
+      "rated_count": 0,
+      "avg_rating": null,
+      "top_rating": null,
+      "players": []
+    },
+    {
+      "code": "WAL",
+      "name": "Wales",
+      "rated_count": 0,
+      "avg_rating": null,
+      "top_rating": null,
+      "players": []
+    }
+  ]
+}

@@ -1605,6 +1605,117 @@
         requestPresentationProgress();
     }
 
+    function escapeHtml(value) {
+        return String(value == null ? "" : value).replace(/[&<>"]/g, function (character) {
+            return {
+                "&": "&amp;",
+                "<": "&lt;",
+                ">": "&gt;",
+                "\"": "&quot;"
+            }[character];
+        });
+    }
+
+    function formatRating(value) {
+        return value == null ? "—" : value.toFixed(3);
+    }
+
+    function initializeMatchup() {
+        var dataNode = room.querySelector("[data-matchup-data]");
+        var teamASelect = room.querySelector("[data-team-a]");
+        var teamBSelect = room.querySelector("[data-team-b]");
+        var breakdown = room.querySelector("[data-matchup-breakdown]");
+        var showcase = room.querySelector("[data-featured-showcase]");
+        if (!dataNode || !teamASelect || !teamBSelect || !breakdown) return;
+
+        var data;
+        try {
+            data = JSON.parse(dataNode.textContent);
+        } catch (error) {
+            return;
+        }
+        var teams = (data && data.teams) || [];
+        if (!teams.length) return;
+
+        var byCode = {};
+        teams.forEach(function (team) { byCode[team.code] = team; });
+
+        var optionsHtml = teams.map(function (team) {
+            return "<option value=\"" + team.code + "\">" + escapeHtml(team.name) +
+                (team.rated_count ? "" : " — no rated players yet") + "</option>";
+        }).join("");
+        teamASelect.innerHTML = optionsHtml;
+        teamBSelect.innerHTML = optionsHtml;
+        teamASelect.value = byCode.ARG ? "ARG" : teams[0].code;
+        teamBSelect.value = byCode.FRA ? "FRA" : teams[Math.min(1, teams.length - 1)].code;
+
+        function playerRowHtml(player, index, topRating) {
+            var width = Math.max(6, Math.round(((player.rating || 0) / (topRating || 1)) * 100));
+            var subtitle = player.role || player.position || "";
+            return "<li class=\"matchup-player\">" +
+                "<span class=\"matchup-player__rank\">" + (player.team_rank || index + 1) + "</span>" +
+                "<span class=\"matchup-player__name\">" + escapeHtml(player.name) +
+                (subtitle ? "<em>" + escapeHtml(subtitle) + "</em>" : "") + "</span>" +
+                "<span class=\"matchup-player__bar\"><i style=\"--w: " + width + "%\"></i></span>" +
+                "<span class=\"matchup-player__rating\">" + formatRating(player.rating) + "</span>" +
+                "</li>";
+        }
+
+        function teamCardHtml(team) {
+            if (!team.rated_count) {
+                return "<article class=\"matchup-card is-empty\">" +
+                    "<div class=\"matchup-card__head\"><h3>" + escapeHtml(team.name) + "</h3></div>" +
+                    "<p class=\"matchup-card__empty\">No players have cleared the rating floor yet — this squad fills in as more players are rated.</p>" +
+                    "</article>";
+            }
+            var rows = team.players.map(function (player, index) {
+                return playerRowHtml(player, index, team.top_rating);
+            }).join("");
+            return "<article class=\"matchup-card\">" +
+                "<div class=\"matchup-card__head\"><h3>" + escapeHtml(team.name) + "</h3>" +
+                "<dl><div><dt>Rated</dt><dd>" + team.rated_count + "</dd></div>" +
+                "<div><dt>Avg</dt><dd>" + formatRating(team.avg_rating) + "</dd></div></dl></div>" +
+                "<ol class=\"matchup-card__list\">" + rows + "</ol></article>";
+        }
+
+        function topLine(team) {
+            var top = team.players && team.players[0];
+            return top
+                ? "<strong>" + escapeHtml(top.name) + "</strong><em>top rated · " + formatRating(top.rating) + "</em>"
+                : "<em>No rated players yet</em>";
+        }
+
+        function headToHeadHtml(teamA, teamB) {
+            return "<div class=\"matchup-h2h\">" +
+                "<div class=\"matchup-h2h__side\"><span class=\"matchup-h2h__team\">" +
+                escapeHtml(teamA.name) + "</span>" + topLine(teamA) + "</div>" +
+                "<span class=\"matchup-h2h__vs\" aria-hidden=\"true\">vs</span>" +
+                "<div class=\"matchup-h2h__side is-right\"><span class=\"matchup-h2h__team\">" +
+                escapeHtml(teamB.name) + "</span>" + topLine(teamB) + "</div>" +
+                "</div>";
+        }
+
+        function render() {
+            if (teamASelect.value === teamBSelect.value) {
+                var alternate = teams.find(function (team) { return team.code !== teamASelect.value; });
+                if (alternate) teamBSelect.value = alternate.code;
+            }
+            var teamA = byCode[teamASelect.value];
+            var teamB = byCode[teamBSelect.value];
+            if (!teamA || !teamB) return;
+            breakdown.innerHTML = headToHeadHtml(teamA, teamB) +
+                "<div class=\"matchup-cards\">" + teamCardHtml(teamA) + teamCardHtml(teamB) + "</div>";
+            if (showcase) {
+                var pair = [teamASelect.value, teamBSelect.value].slice().sort().join("-");
+                showcase.hidden = pair !== "ARG-FRA";
+            }
+        }
+
+        teamASelect.addEventListener("change", render);
+        teamBSelect.addEventListener("change", render);
+        render();
+    }
+
     var activeMode = "tool";
 
     function setMode(mode, options) {
@@ -1692,6 +1803,7 @@
     function initializeInteractions() {
         createPlayerNodes();
         updateForwardRoster();
+        initializeMatchup();
 
         room.querySelectorAll("[data-coach-mode]").forEach(function (button, index, buttons) {
             button.addEventListener("click", function () {
