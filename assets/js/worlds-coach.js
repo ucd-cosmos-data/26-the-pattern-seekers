@@ -983,6 +983,7 @@
                 meta: meta,
                 reportSlug: idx ? idx.slug : null,
                 wikiTitle: idx ? (idx.wiki || idx.name) : (r.wikiTitle || r.displayName),
+                rating: isRated ? idx.rating : (typeof r.rating === "number" ? r.rating : null),
                 espnId: null
             };
         });
@@ -1018,6 +1019,8 @@
         sequences = plan.sequences;
         formationStates = plan.formationStates;
         if (rebuildNodes) createPlayerNodes();
+        updateRoleCards();
+        updateForwardRoster();
         var text = plan.planText;
         var lautaroPenalty = (isFlagshipMatchup(currentMatchup.ourCode, currentMatchup.oppCode) &&
             playerControl && playerControl.value === "lautaro") ? -2 : 0;
@@ -1102,6 +1105,69 @@
     function sentenceCase(value) {
         var text = String(value || "").toLowerCase();
         return text.charAt(0).toUpperCase() + text.slice(1);
+    }
+
+    // A short tactical brief derived from a player's functional role.
+    function jobForRole(role) {
+        var s = String(role || "").toLowerCase();
+        if (s.indexOf("keeper") !== -1) return "Sweep and start the build";
+        if (s.indexOf("wing-back") !== -1 || s.indexOf("wingback") !== -1 ||
+            s.indexOf("full-back") !== -1 || s.indexOf("fullback") !== -1) return "Overlap and hold the width";
+        if (s.indexOf("back") !== -1 || s.indexOf("sweeper") !== -1) return "Hold the line, step out";
+        if (s.indexOf("winger") !== -1 || s.indexOf("wing") !== -1 || s.indexOf("wide") !== -1) return "Take your man on, reach the byline";
+        if (s.indexOf("target") !== -1 || s.indexOf("striker") !== -1 ||
+            s.indexOf("forward") !== -1 || s.indexOf("poacher") !== -1 || s.indexOf("finish") !== -1) return "Lead the line, attack the box";
+        if (s.indexOf("playmak") !== -1 || s.indexOf("creat") !== -1 || s.indexOf("attacking") !== -1) return "Find the pocket, release the runners";
+        if (s.indexOf("ball-winner") !== -1 || s.indexOf("defensive") !== -1 || s.indexOf("engine") !== -1 ||
+            s.indexOf("box-to-box") !== -1 || s.indexOf("deep") !== -1 || s.indexOf("regista") !== -1) return "Screen the defence, win it back";
+        return "Support the play, keep the shape";
+    }
+
+    var roleGridOriginal = null;
+
+    // The Player-roles cards show the CURRENT team's key players. The Argentina
+    // flagship keeps its hand-authored cards; every other team populates the
+    // four cards with its four highest-rated players.
+    function updateRoleCards() {
+        var grid = room.querySelector(".coach-role-grid");
+        if (!grid) return;
+        if (roleGridOriginal === null) roleGridOriginal = grid.innerHTML;
+        var flagship = isFlagshipMatchup(currentMatchup.ourCode, currentMatchup.oppCode);
+        if (flagship) {
+            if (grid.innerHTML !== roleGridOriginal) grid.innerHTML = roleGridOriginal;
+            grid.querySelectorAll("[data-role-card]").forEach(function (card) {
+                if (card.dataset.roleCard !== "forward") loadRolePhoto(card);
+            });
+            return;
+        }
+        var ourIds = Object.keys(roster).filter(function (id) {
+            return id.indexOf("us_") === 0 && !roster[id].isPlaceholder;
+        }).sort(function (a, b) {
+            return (roster[b].rating || 0) - (roster[a].rating || 0);
+        });
+        grid.querySelectorAll("[data-role-card]").forEach(function (card, i) {
+            var id = ourIds[i];
+            if (!id) { card.hidden = true; return; }
+            card.hidden = false;
+            var pl = roster[id];
+            var h3 = card.querySelector("h3");
+            var pEl = card.querySelector("div p");
+            var strong = card.querySelector("strong");
+            var num = card.querySelector(".coach-role-number");
+            var img = card.querySelector(".coach-role-photo");
+            if (h3) h3.textContent = pl.name;
+            if (pEl) pEl.textContent = pl.role;
+            if (strong) strong.textContent = jobForRole(pl.role);
+            if (num) num.textContent = pl.number;
+            card.dataset.roleCard = id; // so loadPhotoInto resolves this slot's player
+            if (img) {
+                img.onload = function () { card.classList.add("has-photo"); };
+                loadPhotoInto(img, id, function () {
+                    card.classList.remove("has-photo");
+                    img.removeAttribute("src");
+                });
+            }
+        });
     }
 
     function updateForwardRoster() {
