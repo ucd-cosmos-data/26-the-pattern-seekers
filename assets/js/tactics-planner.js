@@ -385,6 +385,7 @@
         var lift = scenario.lineShift;
         var r = roleMap(ourSlots, flank), q = oppRoles(oppSlots, flank);
         var fY = right ? 58 : 10, hY = right ? 44 : 24, wY = right ? 12 : 56;
+        var whY = right ? 24 : 44;
         var byY = right ? 63 : 5, nearY = right ? 40 : 28, backY = right ? 27 : 41;
         // Base shapes: our team building, opponent in a deep block.
         var initial = {};
@@ -401,10 +402,10 @@
             {
                 id: "attack-build", label: "1 - Build", phase: "IN POSSESSION",
                 title: "Build a base behind the ball", duration: 1500,
-                caption: "The pivot drops in, the full-backs set the width, and the front line pins the last line.",
+                caption: "The holding midfielder screens in front of the back line, the full-backs set the width, and the front line pins the last line.",
                 ballPath: [ball],
-                moves: moves(r.pivot, 34, 34, r.sFB, 47, fY, r.wFB, 41, wY, r.sMid, 52, hY,
-                    q.fwdS, 58, hY, q.fwdW, 58, right ? 24 : 44),
+                moves: moves(r.pivot, 46, 34, r.sFB, 47, fY, r.wFB, 41, wY, r.sMid, 52, hY,
+                    q.fwdS, 58, hY, q.fwdW, 58, whY),
                 active: [r.gk, r.cbMid, r.pivot, r.sFB],
                 zones: [{ type: "rect", x: 16, y: 8, width: 32, height: 52, tone: "neutral", label: "BUILD PLATFORM" }]
             },
@@ -413,7 +414,7 @@
                 title: "Carry out and draw the press", duration: 2200,
                 caption: "The centre-back steps out with the ball; the opponent's forward jumps and the pivot rotates.",
                 ballPath: [point(9, 34), point(24, hY), point(34, hY)],
-                moves: moves(r.cbMid, 34, hY, r.pivot, 40, 30, r.sMid, 54, hY, r.sFB, 52, fY,
+                moves: moves(r.cbMid, 34, hY, r.pivot, 52, 32, r.sMid, 54, hY, r.sFB, 52, fY,
                     q.fwdS, 42, hY, q.midS, 60, hY),
                 active: [r.gk, r.cbMid, r.pivot, r.sMid],
                 actions: [
@@ -427,7 +428,7 @@
                 caption: "The ball breaks the midfield line; the winger holds width and the striker pins the centre-backs.",
                 ballPath: [point(34, hY), point(54, hY)],
                 moves: moves(r.sMid, 54, hY, r.wide, 72, fY, r.striker, 80, 34, r.farFwd, 74, wY,
-                    r.sFB, 60, fY, q.fbS, 74, fY, q.midS, 60, hY, q.cb, 82, 30),
+                    r.wMid, 58, whY, r.sFB, 60, fY, q.fbS, 74, fY, q.midS, 60, hY, q.cb, 82, 30),
                 active: [r.cbMid, r.sMid, r.wide, r.striker],
                 actions: [{ type: "pass", label: "LINE BREAK", path: [point(34, hY), point(54, hY)] }],
                 zones: [{ type: "rect", x: 50, y: right ? 38 : 8, width: 26, height: 22, tone: "neutral", label: (right ? "RIGHT" : "LEFT") + " HALF-SPACE" }]
@@ -438,7 +439,7 @@
                 caption: "The creator releases the winger while the full-back overlaps and the striker pins the far centre-back.",
                 ballPath: [point(54, hY), point(70, fY)],
                 moves: moves(r.wide, 70, fY, r.sFB, 82, byY, r.sMid, 64, hY, r.striker, 82, 34,
-                    r.farFwd, 78, wY, q.fbS, 76, fY, q.cb, 80, hY, q.midW, 66, hY),
+                    r.farFwd, 78, wY, r.pivot, 56, 30, r.wMid, 66, 34, q.fbS, 76, fY, q.cb, 80, hY, q.midW, 66, hY),
                 active: [r.sMid, r.wide, r.sFB],
                 actions: [
                     { type: "pass", label: "PASS", path: [point(54, hY), point(70, fY)] },
@@ -453,7 +454,7 @@
                 caption: "The overlap reaches the byline as the striker attacks the near post and the far runner the back post.",
                 ballPath: [point(70, fY), point(90, byY)],
                 moves: moves(r.sFB, 90, byY, r.striker, 90, nearY, r.farFwd, 93, backY, r.sMid, 82, hY,
-                    r.wide, 80, 40, q.cb, 92, 30, q.cbW, 92, 38, q.fbS, 88, fY),
+                    r.wide, 80, 40, r.wMid, 76, 32, q.cb, 92, 30, q.cbW, 92, 38, q.fbS, 88, fY),
                 active: [r.wide, r.sFB, r.striker, r.farFwd],
                 actions: [
                     { type: "pass", label: "RELEASE", path: [point(70, fY), point(90, byY)] },
@@ -464,18 +465,35 @@
             {
                 id: "attack-cutback", label: "6 - Cut it back", phase: "FINISH",
                 title: "Cut it back to the arriving runner", duration: 1800,
-                caption: "The low cutback finds the striker at the spot as the midfielder arrives on the edge of the box.",
+                caption: "The low cutback finds the striker at the spot as the advancing midfielder arrives on the edge of the box; the holding midfielder stays as the rest defence.",
                 ballPath: [point(90, byY), point(93, 34)],
-                moves: moves(r.striker, 93, 34, r.pivot, 86, 30, r.farFwd, 95, backY, r.sMid, 84, 38,
-                    q.cb, 95, 31, q.cbW, 95, 37),
-                active: [r.sFB, r.striker, r.pivot, r.farFwd],
+                moves: moves(r.striker, 93, 34, r.wMid, 84, 30, r.farFwd, 95, backY, r.sMid, 84, 38,
+                    r.pivot, 58, 32, q.cb, 95, 31, q.cbW, 95, 37),
+                active: [r.sFB, r.striker, r.wMid, r.farFwd],
                 actions: [
                     { type: "pass", label: "CUTBACK", path: [point(90, byY), point(93, 34)] },
-                    { type: "run", label: "ARRIVE", path: [point(70, 30), point(86, 30)] }
+                    { type: "run", label: "ARRIVE", path: [point(74, 32), point(84, 30)] }
                 ],
                 zones: [{ type: "circle", cx: 93, cy: 34, radius: 8, tone: "press", label: "CUTBACK ZONE" }]
             }
         ];
+        // Guarantee no midfielder or forward is left frozen: formations with
+        // more mids/forwards than the named roles (e.g. a 4-man midfield) get
+        // their extra players advancing as a progressive second wave, so none
+        // sits static or stranded in the back line.
+        var namedMid = [r.pivot, r.sMid, r.wMid];
+        var namedFwd = [r.wide, r.striker, r.farFwd];
+        var extraMids = r.u.MID.filter(function (id) { return namedMid.indexOf(id) === -1; });
+        var extraFwds = r.u.FWD.filter(function (id) { return namedFwd.indexOf(id) === -1; });
+        steps.forEach(function (st, i) {
+            if (i < 2) return; // hold shape during the build
+            var midX = 56 + (i - 1) * 4;
+            var fwdX = 76 + (i - 1) * 3;
+            var midYs = spread(extraMids.length, 16);
+            extraMids.forEach(function (id, k) { if (!st.moves[id]) st.moves[id] = P(midX, midYs[k]); });
+            var fwdYs = spread(extraFwds.length, 16);
+            extraFwds.forEach(function (id, k) { if (!st.moves[id]) st.moves[id] = P(fwdX, fwdYs[k]); });
+        });
         return { initial: initial, ball: point(9, 34), steps: steps };
     }
 
