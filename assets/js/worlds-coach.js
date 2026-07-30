@@ -1017,6 +1017,23 @@
             pitch.setAttribute("aria-label", ourName + " tactical pitch. " + ourName +
                 " attacks from left to right; " + ourName + "'s right side is the lower half.");
         }
+        var directionEl = room.querySelector("[data-pitch-direction]");
+        if (directionEl) directionEl.innerHTML = escapeHtml(ourName) + " attacks <b>→</b>";
+
+        // Scenario labels name the current team, not always Argentina.
+        var stateLabels = {
+            prematch: "Pre-match, 0–0", drawing: "70', level",
+            leading: "70', " + ourName + " leading",
+            trailing: "70', " + ourName + " trailing"
+        };
+        Array.prototype.forEach.call(stateControl.options, function (opt) {
+            if (stateLabels[opt.value]) opt.textContent = stateLabels[opt.value];
+        });
+        // The Álvarez ↔ Lautaro swap only makes sense for the Argentina flagship.
+        var forwardLabel = playerControl && playerControl.closest
+            ? playerControl.closest("label") : null;
+        if (forwardLabel) forwardLabel.hidden = !isFlagshipMatchup(ourCode, oppCode);
+
         applyPlan(stateControl.value, true);
     }
     var pitchResizeFrame = 0;
