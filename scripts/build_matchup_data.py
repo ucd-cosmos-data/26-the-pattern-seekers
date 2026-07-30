@@ -1,9 +1,14 @@
 #!/usr/bin/env python3
 """Build the World's Coach matchup dataset from the analysis repo.
 
-Reads the per-player leaderboard and rating-uncertainty tables (plus the team
-coaching-report filenames for code<->name mapping) from the sibling analysis
-repo, and emits a single ``data/matchups.json`` that the interactive tool loads.
+Reads the per-player leaderboard (plus the team coaching-report filenames for
+code<->name mapping) from the sibling analysis repo, and emits a single
+``assets/matchups.json`` that the interactive tool loads.
+
+Rating confidence intervals are NOT included: ``player_rating_uncertainty.csv``
+is still on the legacy rating scale, so joining it against the v5 leaderboard
+would misstate uncertainty. Re-add once that table is regenerated on the v5
+scale.
 
 All 32 World Cup teams are included so any matchup is selectable; teams whose
 players have not yet cleared the rating floor come through with an empty player
@@ -12,7 +17,7 @@ players). Stdlib only — no third-party dependencies.
 
     python scripts/build_matchup_data.py \
         [--analysis ../26-the-pattern-seekers-analysis/World-Cup-S-Bomb] \
-        [--output data/matchups.json]
+        [--output assets/matchups.json]
 """
 
 from __future__ import annotations
@@ -107,7 +112,7 @@ def build(analysis: Path) -> dict:
     # sanity: teams present in the leaderboard should all have mapped to a code
     unmapped = sorted(set(players_by_team) - set(code_by_name))
     return {
-        "generated_from": "player_leaderboard.csv + player_rating_uncertainty.csv",
+        "generated_from": "player_leaderboard.csv + compiled team coaching reports (code-name mapping)",
         "team_count": len(teams),
         "rated_player_count": len(leaderboard),
         "unmapped_teams": unmapped,
