@@ -1,0 +1,77 @@
+---
+title: "Hugo Lloris Player Profile"
+description: "This report uses tournament events and coverage-qualified StatsBomb 360 context. It is not an optical-tracking report or a subjective scouting grade."
+layout: "player-report"
+url: "/projects/worlds-coach-output/reports/hugo-lloris/"
+playerId: "fra_gk"
+sourceUrl: "https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis/blob/718ae91e82bedbd53486a1e0381aaa70e124ba12/World-Cup-S-Bomb/results/reports/player_profiles/hugo-lloris-3099.md"
+displayName: "Hugo Lloris"
+headshotUrl: "https://a.espncdn.com/i/headshots/soccer/players/full/43372.png"
+shirtNumber: 1
+overview: "Hugo Lloris was France's goalkeeper. The model ranked him #11 within the team, using shot-stopping, cross control, sweeping, and distribution data."
+strengths:
+  - "Comes off his line regularly to claim crosses and relieve pressure."
+  - "Offers useful cover behind the defensive line as a sweeper."
+weaknesses:
+  - "Stopping crosses was less consistent than his stronger goalkeeper skills."
+  - "Distribution under pressure was not one of his stronger areas."
+---
+## Ranking and role
+
+- Team: France
+- Position group: Goalkeeper
+- Functional role: Goalkeeper
+- Probabilistic role: Goalkeeper
+- Role entropy: 0.0000
+- Global rank: not available
+- Position rank: 14
+- Role rank: 14
+- Team rank: 11
+- Final player rating: 0.4493
+- Global ranking eligibility: goalkeeper-only ranking
+- Minutes: 614.2
+- Minutes reliability: 0.6718
+
+## Rating components
+
+| Metric | Value |
+|---|---|
+| post_shot_xg_proxy | 10.8465 |
+| goals_prevented_proxy_p90 | 0.5636 |
+| save_rate | 0.7083 |
+| claims_p90 | 1.6119 |
+| cross_stopping_rate | 0.1447 |
+| sweeper_actions_p90 | 0.5861 |
+| distribution_under_pressure | 0.1818 |
+| penalty_save_rate_shrunk | 0.1000 |
+| goalkeeper_feature_coverage | 1.0000 |
+
+## Continuous role vector
+
+| Metric | Value |
+|---|---|
+| progression_score | 0.5171 |
+| creation_score | 0.3493 |
+| finishing_score | 0.1749 |
+| pressing_score | 0.0502 |
+| defensive_score | 0.1350 |
+| ball_security_score | 0.2176 |
+| aerial_score | 0.0681 |
+
+## Spatial, 360 and passing-network context
+
+| Metric | Value |
+|---|---|
+| sb360_coverage | 0.6190 |
+| mean_defenders_within_3m | 0.0989 |
+| mean_defenders_within_5m | 0.1941 |
+| mean_nearest_defender_m | 14.1818 |
+| mean_passing_lane_availability | 0.9358 |
+| packing_index_mean | 0.8608 |
+| mean_space_received | 0.9548 |
+| network_pagerank | 0.0319 |
+| network_betweenness | 0.0396 |
+| network_entropy | 0.9044 |
+| build_up_involvement_ratio | 0.7521 |
+
+Missing values indicate unavailable evidence; they are not converted into zero contribution.

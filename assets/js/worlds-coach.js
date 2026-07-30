@@ -137,9 +137,10 @@
     };
 
     function headshotUrl(id) {
+        var entry = roster[id];
         var espn = id === "forward" && playerControl && playerControl.value === "lautaro"
             ? espnIds.lautaro
-            : espnIds[id];
+            : (entry && entry.espnId);
         return espn
             ? "https://a.espncdn.com/i/headshots/soccer/players/full/" + espn + ".png"
             : "";
@@ -162,7 +163,8 @@
         if (id === "forward" && playerControl && playerControl.value === "lautaro") {
             return wikiTitles.lautaro;
         }
-        return wikiTitles[id];
+        var entry = roster[id];
+        return entry && entry.wikiTitle;
     }
 
     // Load the tooltip photo: ESPN first, Wikipedia thumbnail as fallback, then
@@ -804,11 +806,47 @@
     var animationControls = room.querySelector(".coach-animation__controls");
     var animationTimeline = room.querySelector(".coach-timeline");
     var tacticalTooltip = room.querySelector("[data-tactical-tooltip]");
+    var playerReportData = room.querySelector("[data-player-report-data]");
     var planName = room.querySelector("[data-plan-name]");
     var planWhy = room.querySelector("[data-plan-why]");
     var confidence = room.querySelector("[data-confidence]");
     var statusNode = room.querySelector("[data-coach-status]");
     var reducedMotion = window.matchMedia("(prefers-reduced-motion: reduce)");
+    var playerReports = {};
+    var playerReportBase = playerReportData
+        ? playerReportData.dataset.reportBase
+        : "";
+
+    if (playerReportData) {
+        try {
+            playerReports = JSON.parse(playerReportData.textContent);
+        } catch (error) {
+            console.warn("Player reports could not be loaded.", error);
+        }
+    }
+
+    // Full knockout player index (name each player goes by, imported report
+    // description, and report slug), keyed by StatsBomb player id.
+    var playerIndexData = room.querySelector("[data-player-index]");
+    var playerIndex = {};
+    if (playerIndexData) {
+        try {
+            playerIndex = JSON.parse(playerIndexData.textContent);
+        } catch (error) {
+            console.warn("Player index could not be loaded.", error);
+        }
+    }
+
+    // Full appearance squads so generated XIs fill with real players.
+    var squadsData = room.querySelector("[data-squads]");
+    var squads = {};
+    if (squadsData) {
+        try {
+            squads = JSON.parse(squadsData.textContent);
+        } catch (error) {
+            console.warn("Squads could not be loaded.", error);
+        }
+    }
 
     var activeView = "attack";
     var viewProgress = { attack: 0, press: 0, transition: 0 };
@@ -817,10 +855,204 @@
     var animationStartedAt = 0;
     var animationBaseProgress = 0;
     var tooltipPinned = false;
+    var tooltipHideTimer = 0;
     var currentPositions = model.copyPositions(attackInitial);
     var playerNodes = {};
     var activeTooltipId = null;
     var lastSequenceRender = { view: null, index: -1, triggerVisible: null };
+
+    // --- Matchup engine ---------------------------------------------------
+    // Enrich the hand-authored flagship roster so headshots and side
+    // classification read from per-player fields (generated rosters carry the
+    // same fields), then snapshot it as the untouched Argentina-France plan.
+    Object.keys(roster).forEach(function (id) {
+        roster[id].espnId = espnIds[id] || null;
+        roster[id].wikiTitle = wikiTitles[id] || roster[id].name;
+        roster[id].isOurs = roster[id].team === "ARG";
+    });
+
+    var FLAGSHIP = {
+        roster: roster,
+        sequences: sequences,
+        scenarios: scenarios,
+        formationStates: formationStates
+    };
+    var currentMatchup = { ourCode: "ARG", oppCode: "FRA" };
+
+    var teamsByCode = {};
+    (function () {
+        var node = room.querySelector("[data-matchup-data]");
+        if (!node) return;
+        try {
+            (JSON.parse(node.textContent).teams || []).forEach(function (team) {
+                teamsByCode[team.code] = team;
+            });
+        } catch (error) { /* the selector still works without the coach engine */ }
+    })();
+
+    // Scenario nudge for the hand-authored flagship: shift our shape forward
+    // when chasing, drop it when protecting a lead. Generated plans bake this in.
+    var FLAGSHIP_SHIFT = { prematch: 0, leading: -6, drawing: 2, trailing: 7 };
+
+    function isFlagshipMatchup(ourCode, oppCode) {
+        return (ourCode === "ARG" && oppCode === "FRA") ||
+            (ourCode === "FRA" && oppCode === "ARG");
+    }
+
+    function shiftPositions(map, dx, ourIds) {
+        var out = {};
+        Object.keys(map).forEach(function (id) {
+            var p = map[id];
+            out[id] = ourIds[id]
+                ? point(model.clamp(p.xMeters + dx, 6, 100), p.yMeters)
+                : point(p.xMeters, p.yMeters);
+        });
+        return out;
+    }
+
+    function shiftSequence(sequence, dx, ourIds) {
+        if (!dx) return sequence;
+        return {
+            initialPositions: shiftPositions(sequence.initialPositions, dx, ourIds),
+            duration: sequence.duration,
+            steps: sequence.steps.map(function (step) {
+                return Object.assign({}, step, {
+                    startPositions: shiftPositions(step.startPositions, dx, ourIds),
+                    endPositions: shiftPositions(step.endPositions, dx, ourIds)
+                });
+            })
+        };
+    }
+
+    function flagshipPlan(scenarioKey) {
+        var dx = FLAGSHIP_SHIFT[scenarioKey] || 0;
+        var ourIds = {};
+        Object.keys(FLAGSHIP.roster).forEach(function (id) {
+            if (FLAGSHIP.roster[id].isOurs) ourIds[id] = true;
+        });
+        return {
+            roster: FLAGSHIP.roster,
+            sequences: {
+                attack: shiftSequence(FLAGSHIP.sequences.attack, dx, ourIds),
+                press: shiftSequence(FLAGSHIP.sequences.press, dx, ourIds),
+                transition: shiftSequence(FLAGSHIP.sequences.transition, dx, ourIds)
+            },
+            formationStates: FLAGSHIP.formationStates,
+            planText: FLAGSHIP.scenarios[scenarioKey]
+        };
+    }
+
+    function generatedPlan(ourCode, oppCode, scenarioKey) {
+        var gen = window.WorldsCoachPlanner.generate({
+            teams: teamsByCode, squads: squads, ourCode: ourCode, oppCode: oppCode, scenario: scenarioKey
+        });
+        var genRoster = {};
+        Object.keys(gen.roster).forEach(function (id) {
+            var r = gen.roster[id];
+            // Enrich from the knockout player index: goes-by name, report
+            // description and report slug, keyed by StatsBomb id.
+            var idx = r.playerId ? playerIndex[r.playerId] : null;
+            var isRated = idx && typeof idx.rating === "number";
+            var meta = "";
+            if (idx && isRated) {
+                var bits = [];
+                if (idx.teamRank) bits.push("Team #" + idx.teamRank + " rated");
+                bits.push(idx.rating.toFixed(2) + " rating");
+                if (idx.minutes) bits.push(idx.minutes + "′");
+                meta = bits.join(" · ");
+            }
+            // Unrated squad players are shown by name + position, with an honest
+            // note that they were below the individual-rating minutes floor.
+            var description = isRated ? idx.strength
+                : (idx ? "Squad player — below the tournament minutes floor, so not individually rated."
+                    : (r.instruction || ""));
+            genRoster[id] = {
+                team: r.team, isOurs: r.isOurs, number: r.number,
+                isPlaceholder: r.isPlaceholder || false,
+                name: idx ? idx.name : r.displayName,
+                surname: idx ? idx.surname : r.surname,
+                role: idx ? (idx.role || r.role) : r.role,
+                instruction: description,
+                overview: idx && isRated ? idx.overview : "",
+                meta: meta,
+                reportSlug: idx ? idx.slug : null,
+                wikiTitle: idx ? (idx.wiki || idx.name) : (r.wikiTitle || r.displayName),
+                espnId: null
+            };
+        });
+        return {
+            roster: genRoster,
+            sequences: {
+                attack: compileSequence(gen.attack.initial, gen.attack.ball, gen.attack.steps),
+                press: compileSequence(gen.press.initial, gen.press.ball, gen.press.steps),
+                transition: compileSequence(gen.transition.initial, gen.transition.ball, gen.transition.steps)
+            },
+            formationStates: gen.formationStates,
+            planText: gen.scenarioText
+        };
+    }
+
+    function buildPlan(ourCode, oppCode, scenarioKey) {
+        if (isFlagshipMatchup(ourCode, oppCode) ||
+            !window.WorldsCoachPlanner || !teamsByCode[ourCode] || !teamsByCode[oppCode]) {
+            return flagshipPlan(scenarioKey);
+        }
+        return generatedPlan(ourCode, oppCode, scenarioKey);
+    }
+
+    function applyPlan(scenarioKey, rebuildNodes) {
+        var plan;
+        try {
+            plan = buildPlan(currentMatchup.ourCode, currentMatchup.oppCode, scenarioKey);
+        } catch (error) {
+            console.warn("Could not build the game plan; keeping the current one.", error);
+            return;
+        }
+        roster = plan.roster;
+        sequences = plan.sequences;
+        formationStates = plan.formationStates;
+        if (rebuildNodes) createPlayerNodes();
+        var text = plan.planText;
+        var lautaroPenalty = (isFlagshipMatchup(currentMatchup.ourCode, currentMatchup.oppCode) &&
+            playerControl && playerControl.value === "lautaro") ? -2 : 0;
+        var shownConfidence = text.confidence + lautaroPenalty;
+        planName.textContent = text.plan;
+        planWhy.textContent = text.why;
+        confidence.textContent = shownConfidence + "%";
+        updateView(activeView);
+        statusNode.textContent = "Plan updated: " + text.plan +
+            ". Illustrative confidence " + shownConfidence + "%.";
+    }
+
+    function applyMatchup(ourCode, oppCode) {
+        currentMatchup = { ourCode: ourCode, oppCode: oppCode };
+        var ourName = (teamsByCode[ourCode] && teamsByCode[ourCode].name) || ourCode;
+        var oppName = (teamsByCode[oppCode] && teamsByCode[oppCode].name) || oppCode;
+        var titleEl = room.querySelector("#coach-pitch-title");
+        if (titleEl) titleEl.textContent = ourName + " tactical plan against " + oppName;
+        if (pitch) {
+            pitch.setAttribute("aria-label", ourName + " tactical pitch. " + ourName +
+                " attacks from left to right; " + ourName + "'s right side is the lower half.");
+        }
+        var directionEl = room.querySelector("[data-pitch-direction]");
+        if (directionEl) directionEl.innerHTML = escapeHtml(ourName) + " attacks <b>→</b>";
+
+        // Scenario labels name the current team, not always Argentina.
+        var stateLabels = {
+            prematch: "Pre-match, 0–0", drawing: "70', level",
+            leading: "70', " + ourName + " leading",
+            trailing: "70', " + ourName + " trailing"
+        };
+        Array.prototype.forEach.call(stateControl.options, function (opt) {
+            if (stateLabels[opt.value]) opt.textContent = stateLabels[opt.value];
+        });
+        // The Álvarez ↔ Lautaro swap only makes sense for the Argentina flagship.
+        var forwardLabel = playerControl && playerControl.closest
+            ? playerControl.closest("label") : null;
+        if (forwardLabel) forwardLabel.hidden = !isFlagshipMatchup(ourCode, oppCode);
+
+        applyPlan(stateControl.value, true);
+    }
     var pitchResizeFrame = 0;
     var pitchResizeObserver = null;
 
@@ -845,6 +1077,15 @@
         if (element) element.textContent = value;
     }
 
+    function playerReportFor(id) {
+        if (id === "forward" && playerControl.value === "lautaro") return null;
+        if (playerReports[id]) return playerReports[id];
+        // Generated teams carry a report slug on the roster entry.
+        var entry = roster[id];
+        if (entry && entry.reportSlug) return { slug: entry.reportSlug };
+        return null;
+    }
+
     function formatTime(milliseconds) {
         var totalSeconds = Math.max(0, Math.round(milliseconds / 1000));
         var minutes = Math.floor(totalSeconds / 60);
@@ -858,9 +1099,14 @@
     }
 
     function updateForwardRoster() {
+        // The Álvarez ↔ Lautaro swap only applies to the Argentina flagship plan.
+        if (!isFlagshipMatchup(currentMatchup.ourCode, currentMatchup.oppCode) || !roster.forward) return;
         var lautaro = playerControl.value === "lautaro";
         roster.forward = {
             team: "ARG",
+            isOurs: true,
+            espnId: lautaro ? espnIds.lautaro : espnIds.forward,
+            wikiTitle: lautaro ? wikiTitles.lautaro : wikiTitles.forward,
             number: lautaro ? 22 : 9,
             name: lautaro ? "Lautaro Martínez" : "Julián Álvarez",
             surname: lautaro ? "Lautaro" : "Álvarez",
@@ -889,7 +1135,11 @@
         var surname = node.querySelector("small");
         number.textContent = player.number;
         surname.textContent = player.surname;
-        node.setAttribute("aria-label", player.name + ", number " + player.number + ", " + player.role + ". " + player.instruction);
+        node.setAttribute(
+            "aria-label",
+            player.name + ", number " + player.number + ", " + player.role + ". " +
+            player.instruction + " Activate for player details and report."
+        );
     }
 
     function positionTooltip(id) {
@@ -905,10 +1155,27 @@
         var player = roster[id];
         var position = currentPositions[id];
         if (!player || !position) return;
+        if (tooltipHideTimer) {
+            window.clearTimeout(tooltipHideTimer);
+            tooltipHideTimer = 0;
+        }
+        var report = playerReportFor(id);
+        var reportLink = report
+            ? '<a class="coach-report-link" href="' + playerReportBase + report.slug +
+                '/" target="_blank" rel="noopener">Open player report ↗</a>'
+            : "";
+        var metaLine = player.meta
+            ? '<em class="coach-tooltip-meta">' + escapeHtml(player.meta) + "</em>"
+            : "";
+        var description = player.instruction
+            ? "<small>" + escapeHtml(player.instruction) + "</small>"
+            : "";
         tacticalTooltip.innerHTML =
             '<img class="coach-tooltip-photo" alt="">' +
-            '<div class="coach-tooltip-copy"><strong>' + player.name + " · " + player.number +
-            "</strong><span>" + player.role + "</span><small>" + player.instruction + "</small></div>";
+            '<div class="coach-tooltip-copy"><strong>' + escapeHtml(player.name) + " · " + player.number +
+            "</strong><span>" + escapeHtml(player.role) + "</span>" + metaLine +
+            description + reportLink + "</div>";
+        tacticalTooltip.setAttribute("aria-label", player.name + " details");
         tacticalTooltip.classList.add("has-photo");
         activeTooltipId = id;
         var tooltipPhoto = tacticalTooltip.querySelector(".coach-tooltip-photo");
@@ -928,6 +1195,10 @@
 
     function hidePlayerTooltip(force) {
         if (tooltipPinned && !force) return;
+        if (tooltipHideTimer) {
+            window.clearTimeout(tooltipHideTimer);
+            tooltipHideTimer = 0;
+        }
         tacticalTooltip.hidden = true;
         tooltipPinned = false;
         activeTooltipId = null;
@@ -935,6 +1206,44 @@
             node.setAttribute("aria-expanded", "false");
         });
     }
+
+    function schedulePlayerTooltipHide() {
+        if (tooltipPinned) return;
+        if (tooltipHideTimer) window.clearTimeout(tooltipHideTimer);
+        tooltipHideTimer = window.setTimeout(function () {
+            tooltipHideTimer = 0;
+            hidePlayerTooltip(false);
+        }, 180);
+    }
+
+    function cancelPlayerTooltipHide() {
+        if (!tooltipHideTimer) return;
+        window.clearTimeout(tooltipHideTimer);
+        tooltipHideTimer = 0;
+    }
+
+    // National-flag disc per nation (recognisable at marker scale) + a number
+    // colour that reads on the centre of each flag. Every dot shows its own
+    // country's flag, so knockout matchups no longer reuse Argentina/France.
+    var FLAGS = {
+        ARG: { grad: "linear-gradient(180deg,#74acdf 0 33.34%,#ffffff 33.34% 66.67%,#74acdf 66.67%)", num: "#0b3563" },
+        FRA: { grad: "linear-gradient(90deg,#002395 0 33.34%,#ffffff 33.34% 66.67%,#ed2939 66.67%)", num: "#10203f" },
+        BRA: { grad: "radial-gradient(circle at 50% 50%,#002776 0 21%,#ffdf00 21% 46%,#009c3b 46%)", num: "#ffffff" },
+        CRO: { grad: "linear-gradient(180deg,#ff0000 0 33.34%,#ffffff 33.34% 66.67%,#171796 66.67%)", num: "#14143c" },
+        NED: { grad: "linear-gradient(180deg,#ae1c28 0 33.34%,#ffffff 33.34% 66.67%,#21468b 66.67%)", num: "#1b2f5e" },
+        MAR: { grad: "radial-gradient(circle at 50% 50%,#0a6b3a 0 15%,#c1272d 15%)", num: "#ffffff" },
+        POR: { grad: "linear-gradient(90deg,#006600 0 40%,#d10a11 40%)", num: "#ffffff" },
+        ESP: { grad: "linear-gradient(180deg,#aa151b 0 25%,#f1bf00 25% 75%,#aa151b 75%)", num: "#7a0f13" },
+        ENG: { grad: "linear-gradient(0deg,transparent 40%,#cf142b 40% 60%,transparent 60%),linear-gradient(90deg,transparent 40%,#cf142b 40% 60%,transparent 60%),#ffffff", num: "#ffffff" },
+        USA: { grad: "linear-gradient(180deg,#3c3b6e 0 42%,#b22234 42% 58%,#ffffff 58% 74%,#b22234 74%)", num: "#ffffff" },
+        POL: { grad: "linear-gradient(180deg,#ffffff 50%,#dc143c 50%)", num: "#c8102e" },
+        SEN: { grad: "linear-gradient(90deg,#00853f 0 33.34%,#fdef42 33.34% 66.67%,#e31b23 66.67%)", num: "#0a6b34" },
+        JPN: { grad: "radial-gradient(circle at 50% 50%,#bc002d 0 32%,#ffffff 32%)", num: "#ffffff" },
+        KOR: { grad: "radial-gradient(circle at 50% 50%,#cd2e3a 0 15%,#0047a0 15% 30%,#ffffff 30%)", num: "#ffffff" },
+        SUI: { grad: "linear-gradient(0deg,transparent 42%,#ffffff 42% 58%,transparent 58%),linear-gradient(90deg,transparent 42%,#ffffff 42% 58%,transparent 58%),#da291c", num: "#b31b1b" },
+        AUS: { grad: "linear-gradient(135deg,#00247d,#001a5e)", num: "#ffffff" },
+        _default: { grad: "linear-gradient(135deg,#5b6472,#3a4150)", num: "#ffffff" }
+    };
 
     function createPlayerNodes() {
         playersLayer.innerHTML = "";
@@ -946,11 +1255,27 @@
             var number = document.createElement("b");
             var surname = document.createElement("small");
             button.type = "button";
-            button.className = "coach-player " + (player.team === "ARG" ? "is-team" : "is-opponent");
+            button.className = "coach-player " + (player.isOurs ? "is-team" : "is-opponent") +
+                (player.isPlaceholder ? " is-placeholder" : "");
             button.dataset.playerId = id;
             button.setAttribute("aria-expanded", "false");
-            button.setAttribute("aria-describedby", "coach-player-tooltip");
-            marker.className = "coach-marker " + (player.team === "ARG" ? "is-team" : "is-opponent");
+            button.setAttribute("aria-controls", "coach-player-tooltip");
+            marker.className = "coach-marker " + (player.isOurs ? "is-team" : "is-opponent");
+            var flag = FLAGS[player.team] || FLAGS._default;
+            if (player.isPlaceholder) {
+                // Unrated depth: hollow neutral disc so it recedes behind the
+                // real flagged players.
+                marker.style.background = "rgba(140, 142, 150, 0.28)";
+                marker.style.color = "rgba(247, 242, 233, 0.85)";
+            } else {
+                // A soft dark scrim sits under the number so a white number is
+                // legible on any flag — even a white centre stripe (Croatia,
+                // France, Netherlands) — while the flag colours still read as a
+                // ring around it.
+                var scrim = "radial-gradient(circle at 50% 50%, rgba(8,6,10,0.82) 0%, rgba(8,6,10,0.74) 38%, rgba(8,6,10,0) 64%)";
+                marker.style.background = scrim + ", " + flag.grad;
+                marker.style.color = "#ffffff";
+            }
             number.textContent = player.number;
             surname.textContent = player.surname;
             marker.appendChild(number);
@@ -958,16 +1283,18 @@
             button.appendChild(surname);
             updatePlayerNode(button, id);
             button.addEventListener("mouseenter", function () {
+                cancelPlayerTooltipHide();
                 showPlayerTooltip(button, id, false);
             });
             button.addEventListener("mouseleave", function () {
-                hidePlayerTooltip(false);
+                schedulePlayerTooltipHide();
             });
             button.addEventListener("focus", function () {
+                cancelPlayerTooltipHide();
                 showPlayerTooltip(button, id, false);
             });
             button.addEventListener("blur", function () {
-                hidePlayerTooltip(false);
+                schedulePlayerTooltipHide();
             });
             button.addEventListener("click", function (event) {
                 event.stopPropagation();
@@ -1742,12 +2069,19 @@
         teamASelect.value = byCode.ARG ? "ARG" : teams[0].code;
         teamBSelect.value = byCode.FRA ? "FRA" : teams[Math.min(1, teams.length - 1)].code;
 
+        // Show the name each player goes by (from the player index) in the
+        // head-to-head ratings card, falling back to the full name.
+        function goesByName(player) {
+            var idx = player && player.id != null ? playerIndex[String(player.id)] : null;
+            return idx && idx.name ? idx.name : (player ? player.name : "");
+        }
+
         function playerRowHtml(player, index, topRating) {
             var width = Math.max(6, Math.round(((player.rating || 0) / (topRating || 1)) * 100));
             var subtitle = player.role || player.position || "";
             return "<li class=\"matchup-player\">" +
                 "<span class=\"matchup-player__rank\">" + (player.team_rank || index + 1) + "</span>" +
-                "<span class=\"matchup-player__name\">" + escapeHtml(player.name) +
+                "<span class=\"matchup-player__name\">" + escapeHtml(goesByName(player)) +
                 (subtitle ? "<em>" + escapeHtml(subtitle) + "</em>" : "") + "</span>" +
                 "<span class=\"matchup-player__bar\"><i style=\"--w: " + width + "%\"></i></span>" +
                 "<span class=\"matchup-player__rating\">" + formatRating(player.rating) + "</span>" +
@@ -1774,7 +2108,7 @@
         function topLine(team) {
             var top = team.players && team.players[0];
             return top
-                ? "<strong>" + escapeHtml(top.name) + "</strong><em>top rated · " + formatRating(top.rating) + "</em>"
+                ? "<strong>" + escapeHtml(goesByName(top)) + "</strong><em>top rated · " + formatRating(top.rating) + "</em>"
                 : "<em>No rated players yet</em>";
         }
 
@@ -1788,7 +2122,93 @@
                 "</div>";
         }
 
-        function render() {
+        var showcaseLabel = showcase ? showcase.querySelector(".coach-showcase__label") : null;
+        var matchupTitleNode = room.querySelector(".coach-matchup");
+        var fixturesNode = room.querySelector("[data-fixtures]");
+        var formulateTimer = null;
+
+        // Knockout fixtures as one-tap picks right at the board, so switching
+        // matchup is obvious (not just the dropdowns above).
+        function fixtureName(code) {
+            return byCode[code] ? byCode[code].name : code;
+        }
+
+        function renderFixtures() {
+            if (!fixturesNode || !window.WorldsCoachPlanner) return;
+            var rounds = [];
+            var byRound = {};
+            window.WorldsCoachPlanner.KNOCKOUTS.forEach(function (fx) {
+                if (!byRound[fx.round]) { byRound[fx.round] = []; rounds.push(fx.round); }
+                byRound[fx.round].push(fx);
+            });
+            var groups = rounds.map(function (round) {
+                var opts = byRound[round].map(function (fx) {
+                    return "<option value=\"" + fx.teamA + "|" + fx.teamB + "\">" +
+                        escapeHtml(fixtureName(fx.teamA)) + " vs " + escapeHtml(fixtureName(fx.teamB)) +
+                        "</option>";
+                }).join("");
+                return "<optgroup label=\"" + escapeHtml(round) + "\">" + opts + "</optgroup>";
+            }).join("");
+            fixturesNode.innerHTML =
+                "<label class=\"coach-fixtures__label\">" +
+                "<span>Jump to a knockout fixture</span>" +
+                "<select data-fixture-select aria-label=\"Jump to a knockout fixture\">" +
+                "<option value=\"\">Custom matchup</option>" + groups +
+                "</select></label>";
+        }
+
+        function markActiveFixture() {
+            if (!fixturesNode) return;
+            var select = fixturesNode.querySelector("[data-fixture-select]");
+            if (!select) return;
+            var key = teamASelect.value + "|" + teamBSelect.value;
+            var reverse = teamBSelect.value + "|" + teamASelect.value;
+            var match = "";
+            Array.prototype.forEach.call(select.options, function (opt) {
+                if (opt.value === key || opt.value === reverse) match = opt.value;
+            });
+            select.value = match;
+        }
+
+        if (fixturesNode) {
+            fixturesNode.addEventListener("change", function (event) {
+                var select = event.target.closest("[data-fixture-select]");
+                if (!select || !select.value) return;
+                var pair = select.value.split("|");
+                teamASelect.value = pair[0];
+                teamBSelect.value = pair[1];
+                render(true);
+            });
+        }
+
+        // Drive the tactical board from the selected matchup. The head-to-head
+        // ratings card above is rendered separately and always stays in sync.
+        function driveCoach(teamACode, teamBCode, teamA, teamB, animate) {
+            if (showcase) showcase.hidden = false;
+            if (matchupTitleNode) {
+                matchupTitleNode.textContent = teamA.name + " vs. " + teamB.name;
+                matchupTitleNode.setAttribute("aria-label", teamA.name + " versus " + teamB.name);
+            }
+            function commit() {
+                applyMatchup(teamACode, teamBCode);
+                if (showcaseLabel) {
+                    showcaseLabel.innerHTML = "<span>Featured</span> Interactive tactical plan &mdash; " +
+                        escapeHtml(teamA.name) + " vs " + escapeHtml(teamB.name);
+                }
+                if (pitch) pitch.classList.remove("is-formulating");
+            }
+            if (!animate) { commit(); return; }
+            if (showcaseLabel) {
+                showcaseLabel.innerHTML = "<span>Formulating</span> Building a game plan for " +
+                    escapeHtml(teamA.name) + " vs " + escapeHtml(teamB.name) + "&hellip;";
+            }
+            if (pitch) pitch.classList.add("is-formulating");
+            statusNode.textContent = "Formulating a game plan for " + teamA.name + " versus " + teamB.name + ".";
+            if (formulateTimer) window.clearTimeout(formulateTimer);
+            formulateTimer = window.setTimeout(commit, 520);
+        }
+
+        function render(animate) {
             if (teamASelect.value === teamBSelect.value) {
                 // Nudge the opponent to a different team so a matchup is always valid.
                 var alternate = teams.find(function (team) { return team.code !== teamASelect.value; });
@@ -1799,15 +2219,14 @@
             if (!teamA || !teamB) return;
             breakdown.innerHTML = headToHeadHtml(teamA, teamB) +
                 "<div class=\"matchup-cards\">" + teamCardHtml(teamA) + teamCardHtml(teamB) + "</div>";
-            if (showcase) {
-                var pair = [teamASelect.value, teamBSelect.value].slice().sort().join("-");
-                showcase.hidden = pair !== "ARG-FRA";
-            }
+            markActiveFixture();
+            driveCoach(teamASelect.value, teamBSelect.value, teamA, teamB, animate);
         }
 
-        teamASelect.addEventListener("change", render);
-        teamBSelect.addEventListener("change", render);
-        render();
+        teamASelect.addEventListener("change", function () { render(true); });
+        teamBSelect.addEventListener("change", function () { render(true); });
+        renderFixtures();
+        render(false);
     }
 
     var activeMode = "tool";
@@ -1884,20 +2303,27 @@
     }
 
     function updateScenario() {
-        var scenario = scenarios[stateControl.value];
-        var adjustedConfidence = scenario.confidence + (playerControl.value === "lautaro" ? -2 : 0);
-        planName.textContent = scenario.plan;
-        planWhy.textContent = scenario.why;
-        confidence.textContent = adjustedConfidence + "%";
-
-        updateView(activeView);
-        statusNode.textContent = "Recommendation updated: " + scenario.plan + ". Illustrative confidence " + adjustedConfidence + "%.";
+        // Rebuild the plan for the current matchup + scenario (no node rebuild —
+        // the roster ids are unchanged, only positions and text move).
+        applyPlan(stateControl.value, false);
     }
 
     function initializeInteractions() {
         createPlayerNodes();
         updateForwardRoster();
         initializeMatchup();
+
+        tacticalTooltip.addEventListener("mouseenter", cancelPlayerTooltipHide);
+        tacticalTooltip.addEventListener("mouseleave", schedulePlayerTooltipHide);
+        tacticalTooltip.addEventListener("focusin", cancelPlayerTooltipHide);
+        tacticalTooltip.addEventListener("focusout", function (event) {
+            if (!tacticalTooltip.contains(event.relatedTarget)) {
+                schedulePlayerTooltipHide();
+            }
+        });
+        tacticalTooltip.addEventListener("click", function (event) {
+            event.stopPropagation();
+        });
 
         // Static role cards (the forward card is refreshed by updateForwardRoster).
         room.querySelectorAll("[data-role-card]").forEach(function (card) {

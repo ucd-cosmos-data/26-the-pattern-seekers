@@ -1,0 +1,77 @@
+---
+title: "Youssef En-Nesyri — player profile"
+description: "This report uses tournament events and coverage-qualified StatsBomb 360 context. It is not an optical-tracking report or a subjective scouting grade."
+layout: "player-report"
+url: "/projects/worlds-coach-output/reports/youssef-en-nesyri/"
+playerId: "sb-6301"
+sourceUrl: "https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis/blob/718ae91e82bedbd53486a1e0381aaa70e124ba12/World-Cup-S-Bomb/results/reports/player_profiles/youssef-en-nesyri-6301.md"
+displayName: "Youssef En-Nesyri"
+wikiTitle: "Youssef En-Nesyri"
+headshotUrl: ""
+shirtNumber: ""
+overview: "Youssef En-Nesyri played as a forward for Morocco. His main role was target forward / penalty-box anchor, and the model ranked him #8 on the team. The notes below translate his tournament data into simple soccer terms."
+strengths:
+  - "Offers a strong goal threat when attacks reach the final third."
+  - "Competes well for headers and aerial balls."
+weaknesses:
+  - "Has less impact moving possession upfield."
+  - "Creates fewer chances than his stronger areas suggest."
+---
+## Ranking and role
+
+- Team: Morocco
+- Position group: Forward
+- Functional role: Target Forward / Penalty-Box Anchor
+- Probabilistic role: Finishing/Aerial Forward
+- Role entropy: 0.0000
+- Global rank: 95
+- Position rank: 11
+- Role rank: 3
+- Team rank: 8
+- Final player rating: 0.4783
+- Global ranking eligibility: eligible
+- Minutes: 553.8
+- Minutes reliability: 0.6486
+
+## Rating components
+
+| Metric | Value |
+|---|---|
+| vaep_off_scaled | 0.2553 |
+| vaep_def_scaled | 0.2968 |
+| vaep_per_touch | 0.0046 |
+| open_play_xt_p90 | 0.0043 |
+| set_piece_xt_p90 | 0.0008 |
+| role_adjusted_value | 0.4332 |
+| completeness_score | 0.4599 |
+| off_ball_score | 0.4394 |
+
+## Continuous role vector
+
+| Metric | Value |
+|---|---|
+| progression_score | 0.1419 |
+| creation_score | 0.1993 |
+| finishing_score | 0.8439 |
+| pressing_score | 0.6341 |
+| defensive_score | 0.3005 |
+| ball_security_score | 0.4204 |
+| aerial_score | 0.8369 |
+
+## Spatial, 360 and passing-network context
+
+| Metric | Value |
+|---|---|
+| sb360_coverage | 0.8641 |
+| mean_defenders_within_3m | 0.6690 |
+| mean_defenders_within_5m | 1.1009 |
+| mean_nearest_defender_m | 8.8457 |
+| mean_passing_lane_availability | 0.8149 |
+| packing_index_mean | 0.2817 |
+| mean_space_received | 0.5294 |
+| network_pagerank | 0.0396 |
+| network_betweenness | 0.0007 |
+| network_entropy | 0.9569 |
+| build_up_involvement_ratio | 0.6378 |
+
+Missing values indicate unavailable evidence; they are not converted into zero contribution.

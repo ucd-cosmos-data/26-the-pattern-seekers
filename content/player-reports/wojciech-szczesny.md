@@ -1,0 +1,77 @@
+---
+title: "Wojciech Szczęsny — player profile"
+description: "This report uses tournament events and coverage-qualified StatsBomb 360 context. It is not an optical-tracking report or a subjective scouting grade."
+layout: "player-report"
+url: "/projects/worlds-coach-output/reports/wojciech-szczesny/"
+playerId: "sb-5669"
+sourceUrl: "https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis/blob/718ae91e82bedbd53486a1e0381aaa70e124ba12/World-Cup-S-Bomb/results/reports/player_profiles/wojciech-szcz-sny-5669.md"
+displayName: "Wojciech Szczęsny"
+wikiTitle: "Wojciech Szczęsny"
+headshotUrl: ""
+shirtNumber: ""
+overview: "Wojciech Szczęsny was Poland's goalkeeper. The model ranked him #1 within the team, using shot-stopping, cross control, sweeping, and distribution data."
+strengths:
+  - "Provides a steady goalkeeper presence and a safe passing option in buildup."
+  - "Commands his box and organises the defence in front of him."
+weaknesses:
+  - "The available tournament sample is small, so goalkeeper conclusions remain cautious."
+---
+## Ranking and role
+
+- Team: Poland
+- Position group: Goalkeeper
+- Functional role: Goalkeeper
+- Probabilistic role: Goalkeeper
+- Role entropy: 0.0000
+- Global rank: not available
+- Position rank: 2
+- Role rank: 2
+- Team rank: 1
+- Final player rating: 0.6371
+- Global ranking eligibility: goalkeeper-only ranking
+- Minutes: 389.8
+- Minutes reliability: 0.5651
+
+## Rating components
+
+| Metric | Value |
+|---|---|
+| post_shot_xg_proxy | 12.3807 |
+| goals_prevented_proxy_p90 | 1.7043 |
+| save_rate | 0.8333 |
+| claims_p90 | 1.6164 |
+| cross_stopping_rate | 0.1014 |
+| sweeper_actions_p90 | 0.6928 |
+| distribution_under_pressure | 0.5000 |
+| penalty_save_rate_shrunk | 0.4571 |
+| goalkeeper_feature_coverage | 1.0000 |
+
+## Continuous role vector
+
+| Metric | Value |
+|---|---|
+| progression_score | 0.6247 |
+| creation_score | 0.3423 |
+| finishing_score | 0.1749 |
+| pressing_score | 0.0502 |
+| defensive_score | 0.1737 |
+| ball_security_score | 0.1824 |
+| aerial_score | 0.0681 |
+
+## Spatial, 360 and passing-network context
+
+| Metric | Value |
+|---|---|
+| sb360_coverage | 0.7040 |
+| mean_defenders_within_3m | 0.0909 |
+| mean_defenders_within_5m | 0.2045 |
+| mean_nearest_defender_m | 13.5718 |
+| mean_passing_lane_availability | 0.8776 |
+| packing_index_mean | 1.2879 |
+| mean_space_received | 0.9400 |
+| network_pagerank | 0.0445 |
+| network_betweenness | 0.0629 |
+| network_entropy | 0.8179 |
+| build_up_involvement_ratio | 0.8571 |
+
+Missing values indicate unavailable evidence; they are not converted into zero contribution.
