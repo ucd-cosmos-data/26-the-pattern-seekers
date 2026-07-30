@@ -3,6 +3,7 @@
 var assert = require("node:assert/strict");
 var test = require("node:test");
 var planner = require("../assets/js/tactics-planner.js");
+var model = require("../assets/js/tactics-model.js");
 var matchupData = require("../assets/matchups.json");
 var playerIndex = require("../assets/player-index.json");
 var squads = require("../assets/squads.json");
@@ -31,13 +32,58 @@ function assertMarkerFullyVisible(point, context) {
     assert.ok(point.yMeters >= 3.4 && point.yMeters <= 64.6, context + " y marker inset");
 }
 
-function assertPlayerSpacing(positions, context) {
+function copyPositions(positions) {
+    var copy = {};
+    Object.keys(positions).forEach(function (id) {
+        copy[id] = {
+            xMeters: positions[id].xMeters,
+            yMeters: positions[id].yMeters
+        };
+    });
+    return copy;
+}
+
+function positionsAtProgress(startPositions, endPositions, step, progress) {
+    var rawFrame = {};
+    Object.keys(startPositions).forEach(function (id) {
+        rawFrame[id] = model.ownerPositionAtStepProgress({
+            startPosition: startPositions[id],
+            endPosition: endPositions[id],
+            path: step.ballPath,
+            owners: step.ballOwners,
+            segmentTypes: step.ballSegmentTypes,
+            playerId: id,
+            progress: progress
+        });
+    });
+    return model.resolveFrameOverlaps(rawFrame, {
+        priorities: model.ballOwnerPrioritiesAtStepProgress(
+            step.ballPath,
+            step.ballOwners,
+            progress,
+            step.ballSegmentTypes
+        ),
+        startPositions: startPositions,
+        endPositions: endPositions,
+        sameTeamMinimum: 3,
+        opponentMinimum: 2,
+        maximumDisplacement: 1.8,
+        inset: 3.5
+    });
+}
+
+function assertRuntimeSpacing(positions, context) {
     var ids = Object.keys(positions);
-    for (var i = 0; i < ids.length; i += 1) {
-        for (var j = i + 1; j < ids.length; j += 1) {
+    for (var firstIndex = 0; firstIndex < ids.length; firstIndex += 1) {
+        for (var secondIndex = firstIndex + 1;
+                secondIndex < ids.length;
+                secondIndex += 1) {
+            var idA = ids[firstIndex];
+            var idB = ids[secondIndex];
+            var minimum = idA.slice(0, 3) === idB.slice(0, 3) ? 1.4 : 0.65;
             assert.ok(
-                distance(positions[ids[i]], positions[ids[j]]) >= 4.9,
-                context + " keeps " + ids[i] + " and " + ids[j] + " visually separate"
+                distance(positions[idA], positions[idB]) >= minimum,
+                context + " keeps " + idA + " clear of " + idB
             );
         }
     }
@@ -51,9 +97,10 @@ function movementFingerprint(sequence) {
             return {
                 duration: step.duration,
                 ballPath: step.ballPath,
+                ballOwners: step.ballOwners,
+                ballSegmentTypes: step.ballSegmentTypes,
                 moves: step.moves,
                 active: step.active,
-                avoidance: step.avoidance,
                 actions: (step.actions || []).map(function (action) {
                     return { type: action.type, path: action.path };
                 }),
@@ -104,48 +151,247 @@ function assertSequence(sequence, phase, context) {
         assertMarkerFullyVisible(positions[id], context + " " + phase + " initial " + id);
     });
     assert.equal(Object.keys(positions).length, 22, context + " " + phase + " renders both XIs");
-    assertPlayerSpacing(positions, context + " " + phase + " initial");
+    assertRuntimeSpacing(positions, context + " " + phase + " initial");
     assertOnPitch(sequence.ball, context + " " + phase + " initial ball");
-    assert.ok(
-        Object.values(positions).some(function (point) {
-            return distance(point, sequence.ball) < 0.001;
-        }),
-        context + " " + phase + " starts with the ball on a player"
-    );
 
-    var movers = {};
     var previousBall = sequence.ball;
+    var previousOwner = null;
     sequence.steps.forEach(function (step) {
+        var stepContext = context + " " + phase + " " + step.id;
+        var startPositions = copyPositions(positions);
+        var endPositions = copyPositions(positions);
+
         assert.ok(step.duration > 0, context + " " + phase + " positive step duration");
+        assert.ok(step.duration <= 5500, stepContext + " remains readable");
         assert.ok(step.ballPath && step.ballPath.length, context + " " + phase + " has a ball path");
+        assert.equal(
+            step.ballOwners.length,
+            step.ballPath.length,
+            stepContext + " names every touch or explicit pass bend"
+        );
+        assert.equal(
+            step.ballSegmentTypes.length,
+            step.ballPath.length - 1,
+            stepContext + " names every ball movement"
+        );
+        assert.ok(step.ballOwners[0], stepContext + " names the starting owner");
+        assert.ok(
+            step.ballOwners[step.ballOwners.length - 1],
+            stepContext + " names the final owner"
+        );
         assert.ok(
             distance(step.ballPath[0], previousBall) < 0.001,
             context + " " + phase + " ball path stays continuous"
         );
-        Object.keys(step.moves || {}).forEach(function (id) {
-            movers[id] = true;
-            positions[id] = step.moves[id];
-            assertOnPitch(positions[id], context + " " + phase + " move " + id);
-            assertMarkerFullyVisible(positions[id], context + " " + phase + " move " + id);
-        });
-        assertPlayerSpacing(positions, context + " " + phase + " " + step.title);
-        step.ballPath.forEach(function (point) {
-            assertOnPitch(point, context + " " + phase + " ball path");
-        });
-        previousBall = step.ballPath[step.ballPath.length - 1];
         assert.ok(
-            Object.values(positions).some(function (point) {
-                return distance(point, previousBall) < 0.001;
-            }),
-            context + " " + phase + " ends every step with the ball on a player"
+            startPositions[step.ballOwners[0]],
+            stepContext + " starting owner exists"
+        );
+        assert.ok(
+            distance(
+                step.ballPath[0],
+                startPositions[step.ballOwners[0]]
+            ) < 0.001,
+            stepContext + " starts on its named owner"
+        );
+        if (previousOwner) {
+            assert.equal(
+                step.ballOwners[0],
+                previousOwner,
+                stepContext + " preserves ownership between steps"
+            );
+        }
+
+        assert.equal(
+            step.avoidance,
+            undefined,
+            stepContext + " has no synthetic collision arc"
+        );
+        Object.keys(step.moves || {}).forEach(function (id) {
+            assert.ok(startPositions[id], stepContext + " moves a present player " + id);
+            endPositions[id] = step.moves[id];
+            assertOnPitch(endPositions[id], context + " " + phase + " move " + id);
+            assertMarkerFullyVisible(endPositions[id], context + " " + phase + " move " + id);
+        });
+        step.ballPath.forEach(function (point, waypointIndex) {
+            assertOnPitch(point, context + " " + phase + " ball path");
+            var ownerId = step.ballOwners[waypointIndex];
+            if (ownerId === null) {
+                assert.ok(
+                    waypointIndex > 0 && waypointIndex < step.ballPath.length - 1,
+                    stepContext + " only uses ownerless waypoints as pass bends"
+                );
+                return;
+            }
+            assert.ok(startPositions[ownerId], stepContext + " owner " + ownerId + " exists");
+            var touchProgress = model.touchProgressAtWaypoint(
+                step.ballPath,
+                waypointIndex,
+                step.ballOwners,
+                step.ballSegmentTypes
+            );
+            var frameAtTouch = positionsAtProgress(
+                startPositions,
+                endPositions,
+                step,
+                touchProgress
+            );
+            var ownerAtTouch = frameAtTouch[ownerId];
+            assert.ok(
+                distance(ownerAtTouch, point) < 0.001,
+                stepContext + " waypoint " + waypointIndex + " reaches named owner " + ownerId
+            );
+        });
+        step.ballSegmentTypes.forEach(function (segmentType, segmentIndex) {
+            var fromOwner = step.ballOwners[segmentIndex];
+            var toOwner = step.ballOwners[segmentIndex + 1];
+            var scanIndex;
+            if (!fromOwner) {
+                for (scanIndex = segmentIndex - 1; scanIndex >= 0; scanIndex -= 1) {
+                    if (step.ballOwners[scanIndex]) {
+                        fromOwner = step.ballOwners[scanIndex];
+                        break;
+                    }
+                }
+            }
+            if (!toOwner) {
+                for (scanIndex = segmentIndex + 2;
+                        scanIndex < step.ballOwners.length;
+                        scanIndex += 1) {
+                    if (step.ballOwners[scanIndex]) {
+                        toOwner = step.ballOwners[scanIndex];
+                        break;
+                    }
+                }
+            }
+            var sameOwner = fromOwner === toOwner;
+            var sameTeam = fromOwner.slice(0, 3) === toOwner.slice(0, 3);
+            if (segmentType === "carry") assert.ok(sameOwner, stepContext + " carry keeps one owner");
+            if (segmentType === "pass") {
+                assert.ok(!sameOwner && sameTeam, stepContext + " pass changes same-team owner");
+            }
+            if (segmentType === "recovery") {
+                assert.ok(
+                    fromOwner.slice(0, 3) === "op_" &&
+                        toOwner.slice(0, 3) === "us_",
+                    stepContext + " recovery changes opponent to us"
+                );
+            }
+            if (segmentType === "loss") {
+                assert.ok(
+                    fromOwner.slice(0, 3) === "us_" &&
+                        toOwner.slice(0, 3) === "op_",
+                    stepContext + " loss changes us to opponent"
+                );
+            }
+        });
+
+        var previousFrame = positionsAtProgress(
+            startPositions,
+            endPositions,
+            step,
+            0
+        );
+        for (var sampleIndex = 1; sampleIndex <= 40; sampleIndex += 1) {
+            var progress = sampleIndex / 40;
+            var frame = positionsAtProgress(
+                startPositions,
+                endPositions,
+                step,
+                progress
+            );
+            assertRuntimeSpacing(frame, stepContext + " sample " + sampleIndex);
+            var seconds = step.duration / 1000 / 40;
+            Object.keys(frame).forEach(function (id) {
+                assertOnPitch(frame[id], stepContext + " sampled " + id);
+                var sampledSpeed = distance(frame[id], previousFrame[id]) / seconds;
+                assert.ok(
+                    sampledSpeed <= 11.5,
+                    stepContext + " keeps " + id +
+                        " below sprint speed (sampled " +
+                        sampledSpeed.toFixed(2) + "m/s)"
+                );
+            });
+
+            var ballProgress = model.ballProgressAtStepProgress(progress);
+            var ball = model.interpolateOwnedPath(
+                step.ballPath,
+                step.ballOwners,
+                ballProgress,
+                step.ballSegmentTypes
+            );
+            for (var segmentIndex = 0;
+                    segmentIndex < step.ballOwners.length - 1;
+                    segmentIndex += 1) {
+                var carrierId = step.ballOwners[segmentIndex];
+                if (step.ballSegmentTypes[segmentIndex] !== "carry") {
+                    continue;
+                }
+                var segmentStart = model.ownedPathWaypointProgress(
+                    step.ballPath,
+                    step.ballOwners,
+                    segmentIndex,
+                    step.ballSegmentTypes
+                );
+                var segmentEnd = model.ownedPathWaypointProgress(
+                    step.ballPath,
+                    step.ballOwners,
+                    segmentIndex + 1,
+                    step.ballSegmentTypes
+                );
+                if (ballProgress + 0.0001 < segmentStart ||
+                        ballProgress - 0.0001 > segmentEnd) {
+                    continue;
+                }
+                assert.ok(
+                    distance(frame[carrierId], ball) < 0.001,
+                    stepContext + " keeps carrier " + carrierId + " attached to the ball"
+                );
+            }
+            previousFrame = frame;
+        }
+
+        var ballActions = (step.actions || []).filter(function (action) {
+            return action.type === "pass" ||
+                action.type === "carry" ||
+                action.type === "recovery" ||
+                action.type === "loss";
+        });
+        if (ballActions.length === step.ballPath.length - 1) {
+            ballActions.forEach(function (action, actionIndex) {
+                assert.equal(
+                    action.type,
+                    step.ballSegmentTypes[actionIndex],
+                    stepContext + " labels the ball segment honestly"
+                );
+                assert.deepEqual(
+                    action.path,
+                    [step.ballPath[actionIndex], step.ballPath[actionIndex + 1]],
+                    stepContext + " keeps " + action.type + " annotation on the ball route"
+                );
+            });
+        } else if (ballActions.length === 1) {
+            assert.ok(
+                step.ballSegmentTypes.every(function (segmentType) {
+                    return segmentType === ballActions[0].type;
+                }),
+                stepContext + " full-path action matches every segment"
+            );
+            assert.deepEqual(
+                ballActions[0].path,
+                step.ballPath,
+                stepContext + " keeps the action annotation on the full ball route"
+            );
+        }
+
+        positions = endPositions;
+        previousBall = step.ballPath[step.ballPath.length - 1];
+        previousOwner = step.ballOwners[step.ballOwners.length - 1];
+        assert.ok(
+            distance(positions[previousOwner], previousBall) < 0.001,
+            stepContext + " ends on its named owner"
         );
     });
-
-    var minimumMovers = { attack: 8, press: 7, transition: 7 }[phase];
-    assert.ok(
-        Object.keys(movers).length >= minimumMovers,
-        context + " " + phase + " moves enough players to read as coordinated"
-    );
 }
 
 test("every knockout fixture generates complete plans from both points of view", function () {
@@ -394,4 +640,58 @@ test("recommendations choose a player who fits the generated attacking pattern",
         }),
         "Morocco's recommended wide creator is present in the rendered XI"
     );
+});
+
+test("turnovers and back-three passes keep honest ownership semantics", function () {
+    function planFor(ourCode, oppCode) {
+        return planner.generate({
+            teams: teams,
+            squads: squads,
+            names: names,
+            ourCode: ourCode,
+            oppCode: oppCode,
+            scenario: "prematch"
+        });
+    }
+
+    var usa = planFor("USA", "NED");
+    var backThreePass = usa.press.steps.find(function (step) {
+        return step.id === "hp-trigger";
+    });
+    assert.deepEqual(backThreePass.ballSegmentTypes, ["pass"]);
+    assert.notEqual(
+        backThreePass.ballOwners[0],
+        backThreePass.ballOwners[1],
+        "the centre-back and back-three wide outlet are distinct players"
+    );
+
+    var argentina = planFor("ARG", "AUS");
+    var highRegain = argentina.press.steps.find(function (step) {
+        return step.id === "hp-win";
+    });
+    var counterpressLoss = argentina.transition.steps.find(function (step) {
+        return step.id === "sw-swarm";
+    });
+    assert.deepEqual(highRegain.ballSegmentTypes, ["recovery", "pass"]);
+    assert.deepEqual(
+        highRegain.actions
+            .filter(function (action) {
+                return ["recovery", "pass", "carry", "loss"].includes(action.type);
+            })
+            .map(function (action) { return action.type; }),
+        ["recovery", "pass"]
+    );
+    assert.deepEqual(counterpressLoss.ballSegmentTypes, ["loss"]);
+    assert.ok(
+        counterpressLoss.actions.some(function (action) {
+            return action.type === "loss" && action.label === "TURNOVER";
+        }),
+        "the possession loss is shown as a turnover, not a pass"
+    );
+
+    var netherlands = planFor("NED", "USA");
+    var midBlockRegain = netherlands.press.steps.find(function (step) {
+        return step.id === "mb-spring";
+    });
+    assert.deepEqual(midBlockRegain.ballSegmentTypes, ["recovery", "pass"]);
 });

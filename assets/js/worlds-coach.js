@@ -697,9 +697,39 @@
         }
     ];
 
+    function ownerTeam(ownerId) {
+        var value = String(ownerId || "");
+        var separator = value.indexOf("_");
+        return separator === -1 ? value : value.slice(0, separator);
+    }
+
+    function namedSegmentOwners(owners, segmentIndex) {
+        var fromOwner = owners[segmentIndex];
+        var toOwner = owners[segmentIndex + 1];
+        var index;
+        if (!fromOwner) {
+            for (index = segmentIndex - 1; index >= 0; index -= 1) {
+                if (owners[index]) {
+                    fromOwner = owners[index];
+                    break;
+                }
+            }
+        }
+        if (!toOwner) {
+            for (index = segmentIndex + 2; index < owners.length; index += 1) {
+                if (owners[index]) {
+                    toOwner = owners[index];
+                    break;
+                }
+            }
+        }
+        return { from: fromOwner, to: toOwner };
+    }
+
     function compileSequence(initialPositions, initialBall, steps) {
         var positions = model.copyPositions(initialPositions);
         var ball = point(initialBall.xMeters, initialBall.yMeters);
+        var ballOwner = null;
         var elapsed = 0;
 
         var compiledSteps = steps.map(function (step) {
@@ -724,6 +754,75 @@
                     throw new Error(step.id + " contains an out-of-bounds ball coordinate.");
                 }
             });
+            if (step.ballOwners) {
+                if (step.ballOwners.length !== ballPath.length) {
+                    throw new Error(step.id + " requires one ball owner entry per waypoint.");
+                }
+                step.ballOwners.forEach(function (ownerId, waypointIndex) {
+                    if (ownerId !== null && !startPositions[ownerId]) {
+                        throw new Error(
+                            step.id + " assigns waypoint " + waypointIndex +
+                            " to an unknown player."
+                        );
+                    }
+                });
+                if (!step.ballSegmentTypes ||
+                        step.ballSegmentTypes.length !==
+                            Math.max(0, ballPath.length - 1)) {
+                    throw new Error(step.id + " requires one ball segment type per movement.");
+                }
+                step.ballSegmentTypes.forEach(function (segmentType, segmentIndex) {
+                    var namedOwners = namedSegmentOwners(
+                        step.ballOwners,
+                        segmentIndex
+                    );
+                    var sameOwner = namedOwners.from === namedOwners.to;
+                    var sameTeam =
+                        ownerTeam(namedOwners.from) === ownerTeam(namedOwners.to);
+                    var valid = (
+                        segmentType === "carry" && sameOwner
+                    ) || (
+                        segmentType === "pass" && !sameOwner && sameTeam
+                    ) || (
+                        segmentType === "recovery" &&
+                        ownerTeam(namedOwners.from) === "op" &&
+                        ownerTeam(namedOwners.to) === "us"
+                    ) || (
+                        segmentType === "loss" &&
+                        ownerTeam(namedOwners.from) === "us" &&
+                        ownerTeam(namedOwners.to) === "op"
+                    );
+                    if (!valid) {
+                        throw new Error(
+                            step.id + " has ownership inconsistent with " +
+                            segmentType + "."
+                        );
+                    }
+                    if ((!step.ballOwners[segmentIndex] ||
+                            !step.ballOwners[segmentIndex + 1]) &&
+                            segmentType !== "pass") {
+                        throw new Error(
+                            step.id + " uses an ownerless bend outside a pass."
+                        );
+                    }
+                });
+                if (!step.ballOwners[0] ||
+                        !model.pointsEqual(ballPath[0], startPositions[step.ballOwners[0]])) {
+                    throw new Error(step.id + " does not start on its named ball owner.");
+                }
+                if (ballOwner && step.ballOwners[0] !== ballOwner) {
+                    throw new Error(step.id + " changes owner between continuous steps.");
+                }
+                var finalOwner = step.ballOwners[step.ballOwners.length - 1];
+                if (!finalOwner ||
+                        !model.pointsEqual(
+                            ballPath[ballPath.length - 1],
+                            endPositions[finalOwner]
+                        )) {
+                    throw new Error(step.id + " does not finish on its named ball owner.");
+                }
+                ballOwner = finalOwner;
+            }
             if (step.ballCarrier) {
                 var carrier = step.ballCarrier;
                 if (!startPositions[carrier.playerId]) {
@@ -1482,7 +1581,9 @@
     }
 
     function actionMarker(type) {
-        if (type === "press" || type === "recovery") return "url(#coach-arrow-red)";
+        if (type === "press" || type === "recovery" || type === "loss") {
+            return "url(#coach-arrow-red)";
+        }
         if (type === "protect") return "url(#coach-arrow-green)";
         return "url(#coach-arrow-blue)";
     }
@@ -1747,46 +1848,6 @@
         });
     }
 
-    function separateFramePositions(positions, minimumDistance) {
-        var ids = Object.keys(positions).sort();
-        for (var pass = 0; pass < 6; pass += 1) {
-            var adjusted = false;
-            for (var i = 0; i < ids.length; i += 1) {
-                for (var j = i + 1; j < ids.length; j += 1) {
-                    var a = positions[ids[i]], b = positions[ids[j]];
-                    var dx = b.xMeters - a.xMeters;
-                    var dy = b.yMeters - a.yMeters;
-                    var d = Math.sqrt(dx * dx + dy * dy);
-                    if (d >= minimumDistance) continue;
-                    if (d < 0.001) {
-                        var seed = 0;
-                        var key = ids[i] + "|" + ids[j];
-                        for (var k = 0; k < key.length; k += 1) {
-                            seed = (seed * 31 + key.charCodeAt(k)) % 360;
-                        }
-                        var angle = seed * Math.PI / 180;
-                        dx = Math.cos(angle);
-                        dy = Math.sin(angle);
-                        d = 1;
-                    }
-                    var push = (minimumDistance - d) / 2 + 0.03;
-                    var ux = dx / d, uy = dy / d;
-                    positions[ids[i]] = markerSafePoint(point(
-                        a.xMeters - ux * push,
-                        a.yMeters - uy * push
-                    ));
-                    positions[ids[j]] = markerSafePoint(point(
-                        b.xMeters + ux * push,
-                        b.yMeters + uy * push
-                    ));
-                    adjusted = true;
-                }
-            }
-            if (!adjusted) break;
-        }
-        return positions;
-    }
-
     function sequenceAtProgress(sequence, progress) {
         var elapsed = model.clamp(progress, 0, 1) * sequence.duration;
         var step = sequence.steps[sequence.steps.length - 1];
@@ -1804,21 +1865,40 @@
         var localProgress = step.duration
             ? model.clamp((elapsed - step.startTime) / step.duration, 0, 1)
             : 1;
-        var easedProgress = localProgress * localProgress * (3 - 2 * localProgress);
-        var ball = model.interpolatePath(step.ballPath, localProgress);
+        var easedProgress = model.smoothstep(localProgress);
+        var ballProgress = step.ballOwners
+            ? model.ballProgressAtStepProgress(localProgress)
+            : localProgress;
+        var ball = step.ballOwners
+            ? model.interpolateOwnedPath(
+                step.ballPath,
+                step.ballOwners,
+                ballProgress,
+                step.ballSegmentTypes
+            )
+            : model.interpolatePath(step.ballPath, ballProgress);
         var positions = {};
 
         Object.keys(step.startPositions).forEach(function (id) {
-            positions[id] = markerSafePoint(
-                model.interpolatePoint(step.startPositions[id], step.endPositions[id], easedProgress)
-            );
-            var avoidance = step.avoidance && step.avoidance[id];
-            if (avoidance) {
-                var arc = Math.sin(Math.PI * localProgress);
-                positions[id] = markerSafePoint(point(
-                    positions[id].xMeters + avoidance.xMeters * arc,
-                    positions[id].yMeters + avoidance.yMeters * arc
-                ));
+            if (step.ballOwners) {
+                var ownedPosition = model.ownerPositionAtStepProgress({
+                    startPosition: step.startPositions[id],
+                    endPosition: step.endPositions[id],
+                    path: step.ballPath,
+                    owners: step.ballOwners,
+                    segmentTypes: step.ballSegmentTypes,
+                    playerId: id,
+                    progress: localProgress
+                });
+                positions[id] = markerSafePoint(ownedPosition);
+            } else {
+                positions[id] = markerSafePoint(
+                    model.interpolatePoint(
+                        step.startPositions[id],
+                        step.endPositions[id],
+                        easedProgress
+                    )
+                );
             }
         });
 
@@ -1833,7 +1913,26 @@
                 )
             );
         }
-        separateFramePositions(positions, 5.2);
+        var ownerPriorities = step.ballOwners
+            ? model.ballOwnerPrioritiesAtStepProgress(
+                step.ballPath,
+                step.ballOwners,
+                localProgress,
+                step.ballSegmentTypes
+            )
+            : {};
+        if (step.ballCarrier) {
+            ownerPriorities[step.ballCarrier.playerId] = 1;
+        }
+        positions = model.resolveFrameOverlaps(positions, {
+            priorities: ownerPriorities,
+            startPositions: step.startPositions,
+            endPositions: step.endPositions,
+            sameTeamMinimum: 3,
+            opponentMinimum: 2,
+            maximumDisplacement: 1.8,
+            inset: 3.5
+        });
 
         return {
             elapsed: elapsed,
