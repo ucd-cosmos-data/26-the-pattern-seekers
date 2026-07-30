@@ -5929,6 +5929,55 @@ body:has(.player-report-page) .theme-toggle {
     font-weight: 500;
 }
 
+/* Flip sides — swap which team the interactive board is planning for. */
+.coach-context__matchup {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.4rem;
+}
+.coach-flip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    min-height: 3.6rem;
+    padding: 0 1.4rem;
+    border: 0.1rem solid rgba(217, 182, 93, 0.45);
+    border-radius: 999px;
+    background: rgba(217, 182, 93, 0.08);
+    color: var(--qatar-cream, #f7f2e9);
+    font: inherit;
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition:
+        border-color 180ms var(--ps-ease),
+        background-color 180ms var(--ps-ease),
+        transform 120ms var(--ps-ease);
+}
+.coach-flip:hover {
+    border-color: rgba(217, 182, 93, 0.85);
+    background: rgba(217, 182, 93, 0.16);
+}
+.coach-flip:focus-visible {
+    outline: 0.2rem solid var(--qatar-gold, #d9b65d);
+    outline-offset: 0.2rem;
+}
+.coach-flip:active {
+    transform: translateY(0.1rem);
+}
+.coach-flip__icon {
+    font-size: 1.55rem;
+    line-height: 1;
+    color: var(--qatar-gold, #d9b65d);
+    transition: transform 260ms var(--ps-ease);
+}
+.coach-flip:hover .coach-flip__icon,
+.coach-flip:focus-visible .coach-flip__icon {
+    transform: rotate(180deg);
+}
+
 /* Tooltip: imported rating/rank line under the role. */
 .coach-tactical-tooltip .coach-tooltip-meta {
     display: block;

@@ -94,13 +94,22 @@
     }
 
     function classify(player) {
-        var pos = (player.position || "") + " " + (player.role || "");
-        pos = pos.toLowerCase();
+        var position = String(player.position || "").toLowerCase();
+        var role = String(player.role || "").toLowerCase();
+        var pos = position + " " + role;
         if (pos.indexOf("goalkeeper") !== -1 || pos.indexOf("keeper") !== -1) return "GK";
         // Check defence before "wing" so "wingback"/"fullback" stay defenders.
         if (pos.indexOf("back") !== -1 || pos.indexOf("defender") !== -1) return "DEF";
-        if (pos.indexOf("forward") !== -1 || pos.indexOf("striker") !== -1 ||
-            pos.indexOf("winger") !== -1 || pos.indexOf("wing") !== -1) return "FWD";
+        // Prefer the authored functional role over a broad position such as
+        // "Attacking Midfield/Wing": a Box-to-Box Boufal is a midfielder, while
+        // a Target Forward En-Nesyri must be reserved for the forward line.
+        // A wide creator listed in the hybrid "Attacking Midfield/Wing" bucket
+        // still belongs in the front line. Without this, Croatia spends one of
+        // its three midfield places on Perišić and drops Modrić from the XI.
+        if (/target|forward|striker|winger|poacher|finish|wide creator/.test(role)) return "FWD";
+        if (/midfield|box-to-box|engine|ball-winner|playmak|creator|holding|controlling|regista/.test(role)) return "MID";
+        if (position.indexOf("forward") !== -1 || position.indexOf("striker") !== -1 ||
+            position.indexOf("winger") !== -1 || position.indexOf("wing") !== -1) return "FWD";
         if (pos.indexOf("midfield") !== -1) return "MID";
         return "MID";
     }
@@ -225,10 +234,19 @@
             var label = slotLabel(slot.type, idx, typeCounts[slot.type]);
             var player = pool.buckets[slot.type].shift();
             if (!player) {
-                // Fall back to any remaining rated player, then a placeholder.
-                var spill = pool.buckets.MID.shift() || pool.buckets.FWD.shift() ||
-                    pool.buckets.DEF.shift();
-                player = spill || null;
+                // Use only surplus players from another line, taking its lowest
+                // priority extra so the best goalkeeper/defenders/mids/forwards
+                // remain reserved for their own unfilled slots.
+                var spillOrder = ["MID", "FWD", "DEF", "GK"];
+                for (var spillIndex = 0; spillIndex < spillOrder.length; spillIndex += 1) {
+                    var spillType = spillOrder[spillIndex];
+                    if (spillType === slot.type) continue;
+                    var futureNeed = (typeCounts[spillType] || 0) - (typeIndex[spillType] || 0);
+                    if (pool.buckets[spillType].length > futureNeed) {
+                        player = pool.buckets[spillType].pop();
+                        break;
+                    }
+                }
             }
             var baseNum = SLOT_NUMBER[label] || SLOT_NUMBER[slot.type] || 20;
             // Squad slot with no rated player (teams below the rating floor).
@@ -272,18 +290,31 @@
     // full-back — pick the top-rated forward / winger / creator, else fall back.
     // `names` is the id -> goes-by map from the player index, so the name in the
     // recommendation matches the names on the board exactly.
-    function keyAttackerName(team, names) {
+    function keyAttackerName(team, names, style) {
         var players = (team.players || []).slice().sort(function (a, b) {
             return (b.rating || 0) - (a.rating || 0);
         });
+        var tiers = {
+            wing: [["winger"], ["attacking wingback"], ["wide"], ["wingback", "fullback"]],
+            wingback: [["attacking wingback"], ["progressive winger"], ["wide", "winger"], ["wingback", "fullback"]],
+            central: [["playmak", "creat", "attacking mid"], ["midfield", "box-to-box", "engine"]],
+            direct: [["target", "striker", "forward", "poacher", "finish"]],
+            counter: [["winger", "forward", "striker", "attacking mid"], ["wide", "creat"]],
+            buildup: [["playmak", "creat"], ["winger", "wide"], ["wingback", "fullback"]]
+        }[style] || [["forward", "striker", "winger", "wing", "attacking mid", "creat", "playmak"]];
         var attacker = null;
-        for (var i = 0; i < players.length; i += 1) {
-            var s = ((players[i].role || "") + " " + (players[i].position || "")).toLowerCase();
-            if (s.indexOf("forward") !== -1 || s.indexOf("striker") !== -1 ||
-                s.indexOf("winger") !== -1 || s.indexOf("wing") !== -1 ||
-                s.indexOf("attacking mid") !== -1 || s.indexOf("creat") !== -1 ||
-                s.indexOf("playmak") !== -1 || s.indexOf("poacher") !== -1) {
-                if (s.indexOf("back") === -1) { attacker = players[i]; break; }
+        for (var tier = 0; tier < tiers.length && !attacker; tier += 1) {
+            for (var i = 0; i < players.length; i += 1) {
+                var position = (players[i].position || "").toLowerCase();
+                if (style === "central" &&
+                    /fullback|wingback|center back|centre-back|goalkeeper/.test(position)) {
+                    continue;
+                }
+                var s = ((players[i].role || "") + " " + position).toLowerCase();
+                if (tiers[tier].some(function (token) { return s.indexOf(token) !== -1; })) {
+                    attacker = players[i];
+                    break;
+                }
             }
         }
         var pick = attacker || players[0];
@@ -327,25 +358,29 @@
         return "isolate";
     }
 
+    function possessive(name) {
+        return /s$/i.test(name) ? name + "'" : name + "'s";
+    }
+
     // Recommendation copy keyed off the SAME attack style that drives the
     // board, so the words on the card always match what the players do.
     function planText(ourTeam, oppTeam, flank, scenarioKey, style, names) {
-        var star = keyAttackerName(ourTeam, names);
+        var star = keyAttackerName(ourTeam, names, style);
         var opp = oppTeam.name;
         var wide = flank === "right" ? "right" : "left";
 
         var approaches = {
             wing: {
                 plan: "Stretch " + opp + " wide, then isolate " + star,
-                why: "Switch the play to pull " + opp + "'s block across, then feed " + star + " one-v-one on the " + wide + " to beat his marker and get to the byline for the cutback."
+                why: "Switch the play to pull " + possessive(opp) + " block across, then feed " + star + " one-v-one on the " + wide + " to beat his marker and get to the byline for the cutback."
             },
             central: {
                 plan: "Play through the lines to " + star,
-                why: "Circulate to draw " + opp + "'s midfield up, find " + star + " in the pocket between the lines, then a third-man run splits the centre-backs."
+                why: "Circulate to draw " + possessive(opp) + " midfield up, find " + star + " in the pocket between the lines, then a third-man run splits the centre-backs."
             },
             direct: {
                 plan: "Get it wide early and load the box",
-                why: "No slow build — get width quickly and whip early crosses in so " + opp + "'s centre-backs defend on the turn, with runners crashing the box around " + star + "."
+                why: "No slow build — get width quickly and whip early crosses in so " + possessive(opp) + " centre-backs defend on the turn, with runners crashing the box around " + star + "."
             },
             counter: {
                 plan: "Sit compact and hit " + opp + " on the break",
@@ -357,7 +392,7 @@
             },
             buildup: {
                 plan: "Play out, switch, and spring " + star,
-                why: "Play out from the back to bait " + opp + "'s press, beat the first line, then switch the play and spring " + star + " in behind on the far side."
+                why: "Play out from the back to bait " + possessive(opp) + " press, beat the first line, then switch the play and spring " + star + " in behind on the far side."
             }
         };
         var base = approaches[style] || approaches.wing;
@@ -1238,7 +1273,9 @@
         BRA: { shape: [4, 3, 3], flank: "left", attack: "wing", press: "high", trans: "swarm" },
         ARG: { shape: [4, 3, 3], flank: "right", attack: "central", press: "high", trans: "swarm" },
         FRA: { shape: [4, 3, 3], flank: "left", attack: "counter", press: "mid", trans: "counter" },
-        ENG: { shape: [4, 3, 3], flank: "right", attack: "wing", press: "high", trans: "swarm" },
+        // The generated England plan is built around Luke Shaw, so its strong
+        // flank must be the left in both the copy and the choreography.
+        ENG: { shape: [4, 3, 3], flank: "left", attack: "wing", press: "high", trans: "swarm" },
         NED: { shape: [3, 4, 3], flank: "right", attack: "wingback", press: "mid", trans: "counter" },
         CRO: { shape: [4, 3, 3], flank: "right", attack: "central", press: "mid", trans: "secure" },
         POR: { shape: [4, 3, 3], flank: "left", attack: "buildup", press: "mid", trans: "secure" },
@@ -1281,6 +1318,152 @@
     function pressFor(style, a, b, f, s) { return (PRESS[style] || PRESS.mid)(a, b, f, s); }
     function transFor(style, a, b, f, s) { return (TRANS[style] || TRANS.swarm)(a, b, f, s); }
 
+    // Keep player markers legible at every authored keyframe. Tactical pressure
+    // still reads as close proximity, but two dots should never occupy the same
+    // patch of grass. This pass works on the full 22-player state, including
+    // players a particular step did not otherwise move.
+    function separatePlayers(seq, minimumDistance) {
+        var current = {};
+        Object.keys(seq.initial).forEach(function (id) {
+            current[id] = point(seq.initial[id].xMeters, seq.initial[id].yMeters);
+        });
+
+        function separate(state) {
+            var ids = Object.keys(state).sort();
+            var changed = {};
+            for (var pass = 0; pass < 10; pass += 1) {
+                var adjusted = false;
+                for (var i = 0; i < ids.length; i += 1) {
+                    for (var j = i + 1; j < ids.length; j += 1) {
+                        var a = state[ids[i]], b = state[ids[j]];
+                        var dx = b.xMeters - a.xMeters;
+                        var dy = b.yMeters - a.yMeters;
+                        var d = Math.sqrt(dx * dx + dy * dy);
+                        if (d >= minimumDistance) continue;
+                        if (d < 0.001) {
+                            // Stable direction for exact collisions.
+                            var angle = (hash(ids[i] + "|" + ids[j]) % 360) * Math.PI / 180;
+                            dx = Math.cos(angle);
+                            dy = Math.sin(angle);
+                            d = 1;
+                        }
+                        var push = (minimumDistance - d) / 2 + 0.04;
+                        var ux = dx / d, uy = dy / d;
+                        state[ids[i]] = onPitch(point(
+                            a.xMeters - ux * push,
+                            a.yMeters - uy * push
+                        ));
+                        state[ids[j]] = onPitch(point(
+                            b.xMeters + ux * push,
+                            b.yMeters + uy * push
+                        ));
+                        changed[ids[i]] = true;
+                        changed[ids[j]] = true;
+                        adjusted = true;
+                    }
+                }
+                if (!adjusted) break;
+            }
+            return changed;
+        }
+
+        separate(current);
+        seq.initial = Object.assign({}, current);
+        seq.steps.forEach(function (step) {
+            Object.keys(step.moves || {}).forEach(function (id) {
+                current[id] = point(step.moves[id].xMeters, step.moves[id].yMeters);
+            });
+            var changed = separate(current);
+            Object.keys(changed).forEach(function (id) {
+                step.moves[id] = point(current[id].xMeters, current[id].yMeters);
+            });
+        });
+        return seq;
+    }
+
+    // Linear player tracks can still cross between two well-spaced keyframes.
+    // Attach a small, deterministic arc to those tracks so markers pass around
+    // one another instead of phasing through each other halfway through a move.
+    function addMotionAvoidance(seq, minimumDistance) {
+        var current = {};
+        Object.keys(seq.initial).forEach(function (id) {
+            current[id] = point(seq.initial[id].xMeters, seq.initial[id].yMeters);
+        });
+
+        seq.steps.forEach(function (step) {
+            var start = {};
+            var end = {};
+            Object.keys(current).forEach(function (id) {
+                start[id] = point(current[id].xMeters, current[id].yMeters);
+                var target = step.moves[id] || current[id];
+                end[id] = point(target.xMeters, target.yMeters);
+            });
+            var ids = Object.keys(start).sort();
+            var offsets = {};
+
+            function addOffset(id, x, y) {
+                if (!offsets[id]) offsets[id] = { xMeters: 0, yMeters: 0 };
+                offsets[id].xMeters += x;
+                offsets[id].yMeters += y;
+            }
+
+            for (var i = 0; i < ids.length; i += 1) {
+                for (var j = i + 1; j < ids.length; j += 1) {
+                    var idA = ids[i], idB = ids[j];
+                    var closest = Infinity, closestT = 0.5;
+                    var closestDx = 0, closestDy = 0;
+                    for (var sample = 1; sample < 20; sample += 1) {
+                        var t = sample / 20;
+                        var eased = t * t * (3 - 2 * t);
+                        var ax = start[idA].xMeters + (end[idA].xMeters - start[idA].xMeters) * eased;
+                        var ay = start[idA].yMeters + (end[idA].yMeters - start[idA].yMeters) * eased;
+                        var bx = start[idB].xMeters + (end[idB].xMeters - start[idB].xMeters) * eased;
+                        var by = start[idB].yMeters + (end[idB].yMeters - start[idB].yMeters) * eased;
+                        var dx = bx - ax, dy = by - ay;
+                        var d = Math.sqrt(dx * dx + dy * dy);
+                        if (d < closest) {
+                            closest = d;
+                            closestT = t;
+                            closestDx = dx;
+                            closestDy = dy;
+                        }
+                    }
+                    if (closest >= minimumDistance) continue;
+
+                    var rvx = (end[idB].xMeters - start[idB].xMeters) -
+                        (end[idA].xMeters - start[idA].xMeters);
+                    var rvy = (end[idB].yMeters - start[idB].yMeters) -
+                        (end[idA].yMeters - start[idA].yMeters);
+                    var rvLen = Math.sqrt(rvx * rvx + rvy * rvy);
+                    var px, py;
+                    if (rvLen > 0.01) {
+                        px = -rvy / rvLen;
+                        py = rvx / rvLen;
+                    } else {
+                        var angle = (hash(idA + ">" + idB) % 360) * Math.PI / 180;
+                        px = Math.cos(angle);
+                        py = Math.sin(angle);
+                    }
+                    if (closestDx * px + closestDy * py < 0) {
+                        px *= -1;
+                        py *= -1;
+                    }
+                    var arcAtClosest = Math.max(0.25, Math.sin(Math.PI * closestT));
+                    var relativeOffset = Math.min(
+                        8,
+                        (minimumDistance - closest + 0.7) / arcAtClosest
+                    );
+                    addOffset(idA, -px * relativeOffset / 2, -py * relativeOffset / 2);
+                    addOffset(idB, px * relativeOffset / 2, py * relativeOffset / 2);
+                }
+            }
+
+            if (Object.keys(offsets).length) step.avoidance = offsets;
+            current = end;
+        });
+        return seq;
+    }
+
     // Make every pass legible: snap the ball's resting points (sequence start +
     // the end of each step) onto the actual receiving player, so the ball
     // always travels dot-to-dot instead of into empty grass. Continuity is
@@ -1320,7 +1503,19 @@
         seq.steps.forEach(function (st) {
             var bp = st.ballPath;
             if (!bp || !bp.length) return;
-            bp[0] = point(b.xMeters, b.yMeters);
+            var receiver = bp[bp.length - 1];
+            if (bp.length === 1 && ballDist(b, receiver) > 0.01) {
+                // A one-point path represents a new resting point, not both the
+                // start and end. Preserve the snapped receiver by expanding it
+                // into a proper dot-to-dot path.
+                st.ballPath = [
+                    point(b.xMeters, b.yMeters),
+                    point(receiver.xMeters, receiver.yMeters)
+                ];
+                bp = st.ballPath;
+            } else {
+                bp[0] = point(b.xMeters, b.yMeters);
+            }
             b = bp[bp.length - 1];
         });
         return seq;
@@ -1441,9 +1636,15 @@
                 scenario: scenarioKey
             },
             roster: roster,
-            attack: snapBall(attackFor(prof.attack, ourSlots, oppSlots, flank, scenario), "us_"),
-            press: snapBall(pressFor(prof.press, ourSlots, oppSlots, flank, scenario), ""),
-            transition: snapBall(transFor(prof.trans, ourSlots, oppSlots, flank, scenario), ""),
+            attack: snapBall(addMotionAvoidance(separatePlayers(
+                attackFor(prof.attack, ourSlots, oppSlots, flank, scenario), 5.2
+            ), 5.2), "us_"),
+            press: snapBall(addMotionAvoidance(separatePlayers(
+                pressFor(prof.press, ourSlots, oppSlots, flank, scenario), 5.2
+            ), 5.2), ""),
+            transition: snapBall(addMotionAvoidance(separatePlayers(
+                transFor(prof.trans, ourSlots, oppSlots, flank, scenario), 5.2
+            ), 5.2), ""),
             formationStates: formationStates(ourSlots, oppSlots, ourCounts, scenario),
             scenarioText: { plan: text.plan, why: text.why, confidence: confidence }
         };

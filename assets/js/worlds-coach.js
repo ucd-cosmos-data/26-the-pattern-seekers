@@ -900,8 +900,11 @@
     var FLAGSHIP_SHIFT = { prematch: 0, leading: -6, drawing: 2, trailing: 7 };
 
     function isFlagshipMatchup(ourCode, oppCode) {
-        return (ourCode === "ARG" && oppCode === "FRA") ||
-            (ourCode === "FRA" && oppCode === "ARG");
+        // The hand-authored flagship is specifically Argentina's point of view.
+        // France vs Argentina must use the generated France plan; treating this
+        // check as order-independent makes a flipped board silently keep showing
+        // Argentina's players, roles, recommendation and choreography.
+        return ourCode === "ARG" && oppCode === "FRA";
     }
 
     function shiftPositions(map, dx, ourIds) {
@@ -1019,9 +1022,9 @@
         sequences = plan.sequences;
         formationStates = plan.formationStates;
         if (rebuildNodes) createPlayerNodes();
-        updateRoleCards();
-        updateForwardRoster();
         var text = plan.planText;
+        updateRoleCards(text);
+        updateForwardRoster();
         var lautaroPenalty = (isFlagshipMatchup(currentMatchup.ourCode, currentMatchup.oppCode) &&
             playerControl && playerControl.value === "lautaro") ? -2 : 0;
         var shownConfidence = text.confidence + lautaroPenalty;
@@ -1128,7 +1131,7 @@
     // The Player-roles cards show the CURRENT team's key players. The Argentina
     // flagship keeps its hand-authored cards; every other team populates the
     // four cards with its four highest-rated players.
-    function updateRoleCards() {
+    function updateRoleCards(planText) {
         var grid = room.querySelector(".coach-role-grid");
         if (!grid) return;
         if (roleGridOriginal === null) roleGridOriginal = grid.innerHTML;
@@ -1145,6 +1148,19 @@
         }).sort(function (a, b) {
             return (roster[b].rating || 0) - (roster[a].rating || 0);
         });
+        // The recommendation's focal player must also appear in Player roles,
+        // even when four teammates have a higher imported rating.
+        var recommendationCopy = planText
+            ? String(planText.plan || "") + " " + String(planText.why || "")
+            : "";
+        var focalId = ourIds.find(function (id) {
+            return roster[id].name && recommendationCopy.indexOf(roster[id].name) !== -1;
+        });
+        if (focalId) {
+            ourIds = [focalId].concat(ourIds.filter(function (id) {
+                return id !== focalId;
+            }));
+        }
         grid.querySelectorAll("[data-role-card]").forEach(function (card, i) {
             var id = ourIds[i];
             if (!id) { card.hidden = true; return; }
@@ -1693,6 +1709,46 @@
         });
     }
 
+    function separateFramePositions(positions, minimumDistance) {
+        var ids = Object.keys(positions).sort();
+        for (var pass = 0; pass < 6; pass += 1) {
+            var adjusted = false;
+            for (var i = 0; i < ids.length; i += 1) {
+                for (var j = i + 1; j < ids.length; j += 1) {
+                    var a = positions[ids[i]], b = positions[ids[j]];
+                    var dx = b.xMeters - a.xMeters;
+                    var dy = b.yMeters - a.yMeters;
+                    var d = Math.sqrt(dx * dx + dy * dy);
+                    if (d >= minimumDistance) continue;
+                    if (d < 0.001) {
+                        var seed = 0;
+                        var key = ids[i] + "|" + ids[j];
+                        for (var k = 0; k < key.length; k += 1) {
+                            seed = (seed * 31 + key.charCodeAt(k)) % 360;
+                        }
+                        var angle = seed * Math.PI / 180;
+                        dx = Math.cos(angle);
+                        dy = Math.sin(angle);
+                        d = 1;
+                    }
+                    var push = (minimumDistance - d) / 2 + 0.03;
+                    var ux = dx / d, uy = dy / d;
+                    positions[ids[i]] = point(
+                        model.clamp(a.xMeters - ux * push, 1, 104),
+                        model.clamp(a.yMeters - uy * push, 1, 67)
+                    );
+                    positions[ids[j]] = point(
+                        model.clamp(b.xMeters + ux * push, 1, 104),
+                        model.clamp(b.yMeters + uy * push, 1, 67)
+                    );
+                    adjusted = true;
+                }
+            }
+            if (!adjusted) break;
+        }
+        return positions;
+    }
+
     function sequenceAtProgress(sequence, progress) {
         var elapsed = model.clamp(progress, 0, 1) * sequence.duration;
         var step = sequence.steps[sequence.steps.length - 1];
@@ -1716,6 +1772,14 @@
 
         Object.keys(step.startPositions).forEach(function (id) {
             positions[id] = model.interpolatePoint(step.startPositions[id], step.endPositions[id], easedProgress);
+            var avoidance = step.avoidance && step.avoidance[id];
+            if (avoidance) {
+                var arc = Math.sin(Math.PI * localProgress);
+                positions[id] = point(
+                    model.clamp(positions[id].xMeters + avoidance.xMeters * arc, 1, 104),
+                    model.clamp(positions[id].yMeters + avoidance.yMeters * arc, 1, 67)
+                );
+            }
         });
 
         if (step.ballCarrier) {
@@ -1727,6 +1791,7 @@
                 localProgress
             );
         }
+        separateFramePositions(positions, 5.2);
 
         return {
             elapsed: elapsed,
@@ -2112,7 +2177,15 @@
         return value == null ? "—" : value.toFixed(3);
     }
 
+    function possessiveTeamName(value) {
+        var name = String(value || "");
+        return /s$/i.test(name) ? name + "'" : name + "'s";
+    }
+
+    var matchupInitialized = false;
+
     function initializeMatchup() {
+        if (matchupInitialized) return;
         var dataNode = room.querySelector("[data-matchup-data]");
         var teamASelect = room.querySelector("[data-team-a]");
         var teamBSelect = room.querySelector("[data-team-b]");
@@ -2128,6 +2201,7 @@
         }
         var teams = (data && data.teams) || [];
         if (!teams.length) return;
+        matchupInitialized = true;
 
         var byCode = {};
         teams.forEach(function (team) { byCode[team.code] = team; });
@@ -2253,6 +2327,20 @@
             });
         }
 
+        // Flip sides: swap which team is "our team" (the point of view the board
+        // is built for). Works for every matchup — the whole pipeline (roster,
+        // board choreography, recommendation, role cards, flags) keys off the two
+        // selects, so swapping them re-plans from the opponent's perspective.
+        var flipButton = room.querySelector("[data-flip-sides]");
+        if (flipButton) {
+            flipButton.addEventListener("click", function () {
+                var previousOur = teamASelect.value;
+                teamASelect.value = teamBSelect.value;
+                teamBSelect.value = previousOur;
+                render(true);
+            });
+        }
+
         // Drive the tactical board from the selected matchup. The head-to-head
         // ratings card above is rendered separately and always stays in sync.
         function driveCoach(teamACode, teamBCode, teamA, teamB, animate) {
@@ -2260,6 +2348,18 @@
             if (matchupTitleNode) {
                 matchupTitleNode.textContent = teamA.name + " vs. " + teamB.name;
                 matchupTitleNode.setAttribute("aria-label", teamA.name + " versus " + teamB.name);
+            }
+            if (flipButton) {
+                var flipLabel = flipButton.querySelector(".coach-flip__label");
+                if (flipLabel) flipLabel.textContent = "Plan as " + teamB.name;
+                flipButton.setAttribute(
+                    "aria-label",
+                    "Flip sides — build " + possessiveTeamName(teamB.name) + " game plan against " + teamA.name
+                );
+                flipButton.setAttribute(
+                    "title",
+                    "Show " + possessiveTeamName(teamB.name) + " tactical plan against " + teamA.name
+                );
             }
             function commit() {
                 applyMatchup(teamACode, teamBCode);
@@ -2383,7 +2483,6 @@
     function initializeInteractions() {
         createPlayerNodes();
         updateForwardRoster();
-        initializeMatchup();
 
         tacticalTooltip.addEventListener("mouseenter", cancelPlayerTooltipHide);
         tacticalTooltip.addEventListener("mouseleave", schedulePlayerTooltipHide);
