@@ -284,32 +284,90 @@
         return Math.round(clamp(base, 47, 86));
     }
 
+    function topPlayer(team) {
+        return (team.players || []).slice().sort(function (a, b) {
+            return (b.rating || 0) - (a.rating || 0);
+        })[0] || null;
+    }
+
+    // Map the team's best player to the attacking mechanism the plan leans on,
+    // so different star profiles produce genuinely different recommendations.
+    function attackArchetype(player) {
+        var s = (((player && player.role) || "") + " " + ((player && player.position) || "")).toLowerCase();
+        if (s.indexOf("target") !== -1 || s.indexOf("poacher") !== -1 || s.indexOf("finisher") !== -1) return "box";
+        if (s.indexOf("playmak") !== -1 || s.indexOf("creat") !== -1 || s.indexOf("attacking mid") !== -1) return "between";
+        if (s.indexOf("winger") !== -1 || s.indexOf("wing") !== -1 || s.indexOf("wide") !== -1) return "isolate";
+        if (s.indexOf("box-to-box") !== -1 || s.indexOf("engine") !== -1 || s.indexOf("ball-winner") !== -1 ||
+            s.indexOf("deep-lying") !== -1 || s.indexOf("defensive mid") !== -1) return "transition";
+        if (s.indexOf("sweeper") !== -1 || s.indexOf("keeper") !== -1 ||
+            (s.indexOf("back") !== -1 && s.indexOf("wing") === -1)) return "buildup";
+        return "isolate";
+    }
+
     function planText(ourTeam, oppTeam, flank, scenarioKey) {
         var star = topPlayerName(ourTeam);
+        var opp = oppTeam.name;
         var wide = flank === "right" ? "right" : "left";
-        var s = scenarioKey;
-        if (s === "leading") {
-            return {
-                plan: "Compact control with selective " + wide + "-channel releases",
-                why: "Protect the centre first against " + oppTeam.name + ", then use the space they leave as they push on — release " + star + " on the break."
-            };
-        }
-        if (s === "trailing") {
-            return {
-                plan: "High 3–2–5 press to force the game",
-                why: "Commit six forward, counterpress on every loss, and overload the " + wide + " to isolate " + star + " — accepting more transition risk against " + oppTeam.name + "."
-            };
-        }
-        if (s === "drawing") {
-            return {
-                plan: "Controlled overload with an earlier " + wide + "-side release",
-                why: "Keep the " + wide + "-side route but release earlier while the rest defence stays intact against " + oppTeam.name + "."
-            };
-        }
-        return {
-            plan: "Controlled possession, then a " + wide + "-side overload",
-            why: "Draw " + oppTeam.name + " in, release " + star + " in the " + wide + " half-space, then attack the cutback zone."
+        var arche = attackArchetype(topPlayer(ourTeam));
+        var diff = strengthOf(ourTeam) - strengthOf(oppTeam);
+
+        var approaches = {
+            isolate: {
+                plan: "Stretch " + opp + " wide, then isolate " + star,
+                why: "Switch the point of attack to pull " + opp + "'s block across, then feed " + star + " one-v-one on the " + wide + " to beat his marker and get to the byline."
+            },
+            box: {
+                plan: "Attack the outside early and load the box",
+                why: "Get width quickly and cross first-time so " + opp + "'s centre-backs defend on the turn — flood the box for " + star + " and the second-ball runners."
+            },
+            between: {
+                plan: "Play through the lines to " + star,
+                why: "Draw " + opp + "'s midfield up, then find " + star + " between the lines in the " + wide + " half-space to turn and release the runners in behind."
+            },
+            transition: {
+                plan: "Win it high and break through " + star,
+                why: "Press to force turnovers in " + opp + "'s half, then attack at speed through " + star + " before they recover their shape."
+            },
+            buildup: {
+                plan: "Build from the back to draw " + opp + " out",
+                why: "Play out patiently to bait " + opp + "'s press, progress through midfield, and release " + star + " into the space in behind."
+            }
         };
+        var base = approaches[arche] || approaches.isolate;
+
+        // Strength gap reframes the game plan.
+        if (diff <= -0.05) {
+            base = {
+                plan: "Sit compact and counter through " + star,
+                why: "Concede the ball to " + opp + ", stay narrow and disciplined, then break at pace through " + star + " the moment you turn it over."
+            };
+        } else if (diff >= 0.06) {
+            base = {
+                plan: base.plan,
+                why: "Against a deep " + opp + " block, " + base.why.charAt(0).toLowerCase() + base.why.slice(1)
+            };
+        }
+
+        // Score-and-time scenario overrides / modifiers.
+        if (scenarioKey === "leading") {
+            return {
+                plan: "Manage the lead, punish on the break",
+                why: "Protect the result: sit a fraction deeper and stay compact against " + opp + ", then hurt them in transition through " + star + " as they commit forward."
+            };
+        }
+        if (scenarioKey === "trailing") {
+            return {
+                plan: "Throw numbers forward to chase it",
+                why: "Push the full-backs on, overload the " + wide + ", and gamble bodies around " + star + " — accept the transition risk against " + opp + " to force the game."
+            };
+        }
+        if (scenarioKey === "drawing") {
+            return {
+                plan: base.plan + " — and take the risk",
+                why: base.why + " With the game level, commit an extra runner and release a beat earlier."
+            };
+        }
+        return base;
     }
 
     // ---- sequence builders (ball threaded for validator continuity) --------
