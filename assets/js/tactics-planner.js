@@ -270,7 +270,9 @@
 
     // The recommendation should name an attacking threat, not the best-rated
     // full-back — pick the top-rated forward / winger / creator, else fall back.
-    function keyAttackerName(team) {
+    // `names` is the id -> goes-by map from the player index, so the name in the
+    // recommendation matches the names on the board exactly.
+    function keyAttackerName(team, names) {
         var players = (team.players || []).slice().sort(function (a, b) {
             return (b.rating || 0) - (a.rating || 0);
         });
@@ -285,7 +287,8 @@
             }
         }
         var pick = attacker || players[0];
-        return pick ? shortName(pick.name) : team.name;
+        if (!pick) return team.name;
+        return (names && pick.id != null && names[String(pick.id)]) || shortName(pick.name);
     }
 
     // Scenario knobs: how high we build, how many we commit, how aggressive the
@@ -326,8 +329,8 @@
 
     // Recommendation copy keyed off the SAME attack style that drives the
     // board, so the words on the card always match what the players do.
-    function planText(ourTeam, oppTeam, flank, scenarioKey, style) {
-        var star = keyAttackerName(ourTeam);
+    function planText(ourTeam, oppTeam, flank, scenarioKey, style, names) {
+        var star = keyAttackerName(ourTeam, names);
         var opp = oppTeam.name;
         var wide = flank === "right" ? "right" : "left";
 
@@ -1427,7 +1430,7 @@
         fillRoster(roster, ourSlots, ourCode, "ours", assignPlayers(ourPool, ourCounts), true);
         fillRoster(roster, oppSlots, oppCode, "theirs", assignPlayers(oppPool, oppCounts), false);
 
-        var text = planText(ourTeam, oppTeam, flank, scenarioKey, prof.attack);
+        var text = planText(ourTeam, oppTeam, flank, scenarioKey, prof.attack, opts.names || null);
         var confidence = confidenceFor(ourTeam, oppTeam, scenarioKey);
 
         return {

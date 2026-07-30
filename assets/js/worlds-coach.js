@@ -836,6 +836,11 @@
             console.warn("Player index could not be loaded.", error);
         }
     }
+    // id -> goes-by name, so the recommendation names players exactly like the board.
+    var playerGoesBy = {};
+    Object.keys(playerIndex).forEach(function (id) {
+        if (playerIndex[id] && playerIndex[id].name) playerGoesBy[id] = playerIndex[id].name;
+    });
 
     // Full appearance squads so generated XIs fill with real players.
     var squadsData = room.querySelector("[data-squads]");
@@ -944,7 +949,8 @@
 
     function generatedPlan(ourCode, oppCode, scenarioKey) {
         var gen = window.WorldsCoachPlanner.generate({
-            teams: teamsByCode, squads: squads, ourCode: ourCode, oppCode: oppCode, scenario: scenarioKey
+            teams: teamsByCode, squads: squads, names: playerGoesBy,
+            ourCode: ourCode, oppCode: oppCode, scenario: scenarioKey
         });
         var genRoster = {};
         Object.keys(gen.roster).forEach(function (id) {
