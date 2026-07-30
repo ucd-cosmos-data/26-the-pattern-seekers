@@ -2167,13 +2167,6 @@
         color: #ffffff;
     }
 
-    .coach-player.is-opponent b {
-        display: block;
-        color: #ffffff;
-        font-size: clamp(0.55rem, 0.65vw, 0.72rem);
-        font-weight: 700;
-    }
-
     .coach-ball {
         position: absolute;
         z-index: 8;
@@ -5947,19 +5940,15 @@ body:has(.player-report-page) .theme-toggle {
     color: var(--qatar-gold, #d9b65d);
 }
 
-/* Three-tier hierarchy that survives similar flags:
-   our team = full-size flags with a bright gold rim;
-   opponent = smaller, desaturated flags;
-   unrated depth = small hollow discs. */
-.coach-player.is-team > .coach-marker {
-    box-shadow: 0 0 0 0.16rem rgba(217, 182, 93, 0.55), 0 0.2rem 0.7rem rgba(0, 0, 0, 0.42);
-}
+/* Uniform dots for both teams — same size, ring and weight. The flags tell the
+   sides apart, and the gold ring still appears on hover / focus / active. */
+.coach-player.is-team > .coach-marker,
 .coach-player.is-opponent > .coach-marker {
-    transform: scale(0.82);
-    border-color: rgba(247, 242, 233, 0.55);
-    opacity: 0.9;
-    filter: saturate(0.82);
-    box-shadow: 0 0.15rem 0.5rem rgba(0, 0, 0, 0.35);
+    transform: none;
+    opacity: 1;
+    filter: none;
+    border-color: rgba(255, 255, 255, 0.92);
+    box-shadow: 0 0.2rem 0.6rem rgba(0, 0, 0, 0.4);
 }
 .coach-player.is-placeholder > .coach-marker {
     border-style: dashed !important;
