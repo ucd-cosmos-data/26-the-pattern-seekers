@@ -114,7 +114,7 @@
         "Depay": "Depay", "Bellingham": "Bellingham", "Di María": "Di María",
         "Cancelo": "Cancelo", "Boufal": "Boufal", "Ziyech": "Ziyech",
         "Hakimi": "Hakimi", "Perišić": "Perišić", "Kramarić": "Kramarić",
-        "Modrić": "Modrić", "Griezmann": "Griezmann"
+        "Modrić": "Modrić", "Griezmann": "Griezmann", "Olmo": "Dani Olmo"
     };
     var CONNECTORS = { de: 1, da: 1, dos: 1, do: 1, van: 1, von: 1, el: 1, le: 1, "júnior": 1 };
 
