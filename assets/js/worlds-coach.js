@@ -4,9 +4,17 @@
     var room = document.querySelector("[data-coach-room]");
     var model = window.WorldsCoachModel;
     if (!room || !model) return;
+    var PLAYER_INSET_METRES = 3.5;
 
     function point(xMeters, yMeters) {
         return { xMeters: xMeters, yMeters: yMeters };
+    }
+
+    function markerSafePoint(source) {
+        return point(
+            model.clamp(source.xMeters, PLAYER_INSET_METRES, model.PITCH.length - PLAYER_INSET_METRES),
+            model.clamp(source.yMeters, PLAYER_INSET_METRES, model.PITCH.width - PLAYER_INSET_METRES)
+        );
     }
 
     function mergePositions() {
@@ -1032,12 +1040,18 @@
         planWhy.textContent = text.why;
         confidence.textContent = shownConfidence + "%";
         updateView(activeView);
-        statusNode.textContent = "Plan updated: " + text.plan +
-            ". Illustrative confidence " + shownConfidence + "%.";
+        var statusPlan = String(text.plan || "").trim();
+        statusNode.textContent = "Plan updated: " + statusPlan +
+            (/[.!?]$/.test(statusPlan) ? " " : ". ") +
+            "Illustrative confidence " + shownConfidence + "%.";
     }
 
     function applyMatchup(ourCode, oppCode) {
         currentMatchup = { ourCode: ourCode, oppCode: oppCode };
+        // A new point of view is a new plan. Do not strand the opponent on the
+        // final frame of the sequence the user just reviewed before flipping.
+        viewProgress = { attack: 0, press: 0, transition: 0 };
+        formationIndex = 0;
         var ourName = (teamsByCode[ourCode] && teamsByCode[ourCode].name) || ourCode;
         var oppName = (teamsByCode[oppCode] && teamsByCode[oppCode].name) || oppCode;
         var titleEl = room.querySelector("#coach-pitch-title");
@@ -1128,6 +1142,23 @@
 
     var roleGridOriginal = null;
 
+    function normalizedPlayerName(name) {
+        return String(name || "")
+            .normalize("NFD")
+            .replace(/[\u0300-\u036f]/g, "")
+            .toLowerCase()
+            .replace(/[^a-z0-9]+/g, " ")
+            .trim();
+    }
+
+    function playerNameMatches(rosterName, focalName) {
+        var rosterTokens = normalizedPlayerName(rosterName).split(/\s+/).filter(Boolean);
+        var focalTokens = normalizedPlayerName(focalName).split(/\s+/).filter(Boolean);
+        return focalTokens.length > 0 && focalTokens.every(function (token) {
+            return rosterTokens.indexOf(token) !== -1;
+        });
+    }
+
     // The Player-roles cards show the CURRENT team's key players. The Argentina
     // flagship keeps its hand-authored cards; every other team populates the
     // four cards with its four highest-rated players.
@@ -1153,9 +1184,16 @@
         var recommendationCopy = planText
             ? String(planText.plan || "") + " " + String(planText.why || "")
             : "";
-        var focalId = ourIds.find(function (id) {
-            return roster[id].name && recommendationCopy.indexOf(roster[id].name) !== -1;
-        });
+        var focalPlayer = planText ? planText.focalPlayer : "";
+        var focalId = focalPlayer
+            ? ourIds.find(function (id) {
+                return roster[id].name &&
+                    playerNameMatches(roster[id].name, focalPlayer);
+            })
+            : ourIds.find(function (id) {
+                return roster[id].name &&
+                    recommendationCopy.indexOf(roster[id].name) !== -1;
+            });
         if (focalId) {
             ourIds = [focalId].concat(ourIds.filter(function (id) {
                 return id !== focalId;
@@ -1733,14 +1771,14 @@
                     }
                     var push = (minimumDistance - d) / 2 + 0.03;
                     var ux = dx / d, uy = dy / d;
-                    positions[ids[i]] = point(
-                        model.clamp(a.xMeters - ux * push, 1, 104),
-                        model.clamp(a.yMeters - uy * push, 1, 67)
-                    );
-                    positions[ids[j]] = point(
-                        model.clamp(b.xMeters + ux * push, 1, 104),
-                        model.clamp(b.yMeters + uy * push, 1, 67)
-                    );
+                    positions[ids[i]] = markerSafePoint(point(
+                        a.xMeters - ux * push,
+                        a.yMeters - uy * push
+                    ));
+                    positions[ids[j]] = markerSafePoint(point(
+                        b.xMeters + ux * push,
+                        b.yMeters + uy * push
+                    ));
                     adjusted = true;
                 }
             }
@@ -1771,24 +1809,28 @@
         var positions = {};
 
         Object.keys(step.startPositions).forEach(function (id) {
-            positions[id] = model.interpolatePoint(step.startPositions[id], step.endPositions[id], easedProgress);
+            positions[id] = markerSafePoint(
+                model.interpolatePoint(step.startPositions[id], step.endPositions[id], easedProgress)
+            );
             var avoidance = step.avoidance && step.avoidance[id];
             if (avoidance) {
                 var arc = Math.sin(Math.PI * localProgress);
-                positions[id] = point(
-                    model.clamp(positions[id].xMeters + avoidance.xMeters * arc, 1, 104),
-                    model.clamp(positions[id].yMeters + avoidance.yMeters * arc, 1, 67)
-                );
+                positions[id] = markerSafePoint(point(
+                    positions[id].xMeters + avoidance.xMeters * arc,
+                    positions[id].yMeters + avoidance.yMeters * arc
+                ));
             }
         });
 
         if (step.ballCarrier) {
             var carrierId = step.ballCarrier.playerId;
-            positions[carrierId] = model.carrierPositionAtProgress(
-                step.startPositions[carrierId],
-                step.ballPath,
-                step.ballCarrier.fromWaypoint,
-                localProgress
+            positions[carrierId] = markerSafePoint(
+                model.carrierPositionAtProgress(
+                    step.startPositions[carrierId],
+                    step.ballPath,
+                    step.ballCarrier.fromWaypoint,
+                    localProgress
+                )
             );
         }
         separateFramePositions(positions, 5.2);
@@ -2010,7 +2052,11 @@
         // end, so the last action completes instead of freezing at its start.
         var progress = (direction > 0 && current === lastIndex)
             ? 1
-            : sequence.steps[nextIndex].startTime / sequence.duration;
+            // Land just inside the requested phase. An exact floating-point
+            // boundary can multiply back to a fraction below startTime and
+            // leave Next stuck on the same step for certain tempo values.
+            : (sequence.steps[nextIndex].startTime + (nextIndex ? 0.5 : 0)) /
+                sequence.duration;
         viewProgress[activeView] = progress;
         renderSequence(activeView, progress);
     }

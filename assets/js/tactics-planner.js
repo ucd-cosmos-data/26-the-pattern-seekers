@@ -10,9 +10,11 @@
  *   - Bracket and per-team formations are real (2022 World Cup knockouts).
  *   - Player identities, ratings and ranks come from the project's rated-squad
  *     data (matchups.json), so lineups and confidence reflect real outputs.
- *   - The choreography (passing lanes, press triggers) is a principled,
- *     rule-based illustration, not a per-match researched sequence. The
- *     Argentina-vs-France final keeps its hand-authored choreography instead.
+ *   - Every directed knockout matchup has an explicit tactical brief that
+ *     selects and reshapes the choreography, timing, trigger, lane and copy for
+ *     that opponent. It remains an illustrative coaching prototype rather than
+ *     a claim that these exact movements occurred in the match.
+ *   - The Argentina-vs-France final keeps its hand-authored choreography.
  *
  * Sequences are built so the board's compileSequence() validators pass by
  * construction: durations are positive, every step's ball path continues from
@@ -20,16 +22,31 @@
  */
 (function (root, factory) {
     "use strict";
-    var api = factory();
+    var matchupPlans = {};
     if (typeof module === "object" && module.exports) {
-        module.exports = api;
+        [
+            "./worlds-coach-plans/group-a.js",
+            "./worlds-coach-plans/group-b.js",
+            "./worlds-coach-plans/group-c.js"
+        ].forEach(function (path) {
+            Object.assign(matchupPlans, require(path));
+        });
+        module.exports = factory(matchupPlans);
     } else {
-        root.WorldsCoachPlanner = api;
+        (root.WorldsCoachPlanGroups || []).forEach(function (group) {
+            Object.assign(matchupPlans, group);
+        });
+        root.WorldsCoachPlanner = factory(matchupPlans);
     }
-})(typeof globalThis !== "undefined" ? globalThis : this, function () {
+})(typeof globalThis !== "undefined" ? globalThis : this, function (MATCHUP_PLANS) {
     "use strict";
 
+    MATCHUP_PLANS = MATCHUP_PLANS || {};
     var PITCH = { length: 105, width: 68 };
+    // Player markers are roughly 3.2 pitch metres in radius at every responsive
+    // board size. Keep their centres slightly farther inside the field so the
+    // marker rings never disappear beneath the pitch's clipped border.
+    var PLAYER_INSET = 3.5;
 
     function point(xMeters, yMeters) {
         return { xMeters: xMeters, yMeters: yMeters };
@@ -38,7 +55,10 @@
         return Math.min(high, Math.max(low, value));
     }
     function onPitch(p) {
-        return point(clamp(p.xMeters, 1, PITCH.length - 1), clamp(p.yMeters, 1, PITCH.width - 1));
+        return point(
+            clamp(p.xMeters, PLAYER_INSET, PITCH.length - PLAYER_INSET),
+            clamp(p.yMeters, PLAYER_INSET, PITCH.width - PLAYER_INSET)
+        );
     }
     function round1(v) {
         return Math.round(v * 10) / 10;
@@ -190,13 +210,27 @@
         return point(round1(PITCH.length - pos.xMeters), pos.yMeters);
     }
 
-    function assignPlayers(team, counts) {
+    function assignPlayers(team, counts, preferredName) {
         // Bucket rated players by line, best-rated first.
         var players = (team.players || []).slice().sort(function (a, b) {
             return (b.rating || 0) - (a.rating || 0);
         });
         var buckets = { GK: [], DEF: [], MID: [], FWD: [] };
         players.forEach(function (p) { buckets[classify(p)].push(p); });
+        // A directed brief's focal player must make the rendered XI even when
+        // the imported squad row has no rating (Neymar and Mitoma are two such
+        // rows). Keep the player's authored line classification, but promote
+        // them to the front of that line's selection order.
+        if (preferredName) {
+            Object.keys(buckets).some(function (type) {
+                var preferredIndex = buckets[type].findIndex(function (player) {
+                    return player.name === preferredName;
+                });
+                if (preferredIndex === -1) return false;
+                buckets[type].unshift(buckets[type].splice(preferredIndex, 1)[0]);
+                return true;
+            });
+        }
         var need = { GK: 1, DEF: counts[0], MID: counts[1], FWD: counts[2] };
         // Spill extras so every slot can be filled even if the rated set is thin.
         var order = ["GK", "DEF", "MID", "FWD"];
@@ -417,6 +451,42 @@
             };
         }
         return base;
+    }
+
+    function matchupPlanText(spec, oppTeam, scenarioKey) {
+        if (!spec || !spec.recommendation) return null;
+        var recommendation = spec.recommendation;
+        var player = recommendation.player;
+        if (scenarioKey === "leading") {
+            return {
+                focalPlayer: player,
+                plan: "Protect the lead, then release " + player,
+                why: "Stay compact against " + oppTeam.name +
+                    ", invite the extra attacker, then use the same matchup route through " +
+                    player + ": " + recommendation.why
+            };
+        }
+        if (scenarioKey === "drawing") {
+            return {
+                focalPlayer: player,
+                plan: recommendation.plan + " — with one extra runner",
+                why: recommendation.why +
+                    " With the game level, advance one supporting player earlier without abandoning the rest defence."
+            };
+        }
+        if (scenarioKey === "trailing") {
+            return {
+                focalPlayer: player,
+                plan: "Chase the game through " + player,
+                why: recommendation.why +
+                    " Commit the far-side runner and hold the counterpress behind the attack, accepting the added transition risk."
+            };
+        }
+        return {
+            focalPlayer: player,
+            plan: recommendation.plan,
+            why: recommendation.why
+        };
     }
 
     // ---- sequence builders (ball threaded for validator continuity) --------
@@ -1318,6 +1388,123 @@
     function pressFor(style, a, b, f, s) { return (PRESS[style] || PRESS.mid)(a, b, f, s); }
     function transFor(style, a, b, f, s) { return (TRANS[style] || TRANS.swarm)(a, b, f, s); }
 
+    function transformMatchupPoint(source, spec, stepIndex) {
+        if (!source || source.xMeters == null || source.yMeters == null) return source;
+        var widthScale = Number(spec.widthScale) || 1;
+        var depthShift = Number(spec.depthShift) || 0;
+        var laneShift = Number(spec.laneShift) || 0;
+        var stagger = Number(spec.stagger) || 0;
+        var stepShift = stepIndex >= 0 ? stagger * (stepIndex + 1) : 0;
+        return point(
+            round1(clamp(source.xMeters + depthShift + stepShift, 1, 104)),
+            round1(clamp(34 + (source.yMeters - 34) * widthScale + laneShift, 1, 67))
+        );
+    }
+
+    function transformZone(zone, spec, stepIndex) {
+        var copy = Object.assign({}, zone);
+        if (zone.type === "rect") {
+            var topLeft = transformMatchupPoint(point(zone.x, zone.y), spec, stepIndex);
+            copy.x = topLeft.xMeters;
+            copy.y = topLeft.yMeters;
+            copy.width = round1(Math.max(
+                1,
+                Math.min(PITCH.length - copy.x, zone.width || 2)
+            ));
+            copy.height = round1(Math.max(
+                1,
+                Math.min(
+                    PITCH.width - copy.y,
+                    (zone.height || 2) * (Number(spec.widthScale) || 1)
+                )
+            ));
+        } else if (zone.type === "circle") {
+            var centre = transformMatchupPoint(point(zone.cx, zone.cy), spec, stepIndex);
+            copy.cx = centre.xMeters;
+            copy.cy = centre.yMeters;
+            copy.radius = round1(Math.max(
+                1,
+                Math.min(
+                    (zone.radius || 1) * (Number(spec.widthScale) || 1),
+                    centre.xMeters,
+                    PITCH.length - centre.xMeters,
+                    centre.yMeters,
+                    PITCH.width - centre.yMeters
+                )
+            ));
+        } else if (zone.type === "polygon") {
+            copy.points = (zone.points || []).map(function (zonePoint) {
+                return transformMatchupPoint(zonePoint, spec, stepIndex);
+            });
+        } else if (zone.type === "line") {
+            var lineStart = transformMatchupPoint(point(zone.x1, zone.y1), spec, stepIndex);
+            var lineEnd = transformMatchupPoint(point(zone.x2, zone.y2), spec, stepIndex);
+            copy.x1 = lineStart.xMeters;
+            copy.y1 = lineStart.yMeters;
+            copy.x2 = lineEnd.xMeters;
+            copy.y2 = lineEnd.yMeters;
+        }
+        return copy;
+    }
+
+    // Apply the directed matchup brief to a phase template. This deliberately
+    // changes the actual keyframes, timing, flank, trigger and coaching copy;
+    // it is not a team-colour swap over identical sequence data.
+    function personalizeSequence(sequence, spec) {
+        if (!spec) return sequence;
+        var tempo = Number(spec.tempo) || 1;
+        var transformedInitial = {};
+        Object.keys(sequence.initial || {}).forEach(function (id) {
+            transformedInitial[id] = onPitch(
+                transformMatchupPoint(sequence.initial[id], spec, -1)
+            );
+        });
+        sequence.initial = transformedInitial;
+        sequence.ball = transformMatchupPoint(sequence.ball, spec, -1);
+
+        (sequence.steps || []).forEach(function (step, index) {
+            var transformedMoves = {};
+            Object.keys(step.moves || {}).forEach(function (id) {
+                transformedMoves[id] = onPitch(
+                    transformMatchupPoint(step.moves[id], spec, index)
+                );
+            });
+            step.moves = transformedMoves;
+            step.ballPath = (step.ballPath || []).map(function (ballPoint) {
+                return transformMatchupPoint(ballPoint, spec, index);
+            });
+            (step.actions || []).forEach(function (action) {
+                if (action.path) {
+                    action.path = action.path.map(function (actionPoint) {
+                        return transformMatchupPoint(actionPoint, spec, index);
+                    });
+                }
+            });
+            step.zones = (step.zones || []).map(function (zone) {
+                return transformZone(zone, spec, index);
+            });
+            step.annotations = (step.annotations || []).map(function (annotation) {
+                var location = transformMatchupPoint(
+                    point(annotation.x, annotation.y),
+                    spec,
+                    index
+                );
+                return Object.assign({}, annotation, {
+                    x: location.xMeters,
+                    y: location.yMeters
+                });
+            });
+            step.duration = Math.max(700, Math.round(step.duration * tempo / 50) * 50);
+            if (spec.stepTitles && spec.stepTitles[index]) {
+                step.title = spec.stepTitles[index];
+            }
+            if (spec.stepCaptions && spec.stepCaptions[index]) {
+                step.caption = spec.stepCaptions[index];
+            }
+        });
+        return sequence;
+    }
+
     // Keep player markers legible at every authored keyframe. Tactical pressure
     // still reads as close proximity, but two dots should never occupy the same
     // patch of grass. This pass works on the full 22-player state, including
@@ -1609,9 +1796,21 @@
         var ourPool = squads && squads[ourCode] ? { players: squads[ourCode] } : ourTeam;
         var oppPool = squads && squads[oppCode] ? { players: squads[oppCode] } : oppTeam;
 
-        // The team's game-plan profile drives the shape, flank and every phase.
+        var matchupKey = ourCode + "|" + oppCode;
+        var matchupSpec = MATCHUP_PLANS[matchupKey] || null;
+
+        // The team profile supplies a fallback. A directed matchup brief can
+        // independently change the style and flank of all three phases.
         var prof = profileFor(ourTeam, oppTeam, ourCode, hash(ourCode + oppCode) % 2 === 0 ? "right" : "left");
-        var flank = prof.flank;
+        var attackSpec = matchupSpec && matchupSpec.attack;
+        var pressSpec = matchupSpec && matchupSpec.press;
+        var transitionSpec = matchupSpec && matchupSpec.transition;
+        if (attackSpec && attackSpec.style) prof.attack = attackSpec.style;
+        if (pressSpec && pressSpec.style) prof.press = pressSpec.style;
+        if (transitionSpec && transitionSpec.style) prof.trans = transitionSpec.style;
+        var attackFlank = (attackSpec && attackSpec.flank) || prof.flank;
+        var pressFlank = (pressSpec && pressSpec.flank) || attackFlank;
+        var transitionFlank = (transitionSpec && transitionSpec.flank) || attackFlank;
         var ourCounts = prof.shape || formationFor(ourCode);
         var oppCounts = (STYLE_PROFILES[oppCode] && STYLE_PROFILES[oppCode].shape) || formationFor(oppCode);
         // Our attacking shape (toward +x) and the opponent's defensive block.
@@ -1622,31 +1821,66 @@
         });
 
         var roster = {};
-        fillRoster(roster, ourSlots, ourCode, "ours", assignPlayers(ourPool, ourCounts), true);
+        var focalPlayer = matchupSpec && matchupSpec.recommendation
+            ? matchupSpec.recommendation.player
+            : null;
+        fillRoster(
+            roster,
+            ourSlots,
+            ourCode,
+            "ours",
+            assignPlayers(ourPool, ourCounts, focalPlayer),
+            true
+        );
         fillRoster(roster, oppSlots, oppCode, "theirs", assignPlayers(oppPool, oppCounts), false);
 
-        var text = planText(ourTeam, oppTeam, flank, scenarioKey, prof.attack, opts.names || null);
+        var text = matchupPlanText(matchupSpec, oppTeam, scenarioKey) ||
+            planText(ourTeam, oppTeam, attackFlank, scenarioKey, prof.attack, opts.names || null);
         var confidence = confidenceFor(ourTeam, oppTeam, scenarioKey);
+        var attackSequence = snapBall(addMotionAvoidance(separatePlayers(
+            personalizeSequence(
+                attackFor(prof.attack, ourSlots, oppSlots, attackFlank, scenario),
+                attackSpec
+            ),
+            5.2
+        ), 5.2), "us_");
+        var pressSequence = snapBall(addMotionAvoidance(separatePlayers(
+            personalizeSequence(
+                pressFor(prof.press, ourSlots, oppSlots, pressFlank, scenario),
+                pressSpec
+            ),
+            5.2
+        ), 5.2), "");
+        var transitionSequence = snapBall(addMotionAvoidance(separatePlayers(
+            personalizeSequence(
+                transFor(prof.trans, ourSlots, oppSlots, transitionFlank, scenario),
+                transitionSpec
+            ),
+            5.2
+        ), 5.2), "");
 
         return {
             meta: {
                 ourCode: ourCode, oppCode: oppCode, ourName: ourTeam.name, oppName: oppTeam.name,
-                flank: flank, ourFormation: formationName(ourCounts), oppFormation: formationName(oppCounts),
+                flank: attackFlank, ourFormation: formationName(ourCounts), oppFormation: formationName(oppCounts),
                 attackStyle: prof.attack, pressStyle: prof.press, transStyle: prof.trans,
+                attackIntent: attackSpec && attackSpec.intent,
+                pressIntent: pressSpec && pressSpec.intent,
+                transitionIntent: transitionSpec && transitionSpec.intent,
+                tailored: !!matchupSpec,
                 scenario: scenarioKey
             },
             roster: roster,
-            attack: snapBall(addMotionAvoidance(separatePlayers(
-                attackFor(prof.attack, ourSlots, oppSlots, flank, scenario), 5.2
-            ), 5.2), "us_"),
-            press: snapBall(addMotionAvoidance(separatePlayers(
-                pressFor(prof.press, ourSlots, oppSlots, flank, scenario), 5.2
-            ), 5.2), ""),
-            transition: snapBall(addMotionAvoidance(separatePlayers(
-                transFor(prof.trans, ourSlots, oppSlots, flank, scenario), 5.2
-            ), 5.2), ""),
+            attack: attackSequence,
+            press: pressSequence,
+            transition: transitionSequence,
             formationStates: formationStates(ourSlots, oppSlots, ourCounts, scenario),
-            scenarioText: { plan: text.plan, why: text.why, confidence: confidence }
+            scenarioText: {
+                focalPlayer: text.focalPlayer || null,
+                plan: text.plan,
+                why: text.why,
+                confidence: confidence
+            }
         };
     }
 
@@ -1654,6 +1888,7 @@
         KNOCKOUTS: KNOCKOUTS,
         FORMATIONS: FORMATIONS,
         SCENARIOS: Object.keys(SCENARIOS),
+        MATCHUP_PLANS: MATCHUP_PLANS,
         generate: generate,
         _internal: {
             classify: classify, buildShape: buildShape, confidenceFor: confidenceFor,

@@ -5255,7 +5255,21 @@
         }
 
         .coach-marker {
-            --marker-size: clamp(2.15rem, 7vw, 2.65rem);
+            /* The full 22-player board compresses to roughly 3.3 px per pitch
+               metre on a phone. Scale the dots with that field, rather than
+               letting desktop-sized markers overlap and clip at the touchline. */
+            --marker-size: clamp(1.55rem, 4.2vw, 2.15rem);
+        }
+
+        .coach-player,
+        .coach-player.is-team,
+        .coach-player.is-opponent {
+            width: clamp(2rem, 5vw, 3.4rem);
+            height: clamp(2rem, 5vw, 3.4rem);
+        }
+
+        .coach-marker b {
+            font-size: clamp(0.82rem, 2.6vw, 1.1rem);
         }
 
         .coach-pitch__direction {
