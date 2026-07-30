@@ -268,6 +268,26 @@
         return best ? shortName(best.name) : team.name;
     }
 
+    // The recommendation should name an attacking threat, not the best-rated
+    // full-back — pick the top-rated forward / winger / creator, else fall back.
+    function keyAttackerName(team) {
+        var players = (team.players || []).slice().sort(function (a, b) {
+            return (b.rating || 0) - (a.rating || 0);
+        });
+        var attacker = null;
+        for (var i = 0; i < players.length; i += 1) {
+            var s = ((players[i].role || "") + " " + (players[i].position || "")).toLowerCase();
+            if (s.indexOf("forward") !== -1 || s.indexOf("striker") !== -1 ||
+                s.indexOf("winger") !== -1 || s.indexOf("wing") !== -1 ||
+                s.indexOf("attacking mid") !== -1 || s.indexOf("creat") !== -1 ||
+                s.indexOf("playmak") !== -1 || s.indexOf("poacher") !== -1) {
+                if (s.indexOf("back") === -1) { attacker = players[i]; break; }
+            }
+        }
+        var pick = attacker || players[0];
+        return pick ? shortName(pick.name) : team.name;
+    }
+
     // Scenario knobs: how high we build, how many we commit, how aggressive the
     // press engagement line is, and a confidence delta.
     var SCENARIOS = {
@@ -307,7 +327,7 @@
     // Recommendation copy keyed off the SAME attack style that drives the
     // board, so the words on the card always match what the players do.
     function planText(ourTeam, oppTeam, flank, scenarioKey, style) {
-        var star = topPlayerName(ourTeam);
+        var star = keyAttackerName(ourTeam);
         var opp = oppTeam.name;
         var wide = flank === "right" ? "right" : "left";
 
