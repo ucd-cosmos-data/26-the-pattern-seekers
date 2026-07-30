@@ -1251,8 +1251,10 @@
                 marker.style.background = "rgba(140, 142, 150, 0.28)";
                 marker.style.color = "rgba(247, 242, 233, 0.85)";
             } else {
+                // White number + dark outline (CSS) reads on every flag, light
+                // or dark, so it never disappears into a same-colour stripe.
                 marker.style.background = flag.grad;
-                marker.style.color = flag.num;
+                marker.style.color = "#ffffff";
             }
             number.textContent = player.number;
             surname.textContent = player.surname;
@@ -2107,6 +2109,10 @@
 
         // Knockout fixtures as one-tap picks right at the board, so switching
         // matchup is obvious (not just the dropdowns above).
+        function fixtureName(code) {
+            return byCode[code] ? byCode[code].name : code;
+        }
+
         function renderFixtures() {
             if (!fixturesNode || !window.WorldsCoachPlanner) return;
             var rounds = [];
@@ -2115,35 +2121,42 @@
                 if (!byRound[fx.round]) { byRound[fx.round] = []; rounds.push(fx.round); }
                 byRound[fx.round].push(fx);
             });
-            fixturesNode.innerHTML = rounds.map(function (round) {
-                var picks = byRound[round].map(function (fx) {
-                    return "<button type=\"button\" class=\"coach-fixtures__pick\" " +
-                        "data-fx-a=\"" + fx.teamA + "\" data-fx-b=\"" + fx.teamB + "\" aria-pressed=\"false\">" +
-                        escapeHtml(fx.teamA) + " v " + escapeHtml(fx.teamB) + "</button>";
+            var groups = rounds.map(function (round) {
+                var opts = byRound[round].map(function (fx) {
+                    return "<option value=\"" + fx.teamA + "|" + fx.teamB + "\">" +
+                        escapeHtml(fixtureName(fx.teamA)) + " vs " + escapeHtml(fixtureName(fx.teamB)) +
+                        "</option>";
                 }).join("");
-                return "<div class=\"coach-fixtures__group\">" +
-                    "<span class=\"coach-fixtures__round\">" + escapeHtml(round) + "</span>" +
-                    picks + "</div>";
+                return "<optgroup label=\"" + escapeHtml(round) + "\">" + opts + "</optgroup>";
             }).join("");
+            fixturesNode.innerHTML =
+                "<label class=\"coach-fixtures__label\">" +
+                "<span>Jump to a knockout fixture</span>" +
+                "<select data-fixture-select aria-label=\"Jump to a knockout fixture\">" +
+                "<option value=\"\">Custom matchup</option>" + groups +
+                "</select></label>";
         }
 
         function markActiveFixture() {
             if (!fixturesNode) return;
-            var a = teamASelect.value, b = teamBSelect.value;
-            fixturesNode.querySelectorAll("[data-fx-a]").forEach(function (btn) {
-                var match = (btn.dataset.fxA === a && btn.dataset.fxB === b) ||
-                    (btn.dataset.fxA === b && btn.dataset.fxB === a);
-                btn.classList.toggle("is-active", match);
-                btn.setAttribute("aria-pressed", String(match));
+            var select = fixturesNode.querySelector("[data-fixture-select]");
+            if (!select) return;
+            var key = teamASelect.value + "|" + teamBSelect.value;
+            var reverse = teamBSelect.value + "|" + teamASelect.value;
+            var match = "";
+            Array.prototype.forEach.call(select.options, function (opt) {
+                if (opt.value === key || opt.value === reverse) match = opt.value;
             });
+            select.value = match;
         }
 
         if (fixturesNode) {
-            fixturesNode.addEventListener("click", function (event) {
-                var btn = event.target.closest("[data-fx-a]");
-                if (!btn) return;
-                teamASelect.value = btn.dataset.fxA;
-                teamBSelect.value = btn.dataset.fxB;
+            fixturesNode.addEventListener("change", function (event) {
+                var select = event.target.closest("[data-fixture-select]");
+                if (!select || !select.value) return;
+                var pair = select.value.split("|");
+                teamASelect.value = pair[0];
+                teamBSelect.value = pair[1];
                 render(true);
             });
         }

@@ -4326,28 +4326,30 @@
     .coach-marker b {
         color: inherit;
         font-size: clamp(1.1rem, 1.2vw, 1.35rem);
-        font-weight: 700;
+        font-weight: 800;
         line-height: 1;
+        /* Dark outline so a white number stays legible on any flag colour,
+           light or dark, without depending on the stripe behind it. */
+        text-shadow:
+            -1px -1px 0 rgba(0, 0, 0, 0.82),
+            1px -1px 0 rgba(0, 0, 0, 0.82),
+            -1px 1px 0 rgba(0, 0, 0, 0.82),
+            1px 1px 0 rgba(0, 0, 0, 0.82),
+            0 0 2px rgba(0, 0, 0, 0.75);
     }
 
     .coach-player.is-team > .coach-marker {
         width: var(--marker-size);
         border: 0.16rem solid rgba(255, 255, 255, 0.92);
         background: var(--coach-home-flag);
-        color: var(--coach-home-number);
-        text-shadow:
-            0 0 0.35rem rgba(255, 255, 255, 0.9),
-            0 0 0.12rem rgba(255, 255, 255, 0.95);
+        color: #ffffff;
     }
 
     .coach-player.is-opponent > .coach-marker {
         width: var(--marker-size);
         border: 0.16rem solid rgba(255, 255, 255, 0.92);
         background: var(--coach-away-flag);
-        color: var(--coach-away-number);
-        text-shadow:
-            0 0 0.35rem rgba(255, 255, 255, 0.9),
-            0 0 0.12rem rgba(255, 255, 255, 0.95);
+        color: #ffffff;
     }
 
     .coach-player.is-team > .coach-marker b,
@@ -5885,56 +5887,53 @@ body:has(.player-report-page) .theme-toggle {
     .coach-pitch.is-formulating { transition: none; }
 }
 
-/* Knockout fixture quick-pick at the board. */
+/* Knockout fixture picker at the board — a single grouped dropdown. */
 .coach-fixtures {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1.4rem 2rem;
     margin: 1.6rem 0 0.4rem;
-    padding-bottom: 0.4rem;
 }
-.coach-fixtures__group {
-    display: flex;
-    align-items: center;
-    flex-wrap: wrap;
+.coach-fixtures__label {
+    display: inline-grid;
     gap: 0.5rem;
+    max-width: 34rem;
 }
-.coach-fixtures__round {
-    margin-right: 0.4rem;
+.coach-fixtures__label > span {
     font-family: var(--q-mono, ui-monospace, monospace);
     font-size: 1.05rem;
-    letter-spacing: 0.14em;
+    letter-spacing: 0.12em;
     text-transform: uppercase;
     color: var(--qatar-gold, #d9b65d);
 }
-.coach-fixtures__pick {
-    min-height: 3.4rem;
-    padding: 0 1.2rem;
-    border: 0.1rem solid rgba(247, 242, 233, 0.2);
+.coach-fixtures__label select {
+    min-height: 3.8rem;
+    padding: 0 1.1rem;
+    border: 0.1rem solid rgba(247, 242, 233, 0.24);
     border-radius: 1rem;
-    background: rgba(247, 242, 233, 0.05);
+    background: var(--ps-surface, #241219);
     color: var(--qatar-cream, #f7f2e9);
-    font-size: 1.25rem;
+    font: inherit;
+    font-size: 1.35rem;
     font-weight: 600;
-    letter-spacing: 0.02em;
     cursor: pointer;
     transition:
-        background-color 180ms var(--ps-ease),
         border-color 180ms var(--ps-ease),
-        color 180ms var(--ps-ease);
+        background-color 180ms var(--ps-ease);
 }
-.coach-fixtures__pick:hover {
+.coach-fixtures__label select:hover {
     border-color: rgba(217, 182, 93, 0.6);
-    background: rgba(217, 182, 93, 0.12);
 }
-.coach-fixtures__pick.is-active {
-    border-color: var(--qatar-gold, #d9b65d);
-    background: var(--qatar-maroon, #8a1538);
-    color: var(--qatar-cream, #f7f2e9);
-}
-.coach-fixtures__pick:focus-visible {
+.coach-fixtures__label select:focus-visible {
     outline: 0.2rem solid var(--qatar-gold, #d9b65d);
     outline-offset: 0.2rem;
+}
+.coach-fixtures__label select optgroup {
+    color: var(--qatar-gold, #d9b65d);
+    background: var(--ps-surface, #241219);
+    font-style: normal;
+}
+.coach-fixtures__label select option {
+    color: var(--qatar-cream, #f7f2e9);
+    background: var(--ps-surface, #241219);
+    font-weight: 500;
 }
 
 /* Tooltip: imported rating/rank line under the role. */
