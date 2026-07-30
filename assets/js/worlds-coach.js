@@ -825,6 +825,18 @@
         }
     }
 
+    // Full knockout player index (name each player goes by, imported report
+    // description, and report slug), keyed by StatsBomb player id.
+    var playerIndexData = room.querySelector("[data-player-index]");
+    var playerIndex = {};
+    if (playerIndexData) {
+        try {
+            playerIndex = JSON.parse(playerIndexData.textContent);
+        } catch (error) {
+            console.warn("Player index could not be loaded.", error);
+        }
+    }
+
     var activeView = "attack";
     var viewProgress = { attack: 0, press: 0, transition: 0 };
     var formationIndex = 0;
@@ -926,10 +938,28 @@
         var genRoster = {};
         Object.keys(gen.roster).forEach(function (id) {
             var r = gen.roster[id];
+            // Enrich from the knockout player index: goes-by name, report
+            // description and report slug, keyed by StatsBomb id.
+            var idx = r.playerId ? playerIndex[r.playerId] : null;
+            var meta = "";
+            if (idx) {
+                var bits = [];
+                if (idx.teamRank) bits.push("Team #" + idx.teamRank + " rated");
+                if (typeof idx.rating === "number") bits.push(idx.rating.toFixed(2) + " rating");
+                if (idx.minutes) bits.push(idx.minutes + "′");
+                meta = bits.join(" · ");
+            }
             genRoster[id] = {
                 team: r.team, isOurs: r.isOurs, number: r.number,
-                name: r.displayName, surname: r.surname, role: r.role,
-                instruction: r.instruction || "", wikiTitle: r.wikiTitle || r.displayName,
+                isPlaceholder: r.isPlaceholder || false,
+                name: idx ? idx.name : r.displayName,
+                surname: idx ? idx.surname : r.surname,
+                role: idx ? (idx.role || r.role) : r.role,
+                instruction: idx ? idx.strength : (r.instruction || ""),
+                overview: idx ? idx.overview : "",
+                meta: meta,
+                reportSlug: idx ? idx.slug : null,
+                wikiTitle: idx ? idx.name : (r.wikiTitle || r.displayName),
                 espnId: null
             };
         });
@@ -1015,7 +1045,11 @@
 
     function playerReportFor(id) {
         if (id === "forward" && playerControl.value === "lautaro") return null;
-        return playerReports[id] || null;
+        if (playerReports[id]) return playerReports[id];
+        // Generated teams carry a report slug on the roster entry.
+        var entry = roster[id];
+        if (entry && entry.reportSlug) return { slug: entry.reportSlug };
+        return null;
     }
 
     function formatTime(milliseconds) {
@@ -1096,11 +1130,17 @@
             ? '<a class="coach-report-link" href="' + playerReportBase + report.slug +
                 '/" target="_blank" rel="noopener">Open player report ↗</a>'
             : "";
+        var metaLine = player.meta
+            ? '<em class="coach-tooltip-meta">' + escapeHtml(player.meta) + "</em>"
+            : "";
+        var description = player.instruction
+            ? "<small>" + escapeHtml(player.instruction) + "</small>"
+            : "";
         tacticalTooltip.innerHTML =
             '<img class="coach-tooltip-photo" alt="">' +
-            '<div class="coach-tooltip-copy"><strong>' + player.name + " · " + player.number +
-            "</strong><span>" + player.role + "</span><small>" + player.instruction +
-            "</small>" + reportLink + "</div>";
+            '<div class="coach-tooltip-copy"><strong>' + escapeHtml(player.name) + " · " + player.number +
+            "</strong><span>" + escapeHtml(player.role) + "</span>" + metaLine +
+            description + reportLink + "</div>";
         tacticalTooltip.setAttribute("aria-label", player.name + " details");
         tacticalTooltip.classList.add("has-photo");
         activeTooltipId = id;
@@ -1148,6 +1188,29 @@
         tooltipHideTimer = 0;
     }
 
+    // National-flag disc per nation (recognisable at marker scale) + a number
+    // colour that reads on the centre of each flag. Every dot shows its own
+    // country's flag, so knockout matchups no longer reuse Argentina/France.
+    var FLAGS = {
+        ARG: { grad: "linear-gradient(180deg,#74acdf 0 33.34%,#ffffff 33.34% 66.67%,#74acdf 66.67%)", num: "#0b3563" },
+        FRA: { grad: "linear-gradient(90deg,#002395 0 33.34%,#ffffff 33.34% 66.67%,#ed2939 66.67%)", num: "#10203f" },
+        BRA: { grad: "radial-gradient(circle at 50% 50%,#002776 0 21%,#ffdf00 21% 46%,#009c3b 46%)", num: "#ffffff" },
+        CRO: { grad: "linear-gradient(180deg,#ff0000 0 33.34%,#ffffff 33.34% 66.67%,#171796 66.67%)", num: "#14143c" },
+        NED: { grad: "linear-gradient(180deg,#ae1c28 0 33.34%,#ffffff 33.34% 66.67%,#21468b 66.67%)", num: "#1b2f5e" },
+        MAR: { grad: "radial-gradient(circle at 50% 50%,#0a6b3a 0 15%,#c1272d 15%)", num: "#ffffff" },
+        POR: { grad: "linear-gradient(90deg,#006600 0 40%,#d10a11 40%)", num: "#ffffff" },
+        ESP: { grad: "linear-gradient(180deg,#aa151b 0 25%,#f1bf00 25% 75%,#aa151b 75%)", num: "#7a0f13" },
+        ENG: { grad: "linear-gradient(0deg,transparent 40%,#cf142b 40% 60%,transparent 60%),linear-gradient(90deg,transparent 40%,#cf142b 40% 60%,transparent 60%),#ffffff", num: "#ffffff" },
+        USA: { grad: "linear-gradient(180deg,#3c3b6e 0 42%,#b22234 42% 58%,#ffffff 58% 74%,#b22234 74%)", num: "#ffffff" },
+        POL: { grad: "linear-gradient(180deg,#ffffff 50%,#dc143c 50%)", num: "#c8102e" },
+        SEN: { grad: "linear-gradient(90deg,#00853f 0 33.34%,#fdef42 33.34% 66.67%,#e31b23 66.67%)", num: "#0a6b34" },
+        JPN: { grad: "radial-gradient(circle at 50% 50%,#bc002d 0 32%,#ffffff 32%)", num: "#ffffff" },
+        KOR: { grad: "radial-gradient(circle at 50% 50%,#cd2e3a 0 15%,#0047a0 15% 30%,#ffffff 30%)", num: "#ffffff" },
+        SUI: { grad: "linear-gradient(0deg,transparent 42%,#ffffff 42% 58%,transparent 58%),linear-gradient(90deg,transparent 42%,#ffffff 42% 58%,transparent 58%),#da291c", num: "#b31b1b" },
+        AUS: { grad: "linear-gradient(135deg,#00247d,#001a5e)", num: "#ffffff" },
+        _default: { grad: "linear-gradient(135deg,#5b6472,#3a4150)", num: "#ffffff" }
+    };
+
     function createPlayerNodes() {
         playersLayer.innerHTML = "";
         playerNodes = {};
@@ -1158,11 +1221,15 @@
             var number = document.createElement("b");
             var surname = document.createElement("small");
             button.type = "button";
-            button.className = "coach-player " + (player.isOurs ? "is-team" : "is-opponent");
+            button.className = "coach-player " + (player.isOurs ? "is-team" : "is-opponent") +
+                (player.isPlaceholder ? " is-placeholder" : "");
             button.dataset.playerId = id;
             button.setAttribute("aria-expanded", "false");
             button.setAttribute("aria-controls", "coach-player-tooltip");
             marker.className = "coach-marker " + (player.isOurs ? "is-team" : "is-opponent");
+            var flag = FLAGS[player.team] || FLAGS._default;
+            marker.style.background = flag.grad;
+            marker.style.color = flag.num;
             number.textContent = player.number;
             surname.textContent = player.surname;
             marker.appendChild(number);

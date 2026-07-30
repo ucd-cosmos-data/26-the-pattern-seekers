@@ -1,0 +1,76 @@
+---
+title: "Daley Blind — player profile"
+description: "This report uses tournament events and coverage-qualified StatsBomb 360 context. It is not an optical-tracking report or a subjective scouting grade."
+layout: "player-report"
+url: "/projects/worlds-coach-output/reports/daley-blind/"
+playerId: "sb-3311"
+sourceUrl: "https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis/blob/718ae91e82bedbd53486a1e0381aaa70e124ba12/World-Cup-S-Bomb/results/reports/player_profiles/daley-blind-3311.md"
+displayName: "Daley Blind"
+headshotUrl: ""
+shirtNumber: ""
+overview: "Daley Blind played as a fullback/wingback for Netherlands. His main role was wide creator, and the model ranked him #2 on the team. The notes below translate his tournament data into simple soccer terms."
+strengths:
+  - "Offers a strong goal threat when attacks reach the final third."
+  - "Works hard without the ball and pressures opponents effectively."
+weaknesses:
+  - "Aerial play is one of the less influential parts of his profile."
+  - "Has less impact moving possession upfield."
+---
+## Ranking and role
+
+- Team: Netherlands
+- Position group: Fullback/Wingback
+- Functional role: Wide Creator
+- Probabilistic role: Creative/Progressive Fullback
+- Role entropy: 0.0000
+- Global rank: 15
+- Position rank: 5
+- Role rank: 2
+- Team rank: 2
+- Final player rating: 0.6665
+- Global ranking eligibility: eligible
+- Minutes: 452.5
+- Minutes reliability: 0.6013
+
+## Rating components
+
+| Metric | Value |
+|---|---|
+| vaep_off_scaled | 0.3147 |
+| vaep_def_scaled | 0.7605 |
+| vaep_per_touch | 0.0009 |
+| open_play_xt_p90 | 0.0249 |
+| set_piece_xt_p90 | 0.0148 |
+| role_adjusted_value | 0.8420 |
+| completeness_score | 0.6395 |
+| off_ball_score | 0.4764 |
+
+## Continuous role vector
+
+| Metric | Value |
+|---|---|
+| progression_score | 0.5749 |
+| creation_score | 0.6458 |
+| finishing_score | 0.6984 |
+| pressing_score | 0.6476 |
+| defensive_score | 0.6215 |
+| ball_security_score | 0.6120 |
+| aerial_score | 0.4965 |
+
+## Spatial, 360 and passing-network context
+
+| Metric | Value |
+|---|---|
+| sb360_coverage | 0.8738 |
+| mean_defenders_within_3m | 0.2717 |
+| mean_defenders_within_5m | 0.5508 |
+| mean_nearest_defender_m | 7.5459 |
+| mean_passing_lane_availability | 0.9141 |
+| packing_index_mean | 0.6328 |
+| mean_space_received | 0.7370 |
+| network_pagerank | 0.0892 |
+| network_betweenness | 0.1826 |
+| network_entropy | 0.8628 |
+| build_up_involvement_ratio | 0.6706 |
+
+Missing values indicate unavailable evidence; they are not converted into zero contribution.

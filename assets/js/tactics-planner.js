@@ -230,21 +230,26 @@
                 player = spill || null;
             }
             var baseNum = SLOT_NUMBER[label] || SLOT_NUMBER[slot.type] || 20;
+            // Squad slot with no rated player (teams below the rating floor).
+            var posWord = { GK: "Keeper", DEF: "Defender", MID: "Midfielder", FWD: "Forward" }[slot.type] || "Player";
+            var posTag = { GK: "GK", DEF: "Def", MID: "Mid", FWD: "Fwd" }[slot.type] || "Sub";
             roster[slot.id] = {
                 team: teamCode,
                 side: teamSideKey,
                 isOurs: isOurs,
+                isPlaceholder: !player,
+                playerId: player ? String(player.id) : null,
                 number: pickNumber(baseNum),
-                name: player ? player.name : teamCode + " " + label,
-                surname: player ? shortName(player.name) : label,
-                displayName: player ? player.name : teamCode + " " + label,
+                name: player ? player.name : "Unrated squad " + posWord.toLowerCase(),
+                surname: player ? shortName(player.name) : posTag,
+                displayName: player ? player.name : "Unrated squad " + posWord.toLowerCase(),
                 wikiTitle: player ? player.name : "",
                 rating: player ? player.rating : null,
-                role: player ? (player.role || player.position || label) : label,
+                role: player ? (player.role || player.position || label) : "Squad " + posWord.toLowerCase() + " · below rating floor",
                 slot: label,
                 instruction: player
                     ? (isOurs ? "" : "Opponent " + label + ".")
-                    : ""
+                    : "Below the tournament rating floor, so this player was not individually rated."
             };
         });
     }

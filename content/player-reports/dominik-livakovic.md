@@ -1,0 +1,76 @@
+---
+title: "Dominik Livaković — player profile"
+description: "This report uses tournament events and coverage-qualified StatsBomb 360 context. It is not an optical-tracking report or a subjective scouting grade."
+layout: "player-report"
+url: "/projects/worlds-coach-output/reports/dominik-livakovic/"
+playerId: "sb-16531"
+sourceUrl: "https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis/blob/718ae91e82bedbd53486a1e0381aaa70e124ba12/World-Cup-S-Bomb/results/reports/player_profiles/dominik-livakovi-16531.md"
+displayName: "Dominik Livaković"
+headshotUrl: ""
+shirtNumber: ""
+overview: "Dominik Livaković was Croatia's goalkeeper. The model ranked him #4 within the team, using shot-stopping, cross control, sweeping, and distribution data."
+strengths:
+  - "Provides a steady goalkeeper presence and a safe passing option in buildup."
+  - "Commands his box and organises the defence in front of him."
+weaknesses:
+  - "The available tournament sample is small, so goalkeeper conclusions remain cautious."
+---
+## Ranking and role
+
+- Team: Croatia
+- Position group: Goalkeeper
+- Functional role: Goalkeeper
+- Probabilistic role: Goalkeeper
+- Role entropy: 0.0000
+- Global rank: not available
+- Position rank: 8
+- Role rank: 8
+- Team rank: 4
+- Final player rating: 0.5503
+- Global ranking eligibility: goalkeeper-only ranking
+- Minutes: 720.3
+- Minutes reliability: 0.7060
+
+## Rating components
+
+| Metric | Value |
+|---|---|
+| post_shot_xg_proxy | 14.5028 |
+| goals_prevented_proxy_p90 | 0.9375 |
+| save_rate | 0.7742 |
+| claims_p90 | 0.9996 |
+| cross_stopping_rate | 0.0976 |
+| sweeper_actions_p90 | 0.2499 |
+| distribution_under_pressure | 0.4706 |
+| penalty_save_rate_shrunk | 0.4000 |
+| goalkeeper_feature_coverage | 1.0000 |
+
+## Continuous role vector
+
+| Metric | Value |
+|---|---|
+| progression_score | 0.3677 |
+| creation_score | 0.2866 |
+| finishing_score | 0.1749 |
+| pressing_score | 0.0692 |
+| defensive_score | 0.1684 |
+| ball_security_score | 0.3585 |
+| aerial_score | 0.0681 |
+
+## Spatial, 360 and passing-network context
+
+| Metric | Value |
+|---|---|
+| sb360_coverage | 0.6733 |
+| mean_defenders_within_3m | 0.0788 |
+| mean_defenders_within_5m | 0.2291 |
+| mean_nearest_defender_m | 13.0032 |
+| mean_passing_lane_availability | 0.9619 |
+| packing_index_mean | 0.3818 |
+| mean_space_received | 0.9263 |
+| network_pagerank | 0.0329 |
+| network_betweenness | 0.0255 |
+| network_entropy | 0.8170 |
+| build_up_involvement_ratio | 0.7669 |
+
+Missing values indicate unavailable evidence; they are not converted into zero contribution.
