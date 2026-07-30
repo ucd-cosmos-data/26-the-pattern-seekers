@@ -4465,7 +4465,8 @@
     }
 
     .coach-action.is-press,
-    .coach-action.is-recovery {
+    .coach-action.is-recovery,
+    .coach-action.is-loss {
         stroke: var(--coach-action);
         stroke-width: 1.9;
         stroke-dasharray: 2 3;
@@ -5255,7 +5256,21 @@
         }
 
         .coach-marker {
-            --marker-size: clamp(2.15rem, 7vw, 2.65rem);
+            /* The full 22-player board compresses to roughly 3.3 px per pitch
+               metre on a phone. Scale the dots with that field, rather than
+               letting desktop-sized markers overlap and clip at the touchline. */
+            --marker-size: clamp(1.55rem, 4.2vw, 2.15rem);
+        }
+
+        .coach-player,
+        .coach-player.is-team,
+        .coach-player.is-opponent {
+            width: clamp(2rem, 5vw, 3.4rem);
+            height: clamp(2rem, 5vw, 3.4rem);
+        }
+
+        .coach-marker b {
+            font-size: clamp(0.82rem, 2.6vw, 1.1rem);
         }
 
         .coach-pitch__direction {
@@ -5927,6 +5942,55 @@ body:has(.player-report-page) .theme-toggle {
     color: var(--qatar-cream, #f7f2e9);
     background: var(--ps-surface, #241219);
     font-weight: 500;
+}
+
+/* Flip sides — swap which team the interactive board is planning for. */
+.coach-context__matchup {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 1.4rem;
+}
+.coach-flip {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.7rem;
+    min-height: 3.6rem;
+    padding: 0 1.4rem;
+    border: 0.1rem solid rgba(217, 182, 93, 0.45);
+    border-radius: 999px;
+    background: rgba(217, 182, 93, 0.08);
+    color: var(--qatar-cream, #f7f2e9);
+    font: inherit;
+    font-size: 1.2rem;
+    font-weight: 600;
+    letter-spacing: 0.04em;
+    cursor: pointer;
+    transition:
+        border-color 180ms var(--ps-ease),
+        background-color 180ms var(--ps-ease),
+        transform 120ms var(--ps-ease);
+}
+.coach-flip:hover {
+    border-color: rgba(217, 182, 93, 0.85);
+    background: rgba(217, 182, 93, 0.16);
+}
+.coach-flip:focus-visible {
+    outline: 0.2rem solid var(--qatar-gold, #d9b65d);
+    outline-offset: 0.2rem;
+}
+.coach-flip:active {
+    transform: translateY(0.1rem);
+}
+.coach-flip__icon {
+    font-size: 1.55rem;
+    line-height: 1;
+    color: var(--qatar-gold, #d9b65d);
+    transition: transform 260ms var(--ps-ease);
+}
+.coach-flip:hover .coach-flip__icon,
+.coach-flip:focus-visible .coach-flip__icon {
+    transform: rotate(180deg);
 }
 
 /* Tooltip: imported rating/rank line under the role. */

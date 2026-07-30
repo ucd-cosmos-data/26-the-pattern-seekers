@@ -17,6 +17,10 @@
 {{- if eq .Layout "worlds-coach" -}}
 {{- $tacticsModel := resources.Get "js/tactics-model.js" | minify | fingerprint -}}
 <script src="{{ $tacticsModel.RelPermalink }}" integrity="{{ $tacticsModel.Data.Integrity }}" defer></script>
+{{- range slice "group-a" "group-b" "group-c" -}}
+{{- $matchupPlans := resources.Get (printf "js/worlds-coach-plans/%s.js" .) | minify | fingerprint -}}
+<script src="{{ $matchupPlans.RelPermalink }}" integrity="{{ $matchupPlans.Data.Integrity }}" defer></script>
+{{- end -}}
 {{- $tacticsPlanner := resources.Get "js/tactics-planner.js" | minify | fingerprint -}}
 <script src="{{ $tacticsPlanner.RelPermalink }}" integrity="{{ $tacticsPlanner.Data.Integrity }}" defer></script>
 {{- end -}}

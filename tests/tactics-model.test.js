@@ -94,6 +94,103 @@ test("path waypoint progress identifies the moment a pass reaches its receiver",
     );
 });
 
+test("explicit owners arrive for passes and stay attached for carries", function () {
+    var path = [
+        { xMeters: 20, yMeters: 34 },
+        { xMeters: 44, yMeters: 24 },
+        { xMeters: 56, yMeters: 24 }
+    ];
+    var owners = ["passer", "receiver", "receiver"];
+    var receiverStart = { xMeters: 38, yMeters: 30 };
+    var receiverEnd = path[2];
+    var receptionProgress = model.touchProgressAtWaypoint(path, 1, owners);
+    var receiverAtReception = model.ownerPositionAtStepProgress({
+        startPosition: receiverStart,
+        endPosition: receiverEnd,
+        path: path,
+        owners: owners,
+        playerId: "receiver",
+        progress: receptionProgress
+    });
+
+    assert.deepEqual(receiverAtReception, path[1]);
+
+    var carryProgress = (
+        receptionProgress +
+        model.touchProgressAtWaypoint(path, 2, owners)
+    ) / 2;
+    var ball = model.interpolateOwnedPath(
+        path,
+        owners,
+        model.ballProgressAtStepProgress(carryProgress)
+    );
+    var carrier = model.ownerPositionAtStepProgress({
+        startPosition: receiverStart,
+        endPosition: receiverEnd,
+        path: path,
+        owners: owners,
+        playerId: "receiver",
+        progress: carryProgress
+    });
+
+    assert.deepEqual(carrier, ball);
+});
+
+test("turnovers have their own timing and owner priority handoff", function () {
+    var path = [
+        { xMeters: 40, yMeters: 32 },
+        { xMeters: 48, yMeters: 34 }
+    ];
+    var owners = ["op_m1", "us_m1"];
+
+    assert.ok(
+        model.ownedSegmentWeight(path, owners, 0, ["recovery"]) >
+            model.ownedSegmentWeight(path, owners, 0, ["pass"]),
+        "a contested recovery is slower than a clean pass"
+    );
+
+    var before = model.ballOwnerPrioritiesAtStepProgress(
+        path,
+        owners,
+        0.21,
+        ["recovery"]
+    );
+    var after = model.ballOwnerPrioritiesAtStepProgress(
+        path,
+        owners,
+        0.85,
+        ["recovery"]
+    );
+    assert.equal(before.op_m1, 1);
+    assert.equal(after.us_m1, 1);
+});
+
+test("overlap resolution is deterministic and never detaches a pinned owner", function () {
+    var positions = {
+        us_owner: { xMeters: 50, yMeters: 34 },
+        us_support: { xMeters: 50, yMeters: 34 },
+        op_marker: { xMeters: 50, yMeters: 34 }
+    };
+    var options = {
+        priorities: { us_owner: 1 },
+        sameTeamMinimum: 3,
+        opponentMinimum: 2,
+        maximumDisplacement: 1.8,
+        inset: 3.5
+    };
+    var resolved = model.resolveFrameOverlaps(positions, options);
+    var reversed = model.resolveFrameOverlaps({
+        op_marker: positions.op_marker,
+        us_support: positions.us_support,
+        us_owner: positions.us_owner
+    }, options);
+
+    assert.deepEqual(resolved, reversed);
+    assert.deepEqual(resolved.us_owner, positions.us_owner);
+    assert.ok(model.distance(resolved.us_owner, resolved.us_support) >= 0.7);
+    assert.ok(model.distance(resolved.us_owner, resolved.op_marker) >= 0.7);
+});
+
 test("sequence coordinates can be validated before rendering", function () {
     assert.equal(model.pointsEqual(
         { xMeters: 35, yMeters: 56 },

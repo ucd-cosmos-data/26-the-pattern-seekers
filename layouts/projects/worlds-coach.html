@@ -68,10 +68,20 @@
             <div class="coach-fixtures" data-fixtures role="group" aria-label="Pick a knockout fixture"></div>
         <div class="coach-overview">
             <section class="coach-context" aria-label="Match context">
-                <div>
+                <div class="coach-context__matchup">
                     <p class="coach-matchup" aria-label="Argentina versus France">
                         Argentina vs. France
                     </p>
+                    <button
+                        type="button"
+                        class="coach-flip"
+                        data-flip-sides
+                        aria-label="Flip sides — build the game plan from the opponent's point of view"
+                        title="Flip sides — see the opponent's game plan"
+                    >
+                        <span class="coach-flip__icon" aria-hidden="true">⇄</span>
+                        <span class="coach-flip__label">Flip sides</span>
+                    </button>
                 </div>
 
                 <div class="coach-context__controls" aria-label="Match scenario">
