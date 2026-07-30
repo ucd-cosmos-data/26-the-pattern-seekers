@@ -1245,8 +1245,15 @@
             button.setAttribute("aria-controls", "coach-player-tooltip");
             marker.className = "coach-marker " + (player.isOurs ? "is-team" : "is-opponent");
             var flag = FLAGS[player.team] || FLAGS._default;
-            marker.style.background = flag.grad;
-            marker.style.color = flag.num;
+            if (player.isPlaceholder) {
+                // Unrated depth: hollow neutral disc so it recedes behind the
+                // real flagged players.
+                marker.style.background = "rgba(140, 142, 150, 0.28)";
+                marker.style.color = "rgba(247, 242, 233, 0.85)";
+            } else {
+                marker.style.background = flag.grad;
+                marker.style.color = flag.num;
+            }
             number.textContent = player.number;
             surname.textContent = player.surname;
             marker.appendChild(number);

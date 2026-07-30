@@ -5948,22 +5948,28 @@ body:has(.player-report-page) .theme-toggle {
     color: var(--qatar-gold, #d9b65d);
 }
 
-/* At-rest team distinction that survives similar flags: our players sit a
-   touch larger with a bright rim; opponents a touch smaller and muted. */
-.coach-player.is-opponent > .coach-marker {
-    transform: scale(0.9);
-    border-color: rgba(247, 242, 233, 0.72);
-    opacity: 0.94;
-}
+/* Three-tier hierarchy that survives similar flags:
+   our team = full-size flags with a bright gold rim;
+   opponent = smaller, desaturated flags;
+   unrated depth = small hollow discs. */
 .coach-player.is-team > .coach-marker {
-    box-shadow: 0 0 0 0.12rem rgba(217, 182, 93, 0.32), 0 0.2rem 0.6rem rgba(0, 0, 0, 0.35);
+    box-shadow: 0 0 0 0.16rem rgba(217, 182, 93, 0.55), 0 0.2rem 0.7rem rgba(0, 0, 0, 0.42);
 }
-
-/* Squad slots with no rated player: present but visibly muted. */
+.coach-player.is-opponent > .coach-marker {
+    transform: scale(0.82);
+    border-color: rgba(247, 242, 233, 0.55);
+    opacity: 0.9;
+    filter: saturate(0.82);
+    box-shadow: 0 0.15rem 0.5rem rgba(0, 0, 0, 0.35);
+}
 .coach-player.is-placeholder > .coach-marker {
-    opacity: 0.5;
-    filter: grayscale(0.35);
+    border-style: dashed !important;
+    border-color: rgba(247, 242, 233, 0.42) !important;
+    opacity: 0.6;
+    transform: scale(0.72);
+    box-shadow: none !important;
 }
 .coach-player.is-placeholder > small {
-    opacity: 0.7;
+    opacity: 0.6;
+    font-style: italic;
 }
