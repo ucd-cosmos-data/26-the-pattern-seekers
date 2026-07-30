@@ -1268,9 +1268,12 @@
                 marker.style.background = "rgba(140, 142, 150, 0.28)";
                 marker.style.color = "rgba(247, 242, 233, 0.85)";
             } else {
-                // White number + dark outline (CSS) reads on every flag, light
-                // or dark, so it never disappears into a same-colour stripe.
-                marker.style.background = flag.grad;
+                // A soft dark scrim sits under the number so a white number is
+                // legible on any flag — even a white centre stripe (Croatia,
+                // France, Netherlands) — while the flag colours still read as a
+                // ring around it.
+                var scrim = "radial-gradient(circle at 50% 50%, rgba(8,6,10,0.82) 0%, rgba(8,6,10,0.74) 38%, rgba(8,6,10,0) 64%)";
+                marker.style.background = scrim + ", " + flag.grad;
                 marker.style.color = "#ffffff";
             }
             number.textContent = player.number;
