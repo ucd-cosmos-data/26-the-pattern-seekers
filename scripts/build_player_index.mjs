@@ -132,6 +132,16 @@ const OVERRIDES = {
     23721: ["Wataru Endo", "Endo"], 3300: ["Maya Yoshida", "Yoshida"]
 };
 
+// Wikipedia titles for headshot lookup where the goes-by name is ambiguous
+// (a mononym that collides with a more famous non-footballer, or a redirect).
+const WIKI_OVERRIDE = {
+    6785: "Yassine Bounou", 20016: "Pepe (footballer, born 1983)",
+    4372: "Marquinhos (footballer, born 1994)", 5547: "Alisson",
+    10595: "Raphinha (footballer, born 1996)", 6765: "Rodri (footballer, born 1996)",
+    18395: "Vinícius Júnior", 30486: "Pedri", 3280: "Richarlison",
+    5539: "Casemiro", 22600: "Lucas Paquetá", 12041: "João Félix"
+};
+
 const CONNECTORS = { de: 1, da: 1, dos: 1, do: 1, van: 1, von: 1, el: 1, di: 1, den: 1, der: 1, mac: 1, mc: 1 };
 
 function titleCase(t) { return t ? t.charAt(0).toUpperCase() + t.slice(1) : t; }
@@ -289,6 +299,7 @@ rankings
             overview: summary.overview,
             strength: summary.strengths[0] || "",
             watch: summary.weaknesses[0] || "",
+            wiki: WIKI_OVERRIDE[id] || goesBy,
             slug
         };
 
@@ -306,6 +317,7 @@ rankings
                 `playerId: ${JSON.stringify("sb-" + id)}`,
                 `sourceUrl: ${JSON.stringify(sourceUrl)}`,
                 `displayName: ${JSON.stringify(goesBy)}`,
+                `wikiTitle: ${JSON.stringify(WIKI_OVERRIDE[id] || goesBy)}`,
                 `headshotUrl: ""`,
                 `shirtNumber: ""`,
                 `overview: ${JSON.stringify(overview)}`,

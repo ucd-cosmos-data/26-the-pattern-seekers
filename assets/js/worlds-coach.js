@@ -959,7 +959,7 @@
                 overview: idx ? idx.overview : "",
                 meta: meta,
                 reportSlug: idx ? idx.slug : null,
-                wikiTitle: idx ? idx.name : (r.wikiTitle || r.displayName),
+                wikiTitle: idx ? (idx.wiki || idx.name) : (r.wikiTitle || r.displayName),
                 espnId: null
             };
         });

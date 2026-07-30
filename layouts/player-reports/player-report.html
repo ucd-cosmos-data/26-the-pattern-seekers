@@ -1,0 +1,86 @@
+{{- define "main" }}
+<article class="player-report-page">
+    <header class="player-report-hero">
+        <div class="player-report-shell player-report-hero__grid">
+            <div class="player-report-hero__copy">
+                <a
+                    class="player-report-back"
+                    href="{{ "projects/worlds-coach-output/" | relURL }}"
+                >&larr; Back to the interactive coach</a>
+                <p>Player analysis &middot; Qatar 2022</p>
+                <h1>{{ .Title }}</h1>
+            </div>
+            <figure
+                class="player-report-headshot"
+                data-player-report-headshot-frame
+                aria-label="{{ .Params.displayName }}, number {{ .Params.shirtNumber }}"
+            >
+                <span class="player-report-headshot__portrait">
+                    <img
+                        src="{{ .Params.headshotUrl }}"
+                        alt="{{ .Params.displayName }} headshot"
+                        width="512"
+                        height="512"
+                        loading="eager"
+                        fetchpriority="high"
+                        data-player-report-headshot
+                        data-wikipedia-title="{{ .Params.wikiTitle | default .Params.displayName }}"
+                    >
+                </span>
+                <span class="player-report-headshot__number" aria-hidden="true">
+                    {{ .Params.shirtNumber }}
+                </span>
+            </figure>
+        </div>
+    </header>
+
+    <div class="player-report-shell player-report-layout">
+        <section
+            class="player-report-summary"
+            aria-labelledby="player-report-overview-title"
+        >
+            <p class="player-report-summary__eyebrow">Quick read</p>
+            <h2 id="player-report-overview-title">Player overview</h2>
+            <p class="player-report-summary__overview">
+                {{ .Params.overview }}
+            </p>
+            <div class="player-report-summary__grid">
+                <section class="player-report-summary__column is-strength">
+                    <h3>Strengths</h3>
+                    <ul>
+                        {{- range .Params.strengths }}
+                        <li>{{ . }}</li>
+                        {{- end }}
+                    </ul>
+                </section>
+                <section class="player-report-summary__column is-watchout">
+                    <h3>Watch-outs</h3>
+                    <ul>
+                        {{- range .Params.weaknesses }}
+                        <li>{{ . }}</li>
+                        {{- end }}
+                    </ul>
+                </section>
+            </div>
+            <p class="player-report-summary__note">
+                Based on this player&rsquo;s Qatar 2022 event and StatsBomb 360 data.
+            </p>
+        </section>
+
+        <div class="player-report-content">
+            {{ .Content }}
+        </div>
+        <footer class="player-report-footer">
+            <p>
+                Copied from the Pattern Seekers analysis repository for this
+                website view.
+            </p>
+            <a
+                href="{{ .Params.sourceUrl }}"
+                target="_blank"
+                rel="noopener noreferrer"
+            >View source analysis &nearr;</a>
+        </footer>
+    </div>
+</article>
+{{- end }}
