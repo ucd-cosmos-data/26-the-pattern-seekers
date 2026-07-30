@@ -333,5 +333,84 @@ rankings
         }
     });
 
+// ---- full appearance squads: fill formations with real players ------------
+function parseCsv(text) {
+    const lines = text.split(/\r?\n/).filter(function (l) { return l.length; });
+    const header = lines[0].split(",");
+    return lines.slice(1).map(function (line) {
+        const cells = line.split(","); // player names in this dataset have no commas
+        const row = {};
+        header.forEach(function (h, i) { row[h] = cells[i]; });
+        return row;
+    });
+}
+
+const READABLE_POS = {
+    "Goalkeeper": "Goalkeeper", "Center Back": "Centre-back",
+    "Fullback/Wingback": "Full-back", "Defensive Midfield": "Defensive midfielder",
+    "Central/Wide Midfield": "Midfielder", "Attacking Midfield/Wing": "Winger",
+    "Forward": "Forward", "Unknown": "Squad player"
+};
+
+const matchups = JSON.parse(fs.readFileSync(path.join(projectRoot, "assets/matchups.json"), "utf8"));
+const nameToCode = {}, codeToName = {};
+matchups.teams.forEach(function (t) { nameToCode[t.name] = t.code; codeToName[t.code] = t.name; });
+const ratedInfoById = {};
+rankings.forEach(function (p) {
+    var rating = typeof p.final_player_rating === "number" ? p.final_player_rating
+        : (typeof p["Final player rating"] === "number" ? p["Final player rating"] : null);
+    ratedInfoById[String(p.player_id)] = { rating: rating, role: p.functional_role };
+});
+
+const intervalsPath = process.env.PATTERN_SEEKERS_LINEUP_INTERVALS ||
+    path.resolve(analysisRoot, "../../data/interim/world_cup_lineup_intervals.csv");
+const squadAgg = {};
+if (fs.existsSync(intervalsPath)) {
+    parseCsv(fs.readFileSync(intervalsPath, "utf8")).forEach(function (r) {
+        const code = nameToCode[r.team];
+        if (!code || !KNOCKOUT_TEAMS.has(r.team) || !r.player_id) return;
+        if (!squadAgg[code]) squadAgg[code] = {};
+        if (!squadAgg[code][r.player_id]) {
+            squadAgg[code][r.player_id] = { name: r.player, min: 0, posMin: {} };
+        }
+        const m = Number(r.minutes) || 0;
+        const pg = r.position_group || "Unknown";
+        squadAgg[code][r.player_id].min += m;
+        squadAgg[code][r.player_id].posMin[pg] = (squadAgg[code][r.player_id].posMin[pg] || 0) + m;
+    });
+}
+
+const squads = {};
+Object.keys(squadAgg).forEach(function (code) {
+    squads[code] = Object.keys(squadAgg[code]).map(function (pid) {
+        const s = squadAgg[code][pid];
+        const primary = Object.keys(s.posMin).sort(function (a, b) { return s.posMin[b] - s.posMin[a]; })[0] || "Unknown";
+        const rated = ratedInfoById[pid] || null;
+        if (!index[pid]) {
+            const nm = resolveNames(pid, s.name);
+            index[pid] = {
+                name: nm.goesBy, surname: nm.surname, team: codeToName[code] || code,
+                role: READABLE_POS[primary] || "Squad player",
+                teamRank: null, positionRank: null, globalRank: null,
+                rating: null, minutes: Math.round(s.min),
+                overview: "", strength: "", watch: "",
+                wiki: nm.goesBy, slug: null, rated: false
+            };
+        }
+        return {
+            id: pid, name: index[pid].name, position: primary,
+            role: rated && rated.role ? rated.role : (READABLE_POS[primary] || "Squad player"),
+            rating: rated ? rated.rating : null, min: Math.round(s.min)
+        };
+    }).sort(function (a, b) {
+        const ra = a.rating == null ? -1 : a.rating;
+        const rb = b.rating == null ? -1 : b.rating;
+        return rb !== ra ? rb - ra : b.min - a.min;
+    });
+});
+
+fs.writeFileSync(path.join(projectRoot, "assets/squads.json"), JSON.stringify(squads, null, 0) + "\n", "utf8");
+
 fs.writeFileSync(indexOut, `${JSON.stringify(index, null, 0)}\n`, "utf8");
-console.log(`player-index: ${Object.keys(index).length} players, ${pagesWritten} new report pages -> ${contentRoot}`);
+console.log(`player-index: ${Object.keys(index).length} players, ${pagesWritten} new report pages`);
+console.log(`squads: ${Object.keys(squads).length} teams, sizes ${Object.keys(squads).map(function (c) { return squads[c].length; }).join("/")}`);

@@ -35,6 +35,7 @@
     <div class="coach-room__workspace" id="coach-tool" data-coach-tool>
         <script type="application/json" data-matchup-data>{{ (resources.Get "matchups.json").Content | safeJS }}</script>
         <script type="application/json" data-player-index>{{ (resources.Get "player-index.json").Content | safeJS }}</script>
+        <script type="application/json" data-squads>{{ (resources.Get "squads.json").Content | safeJS }}</script>
         <script
             type="application/json"
             data-player-report-data

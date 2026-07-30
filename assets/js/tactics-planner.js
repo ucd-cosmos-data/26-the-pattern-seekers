@@ -96,11 +96,12 @@
     function classify(player) {
         var pos = (player.position || "") + " " + (player.role || "");
         pos = pos.toLowerCase();
-        if (pos.indexOf("goalkeeper") !== -1) return "GK";
+        if (pos.indexOf("goalkeeper") !== -1 || pos.indexOf("keeper") !== -1) return "GK";
+        // Check defence before "wing" so "wingback"/"fullback" stay defenders.
+        if (pos.indexOf("back") !== -1 || pos.indexOf("defender") !== -1) return "DEF";
         if (pos.indexOf("forward") !== -1 || pos.indexOf("striker") !== -1 ||
             pos.indexOf("winger") !== -1 || pos.indexOf("wing") !== -1) return "FWD";
         if (pos.indexOf("midfield") !== -1) return "MID";
-        if (pos.indexOf("back") !== -1 || pos.indexOf("defender") !== -1) return "DEF";
         return "MID";
     }
 
@@ -688,6 +689,7 @@
      */
     function generate(opts) {
         var teams = opts.teams;
+        var squads = opts.squads || null;
         var ourCode = opts.ourCode;
         var oppCode = opts.oppCode;
         var scenarioKey = opts.scenario || "prematch";
@@ -695,6 +697,10 @@
         var ourTeam = teams[ourCode];
         var oppTeam = teams[oppCode];
         if (!ourTeam || !oppTeam) throw new Error("Unknown team code in matchup " + ourCode + " vs " + oppCode);
+        // Fill the XI from the full appearance squad when available (so no slot
+        // falls back to a placeholder); the rated ratings still order priority.
+        var ourPool = squads && squads[ourCode] ? { players: squads[ourCode] } : ourTeam;
+        var oppPool = squads && squads[oppCode] ? { players: squads[oppCode] } : oppTeam;
 
         var ourCounts = formationFor(ourCode);
         var oppCounts = formationFor(oppCode);
@@ -709,8 +715,8 @@
         var flank = hash(ourCode + oppCode) % 2 === 0 ? "right" : "left";
 
         var roster = {};
-        fillRoster(roster, ourSlots, ourCode, "ours", assignPlayers(ourTeam, ourCounts), true);
-        fillRoster(roster, oppSlots, oppCode, "theirs", assignPlayers(oppTeam, oppCounts), false);
+        fillRoster(roster, ourSlots, ourCode, "ours", assignPlayers(ourPool, ourCounts), true);
+        fillRoster(roster, oppSlots, oppCode, "theirs", assignPlayers(oppPool, oppCounts), false);
 
         var text = planText(ourTeam, oppTeam, flank, scenarioKey);
         var confidence = confidenceFor(ourTeam, oppTeam, scenarioKey);

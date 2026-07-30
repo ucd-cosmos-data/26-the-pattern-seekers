@@ -837,6 +837,17 @@
         }
     }
 
+    // Full appearance squads so generated XIs fill with real players.
+    var squadsData = room.querySelector("[data-squads]");
+    var squads = {};
+    if (squadsData) {
+        try {
+            squads = JSON.parse(squadsData.textContent);
+        } catch (error) {
+            console.warn("Squads could not be loaded.", error);
+        }
+    }
+
     var activeView = "attack";
     var viewProgress = { attack: 0, press: 0, transition: 0 };
     var formationIndex = 0;
@@ -933,7 +944,7 @@
 
     function generatedPlan(ourCode, oppCode, scenarioKey) {
         var gen = window.WorldsCoachPlanner.generate({
-            teams: teamsByCode, ourCode: ourCode, oppCode: oppCode, scenario: scenarioKey
+            teams: teamsByCode, squads: squads, ourCode: ourCode, oppCode: oppCode, scenario: scenarioKey
         });
         var genRoster = {};
         Object.keys(gen.roster).forEach(function (id) {
@@ -941,22 +952,28 @@
             // Enrich from the knockout player index: goes-by name, report
             // description and report slug, keyed by StatsBomb id.
             var idx = r.playerId ? playerIndex[r.playerId] : null;
+            var isRated = idx && typeof idx.rating === "number";
             var meta = "";
-            if (idx) {
+            if (idx && isRated) {
                 var bits = [];
                 if (idx.teamRank) bits.push("Team #" + idx.teamRank + " rated");
-                if (typeof idx.rating === "number") bits.push(idx.rating.toFixed(2) + " rating");
+                bits.push(idx.rating.toFixed(2) + " rating");
                 if (idx.minutes) bits.push(idx.minutes + "′");
                 meta = bits.join(" · ");
             }
+            // Unrated squad players are shown by name + position, with an honest
+            // note that they were below the individual-rating minutes floor.
+            var description = isRated ? idx.strength
+                : (idx ? "Squad player — below the tournament minutes floor, so not individually rated."
+                    : (r.instruction || ""));
             genRoster[id] = {
                 team: r.team, isOurs: r.isOurs, number: r.number,
                 isPlaceholder: r.isPlaceholder || false,
                 name: idx ? idx.name : r.displayName,
                 surname: idx ? idx.surname : r.surname,
                 role: idx ? (idx.role || r.role) : r.role,
-                instruction: idx ? idx.strength : (r.instruction || ""),
-                overview: idx ? idx.overview : "",
+                instruction: description,
+                overview: idx && isRated ? idx.overview : "",
                 meta: meta,
                 reportSlug: idx ? idx.slug : null,
                 wikiTitle: idx ? (idx.wiki || idx.name) : (r.wikiTitle || r.displayName),
