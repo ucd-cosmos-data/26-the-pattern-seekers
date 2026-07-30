@@ -2023,12 +2023,19 @@
         teamASelect.value = byCode.ARG ? "ARG" : teams[0].code;
         teamBSelect.value = byCode.FRA ? "FRA" : teams[Math.min(1, teams.length - 1)].code;
 
+        // Show the name each player goes by (from the player index) in the
+        // head-to-head ratings card, falling back to the full name.
+        function goesByName(player) {
+            var idx = player && player.id != null ? playerIndex[String(player.id)] : null;
+            return idx && idx.name ? idx.name : (player ? player.name : "");
+        }
+
         function playerRowHtml(player, index, topRating) {
             var width = Math.max(6, Math.round(((player.rating || 0) / (topRating || 1)) * 100));
             var subtitle = player.role || player.position || "";
             return "<li class=\"matchup-player\">" +
                 "<span class=\"matchup-player__rank\">" + (player.team_rank || index + 1) + "</span>" +
-                "<span class=\"matchup-player__name\">" + escapeHtml(player.name) +
+                "<span class=\"matchup-player__name\">" + escapeHtml(goesByName(player)) +
                 (subtitle ? "<em>" + escapeHtml(subtitle) + "</em>" : "") + "</span>" +
                 "<span class=\"matchup-player__bar\"><i style=\"--w: " + width + "%\"></i></span>" +
                 "<span class=\"matchup-player__rating\">" + formatRating(player.rating) + "</span>" +
@@ -2055,7 +2062,7 @@
         function topLine(team) {
             var top = team.players && team.players[0];
             return top
-                ? "<strong>" + escapeHtml(top.name) + "</strong><em>top rated · " + formatRating(top.rating) + "</em>"
+                ? "<strong>" + escapeHtml(goesByName(top)) + "</strong><em>top rated · " + formatRating(top.rating) + "</em>"
                 : "<em>No rated players yet</em>";
         }
 
