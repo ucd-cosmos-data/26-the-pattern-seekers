@@ -48,7 +48,7 @@ For obesity:
 - the least-obese county (San Francisco) was 3.012 standard deviations away from the mean, exceeding the 1.96 limit (95% CI) and suggesting that this may have been an outlier, and
 - inland counties had higher obesity prevalences than coastal counties (see map below).
 
-<div class="project-figure"><iframe src="../../results/figures/ca-obesity-prevalence-map.html" width="100%" height="500px" style="border:none;" title="Map of age-adjusted obesity prevalence by California county"></iframe><p style="text-align: center; font-weight: bold; margin-top: 8px; margin-bottom: 24px;">Figure 1: Obesity Prevalence by County in California</p></div>
+<div class="project-figure"><iframe src="../../results/figures/ca-obesity-prevalence-map.html" width="100%" height="500px" style="border:none;" title="Map of age-adjusted obesity prevalence by California county" loading="lazy"></iframe><p style="text-align: center; font-weight: bold; margin-top: 8px; margin-bottom: 24px;">Figure 1: Obesity Prevalence by County in California</p></div>
 
 ### Hourly Wages
 
@@ -58,7 +58,7 @@ For hourly wages:
 - the top three counties with the lowest hourly wages were **Tulare**, **Glenn**, and **Sutter**, and
 - coastal counties had significantly higher hourly wages than inland counties (see map below).
 
-<div class="project-figure"><iframe src="../../results/figures/ca-living-wage-map.html" width="100%" height="500px" style="border:none;"></iframe><p style="text-align: center; font-weight: bold; margin-top: 8px; margin-bottom: 24px;">Figure 2: Living Wage by County in California</p></div>
+<div class="project-figure"><iframe src="../../results/figures/ca-living-wage-map.html" width="100%" height="500px" style="border:none;" title="Map of hourly living wages by California county" loading="lazy"></iframe><p style="text-align: center; font-weight: bold; margin-top: 8px; margin-bottom: 24px;">Figure 2: Living Wage by County in California</p></div>
 
 ### Correlation
 

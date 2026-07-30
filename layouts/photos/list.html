@@ -11,12 +11,21 @@
     $extension }} {{- $images = $images | append .Name }} {{- end }} {{- end }} {{- end }} {{-
     with $images }}
     <div class="photo-grid" data-reveal-stagger data-reveal-start="190" data-reveal-step="65">
-        {{- range sort . }} {{- $source := (printf "photos/%s" .) | relURL }}
-        <button type="button" data-photo="{{ $source }}" aria-label="Open {{ . }}" data-reveal>
+        {{- range sort . }}
+        {{- $source := (printf "photos/%s" .) | relURL }}
+        {{- $name := . | strings.TrimSuffix (path.Ext .) }}
+        {{- $alt := $name | humanize }}
+        {{- $optimizedPath := printf "static/photos/optimized/%s.jpg" $name }}
+        {{- $displaySource := $source }}
+        {{- if os.FileExists $optimizedPath }}
+            {{- $displaySource = (printf "photos/optimized/%s.jpg" $name) | relURL }}
+        {{- end }}
+        <button type="button" data-photo="{{ $displaySource }}" aria-label="Open photo: {{ $alt }}" data-reveal>
             <img
-                src="{{ $source }}"
-                alt="{{ . | strings.TrimSuffix (path.Ext .) | humanize }}"
+                src="{{ $displaySource }}"
+                alt="{{ $alt }}"
                 loading="lazy"
+                decoding="async"
             />
         </button>
         {{- end }}

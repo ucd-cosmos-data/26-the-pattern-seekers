@@ -4,7 +4,7 @@ title: "The Pattern Seekers"
 theme: hugo-theme-stack
 
 params:
-  favicon: bonsai.jpeg #the small icon shown in the browser tab
+  favicon: bonsai-favicon.jpeg # optimized browser-tab icon; full-resolution source remains in assets/bonsai.jpeg
   colorScheme:
     toggle: true
     default: auto
