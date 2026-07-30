@@ -412,25 +412,54 @@
         }
         return m;
     }
+    // Pick ids from a pool for each of the requested sides, never repeating a
+    // player until the pool is exhausted (so roles don't collide).
+    function pickDistinct(pool, right, order) {
+        var remaining = pool.slice();
+        return order.map(function (which) {
+            var id = sidePick(remaining, right, which);
+            var idx = remaining.indexOf(id);
+            if (idx !== -1) remaining.splice(idx, 1);
+            return id;
+        });
+    }
     function roleMap(ourSlots, flank) {
         var right = flank === "right";
         var u = byType(ourSlots);
-        var attackers = u.FWD.length >= 2 ? u.FWD.slice() : u.FWD.concat(u.MID.slice(-2));
-        var striker = sidePick(u.FWD.length ? u.FWD : attackers, right, "mid");
-        var wide = sidePick(attackers, right, "strong");
-        var farFwd = sidePick(attackers, right, "weak");
+        var fwds = u.FWD.slice();
+        var advMids = u.MID.slice(-2); // the two most advanced midfielders
+        var wide, striker, farFwd, usedMid = {};
+        if (fwds.length >= 3) {
+            var a = pickDistinct(fwds, right, ["strong", "mid", "weak"]);
+            wide = a[0]; striker = a[1]; farFwd = a[2];
+        } else if (fwds.length === 2) {
+            var s2 = pickDistinct(fwds, right, ["mid", "weak"]);
+            striker = s2[0]; farFwd = s2[1] || s2[0];
+            wide = sidePick(advMids, right, "strong") || farFwd;
+            if (wide && advMids.indexOf(wide) !== -1) usedMid[wide] = 1;
+        } else {
+            striker = fwds[0] || null;
+            var w2 = pickDistinct(advMids, right, ["strong", "weak"]);
+            wide = w2[0] || striker; farFwd = w2[1] || wide;
+            if (w2[0]) usedMid[w2[0]] = 1;
+            if (w2[1]) usedMid[w2[1]] = 1;
+        }
+        // Midfield roles come from the mids NOT already used as wide attackers.
+        var midPool = u.MID.filter(function (id) { return !usedMid[id]; });
+        var mm = pickDistinct(midPool, right, ["mid", "strong", "weak"]);
+        var pivot = mm[0] || u.MID[0] || null;
         return {
             u: u,
             gk: u.GK[0],
             sFB: sidePick(u.DEF, right, "strong"),
             wFB: sidePick(u.DEF, right, "weak"),
             cbMid: sidePick(u.DEF, right, "mid"),
-            pivot: sidePick(u.MID, right, "mid"),
-            sMid: sidePick(u.MID, right, "strong"),
-            wMid: sidePick(u.MID, right, "weak"),
+            pivot: pivot,
+            sMid: mm[1] || pivot,
+            wMid: mm[2] || pivot,
             wide: wide,
-            striker: striker,
-            farFwd: farFwd === wide ? sidePick(attackers, right, "mid") : farFwd
+            striker: striker || wide,
+            farFwd: farFwd || wide
         };
     }
     function oppRoles(oppSlots, flank) {
@@ -824,7 +853,7 @@
                 title: "Split the centre-backs and bait the press", duration: 1700,
                 caption: "The keeper splits the centre-backs and the pivot drops in, deliberately inviting the opponent's forwards to jump.",
                 ballPath: [point(9, 34), point(20, 22)],
-                moves: moves(r.pivot, 30, 34, r.cbMid, 22, 46, r.sFB, 40, v.fY, r.wFB, 40, v.wY,
+                moves: moves(r.cbMid, 20, 22, r.pivot, 30, 40, r.sFB, 40, v.fY, r.wFB, 40, v.wY,
                     q.fwdS, 26, 30, q.fwdW, 26, 40),
                 active: [r.gk, r.cbMid, r.pivot],
                 actions: [{ type: "pass", label: "SPLIT", path: [point(9, 34), point(20, 22)] }],
@@ -848,8 +877,8 @@
                 id: "bld-switch", label: "3 - Switch the play", phase: "SWITCH",
                 title: "Big switch to the far side", duration: 2000,
                 caption: "Once the block shifts ball-side, switch it right across to the isolated far-side runner in acres of space.",
-                ballPath: [point(40, 34), point(60, farHalf)],
-                moves: moves(r.wMid, 66, v.wY, r.wide, 70, v.wY, r.striker, 80, 34, r.sMid, 58, v.hY, r.wFB, 60, v.wY,
+                ballPath: [point(40, 34), point(50, 34), point(60, farHalf)],
+                moves: moves(r.wMid, 60, farHalf, r.wide, 72, v.wY, r.striker, 80, 34, r.sMid, 58, v.hY, r.wFB, 56, v.wY,
                     q.fbS, 70, v.fY, q.cb, 78, 34),
                 active: [r.wMid, r.wide, r.striker],
                 actions: [{ type: "pass", label: "SWITCH", path: [point(40, 34), point(50, 34), point(60, farHalf)] }],
@@ -1189,8 +1218,8 @@
                 id: "se-keep", label: "3 - Win & keep it", phase: "REGAIN",
                 title: "Regain and keep the ball", duration: 2000,
                 caption: "When the ball is won, there is no rush — secure it, take the sting out of the game and rebuild possession.",
-                ballPath: [point(56, 34), point(44, 34), point(40, v.hY)],
-                moves: moves(r.pivot, 46, 34, r.sMid, 54, v.hY, r.wMid, 52, v.whY, r.sFB, 50, v.fY, r.cbMid, 36, 34,
+                ballPath: [point(56, 34), point(48, 34), point(40, v.hY)],
+                moves: moves(r.pivot, 40, v.hY, r.sMid, 54, v.hY, r.wMid, 52, v.whY, r.sFB, 50, v.fY, r.cbMid, 36, 34,
                     q.fwdS, 52, 34),
                 active: [r.pivot, r.sMid, r.cbMid],
                 actions: [{ type: "pass", label: "RECYCLE", path: [point(56, 34), point(44, 34), point(40, v.hY)] }],
@@ -1248,6 +1277,51 @@
     function attackFor(style, a, b, f, s) { return (ATTACK[style] || ATTACK.wing)(a, b, f, s); }
     function pressFor(style, a, b, f, s) { return (PRESS[style] || PRESS.mid)(a, b, f, s); }
     function transFor(style, a, b, f, s) { return (TRANS[style] || TRANS.swarm)(a, b, f, s); }
+
+    // Make every pass legible: snap the ball's resting points (sequence start +
+    // the end of each step) onto the actual receiving player, so the ball
+    // always travels dot-to-dot instead of into empty grass. Continuity is
+    // re-threaded afterwards so compileSequence still accepts it.
+    function ballDist(a, b) { return Math.sqrt(Math.pow(a.xMeters - b.xMeters, 2) + Math.pow(a.yMeters - b.yMeters, 2)); }
+    // prefix: "us_" when our team is on the ball (attack), "" to allow either
+    // team (defensive phases, where the opponent is the one passing).
+    function snapBall(seq, prefix) {
+        var pos = {};
+        Object.keys(seq.initial).forEach(function (id) {
+            pos[id] = { xMeters: seq.initial[id].xMeters, yMeters: seq.initial[id].yMeters };
+        });
+        function nearest(pt) {
+            var best = null, bd = Infinity;
+            Object.keys(pos).forEach(function (id) {
+                if (prefix && id.indexOf(prefix) !== 0) return;
+                var d = ballDist(pos[id], pt);
+                if (d < bd) { bd = d; best = id; }
+            });
+            return { pt: best ? pos[best] : null, d: bd };
+        }
+        // Snap the ball's initial resting point to whoever starts with it.
+        var s0 = nearest(seq.ball);
+        if (s0.pt && s0.d <= 12) seq.ball = point(s0.pt.xMeters, s0.pt.yMeters);
+        // Snap each step's final waypoint (the receiver) to that player.
+        seq.steps.forEach(function (st) {
+            Object.keys(st.moves || {}).forEach(function (id) {
+                pos[id] = { xMeters: st.moves[id].xMeters, yMeters: st.moves[id].yMeters };
+            });
+            var bp = st.ballPath;
+            if (!bp || !bp.length) return;
+            var near = nearest(bp[bp.length - 1]);
+            if (near.pt && near.d <= 10) bp[bp.length - 1] = point(near.pt.xMeters, near.pt.yMeters);
+        });
+        // Re-thread continuity: each step starts where the ball actually rests.
+        var b = seq.ball;
+        seq.steps.forEach(function (st) {
+            var bp = st.ballPath;
+            if (!bp || !bp.length) return;
+            bp[0] = point(b.xMeters, b.yMeters);
+            b = bp[bp.length - 1];
+        });
+        return seq;
+    }
 
     function formationStates(ourSlots, oppSlots, counts, scenario) {
         var mergedAttack = {};
@@ -1364,9 +1438,9 @@
                 scenario: scenarioKey
             },
             roster: roster,
-            attack: attackFor(prof.attack, ourSlots, oppSlots, flank, scenario),
-            press: pressFor(prof.press, ourSlots, oppSlots, flank, scenario),
-            transition: transFor(prof.trans, ourSlots, oppSlots, flank, scenario),
+            attack: snapBall(attackFor(prof.attack, ourSlots, oppSlots, flank, scenario), "us_"),
+            press: snapBall(pressFor(prof.press, ourSlots, oppSlots, flank, scenario), ""),
+            transition: snapBall(transFor(prof.trans, ourSlots, oppSlots, flank, scenario), ""),
             formationStates: formationStates(ourSlots, oppSlots, ourCounts, scenario),
             scenarioText: { plan: text.plan, why: text.why, confidence: confidence }
         };
