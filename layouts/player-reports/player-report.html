@@ -1,3 +1,4 @@
+{{- define "body-class" }}player-report-body{{- end }}
 {{- define "main" }}
 <article class="player-report-page">
     <header class="player-report-hero">
@@ -68,7 +69,10 @@
         </section>
 
         <div class="player-report-content">
-            {{ .Content }}
+            {{- .Content
+                | replaceRE `(?s)(<table>.*?</table>)` `<div class="player-report-table-scroll" role="region" aria-label="Player statistics table" tabindex="0">$1</div>`
+                | safeHTML
+            }}
         </div>
         <footer class="player-report-footer">
             <p>

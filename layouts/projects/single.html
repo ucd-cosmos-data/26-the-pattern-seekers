@@ -10,7 +10,7 @@
 
     <div class="project-reading-layout">
         <div class="project-content main-article" data-reveal data-reveal-delay="230">
-            {{- $wrappedTable := printf "<div class=\"project-table-scroll\">${1}</div>" -}}
+            {{- $wrappedTable := printf "<div class=\"project-table-scroll\" role=\"region\" aria-label=\"Project data table\" tabindex=\"0\">${1}</div>" -}}
             {{ .Content | replaceRE "(<table>(?:.|\n)+?</table>)" $wrappedTable | safeHTML }}
         </div>
 

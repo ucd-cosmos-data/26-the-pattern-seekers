@@ -2201,6 +2201,7 @@
             presentationPanel.querySelectorAll("[data-pres-jump]")
         );
         var progressNode = presentationPanel.querySelector("[data-pres-progress]");
+        var visibleIndex = -1;
 
         function formatCount(value) {
             return String(value).replace(/\B(?=(\d{3})+(?!\d))/g, ",");
@@ -2289,9 +2290,17 @@
             // links map to chapters[1..6].
             var effective = Math.min(activeIndex, indexLinks.length);
             indexLinks.forEach(function (link, index) {
-                if (index + 1 === effective) link.setAttribute("aria-current", "true");
+                if (index + 1 === effective) link.setAttribute("aria-current", "location");
                 else link.removeAttribute("aria-current");
             });
+            if (effective > 0 && effective !== visibleIndex) {
+                indexLinks[effective - 1].scrollIntoView({
+                    behavior: reducedMotion.matches ? "instant" : "smooth",
+                    block: "nearest",
+                    inline: "center"
+                });
+            }
+            visibleIndex = effective;
         }
 
         function requestPresentationProgress() {

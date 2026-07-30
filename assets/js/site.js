@@ -76,6 +76,22 @@
                     closeMenu();
                     menuButton.focus();
                 }
+                if (event.key === "Tab" && menuButton.getAttribute("aria-expanded") === "true") {
+                    var focusable = [menuButton].concat(
+                        Array.prototype.slice.call(
+                            mobileMenu.querySelectorAll("a, button:not([disabled])")
+                        )
+                    );
+                    var first = focusable[0];
+                    var last = focusable[focusable.length - 1];
+                    if (event.shiftKey && document.activeElement === first) {
+                        event.preventDefault();
+                        last.focus();
+                    } else if (!event.shiftKey && document.activeElement === last) {
+                        event.preventDefault();
+                        first.focus();
+                    }
+                }
             });
         }
 
@@ -221,6 +237,10 @@
         document.addEventListener("keydown", function (event) {
             if (event.key === "Escape" && lightbox.classList.contains("is-open")) {
                 closeLightbox();
+            }
+            if (event.key === "Tab" && lightbox.classList.contains("is-open")) {
+                event.preventDefault();
+                closeButton.focus();
             }
         });
     }

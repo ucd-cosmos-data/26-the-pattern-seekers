@@ -258,6 +258,9 @@
     }
 
     .site-nav__brand {
+        display: inline-flex;
+        min-height: 4.4rem;
+        align-items: center;
         grid-column: 1;
         grid-row: 1;
         justify-self: start;
@@ -402,8 +405,8 @@
         display: none;
         grid-column: 3;
         grid-row: 1;
-        width: 4rem;
-        height: 4rem;
+        width: 4.4rem;
+        height: 4.4rem;
         align-items: center;
         justify-content: center;
         justify-self: end;
@@ -1339,6 +1342,11 @@
         border-radius: 1.8rem;
         background: var(--ps-surface);
         scrollbar-width: thin;
+    }
+
+    .project-table-scroll:focus-visible {
+        outline: 0.2rem solid var(--ps-accent);
+        outline-offset: 0.3rem;
     }
 
     .project-content table {
@@ -2643,6 +2651,8 @@
         gap: 2.4rem;
         padding: 1.4rem var(--pres-gutter);
         overflow-x: auto;
+        scroll-padding-inline: var(--pres-gutter);
+        scroll-snap-type: x proximity;
         scrollbar-width: none;
         border-bottom: 1px solid rgba(247, 242, 233, 0.14);
         background: color-mix(in srgb, var(--qatar-deep) 86%, transparent);
@@ -2654,6 +2664,11 @@
     }
 
     .coach-presentation .pres-index a {
+        display: inline-flex;
+        min-height: 4.4rem;
+        flex: 0 0 auto;
+        align-items: center;
+        scroll-snap-align: center;
         font-family: var(--pp-mono);
         font-size: 1.15rem;
         letter-spacing: 0.16em;
@@ -3478,6 +3493,110 @@
 
         .pres-interval__name {
             grid-column: 1 / -1;
+        }
+    }
+
+    @media (max-width: 680px) {
+        .coach-presentation {
+            --pres-gutter: 1.6rem;
+            margin-top: 3rem;
+        }
+
+        .pres-index {
+            top: 5.6rem;
+            gap: 0.4rem;
+            padding-top: 0.4rem;
+            padding-bottom: 0.4rem;
+        }
+
+        .coach-presentation .pres-index a {
+            padding: 0 1rem;
+            font-size: 1.1rem;
+        }
+
+        .pres-hero {
+            padding-top: 6rem;
+        }
+
+        .pres-display {
+            font-size: clamp(4.6rem, 15vw, 6.2rem);
+            overflow-wrap: anywhere;
+        }
+
+        .pres-hero__visual {
+            width: 100%;
+            min-height: 18rem;
+        }
+
+        .pres-chapter {
+            scroll-margin-top: 11rem;
+        }
+
+        .pres-manifest__row {
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 0.4rem 1rem;
+            align-items: start;
+        }
+
+        .pres-manifest__row span:nth-child(2) {
+            grid-column: 1 / -1;
+            grid-row: 2;
+        }
+
+        .pres-manifest__row span:last-child {
+            grid-column: 2;
+            grid-row: 1;
+        }
+
+        .pres-spec {
+            padding: 1.8rem 1.6rem 0.8rem;
+        }
+
+        .pres-spec__row {
+            grid-template-columns: minmax(0, 1fr) auto;
+            gap: 0.3rem 1rem;
+            align-items: start;
+        }
+
+        .pres-spec__row strong {
+            justify-self: end;
+        }
+
+        .pres-spec__row em {
+            grid-column: 1 / -1;
+            justify-self: start;
+            text-align: left;
+        }
+
+        .pres-folds__legend,
+        .pres-intervals__group > p {
+            align-items: flex-start;
+            flex-direction: column;
+        }
+
+        .pres-folds__legend {
+            gap: 0.5rem;
+        }
+
+        .pres-intervals__group > p {
+            gap: 0.2rem;
+        }
+
+        .pres-links {
+            gap: 0.8rem;
+        }
+
+        .coach-presentation .pres-links a {
+            display: inline-flex;
+            width: 100%;
+            min-height: 4.4rem;
+            align-items: center;
+            padding: 0.6rem 0;
+        }
+
+        .pres-coda__meta {
+            font-size: 1.05rem;
+            letter-spacing: 0.1em;
         }
     }
 
@@ -5078,6 +5197,9 @@
         }
 
         .project-outline a {
+            display: inline-flex;
+            min-height: 4.4rem;
+            align-items: center;
             padding: 0.8rem 1.2rem;
             border-radius: 999px;
             background: var(--ps-surface);
@@ -5123,6 +5245,9 @@
         }
 
         .log-sidebar a {
+            display: inline-flex;
+            min-height: 4.4rem;
+            align-items: center;
             padding: 0.8rem 1.2rem;
             border-radius: 999px;
             background: var(--ps-surface);
@@ -5209,6 +5334,77 @@
             margin-top: 0;
         }
 
+        .coach-modes {
+            display: grid;
+            width: 100%;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+        }
+
+        .coach-modes button {
+            min-width: 0;
+            min-height: 4.4rem;
+            padding: 0 1.2rem;
+            font-size: 1.1rem;
+        }
+
+        .matchup__picker {
+            display: grid;
+            grid-template-columns: minmax(0, 1fr);
+            align-items: stretch;
+            gap: 0.8rem;
+        }
+
+        .matchup__team {
+            width: 100%;
+        }
+
+        .matchup__team span {
+            font-size: 1.05rem;
+        }
+
+        .matchup__team select {
+            width: 100%;
+            min-height: 4.4rem;
+            font-size: 1.35rem;
+        }
+
+        .matchup__vs {
+            justify-self: center;
+            padding: 0;
+            font-size: 1.25rem;
+        }
+
+        .matchup-h2h__team,
+        .matchup-h2h__side em {
+            font-size: 1rem;
+        }
+
+        .matchup-card__head dt {
+            font-size: 0.95rem;
+        }
+
+        .matchup-player {
+            grid-template-columns: 1.8rem minmax(0, 1fr) auto;
+        }
+
+        .matchup-player__rank,
+        .matchup-player__name em {
+            font-size: 1rem;
+        }
+
+        .matchup-player__rating {
+            font-size: 1.1rem;
+        }
+
+        .coach-showcase__label {
+            font-size: 1.1rem;
+            line-height: 1.5;
+        }
+
+        .coach-showcase__label span {
+            font-size: 0.95rem;
+        }
+
         .coach-tactics {
             padding: 0;
             border-radius: 0;
@@ -5232,16 +5428,22 @@
             padding-bottom: 1.6rem;
         }
 
+        .coach-substate-tabs button {
+            min-height: 4.4rem;
+            font-size: 1.15rem;
+        }
+
         .coach-animation__controls {
             width: 100%;
         }
 
         .coach-animation__step {
-            min-height: 4.2rem;
+            min-height: 4.4rem;
+            font-size: 1.15rem;
         }
 
         .coach-action-label {
-            font-size: 2.65px;
+            font-size: 3.4px;
             letter-spacing: 0.02em;
         }
 
@@ -5276,7 +5478,31 @@
         .coach-pitch__direction {
             right: 0.7rem;
             bottom: 0.6rem;
-            font-size: 0.66rem;
+            font-size: 1.1rem;
+        }
+
+        .coach-tactical-tooltip {
+            left: 50% !important;
+            width: calc(100% - 2.4rem);
+            padding: 1.2rem;
+        }
+
+        .coach-tactical-tooltip strong {
+            font-size: 1.2rem;
+        }
+
+        .coach-tactical-tooltip span {
+            font-size: 1.1rem;
+        }
+
+        .coach-tactical-tooltip small {
+            font-size: 1.05rem;
+        }
+
+        .coach-report-link {
+            min-height: 4.4rem;
+            padding: 0.8rem 1rem;
+            font-size: 1.1rem;
         }
 
         .coach-sequence {
@@ -5329,15 +5555,34 @@
         }
 
         .photo-grid {
-            columns: 2;
+            columns: 1;
+            padding: 0 1.6rem;
         }
 
         .photo-lightbox {
             padding: 1.6rem;
         }
 
+        .photo-lightbox img {
+            max-width: calc(100vw - 3.2rem);
+            max-height: calc(100svh - 6.4rem);
+        }
+
+        .photo-lightbox__close {
+            z-index: 1;
+            top: max(1.2rem, env(safe-area-inset-top));
+            right: max(1.2rem, env(safe-area-inset-right));
+            background: rgba(0, 0, 0, 0.58);
+        }
+
         .log-card {
             border-radius: 2.2rem;
+        }
+    }
+
+    @media (max-width: 420px) {
+        .coach-context__controls {
+            grid-template-columns: 1fr;
         }
     }
 
@@ -5437,7 +5682,7 @@
     color: var(--qatar-cream);
 }
 
-body:has(.player-report-page) {
+body.player-report-body {
     --ps-bg: #150a10;
     --ps-bg-rgb: 21, 10, 16;
     --ps-surface: #241219;
@@ -5451,7 +5696,7 @@ body:has(.player-report-page) {
     color: var(--ps-text);
 }
 
-body:has(.player-report-page) .site-nav {
+body.player-report-body .site-nav {
     border-bottom: 0.1rem solid rgba(217, 182, 93, 0.18);
     background: rgba(58, 9, 28, 0.98);
     color: #f7f2e9;
@@ -5459,16 +5704,16 @@ body:has(.player-report-page) .site-nav {
     backdrop-filter: none;
 }
 
-body:has(.player-report-page) .site-nav__brand,
-body:has(.player-report-page) .site-nav__desktop a {
+body.player-report-body .site-nav__brand,
+body.player-report-body .site-nav__desktop a {
     color: #f7f2e9;
 }
 
-body:has(.player-report-page) .site-nav__desktop a:hover {
+body.player-report-body .site-nav__desktop a:hover {
     color: #d9b65d;
 }
 
-body:has(.player-report-page) .theme-toggle {
+body.player-report-body .theme-toggle {
     background: #8a1538;
     color: #f7f2e9;
 }
@@ -5760,13 +6005,25 @@ body:has(.player-report-page) .theme-toggle {
     letter-spacing: -0.035em;
 }
 
-.player-report-content table {
+.player-report-table-scroll {
     width: 100%;
-    overflow: hidden;
-    border-collapse: collapse;
+    overflow-x: auto;
     border: 0.1rem solid rgba(247, 242, 233, 0.14);
     border-radius: 1.6rem;
     background: var(--ps-surface);
+    overscroll-behavior-inline: contain;
+    -webkit-overflow-scrolling: touch;
+}
+
+.player-report-table-scroll:focus-visible {
+    outline: 0.2rem solid #d9b65d;
+    outline-offset: 0.3rem;
+}
+
+.player-report-content table {
+    width: 100%;
+    min-width: 44rem;
+    border-collapse: collapse;
     color: var(--ps-text);
 }
 
@@ -5849,6 +6106,41 @@ body:has(.player-report-page) .theme-toggle {
 @media (max-width: 680px) {
     .player-report-shell {
         width: calc(100% - 3.2rem);
+    }
+
+    .player-report-hero {
+        padding: 4.8rem 0 5.6rem;
+    }
+
+    .player-report-hero__grid {
+        grid-template-columns: minmax(0, 1fr);
+        align-items: start;
+        gap: 3.6rem;
+    }
+
+    .player-report-back {
+        font-size: 1.4rem;
+    }
+
+    .player-report-hero p {
+        margin-top: 3.2rem;
+    }
+
+    .player-report-hero h1 {
+        max-width: 100%;
+        font-size: clamp(4.1rem, 13vw, 5.6rem);
+        overflow-wrap: anywhere;
+    }
+
+    .player-report-headshot {
+        width: min(72vw, 24rem);
+        justify-self: center;
+        margin: 0 0 -1rem;
+    }
+
+    .player-report-summary {
+        padding: 2.4rem 2rem;
+        border-radius: 1.8rem;
     }
 
     .player-report-content ul {
@@ -5991,6 +6283,19 @@ body:has(.player-report-page) .theme-toggle {
 .coach-flip:hover .coach-flip__icon,
 .coach-flip:focus-visible .coach-flip__icon {
     transform: rotate(180deg);
+}
+
+@media (max-width: 680px) {
+    .coach-fixtures__label {
+        width: 100%;
+        max-width: none;
+    }
+
+    .coach-fixtures__label select {
+        width: 100%;
+        min-height: 4.4rem;
+        font-size: 1.4rem;
+    }
 }
 
 /* Tooltip: imported rating/rank line under the role. */
