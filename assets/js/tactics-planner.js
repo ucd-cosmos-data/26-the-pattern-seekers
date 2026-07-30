@@ -304,49 +304,40 @@
         return "isolate";
     }
 
-    function planText(ourTeam, oppTeam, flank, scenarioKey) {
+    // Recommendation copy keyed off the SAME attack style that drives the
+    // board, so the words on the card always match what the players do.
+    function planText(ourTeam, oppTeam, flank, scenarioKey, style) {
         var star = topPlayerName(ourTeam);
         var opp = oppTeam.name;
         var wide = flank === "right" ? "right" : "left";
-        var arche = attackArchetype(topPlayer(ourTeam));
-        var diff = strengthOf(ourTeam) - strengthOf(oppTeam);
 
         var approaches = {
-            isolate: {
+            wing: {
                 plan: "Stretch " + opp + " wide, then isolate " + star,
-                why: "Switch the point of attack to pull " + opp + "'s block across, then feed " + star + " one-v-one on the " + wide + " to beat his marker and get to the byline."
+                why: "Switch the play to pull " + opp + "'s block across, then feed " + star + " one-v-one on the " + wide + " to beat his marker and get to the byline for the cutback."
             },
-            box: {
-                plan: "Attack the outside early and load the box",
-                why: "Get width quickly and cross first-time so " + opp + "'s centre-backs defend on the turn — flood the box for " + star + " and the second-ball runners."
-            },
-            between: {
+            central: {
                 plan: "Play through the lines to " + star,
-                why: "Draw " + opp + "'s midfield up, then find " + star + " between the lines in the " + wide + " half-space to turn and release the runners in behind."
+                why: "Circulate to draw " + opp + "'s midfield up, find " + star + " in the pocket between the lines, then a third-man run splits the centre-backs."
             },
-            transition: {
-                plan: "Win it high and break through " + star,
-                why: "Press to force turnovers in " + opp + "'s half, then attack at speed through " + star + " before they recover their shape."
+            direct: {
+                plan: "Get it wide early and load the box",
+                why: "No slow build — get width quickly and whip early crosses in so " + opp + "'s centre-backs defend on the turn, with runners crashing the box around " + star + "."
+            },
+            counter: {
+                plan: "Sit compact and hit " + opp + " on the break",
+                why: "Concede the ball and stay narrow, then break vertically at speed through " + star + " into the space " + opp + " leaves in behind."
+            },
+            wingback: {
+                plan: "Wing-backs high, overload the " + wide,
+                why: "Push both wing-backs on, overload the " + wide + " three-v-two around " + star + ", and get to the byline to cross for the front runners."
             },
             buildup: {
-                plan: "Build from the back to draw " + opp + " out",
-                why: "Play out patiently to bait " + opp + "'s press, progress through midfield, and release " + star + " into the space in behind."
+                plan: "Play out, switch, and spring " + star,
+                why: "Play out from the back to bait " + opp + "'s press, beat the first line, then switch the play and spring " + star + " in behind on the far side."
             }
         };
-        var base = approaches[arche] || approaches.isolate;
-
-        // Strength gap reframes the game plan.
-        if (diff <= -0.05) {
-            base = {
-                plan: "Sit compact and counter through " + star,
-                why: "Concede the ball to " + opp + ", stay narrow and disciplined, then break at pace through " + star + " the moment you turn it over."
-            };
-        } else if (diff >= 0.06) {
-            base = {
-                plan: base.plan,
-                why: "Against a deep " + opp + " block, " + base.why.charAt(0).toLowerCase() + base.why.slice(1)
-            };
-        }
+        var base = approaches[style] || approaches.wing;
 
         // Score-and-time scenario overrides / modifiers.
         if (scenarioKey === "leading") {
@@ -438,257 +429,805 @@
         };
     }
 
-    function attackSequence(ourSlots, oppSlots, flank, scenario) {
+    // =====================================================================
+    // Style-driven choreography. Each team plays a distinct game plan on the
+    // board: profileFor() picks the attack pattern (tied to the recommendation
+    // archetype), the press scheme and the transition, plus flank and shape.
+    // Curated profiles give the 2022 knockout sides their real identities.
+    // =====================================================================
+
+    function flankVars(flank) {
         var right = flank === "right";
-        var lift = scenario.lineShift;
-        var r = roleMap(ourSlots, flank), q = oppRoles(oppSlots, flank);
-        var fY = right ? 58 : 10, hY = right ? 44 : 24, wY = right ? 12 : 56;
-        var whY = right ? 24 : 44;
-        var byY = right ? 63 : 5, nearY = right ? 40 : 28, backY = right ? 27 : 41;
-        // Base shapes: our team building, opponent in a deep block.
+        return {
+            right: right,
+            fY: right ? 58 : 10, hY: right ? 44 : 24, wY: right ? 12 : 56, whY: right ? 24 : 44,
+            byY: right ? 63 : 5, nearY: right ? 40 : 28, backY: right ? 27 : 41
+        };
+    }
+
+    function layTeam(map, r, defX, midX, fwdX, gkX) {
+        map[r.gk] = point(gkX == null ? 9 : gkX, 34);
+        laneAssign(map, r.u.DEF, defX, 9);
+        laneAssign(map, r.u.MID, midX, 13);
+        laneAssign(map, r.u.FWD.length ? r.u.FWD : [r.striker], fwdX, r.u.FWD.length >= 3 ? 7 : 20);
+    }
+    function layOpp(map, q, defX, midX, fwdX, gkX) {
+        map[q.gk] = point(gkX, 34);
+        laneAssign(map, q.o.DEF, defX, 8);
+        laneAssign(map, q.o.MID, midX, 12);
+        laneAssign(map, q.o.FWD, fwdX, q.o.FWD.length >= 3 ? 7 : 20);
+    }
+
+    // Advance any midfielder/forward not driven by a named role so nobody is
+    // left frozen, whatever the formation.
+    function guardNoFrozen(steps, r, fromStep) {
+        var named = {};
+        [r.pivot, r.sMid, r.wMid, r.wide, r.striker, r.farFwd, r.cbMid].forEach(function (id) { if (id) named[id] = 1; });
+        var extraM = r.u.MID.filter(function (id) { return !named[id]; });
+        var extraF = r.u.FWD.filter(function (id) { return !named[id]; });
+        steps.forEach(function (st, i) {
+            if (i < (fromStep == null ? 2 : fromStep)) return;
+            var mx = 56 + (i - 1) * 4, fx = 76 + (i - 1) * 3;
+            var my = spread(extraM.length, 16), fy = spread(extraF.length, 16);
+            extraM.forEach(function (id, k) { if (!st.moves[id]) st.moves[id] = P(mx, my[k]); });
+            extraF.forEach(function (id, k) { if (!st.moves[id]) st.moves[id] = P(fx, fy[k]); });
+        });
+    }
+
+    // --------------------------------------------------------------- ATTACK
+    var ATTACK = {};
+
+    // WING — isolate the winger 1v1, overlap to the byline, low cutback.
+    ATTACK.wing = function (ourSlots, oppSlots, flank, scenario) {
+        var r = roleMap(ourSlots, flank), q = oppRoles(oppSlots, flank), v = flankVars(flank);
         var initial = {};
-        initial[r.gk] = point(9, 34);
-        laneAssign(initial, r.u.DEF, 41 + lift, 9);
-        laneAssign(initial, r.u.MID, 59 + lift, 13);
-        laneAssign(initial, r.u.FWD.length ? r.u.FWD : [r.striker], 75 + lift, r.u.FWD.length >= 3 ? 7 : 20);
-        initial[q.gk] = point(99, 34);
-        laneAssign(initial, q.o.DEF, 90, 8);
-        laneAssign(initial, q.o.MID, 76, 12);
-        laneAssign(initial, q.o.FWD, 62, q.o.FWD.length >= 3 ? 7 : 20);
-        var ball = point(9, 34);
+        layTeam(initial, r, 41 + scenario.lineShift, 59 + scenario.lineShift, 75 + scenario.lineShift);
+        layOpp(initial, q, 90, 76, 62, 99);
         var steps = [
             {
-                id: "attack-build", label: "1 - Build", phase: "IN POSSESSION",
-                title: "Build a base behind the ball", duration: 1500,
-                caption: "The holding midfielder screens in front of the back line, the full-backs set the width, and the front line pins the last line.",
-                ballPath: [ball],
-                moves: moves(r.pivot, 46, 34, r.sFB, 47, fY, r.wFB, 41, wY, r.sMid, 52, hY,
-                    q.fwdS, 58, hY, q.fwdW, 58, whY),
-                active: [r.gk, r.cbMid, r.pivot, r.sFB],
-                zones: [{ type: "rect", x: 16, y: 8, width: 32, height: 52, tone: "neutral", label: "BUILD PLATFORM" }]
+                id: "wing-build", label: "1 - Build", phase: "IN POSSESSION",
+                title: "Build and switch to the " + (v.right ? "right" : "left"), duration: 1500,
+                caption: "Circulate to shift " + q.o.DEF.length + " defenders across, then load the ball-side to isolate the winger.",
+                ballPath: [point(9, 34)],
+                moves: moves(r.pivot, 46, 34, r.sMid, 54, v.hY, r.wide, 72, v.fY, r.sFB, 52, v.fY, r.wFB, 40, v.wY,
+                    q.fwdS, 58, v.hY),
+                active: [r.gk, r.cbMid, r.pivot, r.wide],
+                zones: [{ type: "rect", x: 16, y: 8, width: 30, height: 52, tone: "neutral", label: "BUILD-UP" }]
             },
             {
-                id: "attack-draw", label: "2 - Draw them out", phase: "BUILD-UP",
-                title: "Carry out and draw the press", duration: 2200,
-                caption: "The centre-back steps out with the ball; the opponent's forward jumps and the pivot rotates.",
-                ballPath: [point(9, 34), point(24, hY), point(34, hY)],
-                moves: moves(r.cbMid, 34, hY, r.pivot, 52, 32, r.sMid, 54, hY, r.sFB, 52, fY,
-                    q.fwdS, 42, hY, q.midS, 60, hY),
-                active: [r.gk, r.cbMid, r.pivot, r.sMid],
+                id: "wing-feed", label: "2 - Isolate", phase: "1v1",
+                title: "Feed the winger one-v-one", duration: 2000,
+                caption: "Hit the winger to the touchline with only the full-back to beat; the striker pins the centre-backs.",
+                ballPath: [point(9, 34), point(40, v.hY), point(72, v.fY)],
+                moves: moves(r.wide, 72, v.fY, r.striker, 80, 34, r.sFB, 66, v.fY, r.sMid, 58, v.hY, r.farFwd, 74, v.wY,
+                    q.fbS, 76, v.fY, q.cb, 82, 30),
+                active: [r.pivot, r.wide, r.striker],
                 actions: [
-                    { type: "pass", label: "PASS", path: [point(9, 34), point(24, hY)] },
-                    { type: "carry", label: "CARRY", path: [point(24, hY), point(30, hY), point(34, hY)] }
-                ]
-            },
-            {
-                id: "attack-between", label: "3 - Between the lines", phase: "PROGRESSION",
-                title: "Find the creator between the lines", duration: 2000,
-                caption: "The ball breaks the midfield line; the winger holds width and the striker pins the centre-backs.",
-                ballPath: [point(34, hY), point(54, hY)],
-                moves: moves(r.sMid, 54, hY, r.wide, 72, fY, r.striker, 80, 34, r.farFwd, 74, wY,
-                    r.wMid, 58, whY, r.sFB, 60, fY, q.fbS, 74, fY, q.midS, 60, hY, q.cb, 82, 30),
-                active: [r.cbMid, r.sMid, r.wide, r.striker],
-                actions: [{ type: "pass", label: "LINE BREAK", path: [point(34, hY), point(54, hY)] }],
-                zones: [{ type: "rect", x: 50, y: right ? 38 : 8, width: 26, height: 22, tone: "neutral", label: (right ? "RIGHT" : "LEFT") + " HALF-SPACE" }]
-            },
-            {
-                id: "attack-overload", label: "4 - Overload", phase: "CREATION",
-                title: "Overload the " + (right ? "right" : "left") + " with an overlap", duration: 2200,
-                caption: "The creator releases the winger while the full-back overlaps and the striker pins the far centre-back.",
-                ballPath: [point(54, hY), point(70, fY)],
-                moves: moves(r.wide, 70, fY, r.sFB, 82, byY, r.sMid, 64, hY, r.striker, 82, 34,
-                    r.farFwd, 78, wY, r.pivot, 56, 30, r.wMid, 66, 34, q.fbS, 76, fY, q.cb, 80, hY, q.midW, 66, hY),
-                active: [r.sMid, r.wide, r.sFB],
-                actions: [
-                    { type: "pass", label: "PASS", path: [point(54, hY), point(70, fY)] },
-                    { type: "run", label: "OVERLAP", path: [point(60, fY), point(82, byY)] },
-                    { type: "decoy", label: "PIN", path: [point(80, 34), point(82, 34)] }
+                    { type: "pass", label: "SWITCH", path: [point(9, 34), point(40, v.hY)] },
+                    { type: "pass", label: "FEET", path: [point(40, v.hY), point(72, v.fY)] }
                 ],
-                zones: [{ type: "rect", x: 58, y: right ? 40 : 4, width: 28, height: 24, tone: "neutral", label: "3v2 OVERLOAD" }]
+                zones: [{ type: "rect", x: 62, y: v.right ? 44 : 2, width: 26, height: 22, tone: "neutral", label: "1v1 ZONE" }]
             },
             {
-                id: "attack-byline", label: "5 - Reach the byline", phase: "FINAL THIRD",
-                title: "Get to the byline", duration: 1900,
-                caption: "The overlap reaches the byline as the striker attacks the near post and the far runner the back post.",
-                ballPath: [point(70, fY), point(90, byY)],
-                moves: moves(r.sFB, 90, byY, r.striker, 90, nearY, r.farFwd, 93, backY, r.sMid, 82, hY,
-                    r.wide, 80, 40, r.wMid, 76, 32, q.cb, 92, 30, q.cbW, 92, 38, q.fbS, 88, fY),
+                id: "wing-beat", label: "3 - Beat the man", phase: "FINAL THIRD",
+                title: "Beat the full-back to the byline", duration: 1900,
+                caption: "The winger drives the outside as the full-back overlaps to stretch the back line.",
+                ballPath: [point(72, v.fY), point(90, v.byY)],
+                moves: moves(r.wide, 90, v.byY, r.sFB, 84, v.fY, r.striker, 90, v.nearY, r.farFwd, 93, v.backY, r.sMid, 80, 34,
+                    q.cb, 92, 30, q.cbW, 92, 38, q.fbS, 88, v.fY),
                 active: [r.wide, r.sFB, r.striker, r.farFwd],
                 actions: [
-                    { type: "pass", label: "RELEASE", path: [point(70, fY), point(90, byY)] },
-                    { type: "run", label: "NEAR POST", path: [point(82, 34), point(90, nearY)] },
-                    { type: "run", label: "BACK POST", path: [point(78, wY), point(93, backY)] }
+                    { type: "carry", label: "DRIVE", path: [point(72, v.fY), point(83, v.fY), point(90, v.byY)] },
+                    { type: "run", label: "OVERLAP", path: [point(66, v.fY), point(84, v.fY)] },
+                    { type: "run", label: "NEAR POST", path: [point(80, 34), point(90, v.nearY)] }
                 ]
             },
             {
-                id: "attack-cutback", label: "6 - Cut it back", phase: "FINISH",
-                title: "Cut it back to the arriving runner", duration: 1800,
-                caption: "The low cutback finds the striker at the spot as the advancing midfielder arrives on the edge of the box; the holding midfielder stays as the rest defence.",
-                ballPath: [point(90, byY), point(93, 34)],
-                moves: moves(r.striker, 93, 34, r.wMid, 84, 30, r.farFwd, 95, backY, r.sMid, 84, 38,
-                    r.pivot, 58, 32, q.cb, 95, 31, q.cbW, 95, 37),
-                active: [r.sFB, r.striker, r.wMid, r.farFwd],
+                id: "wing-cutback", label: "4 - Cutback", phase: "FINISH",
+                title: "Low cutback to the arriving runners", duration: 1800,
+                caption: "Pull it back from the byline to the striker at the spot and the midfielder on the edge.",
+                ballPath: [point(90, v.byY), point(92, 34)],
+                moves: moves(r.striker, 92, 34, r.sMid, 84, 30, r.farFwd, 94, v.backY, r.pivot, 60, 32,
+                    q.cb, 94, 31, q.cbW, 94, 37),
+                active: [r.wide, r.striker, r.sMid, r.farFwd],
                 actions: [
-                    { type: "pass", label: "CUTBACK", path: [point(90, byY), point(93, 34)] },
-                    { type: "run", label: "ARRIVE", path: [point(74, 32), point(84, 30)] }
+                    { type: "pass", label: "CUTBACK", path: [point(90, v.byY), point(92, 34)] },
+                    { type: "run", label: "ARRIVE", path: [point(72, 32), point(84, 30)] }
                 ],
-                zones: [{ type: "circle", cx: 93, cy: 34, radius: 8, tone: "press", label: "CUTBACK ZONE" }]
+                zones: [{ type: "circle", cx: 92, cy: 34, radius: 8, tone: "press", label: "CUTBACK" }]
             }
         ];
-        // Guarantee no midfielder or forward is left frozen: formations with
-        // more mids/forwards than the named roles (e.g. a 4-man midfield) get
-        // their extra players advancing as a progressive second wave, so none
-        // sits static or stranded in the back line.
-        var namedMid = [r.pivot, r.sMid, r.wMid];
-        var namedFwd = [r.wide, r.striker, r.farFwd];
-        var extraMids = r.u.MID.filter(function (id) { return namedMid.indexOf(id) === -1; });
-        var extraFwds = r.u.FWD.filter(function (id) { return namedFwd.indexOf(id) === -1; });
-        steps.forEach(function (st, i) {
-            if (i < 2) return; // hold shape during the build
-            var midX = 56 + (i - 1) * 4;
-            var fwdX = 76 + (i - 1) * 3;
-            var midYs = spread(extraMids.length, 16);
-            extraMids.forEach(function (id, k) { if (!st.moves[id]) st.moves[id] = P(midX, midYs[k]); });
-            var fwdYs = spread(extraFwds.length, 16);
-            extraFwds.forEach(function (id, k) { if (!st.moves[id]) st.moves[id] = P(fwdX, fwdYs[k]); });
-        });
+        guardNoFrozen(steps, r);
         return { initial: initial, ball: point(9, 34), steps: steps };
-    }
+    };
 
-    function pressSequence(ourSlots, oppSlots, flank, scenario) {
-        var right = flank === "right";
-        var r = roleMap(ourSlots, flank), q = oppRoles(oppSlots, flank);
-        var fY = right ? 57 : 11, hY = right ? 44 : 24, whY = right ? 24 : 44;
-        var pressLine = scenario.pressLine;
-        // Press shape: our team high; opponent playing out from the keeper.
+    // CENTRAL — circulate, find the pocket, third-man run, split the CBs.
+    ATTACK.central = function (ourSlots, oppSlots, flank, scenario) {
+        var r = roleMap(ourSlots, flank), q = oppRoles(oppSlots, flank), v = flankVars(flank);
         var initial = {};
-        initial[r.gk] = point(12, 34);
-        laneAssign(initial, r.u.DEF, 50, 10);
-        laneAssign(initial, r.u.MID, 64, 13);
-        laneAssign(initial, r.u.FWD.length ? r.u.FWD : [r.striker], 75, r.u.FWD.length >= 3 ? 8 : 20);
-        initial[q.gk] = point(97, 34);
-        laneAssign(initial, q.o.DEF, 87, 9);
-        laneAssign(initial, q.o.MID, 74, 12);
-        laneAssign(initial, q.o.FWD, 58, q.o.FWD.length >= 3 ? 7 : 20);
-        var ball = point(86, hY);
+        layTeam(initial, r, 40 + scenario.lineShift, 58 + scenario.lineShift, 74 + scenario.lineShift);
+        layOpp(initial, q, 88, 74, 60, 99);
         var steps = [
             {
-                id: "press-set", label: "1 - Set the trap", phase: "PRESSING",
-                title: "Set the front line", duration: 1600,
-                caption: "The forwards screen the pivot and shade the ball toward the strong side.",
-                ballPath: [ball],
-                moves: moves(r.wide, 74, hY, r.striker, 74, 34, r.farFwd, 74, whY, r.sMid, 62, hY,
-                    q.midS, 72, 34),
-                active: [r.wide, r.striker, r.farFwd],
-                zones: [{ type: "band", x: 60, y: right ? 20 : 24, width: 8, height: 24, tone: "neutral", label: "FRONT LINE" }]
+                id: "cen-circulate", label: "1 - Circulate", phase: "POSSESSION",
+                title: "Rondo to draw the block in", duration: 1700,
+                caption: "Quick one-touch circulation between the centre-backs and the pivot to bait the press and open the pockets.",
+                ballPath: [point(9, 34), point(30, 22), point(30, 46), point(44, 34)],
+                moves: moves(r.pivot, 44, 34, r.sMid, 54, v.hY, r.wMid, 54, v.whY, r.striker, 74, 34,
+                    q.fwdS, 60, 30, q.fwdW, 60, 38),
+                active: [r.cbMid, r.pivot, r.sMid, r.wMid],
+                actions: [{ type: "pass", label: "RONDO", path: [point(30, 22), point(30, 46), point(44, 34)] }],
+                zones: [{ type: "circle", cx: 40, cy: 34, radius: 12, tone: "neutral", label: "RONDO" }]
             },
             {
-                id: "press-trigger", label: "2 - Trigger", phase: "PRESS TRIGGER",
-                title: "Trigger on the pass back", duration: 1900,
-                caption: "The back pass to the keeper springs the press; the forwards jump together.",
-                ballPath: [point(86, hY), point(96, 34)],
-                moves: moves(r.striker, 82, 34, r.wide, 80, hY, r.sMid, 68, hY, r.sFB, 60, fY),
-                active: [q.gk, r.striker, r.wide],
-                actions: [{ type: "pass", label: "BACK PASS", path: [point(86, hY), point(96, 34)] }],
-                trigger: { cx: 96, cy: 34, radius: 7, label: "PRESS TRIGGER" }
+                id: "cen-pocket", label: "2 - Find the pocket", phase: "PROGRESSION",
+                title: "Play into the creator between the lines", duration: 2000,
+                caption: "Break the midfield line into the free man in the pocket, back to goal, ready to turn.",
+                ballPath: [point(44, 34), point(58, v.hY)],
+                moves: moves(r.sMid, 58, v.hY, r.wMid, 60, v.whY, r.striker, 76, 34, r.pivot, 50, 34,
+                    q.midS, 62, v.hY, q.cb, 78, 32),
+                active: [r.pivot, r.sMid, r.striker],
+                actions: [{ type: "pass", label: "LINE BREAK", path: [point(44, 34), point(58, v.hY)] }],
+                zones: [{ type: "rect", x: 52, y: 22, width: 22, height: 24, tone: "neutral", label: "THE POCKET" }]
             },
             {
-                id: "press-force", label: "3 - Force wide", phase: "LOCK OUTSIDE",
-                title: "Force play to the touchline", duration: 2300,
-                caption: "The curved press blocks the middle and sends the keeper wide into the trap.",
-                ballPath: [point(96, 34), point(88, fY)],
-                moves: moves(r.striker, 86, hY, r.wide, 82, fY, r.sMid, 70, hY, r.sFB, 78, fY,
-                    q.fbS, 88, fY, q.fwdS, 80, fY),
-                active: [r.striker, r.wide, r.sMid, r.sFB],
-                pressing: [r.striker, r.wide],
+                id: "cen-third", label: "3 - Third-man run", phase: "CREATION",
+                title: "Lay it off, third man bursts through", duration: 1900,
+                caption: "The creator sets it back first-time and a midfielder runs beyond, straight through the middle.",
+                ballPath: [point(58, v.hY), point(52, 34), point(70, 34)],
+                moves: moves(r.wMid, 70, 34, r.sMid, 60, v.hY, r.striker, 82, 30, r.farFwd, 78, v.whY,
+                    q.midS, 64, 34, q.cb, 80, 32, q.cbW, 80, 36),
+                active: [r.sMid, r.wMid, r.striker],
                 actions: [
-                    { type: "press", label: "CURVED PRESS", path: [point(82, 34), point(85, hY), point(86, hY)] },
-                    { type: "pass", label: "FORCED WIDE", path: [point(96, 34), point(88, fY)] }
+                    { type: "pass", label: "SET", path: [point(58, v.hY), point(52, 34)] },
+                    { type: "run", label: "THIRD MAN", path: [point(56, v.whY), point(70, 34)] },
+                    { type: "pass", label: "RELEASE", path: [point(52, 34), point(70, 34)] }
                 ]
             },
             {
-                id: "press-win", label: "4 - Spring the trap", phase: "WIN IT HIGH",
-                title: "Trap the ball on the touchline", duration: 2000,
-                caption: "The winger and full-back double the flank and win it high, with the block set behind at the engagement line.",
-                ballPath: [point(88, fY), point(85, fY)],
-                moves: moves(r.wide, 86, fY, r.sFB, 82, fY, r.sMid, 78, hY, r.striker, 84, hY,
-                    r.pivot, 62, 34, q.fbS, 90, fY),
-                active: [r.wide, r.sFB, r.sMid, r.striker],
-                pressing: [r.wide, r.sFB],
+                id: "cen-split", label: "4 - Split the CBs", phase: "FINISH",
+                title: "Through-ball splits the centre-backs", duration: 1800,
+                caption: "A disguised through-ball between the centre-backs releases the striker for a first-time finish.",
+                ballPath: [point(70, 34), point(90, 34)],
+                moves: moves(r.striker, 90, 34, r.wMid, 78, 30, r.farFwd, 86, v.whY, r.sMid, 74, v.hY,
+                    q.cb, 92, 30, q.cbW, 92, 38),
+                active: [r.wMid, r.striker, r.farFwd],
                 actions: [
-                    { type: "press", label: "DOUBLE UP", path: [point(82, fY), point(86, fY)] },
-                    { type: "press", label: "SUPPORT", path: [point(78, hY), point(83, hY)] }
+                    { type: "pass", label: "SPLIT", path: [point(70, 34), point(90, 34)] },
+                    { type: "run", label: "IN BEHIND", path: [point(80, 32), point(90, 34)] }
                 ],
-                zones: [
-                    { type: "circle", cx: 86, cy: fY, radius: 9, tone: "press", label: "WON HIGH" },
-                    { type: "line", x1: pressLine, y1: 3, x2: pressLine, y2: 65, tone: "press", label: "ENGAGEMENT LINE - " + pressLine + " m" }
-                ]
+                zones: [{ type: "rect", x: 82, y: 26, width: 16, height: 16, tone: "press", label: "IN BEHIND" }]
             }
         ];
-        return { initial: initial, ball: point(86, hY), steps: steps };
-    }
+        guardNoFrozen(steps, r);
+        return { initial: initial, ball: point(9, 34), steps: steps };
+    };
 
-    function transitionSequence(ourSlots, oppSlots, flank, scenario) {
-        var right = flank === "right";
-        var r = roleMap(ourSlots, flank), q = oppRoles(oppSlots, flank);
-        var fY = right ? 57 : 11, hY = right ? 44 : 24, wY = right ? 12 : 56;
-        var nearY = right ? 40 : 28, backY = right ? 27 : 41;
-        var commit = scenario.commit;
-        // We have just lost the ball high in the opponent's half.
+    // DIRECT — two strikers, early wide delivery, crash the box, second balls.
+    ATTACK.direct = function (ourSlots, oppSlots, flank, scenario) {
+        var r = roleMap(ourSlots, flank), q = oppRoles(oppSlots, flank), v = flankVars(flank);
         var initial = {};
-        initial[r.gk] = point(10, 34);
-        laneAssign(initial, r.u.DEF, 44, 12);
-        laneAssign(initial, r.u.MID, 62, 13);
-        laneAssign(initial, r.u.FWD.length ? r.u.FWD : [r.striker], 78, r.u.FWD.length >= 3 ? 7 : 20);
-        initial[q.gk] = point(98, 34);
-        laneAssign(initial, q.o.DEF, 24, 10);
-        laneAssign(initial, q.o.MID, 46, 12);
-        laneAssign(initial, q.o.FWD, 66, q.o.FWD.length >= 3 ? 7 : 20);
-        var ball = point(76, fY);
+        layTeam(initial, r, 42 + scenario.lineShift, 60 + scenario.lineShift, 78 + scenario.lineShift);
+        layOpp(initial, q, 90, 76, 62, 99);
+        var target = r.striker, second = r.farFwd || r.wide;
         var steps = [
             {
-                id: "transition-rest", label: "1 - Rest defence", phase: "BEFORE LOSS",
-                title: "Keep a rest defence behind the ball", duration: 1600,
-                caption: "Three defenders and the pivot stay home so a loss cannot become a clean counter.",
-                ballPath: [ball],
-                moves: moves(r.cbMid, 40, 34, r.wFB, 40, wY, r.pivot, 48, 34, r.sFB, 52, fY),
-                active: [r.cbMid, r.wFB, r.pivot],
+                id: "dir-wide", label: "1 - Get it wide early", phase: "IN POSSESSION",
+                title: "Move it to the flank quickly", duration: 1500,
+                caption: "No slow build — get the ball wide to the delivery zone with both strikers already high.",
+                ballPath: [point(9, 34), point(30, v.fY), point(58, v.fY)],
+                moves: moves(r.sMid, 58, v.fY, r.sFB, 64, v.fY, target, 78, v.nearY, second, 78, v.backY, r.wide, 60, v.hY,
+                    q.fbS, 72, v.fY),
+                active: [r.sFB, r.sMid, target, second],
+                actions: [{ type: "pass", label: "SWITCH WIDE", path: [point(9, 34), point(30, v.fY), point(58, v.fY)] }],
+                zones: [{ type: "rect", x: 52, y: v.right ? 46 : 2, width: 26, height: 20, tone: "neutral", label: "DELIVERY ZONE" }]
+            },
+            {
+                id: "dir-cross", label: "2 - Early cross", phase: "DELIVERY",
+                title: "Whip the early cross in", duration: 1900,
+                caption: "First-time delivery from deep so the centre-backs have to defend facing their own goal.",
+                ballPath: [point(58, v.fY), point(88, v.nearY)],
+                moves: moves(target, 90, v.nearY, second, 92, v.backY, r.wide, 84, 34, r.sMid, 76, v.hY,
+                    q.cb, 91, 30, q.cbW, 91, 38, q.fbS, 82, v.fY),
+                active: [r.sFB, target, second, r.wide],
+                actions: [
+                    { type: "pass", label: "EARLY CROSS", path: [point(58, v.fY), point(88, v.nearY)] },
+                    { type: "run", label: "NEAR POST", path: [point(78, v.nearY), point(90, v.nearY)] },
+                    { type: "run", label: "BACK POST", path: [point(78, v.backY), point(92, v.backY)] }
+                ]
+            },
+            {
+                id: "dir-box", label: "3 - Attack the box", phase: "AERIAL DUEL",
+                title: "Target man attacks the cross", duration: 1800,
+                caption: "The target man wins the header; the second striker gambles on the flick and knock-downs.",
+                ballPath: [point(88, v.nearY), point(94, 34)],
+                moves: moves(target, 92, v.nearY, second, 94, 33, r.wide, 86, 30, r.sMid, 82, 34,
+                    q.cb, 93, 32, q.cbW, 93, 36),
+                active: [target, second, r.wide],
+                actions: [
+                    { type: "run", label: "FLICK", path: [point(90, v.nearY), point(94, 34)] }
+                ],
+                zones: [{ type: "circle", cx: 93, cy: 34, radius: 7, tone: "press", label: "SIX-YARD BOX" }]
+            },
+            {
+                id: "dir-second", label: "4 - Second ball", phase: "SECOND BALL",
+                title: "Midfield arrives for the second ball", duration: 1700,
+                caption: "The knock-down drops to the edge of the box, where the midfield runners arrive first.",
+                ballPath: [point(94, 34), point(84, 34)],
+                moves: moves(r.sMid, 84, 34, r.wide, 84, v.hY, r.pivot, 70, 34, target, 90, v.nearY,
+                    q.midS, 82, 34),
+                active: [r.sMid, r.wide, target],
+                actions: [{ type: "run", label: "ARRIVE", path: [point(72, 34), point(84, 34)] }],
+                zones: [{ type: "rect", x: 78, y: 26, width: 14, height: 16, tone: "neutral", label: "SECOND BALL" }]
+            }
+        ];
+        guardNoFrozen(steps, r);
+        return { initial: initial, ball: point(9, 34), steps: steps };
+    };
+
+    // COUNTER — win deep, break fast and vertical, few runners, quick finish.
+    ATTACK.counter = function (ourSlots, oppSlots, flank, scenario) {
+        var r = roleMap(ourSlots, flank), q = oppRoles(oppSlots, flank), v = flankVars(flank);
+        var initial = {};
+        // Deeper block; the opponent has committed forward, we win it in our half.
+        layTeam(initial, r, 26, 40, 56);
+        layOpp(initial, q, 70, 52, 34, 96);
+        var steps = [
+            {
+                id: "cnt-win", label: "1 - Win it deep", phase: "REGAIN",
+                title: "Win it in our own half", duration: 1500,
+                caption: "Regain in a compact block with the opponent committed forward — the space is in behind them.",
+                ballPath: [point(30, 34)],
+                moves: moves(r.striker, 52, 34, r.wide, 48, v.fY, r.sMid, 40, v.hY,
+                    q.fwdS, 30, 30, q.midS, 44, 34),
+                active: [r.cbMid, r.pivot, r.striker],
+                zones: [{ type: "rect", x: 6, y: 8, width: 26, height: 52, tone: "protect", label: "COMPACT BLOCK" }]
+            },
+            {
+                id: "cnt-outlet", label: "2 - Vertical outlet", phase: "TRANSITION",
+                title: "Break vertically at once", duration: 1800,
+                caption: "First pass goes forward, not sideways — hit the striker on the move and sprint past the ball.",
+                ballPath: [point(30, 34), point(58, 34)],
+                moves: moves(r.striker, 58, 34, r.wide, 62, v.fY, r.sMid, 54, v.hY, r.farFwd, 58, v.whY,
+                    q.cb, 60, 34),
+                active: [r.striker, r.wide, r.sMid],
+                actions: [
+                    { type: "pass", label: "OUTLET", path: [point(30, 34), point(58, 34)] },
+                    { type: "run", label: "SPRINT", path: [point(48, v.fY), point(62, v.fY)] }
+                ],
+                zones: [{ type: "rect", x: 40, y: 8, width: 34, height: 52, tone: "neutral", label: "SPACE IN BEHIND" }]
+            },
+            {
+                id: "cnt-carry", label: "3 - Carry & commit", phase: "3v2",
+                title: "Carry into the three-v-two", duration: 1800,
+                caption: "Drive at the last line before it resets; the wide runner stretches it and the striker holds the middle.",
+                ballPath: [point(58, 34), point(74, v.fY), point(84, v.fY)],
+                moves: moves(r.wide, 74, v.fY, r.striker, 80, 34, r.farFwd, 78, v.whY, r.sMid, 68, v.hY,
+                    q.cb, 82, 32, q.cbW, 82, 36),
+                active: [r.wide, r.striker, r.farFwd],
+                actions: [
+                    { type: "pass", label: "RELEASE", path: [point(58, 34), point(74, v.fY)] },
+                    { type: "carry", label: "DRIVE", path: [point(74, v.fY), point(84, v.fY)] }
+                ],
+                zones: [{ type: "rect", x: 62, y: v.right ? 40 : 6, width: 30, height: 24, tone: "neutral", label: "3v2 BREAK" }]
+            },
+            {
+                id: "cnt-finish", label: "4 - Finish fast", phase: "FINISH",
+                title: "Cut it back before they recover", duration: 1700,
+                caption: "Reach the byline and pull it back to the striker arriving centrally before the defence sets.",
+                ballPath: [point(84, v.fY), point(88, v.byY), point(90, 34)],
+                moves: moves(r.striker, 90, 34, r.farFwd, 92, v.backY, r.sMid, 82, v.hY, r.wide, 88, v.byY,
+                    q.cb, 91, 31, q.cbW, 91, 37),
+                active: [r.wide, r.striker, r.farFwd],
+                actions: [{ type: "pass", label: "CUTBACK", path: [point(88, v.byY), point(90, 34)] }],
+                zones: [{ type: "circle", cx: 90, cy: 34, radius: 7, tone: "press", label: "FINISH" }]
+            }
+        ];
+        guardNoFrozen(steps, r, 3);
+        return { initial: initial, ball: point(30, 34), steps: steps };
+    };
+
+    // WINGBACK — 3 at the back, both wing-backs high, overload the strong flank.
+    ATTACK.wingback = function (ourSlots, oppSlots, flank, scenario) {
+        var r = roleMap(ourSlots, flank), q = oppRoles(oppSlots, flank), v = flankVars(flank);
+        var initial = {};
+        layTeam(initial, r, 40 + scenario.lineShift, 58 + scenario.lineShift, 76 + scenario.lineShift);
+        layOpp(initial, q, 90, 76, 62, 99);
+        // Wide midfielders act as the wing-backs.
+        var sWB = r.sMid, wWB = r.wMid;
+        var steps = [
+            {
+                id: "wb-push", label: "1 - Wing-backs on", phase: "IN POSSESSION",
+                title: "Push both wing-backs high", duration: 1600,
+                caption: "The back three holds while both wing-backs sprint to the touchlines to stretch the pitch fully wide.",
+                ballPath: [point(9, 34)],
+                moves: moves(sWB, 66, v.fY, wWB, 62, v.wY, r.pivot, 46, 34, r.wide, 74, v.hY, r.striker, 76, 30, r.farFwd, 76, 38,
+                    q.fbS, 78, v.fY),
+                active: [r.gk, sWB, wWB, r.pivot],
+                zones: [{ type: "band", x: 44, y: 4, width: 8, height: 60, tone: "neutral", label: "BACK THREE" }]
+            },
+            {
+                id: "wb-overload", label: "2 - Overload the flank", phase: "OVERLOAD",
+                title: "Three-v-two on the " + (v.right ? "right" : "left"), duration: 2000,
+                caption: "The ball-side wing-back, winger and central midfielder combine to make it three against two out wide.",
+                ballPath: [point(9, 34), point(44, v.hY), point(66, v.fY)],
+                moves: moves(sWB, 66, v.fY, r.wide, 72, v.hY, r.pivot, 58, v.hY, r.striker, 80, v.nearY, r.farFwd, 80, v.backY,
+                    q.fbS, 74, v.fY, q.midS, 66, v.hY),
+                active: [sWB, r.wide, r.pivot],
+                actions: [
+                    { type: "pass", label: "TO THE WB", path: [point(9, 34), point(44, v.hY), point(66, v.fY)] }
+                ],
+                zones: [{ type: "rect", x: 58, y: v.right ? 42 : 4, width: 28, height: 24, tone: "neutral", label: "3v2 OVERLOAD" }]
+            },
+            {
+                id: "wb-byline", label: "3 - Combine to the byline", phase: "FINAL THIRD",
+                title: "One-two to the byline", duration: 1800,
+                caption: "A quick give-and-go between the wing-back and winger releases the wing-back to the byline.",
+                ballPath: [point(66, v.fY), point(72, v.hY), point(90, v.byY)],
+                moves: moves(sWB, 90, v.byY, r.wide, 78, v.hY, r.striker, 90, v.nearY, r.farFwd, 92, v.backY, r.pivot, 66, 34,
+                    q.cb, 92, 30, q.cbW, 92, 38),
+                active: [sWB, r.wide, r.striker, r.farFwd],
+                actions: [
+                    { type: "pass", label: "ONE", path: [point(66, v.fY), point(72, v.hY)] },
+                    { type: "pass", label: "TWO", path: [point(72, v.hY), point(90, v.byY)] }
+                ]
+            },
+            {
+                id: "wb-cross", label: "4 - Cross for the front", phase: "FINISH",
+                title: "Cross for the two strikers", duration: 1800,
+                caption: "The wing-back crosses for the two central runners and the far wing-back arriving at the back post.",
+                ballPath: [point(90, v.byY), point(92, v.nearY)],
+                moves: moves(r.striker, 92, v.nearY, r.farFwd, 93, 34, wWB, 88, v.backY, r.wide, 84, 34,
+                    q.cb, 93, 31, q.cbW, 93, 37),
+                active: [sWB, r.striker, r.farFwd, wWB],
+                actions: [
+                    { type: "pass", label: "CROSS", path: [point(90, v.byY), point(92, v.nearY)] },
+                    { type: "run", label: "BACK-POST WB", path: [point(70, v.wY), point(88, v.backY)] }
+                ],
+                zones: [{ type: "rect", x: 86, y: 24, width: 14, height: 20, tone: "press", label: "CROSS ZONE" }]
+            }
+        ];
+        guardNoFrozen(steps, r);
+        return { initial: initial, ball: point(9, 34), steps: steps };
+    };
+
+    // BUILDUP — play out from the keeper, beat the press, big switch, spring.
+    ATTACK.buildup = function (ourSlots, oppSlots, flank, scenario) {
+        var r = roleMap(ourSlots, flank), q = oppRoles(oppSlots, flank), v = flankVars(flank);
+        var initial = {};
+        layTeam(initial, r, 38 + scenario.lineShift, 56 + scenario.lineShift, 74 + scenario.lineShift);
+        layOpp(initial, q, 88, 72, 56, 99);
+        var farHalf = v.right ? 24 : 44; // switch lands on the weak side
+        var steps = [
+            {
+                id: "bld-invite", label: "1 - Invite the press", phase: "PLAY OUT",
+                title: "Split the centre-backs and bait the press", duration: 1700,
+                caption: "The keeper splits the centre-backs and the pivot drops in, deliberately inviting the opponent's forwards to jump.",
+                ballPath: [point(9, 34), point(20, 22)],
+                moves: moves(r.pivot, 30, 34, r.cbMid, 22, 46, r.sFB, 40, v.fY, r.wFB, 40, v.wY,
+                    q.fwdS, 26, 30, q.fwdW, 26, 40),
+                active: [r.gk, r.cbMid, r.pivot],
+                actions: [{ type: "pass", label: "SPLIT", path: [point(9, 34), point(20, 22)] }],
+                zones: [{ type: "rect", x: 6, y: 8, width: 30, height: 52, tone: "neutral", label: "PLAY-OUT" }]
+            },
+            {
+                id: "bld-break", label: "2 - Beat the first line", phase: "PROGRESSION",
+                title: "Break the first line to the free man", duration: 2000,
+                caption: "With the forwards drawn in, the pivot is free between the lines — carry through and beat the press.",
+                ballPath: [point(20, 22), point(34, 34), point(40, 34)],
+                moves: moves(r.pivot, 40, 34, r.sMid, 52, v.hY, r.wMid, 50, farHalf, r.cbMid, 30, 40,
+                    q.fwdS, 36, 32, q.midS, 52, 34),
+                active: [r.pivot, r.sMid, r.wMid],
+                actions: [
+                    { type: "pass", label: "TO THE PIVOT", path: [point(20, 22), point(34, 34)] },
+                    { type: "carry", label: "CARRY", path: [point(34, 34), point(40, 34)] }
+                ],
+                zones: [{ type: "rect", x: 24, y: 22, width: 24, height: 24, tone: "neutral", label: "FREE MAN" }]
+            },
+            {
+                id: "bld-switch", label: "3 - Switch the play", phase: "SWITCH",
+                title: "Big switch to the far side", duration: 2000,
+                caption: "Once the block shifts ball-side, switch it right across to the isolated far-side runner in acres of space.",
+                ballPath: [point(40, 34), point(60, farHalf)],
+                moves: moves(r.wMid, 66, v.wY, r.wide, 70, v.wY, r.striker, 80, 34, r.sMid, 58, v.hY, r.wFB, 60, v.wY,
+                    q.fbS, 70, v.fY, q.cb, 78, 34),
+                active: [r.wMid, r.wide, r.striker],
+                actions: [{ type: "pass", label: "SWITCH", path: [point(40, 34), point(50, 34), point(60, farHalf)] }],
+                zones: [{ type: "rect", x: 54, y: v.right ? 4 : 42, width: 30, height: 22, tone: "neutral", label: "FREE FAR SIDE" }]
+            },
+            {
+                id: "bld-spring", label: "4 - Spring in behind", phase: "FINISH",
+                title: "Diagonal in behind the far side", duration: 1800,
+                caption: "First-time diagonal in behind the full-back releases the far runner to attack the box.",
+                ballPath: [point(60, farHalf), point(88, v.wY)],
+                moves: moves(r.wide, 88, v.wY, r.striker, 90, v.backY, r.farFwd, 90, 34, r.wMid, 78, farHalf,
+                    q.cb, 90, 36, q.cbW, 90, 30),
+                active: [r.wide, r.striker, r.farFwd],
+                actions: [
+                    { type: "pass", label: "IN BEHIND", path: [point(60, farHalf), point(88, v.wY)] },
+                    { type: "run", label: "ATTACK BOX", path: [point(80, 34), point(90, v.backY)] }
+                ],
+                zones: [{ type: "rect", x: 82, y: v.right ? 2 : 44, width: 18, height: 20, tone: "press", label: "IN BEHIND" }]
+            }
+        ];
+        guardNoFrozen(steps, r);
+        return { initial: initial, ball: point(9, 34), steps: steps };
+    };
+
+    // --------------------------------------------------------------- PRESS
+    var PRESS = {};
+
+    // HIGH — jump the centre-backs, trap wide, win in the final third.
+    PRESS.high = function (ourSlots, oppSlots, flank, scenario) {
+        var r = roleMap(ourSlots, flank), q = oppRoles(oppSlots, flank), v = flankVars(flank);
+        var initial = {};
+        layTeam(initial, r, 52, 66, 78, 14);
+        layOpp(initial, q, 90, 76, 60, 98);
+        var steps = [
+            {
+                id: "hp-set", label: "1 - Set the trap", phase: "HIGH PRESS",
+                title: "Front line on the centre-backs", duration: 1500,
+                caption: "The forwards step right up onto the centre-backs and screen the pivot, shading the ball wide.",
+                ballPath: [point(88, v.hY)],
+                moves: moves(r.striker, 82, 34, r.wide, 80, v.hY, r.farFwd, 80, v.whY, r.sMid, 70, v.hY,
+                    q.midS, 74, 34),
+                active: [r.striker, r.wide, r.farFwd],
+                zones: [{ type: "band", x: 78, y: 6, width: 8, height: 56, tone: "neutral", label: "FRONT LINE HIGH" }]
+            },
+            {
+                id: "hp-trigger", label: "2 - Trigger", phase: "TRIGGER",
+                title: "Spring on the pass to the full-back", duration: 1800,
+                caption: "The moment the ball goes wide to the full-back, the winger and midfielder jump to lock him in.",
+                ballPath: [point(88, v.hY), point(90, v.fY)],
+                moves: moves(r.wide, 86, v.fY, r.sMid, 76, v.hY, r.striker, 84, 34, r.sFB, 74, v.fY,
+                    q.fbS, 90, v.fY),
+                active: [r.wide, r.sMid, r.sFB],
+                pressing: [r.wide, r.sMid],
+                actions: [{ type: "pass", label: "FORCED WIDE", path: [point(88, v.hY), point(90, v.fY)] }],
+                trigger: { cx: 90, cy: v.fY, radius: 7, label: "TRIGGER" }
+            },
+            {
+                id: "hp-lock", label: "3 - Lock the touchline", phase: "TRAP",
+                title: "Trap him on the line", duration: 2000,
+                caption: "Winger, full-back and midfielder surround the ball with the touchline as an extra defender.",
+                ballPath: [point(90, v.fY), point(90, v.fY)],
+                moves: moves(r.wide, 89, v.fY, r.sFB, 86, v.fY, r.sMid, 82, v.hY, r.striker, 88, 34,
+                    q.fbS, 92, v.fY, q.midS, 84, v.hY),
+                active: [r.wide, r.sFB, r.sMid],
+                pressing: [r.wide, r.sFB, r.sMid],
+                actions: [
+                    { type: "press", label: "SURROUND", path: [point(82, v.hY), point(88, v.fY)] },
+                    { type: "press", label: "SHOW LINE", path: [point(78, v.fY), point(86, v.fY)] }
+                ],
+                zones: [{ type: "circle", cx: 90, cy: v.fY, radius: 9, tone: "press", label: "TRAP" }]
+            },
+            {
+                id: "hp-win", label: "4 - Win it high", phase: "REGAIN",
+                title: "Win it and go straight for goal", duration: 1800,
+                caption: "Force the turnover in the final third and attack the shrunken space immediately.",
+                ballPath: [point(90, v.fY), point(88, 30)],
+                moves: moves(r.sMid, 86, 34, r.striker, 88, 30, r.wide, 90, v.fY, r.farFwd, 86, v.whY,
+                    q.fbS, 92, v.fY),
+                active: [r.sMid, r.striker, r.wide],
+                actions: [{ type: "run", label: "ATTACK", path: [point(86, v.hY), point(88, 30)] }],
+                zones: [{ type: "circle", cx: 88, cy: 32, radius: 8, tone: "press", label: "WON HIGH" }]
+            }
+        ];
+        return { initial: initial, ball: point(88, v.hY), steps: steps };
+    };
+
+    // MID — compact block on halfway, screen the pivot, spring on the regain.
+    PRESS.mid = function (ourSlots, oppSlots, flank, scenario) {
+        var r = roleMap(ourSlots, flank), q = oppRoles(oppSlots, flank), v = flankVars(flank);
+        var initial = {};
+        layTeam(initial, r, 40, 52, 64, 12);
+        layOpp(initial, q, 74, 60, 46, 96);
+        var steps = [
+            {
+                id: "mb-set", label: "1 - Set the block", phase: "MID-BLOCK",
+                title: "Compact 4-4-2 on halfway", duration: 1600,
+                caption: "Hold a compact block around the halfway line — no chasing; keep the lines tight and the middle shut.",
+                ballPath: [point(60, 34)],
+                moves: moves(r.striker, 62, 30, r.wide, 60, v.hY, r.farFwd, 62, 38, r.sMid, 52, v.hY, r.wMid, 52, v.whY,
+                    q.midS, 58, 34),
+                active: [r.striker, r.sMid, r.wMid],
+                zones: [{ type: "rect", x: 40, y: 6, width: 24, height: 56, tone: "protect", label: "COMPACT BLOCK" }]
+            },
+            {
+                id: "mb-screen", label: "2 - Screen the pivot", phase: "DENY CENTRE",
+                title: "Shut the middle, show them wide", duration: 1900,
+                caption: "The strikers screen the pivot so the only pass is sideways or backwards, then shuffle across as a unit.",
+                ballPath: [point(60, 34), point(64, v.hY)],
+                moves: moves(r.striker, 58, 34, r.wide, 56, v.hY, r.sMid, 50, v.hY, r.wMid, 48, v.whY, r.sFB, 44, v.fY,
+                    q.midS, 60, v.hY, q.fbS, 66, v.fY),
+                active: [r.striker, r.wide, r.sMid],
+                actions: [{ type: "pass", label: "FORCED SIDEWAYS", path: [point(60, 34), point(64, v.hY)] }],
+                zones: [{ type: "band", x: 47, y: 6, width: 8, height: 56, tone: "neutral", label: "SCREEN LINE" }]
+            },
+            {
+                id: "mb-jump", label: "3 - Jump the trigger", phase: "PRESS TRIGGER",
+                title: "Spring when it comes into the block", duration: 1900,
+                caption: "A pass into the feet of a player facing his own goal is the trigger — the near unit jumps to swarm.",
+                ballPath: [point(64, v.hY), point(58, v.fY)],
+                moves: moves(r.wide, 60, v.fY, r.sMid, 56, v.hY, r.sFB, 56, v.fY, r.wMid, 50, 34,
+                    q.fbS, 60, v.fY),
+                active: [r.wide, r.sMid, r.sFB],
+                pressing: [r.wide, r.sMid, r.sFB],
+                actions: [{ type: "press", label: "JUMP", path: [point(50, v.hY), point(58, v.fY)] }],
+                trigger: { cx: 58, cy: v.fY, radius: 7, label: "TRIGGER" }
+            },
+            {
+                id: "mb-spring", label: "4 - Spring the counter", phase: "REGAIN",
+                title: "Win it and break through the middle", duration: 2000,
+                caption: "Regain around halfway with the opponent's shape stretched — release the strikers straight up the pitch.",
+                ballPath: [point(58, v.fY), point(78, 34)],
+                moves: moves(r.striker, 78, 34, r.wide, 78, v.fY, r.sMid, 68, v.hY, r.farFwd, 74, v.whY,
+                    q.cb, 76, 34),
+                active: [r.striker, r.wide, r.sMid],
+                actions: [
+                    { type: "pass", label: "RELEASE", path: [point(58, v.fY), point(78, 34)] },
+                    { type: "run", label: "BREAK", path: [point(62, 34), point(78, 34)] }
+                ],
+                zones: [{ type: "rect", x: 64, y: 12, width: 28, height: 44, tone: "neutral", label: "COUNTER SPACE" }]
+            }
+        ];
+        return { initial: initial, ball: point(60, 34), steps: steps };
+    };
+
+    // LOW — two banks near own box, no chase, deny the cross/shot, block.
+    PRESS.low = function (ourSlots, oppSlots, flank, scenario) {
+        var r = roleMap(ourSlots, flank), q = oppRoles(oppSlots, flank), v = flankVars(flank);
+        var initial = {};
+        layTeam(initial, r, 18, 30, 46, 8);
+        layOpp(initial, q, 58, 42, 26, 92);
+        var steps = [
+            {
+                id: "lb-set", label: "1 - Two banks of four", phase: "LOW BLOCK",
+                title: "Drop into a deep, narrow block", duration: 1600,
+                caption: "Both banks drop to the edge of the box and squeeze narrow — concede the ball, protect the goal.",
+                ballPath: [point(40, 34)],
+                moves: moves(r.sMid, 30, v.hY, r.wMid, 30, v.whY, r.striker, 44, 34, r.sFB, 18, v.fY, r.wFB, 18, v.wY,
+                    q.midS, 44, 34),
+                active: [r.cbMid, r.sMid, r.wMid],
+                zones: [{ type: "rect", x: 2, y: 8, width: 26, height: 52, tone: "protect", label: "LOW BLOCK" }]
+            },
+            {
+                id: "lb-shift", label: "2 - Shift, don't chase", phase: "STAY COMPACT",
+                title: "Slide across as a unit", duration: 1900,
+                caption: "As the ball moves wide, the whole block slides over together — stay connected, never get pulled out.",
+                ballPath: [point(40, 34), point(44, v.fY)],
+                moves: moves(r.sMid, 30, v.hY, r.wMid, 28, 34, r.sFB, 20, v.fY, r.striker, 40, v.hY, r.wide, 30, v.hY,
+                    q.fbS, 40, v.fY, q.wide, 36, v.fY),
+                active: [r.sFB, r.sMid, r.wide],
+                actions: [{ type: "run", label: "SLIDE", path: [point(30, 34), point(28, v.hY)] }],
+                zones: [{ type: "band", x: 24, y: 6, width: 8, height: 56, tone: "protect", label: "STAY NARROW" }]
+            },
+            {
+                id: "lb-deny", label: "3 - Deny the cross", phase: "DEFEND THE BOX",
+                title: "Block the cross, fill the box", duration: 1900,
+                caption: "The near full-back steps to block the cross while the centre-backs and far-side fill every gap in the six-yard box.",
+                ballPath: [point(44, v.fY), point(30, v.fY)],
+                moves: moves(r.sFB, 24, v.fY, r.cbMid, 14, 34, r.wFB, 14, v.wY, r.sMid, 22, v.hY, r.striker, 34, 34,
+                    q.wide, 26, v.fY, q.fwdS, 16, v.nearY),
+                active: [r.sFB, r.cbMid, r.wFB],
+                pressing: [r.sFB],
+                actions: [
+                    { type: "press", label: "BLOCK CROSS", path: [point(28, v.hY), point(24, v.fY)] }
+                ],
+                zones: [{ type: "circle", cx: 12, cy: 34, radius: 10, tone: "press", label: "PROTECT THE BOX" }]
+            },
+            {
+                id: "lb-clear", label: "4 - Win it & clear", phase: "REGAIN",
+                title: "Head it clear and reset the line", duration: 1700,
+                caption: "The centre-back attacks the cross, clears the danger, and the block steps out together to reset.",
+                ballPath: [point(30, v.fY), point(44, 34)],
+                moves: moves(r.cbMid, 20, 34, r.sMid, 34, v.hY, r.striker, 48, 34, r.sFB, 22, v.fY,
+                    q.fwdS, 22, v.nearY),
+                active: [r.cbMid, r.sMid, r.striker],
+                actions: [{ type: "pass", label: "CLEAR", path: [point(16, 34), point(44, 34)] }],
+                zones: [{ type: "band", x: 22, y: 6, width: 6, height: 56, tone: "neutral", label: "STEP OUT" }]
+            }
+        ];
+        return { initial: initial, ball: point(40, 34), steps: steps };
+    };
+
+    // --------------------------------------------------------------- TRANSITION
+    var TRANS = {};
+
+    // SWARM — counterpress: nearest players collapse on the ball within 5s.
+    TRANS.swarm = function (ourSlots, oppSlots, flank, scenario) {
+        var r = roleMap(ourSlots, flank), q = oppRoles(oppSlots, flank), v = flankVars(flank);
+        var commit = scenario.commit;
+        var initial = {};
+        layTeam(initial, r, 44, 62, 78, 10);
+        layOpp(initial, q, 24, 46, 66, 98);
+        var steps = [
+            {
+                id: "sw-rest", label: "1 - Rest defence", phase: "BEFORE LOSS",
+                title: "Balanced behind the ball", duration: 1500,
+                caption: "Stay balanced in possession so that the instant the ball is lost, bodies are already positioned to press.",
+                ballPath: [point(76, v.fY)],
+                moves: moves(r.cbMid, 40, 34, r.wFB, 40, v.wY, r.pivot, 50, 34),
+                active: [r.cbMid, r.pivot],
                 zones: [{ type: "band", x: 34, y: 6, width: 16, height: 56, tone: "protect", label: "REST DEFENCE" }]
             },
             {
-                id: "transition-press", label: "2 - Counterpress", phase: "ON LOSS",
-                title: commit + " swarm the ball immediately", duration: 4000,
-                caption: "The nearest players collapse on the loose ball within five seconds; the rest screen the centre.",
-                ballPath: [point(76, fY), point(82, hY)],
-                moves: moves(r.wide, 80, fY, r.sMid, 78, hY, r.striker, 82, 40, r.sFB, 80, right ? 50 : 18,
-                    r.pivot, 70, 34, q.fwdS, 82, hY, q.midS, 74, hY),
+                id: "sw-swarm", label: "2 - Counterpress", phase: "ON LOSS",
+                title: commit + " swarm the ball in 5s", duration: 3800,
+                caption: "The moment it is lost, the nearest players collapse on the ball together to win it back before the counter starts.",
+                ballPath: [point(76, v.fY), point(82, v.hY)],
+                moves: moves(r.wide, 80, v.fY, r.sMid, 78, v.hY, r.striker, 82, 40, r.sFB, 80, v.right ? 50 : 18, r.pivot, 70, 34,
+                    q.fwdS, 82, v.hY),
                 active: [r.wide, r.sMid, r.striker, r.sFB, r.pivot],
                 pressing: [r.wide, r.sMid, r.striker, r.sFB, r.pivot],
                 actions: [
-                    { type: "press", label: "P1", path: [point(78, fY), point(82, hY)] },
-                    { type: "press", label: "P2", path: [point(70, hY), point(80, hY)] },
-                    { type: "press", label: "P3", path: [point(82, 40), point(83, hY)] }
+                    { type: "press", label: "P1", path: [point(78, v.fY), point(82, v.hY)] },
+                    { type: "press", label: "P2", path: [point(70, v.hY), point(80, v.hY)] },
+                    { type: "press", label: "P3", path: [point(82, 40), point(83, v.hY)] }
                 ],
-                zones: [{ type: "circle", cx: 82, cy: hY, radius: 11, tone: "press", label: commit + " PRESS" }],
+                zones: [{ type: "circle", cx: 82, cy: v.hY, radius: 11, tone: "press", label: commit + " SWARM" }],
                 countdown: true
             },
             {
-                id: "transition-release", label: "3 - Win & release", phase: "REGAIN",
-                title: "Win it and attack the " + (right ? "right" : "left") + " channel", duration: 2300,
-                caption: "The regain releases the winger down the channel before the opponent can reset.",
-                ballPath: [point(82, hY), point(93, fY)],
-                moves: moves(r.wide, 93, fY, r.striker, 90, nearY, r.sMid, 84, hY, r.farFwd, 88, backY),
-                active: [r.sMid, r.wide, r.striker],
+                id: "sw-attack", label: "3 - Win & attack", phase: "REGAIN",
+                title: "Win it high and go again", duration: 2000,
+                caption: "Regain in the final third and attack the disorganised defence immediately.",
+                ballPath: [point(82, v.hY), point(92, v.fY)],
+                moves: moves(r.wide, 92, v.fY, r.striker, 90, v.nearY, r.sMid, 84, v.hY, r.farFwd, 88, v.backY,
+                    q.cb, 92, 32),
+                active: [r.wide, r.striker, r.sMid],
                 actions: [
-                    { type: "pass", label: "RELEASE", path: [point(82, hY), point(93, fY)] },
-                    { type: "run", label: "CHANNEL RUN", path: [point(84, fY), point(93, fY)] },
-                    { type: "run", label: "NEAR POST", path: [point(84, 40), point(90, nearY)] }
+                    { type: "pass", label: "RELEASE", path: [point(82, v.hY), point(92, v.fY)] },
+                    { type: "run", label: "ATTACK", path: [point(84, v.fY), point(92, v.fY)] }
                 ],
-                zones: [{ type: "rect", x: 82, y: right ? 46 : 2, width: 22, height: 20, tone: "neutral", label: (right ? "RIGHT" : "LEFT") + " CHANNEL" }]
+                zones: [{ type: "rect", x: 82, y: v.right ? 46 : 2, width: 22, height: 20, tone: "neutral", label: "GO AGAIN" }]
             }
         ];
-        return { initial: initial, ball: point(76, fY), steps: steps };
+        return { initial: initial, ball: point(76, v.fY), steps: steps };
+    };
+
+    // COUNTER — on the regain, break vertically at speed into the channel.
+    TRANS.counter = function (ourSlots, oppSlots, flank, scenario) {
+        var r = roleMap(ourSlots, flank), q = oppRoles(oppSlots, flank), v = flankVars(flank);
+        var initial = {};
+        // We win it deep, defending; the opponent is committed high.
+        layTeam(initial, r, 24, 40, 58, 9);
+        layOpp(initial, q, 62, 48, 32, 96);
+        var steps = [
+            {
+                id: "co-win", label: "1 - Win it deep", phase: "REGAIN",
+                title: "Win it in a low block", duration: 1500,
+                caption: "The ball is won deep with the opponent pushed on — five have to sprint the moment we turn it over.",
+                ballPath: [point(30, 34)],
+                moves: moves(r.striker, 52, 34, r.wide, 50, v.fY, r.sMid, 42, v.hY,
+                    q.fwdS, 30, 32),
+                active: [r.cbMid, r.pivot, r.striker],
+                zones: [{ type: "rect", x: 6, y: 8, width: 26, height: 52, tone: "protect", label: "LOW BLOCK" }]
+            },
+            {
+                id: "co-launch", label: "2 - Launch the break", phase: "TRANSITION",
+                title: "First pass forward, sprint the channel", duration: 1800,
+                caption: "One vertical pass releases the striker; the winger sprints the open channel outside him.",
+                ballPath: [point(30, 34), point(60, v.hY)],
+                moves: moves(r.striker, 62, 34, r.wide, 66, v.fY, r.sMid, 52, v.hY, r.farFwd, 60, v.whY,
+                    q.cb, 62, 34),
+                active: [r.striker, r.wide],
+                actions: [
+                    { type: "pass", label: "OUTLET", path: [point(30, 34), point(60, v.hY)] },
+                    { type: "run", label: "SPRINT CHANNEL", path: [point(48, v.fY), point(66, v.fY)] }
+                ],
+                zones: [{ type: "rect", x: 40, y: 8, width: 40, height: 52, tone: "neutral", label: "OPEN PITCH" }]
+            },
+            {
+                id: "co-finish", label: "3 - Finish the counter", phase: "FINISH",
+                title: "Two-v-one before they recover", duration: 1800,
+                caption: "Carry into the two-v-one and slide the winger in behind for an early shot.",
+                ballPath: [point(60, v.hY), point(86, v.fY)],
+                moves: moves(r.wide, 86, v.fY, r.striker, 88, 34, r.farFwd, 84, v.whY, r.sMid, 74, v.hY,
+                    q.cb, 88, 32, q.cbW, 88, 36),
+                active: [r.wide, r.striker],
+                actions: [
+                    { type: "pass", label: "SLIDE", path: [point(60, v.hY), point(86, v.fY)] },
+                    { type: "run", label: "IN BEHIND", path: [point(70, v.fY), point(86, v.fY)] }
+                ],
+                zones: [{ type: "rect", x: 80, y: v.right ? 46 : 2, width: 22, height: 20, tone: "press", label: "2v1" }]
+            }
+        ];
+        return { initial: initial, ball: point(30, 34), steps: steps };
+    };
+
+    // SECURE — after loss, don't gamble: drop, delay, and keep it on the regain.
+    TRANS.secure = function (ourSlots, oppSlots, flank, scenario) {
+        var r = roleMap(ourSlots, flank), q = oppRoles(oppSlots, flank), v = flankVars(flank);
+        var initial = {};
+        layTeam(initial, r, 42, 58, 72, 10);
+        layOpp(initial, q, 30, 50, 66, 98);
+        var steps = [
+            {
+                id: "se-delay", label: "1 - Delay the counter", phase: "ON LOSS",
+                title: "First man delays, the rest drop", duration: 1700,
+                caption: "Rather than gamble on a counterpress, the nearest player just delays while everyone else drops into shape.",
+                ballPath: [point(70, v.fY), point(64, v.hY)],
+                moves: moves(r.sMid, 60, v.hY, r.wide, 58, v.fY, r.pivot, 52, 34, r.striker, 66, 34, r.cbMid, 40, 34,
+                    q.fwdS, 60, v.hY),
+                active: [r.sMid, r.pivot, r.cbMid],
+                pressing: [r.sMid],
+                actions: [{ type: "press", label: "DELAY", path: [point(66, v.hY), point(62, v.fY)] }],
+                zones: [{ type: "band", x: 40, y: 6, width: 10, height: 56, tone: "protect", label: "DROP & DELAY" }]
+            },
+            {
+                id: "se-shape", label: "2 - Recover shape", phase: "RESET",
+                title: "Get everyone behind the ball", duration: 1800,
+                caption: "The whole team recovers into a set mid-block; deny the space in behind and force the opponent to build slowly.",
+                ballPath: [point(64, v.hY), point(56, 34)],
+                moves: moves(r.sMid, 50, v.hY, r.wMid, 50, v.whY, r.wide, 52, v.fY, r.striker, 58, 34, r.sFB, 44, v.fY,
+                    q.midS, 52, 34),
+                active: [r.sMid, r.wMid, r.wide],
+                zones: [{ type: "rect", x: 38, y: 6, width: 22, height: 56, tone: "neutral", label: "SET BLOCK" }]
+            },
+            {
+                id: "se-keep", label: "3 - Win & keep it", phase: "REGAIN",
+                title: "Regain and keep the ball", duration: 2000,
+                caption: "When the ball is won, there is no rush — secure it, take the sting out of the game and rebuild possession.",
+                ballPath: [point(56, 34), point(44, 34), point(40, v.hY)],
+                moves: moves(r.pivot, 46, 34, r.sMid, 54, v.hY, r.wMid, 52, v.whY, r.sFB, 50, v.fY, r.cbMid, 36, 34,
+                    q.fwdS, 52, 34),
+                active: [r.pivot, r.sMid, r.cbMid],
+                actions: [{ type: "pass", label: "RECYCLE", path: [point(56, 34), point(44, 34), point(40, v.hY)] }],
+                zones: [{ type: "rect", x: 30, y: 8, width: 28, height: 52, tone: "neutral", label: "KEEP-BALL" }]
+            }
+        ];
+        return { initial: initial, ball: point(70, v.fY), steps: steps };
+    };
+
+    // ------------------------------------------------------------ profiles
+    // shape [DEF,MID,FWD], flank, attack, press, transition.
+    var STYLE_PROFILES = {
+        BRA: { shape: [4, 3, 3], flank: "left", attack: "wing", press: "high", trans: "swarm" },
+        ARG: { shape: [4, 3, 3], flank: "right", attack: "central", press: "high", trans: "swarm" },
+        FRA: { shape: [4, 3, 3], flank: "left", attack: "counter", press: "mid", trans: "counter" },
+        ENG: { shape: [4, 3, 3], flank: "right", attack: "wing", press: "high", trans: "swarm" },
+        NED: { shape: [3, 4, 3], flank: "right", attack: "wingback", press: "mid", trans: "counter" },
+        CRO: { shape: [4, 3, 3], flank: "right", attack: "central", press: "mid", trans: "secure" },
+        POR: { shape: [4, 3, 3], flank: "left", attack: "buildup", press: "mid", trans: "secure" },
+        ESP: { shape: [4, 3, 3], flank: "left", attack: "central", press: "high", trans: "swarm" },
+        MAR: { shape: [4, 5, 1], flank: "right", attack: "counter", press: "low", trans: "counter" },
+        JPN: { shape: [3, 4, 3], flank: "right", attack: "wingback", press: "low", trans: "counter" },
+        KOR: { shape: [4, 4, 2], flank: "left", attack: "counter", press: "low", trans: "counter" },
+        POL: { shape: [4, 4, 2], flank: "right", attack: "direct", press: "low", trans: "counter" },
+        SEN: { shape: [4, 3, 3], flank: "right", attack: "direct", press: "mid", trans: "counter" },
+        SUI: { shape: [4, 4, 2], flank: "left", attack: "direct", press: "low", trans: "secure" },
+        AUS: { shape: [4, 4, 2], flank: "left", attack: "direct", press: "low", trans: "counter" },
+        USA: { shape: [4, 3, 3], flank: "left", attack: "wing", press: "high", trans: "counter" }
+    };
+
+    var ARCHE_TO_ATTACK = { isolate: "wing", box: "direct", between: "central", transition: "counter", buildup: "buildup" };
+
+    function profileFor(ourTeam, oppTeam, code, flankFallback) {
+        var arche = attackArchetype(topPlayer(ourTeam));
+        var diff = strengthOf(ourTeam) - strengthOf(oppTeam);
+        var attack = ARCHE_TO_ATTACK[arche] || "wing";
+        if (diff <= -0.06) attack = "counter";
+        var prof = {
+            shape: null, flank: flankFallback,
+            attack: attack,
+            press: diff >= 0.04 ? "high" : (diff <= -0.04 ? "low" : "mid"),
+            trans: attack === "central" ? "swarm" : (diff <= -0.04 ? "counter" : "secure")
+        };
+        var c = STYLE_PROFILES[code];
+        if (c) {
+            if (c.shape) prof.shape = c.shape;
+            if (c.flank) prof.flank = c.flank;
+            if (c.attack) prof.attack = c.attack;
+            if (c.press) prof.press = c.press;
+            if (c.trans) prof.trans = c.trans;
+        }
+        return prof;
     }
+
+    function attackFor(style, a, b, f, s) { return (ATTACK[style] || ATTACK.wing)(a, b, f, s); }
+    function pressFor(style, a, b, f, s) { return (PRESS[style] || PRESS.mid)(a, b, f, s); }
+    function transFor(style, a, b, f, s) { return (TRANS[style] || TRANS.swarm)(a, b, f, s); }
 
     function formationStates(ourSlots, oppSlots, counts, scenario) {
         var mergedAttack = {};
@@ -778,8 +1317,11 @@
         var ourPool = squads && squads[ourCode] ? { players: squads[ourCode] } : ourTeam;
         var oppPool = squads && squads[oppCode] ? { players: squads[oppCode] } : oppTeam;
 
-        var ourCounts = formationFor(ourCode);
-        var oppCounts = formationFor(oppCode);
+        // The team's game-plan profile drives the shape, flank and every phase.
+        var prof = profileFor(ourTeam, oppTeam, ourCode, hash(ourCode + oppCode) % 2 === 0 ? "right" : "left");
+        var flank = prof.flank;
+        var ourCounts = prof.shape || formationFor(ourCode);
+        var oppCounts = (STYLE_PROFILES[oppCode] && STYLE_PROFILES[oppCode].shape) || formationFor(oppCode);
         // Our attacking shape (toward +x) and the opponent's defensive block.
         var ourSlots = buildShape("us_", ourCounts, 40, 18, 18);
         var oppSlotsRaw = buildShape("op_", oppCounts, 40, 18, 18);
@@ -787,26 +1329,24 @@
             return { id: s.id, type: s.type, pos: mirrorX(s.pos) };
         });
 
-        // Deterministic-but-varied strong flank per matchup (illustrative).
-        var flank = hash(ourCode + oppCode) % 2 === 0 ? "right" : "left";
-
         var roster = {};
         fillRoster(roster, ourSlots, ourCode, "ours", assignPlayers(ourPool, ourCounts), true);
         fillRoster(roster, oppSlots, oppCode, "theirs", assignPlayers(oppPool, oppCounts), false);
 
-        var text = planText(ourTeam, oppTeam, flank, scenarioKey);
+        var text = planText(ourTeam, oppTeam, flank, scenarioKey, prof.attack);
         var confidence = confidenceFor(ourTeam, oppTeam, scenarioKey);
 
         return {
             meta: {
                 ourCode: ourCode, oppCode: oppCode, ourName: ourTeam.name, oppName: oppTeam.name,
                 flank: flank, ourFormation: formationName(ourCounts), oppFormation: formationName(oppCounts),
+                attackStyle: prof.attack, pressStyle: prof.press, transStyle: prof.trans,
                 scenario: scenarioKey
             },
             roster: roster,
-            attack: attackSequence(ourSlots, oppSlots, flank, scenario),
-            press: pressSequence(ourSlots, oppSlots, flank, scenario),
-            transition: transitionSequence(ourSlots, oppSlots, flank, scenario),
+            attack: attackFor(prof.attack, ourSlots, oppSlots, flank, scenario),
+            press: pressFor(prof.press, ourSlots, oppSlots, flank, scenario),
+            transition: transFor(prof.trans, ourSlots, oppSlots, flank, scenario),
             formationStates: formationStates(ourSlots, oppSlots, ourCounts, scenario),
             scenarioText: { plan: text.plan, why: text.why, confidence: confidence }
         };
