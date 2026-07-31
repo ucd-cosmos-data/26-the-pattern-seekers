@@ -49,6 +49,51 @@ test("flagship player-report links resolve to committed report pages", function 
     });
 });
 
+test("all team ranking surfaces preserve outfield v4 and separate goalkeeper v5", function () {
+    var matchups = JSON.parse(
+        fs.readFileSync(path.join(projectRoot, "assets/matchups.json"), "utf8")
+    );
+    var playerIndex = JSON.parse(
+        fs.readFileSync(path.join(projectRoot, "assets/player-index.json"), "utf8")
+    );
+    var players = matchups.teams.flatMap(function (team) { return team.players; });
+
+    assert.equal(matchups.teams.length, 32);
+    assert.equal(players.length, 553);
+    assert.deepEqual(
+        players.map(function (player) { return player.global_rank; }).sort(function (a, b) { return a - b; }),
+        Array.from({ length: 553 }, function (_, index) { return index + 1; })
+    );
+    matchups.teams.forEach(function (team) {
+        assert.deepEqual(
+            team.players.map(function (player) { return player.team_rank; }),
+            Array.from({ length: team.players.length }, function (_, index) { return index + 1; })
+        );
+        team.players.forEach(function (player) {
+            var indexed = playerIndex[player.id];
+            assert.equal(indexed.rankingProduct, "outfield");
+            assert.equal(indexed.globalRank, player.global_rank);
+            assert.equal(indexed.teamRank, player.team_rank);
+            assert.equal(indexed.goalkeeperRank, null);
+        });
+    });
+
+    var expectedRanks = {
+        5503: 1,
+        29163: 28,
+        30714: 33,
+        20572: 44,
+        3669: 67,
+        3090: 74
+    };
+    Object.entries(expectedRanks).forEach(function ([playerId, rank]) {
+        assert.equal(playerIndex[playerId].globalRank, rank);
+    });
+    assert.equal(playerIndex[5547].rankingProduct, "goalkeeper");
+    assert.equal(playerIndex[5547].globalRank, null);
+    assert.equal(playerIndex[5547].goalkeeperRank, 16);
+});
+
 test("phone layout guards cover report tables and the coach interaction", function () {
     var css = fs.readFileSync(path.join(projectRoot, "assets/css/tailwind.css"), "utf8");
     var reportTemplate = fs.readFileSync(

@@ -255,8 +255,8 @@ function makeViewerSummary(report, ranking, displayName) {
         .sort((a, b) => b.v - a.v);
     const strengths = scored.slice(0, 2).map((i) => viewerLanguage[i.k].strength);
     const weaknesses = scored.slice(-2).reverse().map((i) => viewerLanguage[i.k].weakness);
-    const globalRank = ranking.publication_global_rank_v5;
-    const teamRank = ranking.publication_team_rank_v5;
+    const globalRank = ranking.publication_global_rank_v4;
+    const teamRank = ranking.publication_team_rank_v4;
     return {
         overview: `${name} played as ${article} ${positionLabel} for ${team}. His main role was ${role.toLowerCase()}${globalRank ? `, with an active outfield rank of #${globalRank} globally and #${teamRank} on the team` : ""}. The notes below translate his tournament evidence into simple soccer terms.`,
         strengths, weaknesses
@@ -272,8 +272,8 @@ function applyV4ProfileRanking(markdown, ranking) {
     const bandWidth = worst - best;
     const uncertaintyStatus = bandWidth > 100 ? "wide" : bandWidth > 50 ? "moderate" : "stable";
     return markdown
-        .replace(/- Global Rank v3: .*$/m, `- Global Rank v4: ${ranking.publication_global_rank_v5}`)
-        .replace(/- Team Rank v3: .*$/m, `- Team Rank v4: ${ranking.publication_team_rank_v5}`)
+        .replace(/- Global Rank v3: .*$/m, `- Global Rank v4: ${ranking.publication_global_rank_v4}`)
+        .replace(/- Team Rank v3: .*$/m, `- Team Rank v4: ${ranking.publication_team_rank_v4}`)
         .replace(/- Position Rank v3: .*$/m, `- Position Rank v4: ${ranking.position_rank_v4}`)
         .replace(/- Role Rank v3: .*$/m, `- Role Rank v4: ${ranking.role_rank_v4}`)
         .replace(/- Tournament Impact: .*$/m, `- Tournament Impact: ${Number(ranking.tournament_impact_score_outfield_v4).toFixed(4)}`)
@@ -332,9 +332,9 @@ outfieldV4
         roleCounters.set(ranking.functional_role, roleRank);
         const raw = Number(v4.tournament_impact_score_outfield_v4);
         Object.assign(ranking, v4, {
-            active_publication_score_v5: (raw - minV4Score) / (maxV4Score - minV4Score),
-            publication_global_rank_v5: Number(v4.tournament_impact_rank_outfield_v4),
-            publication_team_rank_v5: teamRank,
+            active_outfield_score_v4: (raw - minV4Score) / (maxV4Score - minV4Score),
+            publication_global_rank_v4: Number(v4.tournament_impact_rank_outfield_v4),
+            publication_team_rank_v4: teamRank,
             position_rank_v4: positionRank,
             role_rank_v4: roleRank
         });
@@ -383,18 +383,18 @@ rankings.forEach((p) => {
         const isMainGoalkeeper = isGoalkeeper && Boolean(p.is_main_goalkeeper);
         const rating = isGoalkeeper
             ? (isMainGoalkeeper ? Number(p.goalkeeper_consolidated_value_score_v5) : null)
-            : Number(p.active_publication_score_v5);
+            : Number(p.active_outfield_score_v4);
 
         index[id] = {
             name: goesBy,
             surname,
             team: p.team,
             role: p.functional_role || parsed && reportItems(parsed, "Ranking and role")["Functional role"] || "",
-            teamRank: isGoalkeeper ? null : p.publication_team_rank_v5 || null,
+            teamRank: isGoalkeeper ? null : p.publication_team_rank_v4 || null,
             positionRank: isGoalkeeper
                 ? p.goalkeeper_consolidated_value_rank_v5 || null
                 : p.position_rank_v4 || null,
-            globalRank: isGoalkeeper ? null : p.publication_global_rank_v5 || null,
+            globalRank: isGoalkeeper ? null : p.publication_global_rank_v4 || null,
             goalkeeperRank: isMainGoalkeeper ? p.goalkeeper_consolidated_value_rank_v5 : null,
             rankingProduct: isGoalkeeper ? "goalkeeper" : "outfield",
             rating: Number.isFinite(rating) ? rating : null,
@@ -451,7 +451,7 @@ rankings.forEach(function (p) {
     const isGoalkeeper = p.position_group === "Goalkeeper";
     const rating = isGoalkeeper
         ? (p.is_main_goalkeeper ? Number(p.goalkeeper_consolidated_value_score_v5) : null)
-        : Number(p.active_publication_score_v5);
+        : Number(p.active_outfield_score_v4);
     ratedInfoById[String(p.player_id)] = {
         rating: Number.isFinite(rating) ? rating : null,
         role: p.functional_role,
