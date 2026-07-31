@@ -916,13 +916,14 @@
         padding: clamp(3rem, 6vw, 8rem);
         border-radius: clamp(2.6rem, 4vw, 5.2rem);
         background:
-            radial-gradient(
-                circle at 78% 22%,
-                rgba(217, 182, 93, 0.1),
-                transparent 32%
-            ),
+            radial-gradient(circle at 78% 22%, rgba(217, 182, 93, 0.1), transparent 32%),
             radial-gradient(120% 130% at 8% -5%, rgba(138, 21, 56, 0.55) 0%, transparent 55%),
-            linear-gradient(160deg, var(--qatar-burgundy) 0%, var(--qatar-deep) 68%, var(--qatar-black) 100%);
+            linear-gradient(
+                160deg,
+                var(--qatar-burgundy) 0%,
+                var(--qatar-deep) 68%,
+                var(--qatar-black) 100%
+            );
         box-shadow: var(--ps-shadow);
         color: var(--ps-text);
         text-decoration: none;
@@ -1528,11 +1529,21 @@
         --coach-line: rgba(33, 7, 16, 0.46);
         /* Argentina flag stripes (horizontal) */
         --coach-home: #74acdf;
-        --coach-home-flag: linear-gradient(180deg, #74acdf 0 33.4%, #ffffff 33.4% 66.6%, #74acdf 66.6%);
+        --coach-home-flag: linear-gradient(
+            180deg,
+            #74acdf 0 33.4%,
+            #ffffff 33.4% 66.6%,
+            #74acdf 66.6%
+        );
         --coach-home-number: #0b3563;
         /* France flag stripes (vertical) */
         --coach-away: #2f6fc4;
-        --coach-away-flag: linear-gradient(90deg, #002395 0 33.4%, #ffffff 33.4% 66.6%, #ed2939 66.6%);
+        --coach-away-flag: linear-gradient(
+            90deg,
+            #002395 0 33.4%,
+            #ffffff 33.4% 66.6%,
+            #ed2939 66.6%
+        );
         --coach-away-number: #10203f;
         --coach-away-line: #8fc0ef;
         --coach-ball: #ffffff;
@@ -1581,7 +1592,12 @@
         overflow: hidden;
         background:
             radial-gradient(110% 130% at 82% -20%, rgba(138, 21, 56, 0.5) 0%, transparent 55%),
-            linear-gradient(165deg, var(--qatar-burgundy) 0%, var(--qatar-deep) 58%, #150a10 100%);
+            linear-gradient(
+                165deg,
+                var(--qatar-burgundy) 0%,
+                var(--qatar-deep) 58%,
+                #150a10 100%
+            );
     }
 
     .coach-room__hero::before {
@@ -2702,7 +2718,12 @@
         padding: clamp(8rem, 11vw, 14rem) var(--pres-gutter) clamp(6rem, 8vw, 10rem);
         background:
             radial-gradient(120% 130% at 85% -10%, rgba(138, 21, 56, 0.55) 0%, transparent 55%),
-            linear-gradient(168deg, var(--qatar-burgundy) 0%, var(--qatar-deep) 62%, var(--qatar-black) 100%);
+            linear-gradient(
+                168deg,
+                var(--qatar-burgundy) 0%,
+                var(--qatar-deep) 62%,
+                var(--qatar-black) 100%
+            );
     }
 
     .pres-hero > * {
@@ -3361,7 +3382,9 @@
         text-decoration: none;
         border-bottom: 1px solid var(--pp-accent);
         padding-bottom: 0.4rem;
-        transition: color 0.3s ease, border-color 0.3s ease;
+        transition:
+            color 0.3s ease,
+            border-color 0.3s ease;
     }
 
     .coach-presentation .pres-links a:hover {
@@ -3382,7 +3405,7 @@
 
     .pres-coda__line {
         margin: 0;
-        font-size: clamp(2.7rem, 3.4vw, 4.8rem);
+        font-size: clamp(7.7rem, 3.4vw, 14.8rem);
         letter-spacing: -0.015em;
         color: var(--qatar-gold-soft);
     }
@@ -5885,9 +5908,7 @@ body.player-report-body .theme-toggle {
     padding: clamp(2.8rem, 4vw, 4.8rem);
     border: 0.1rem solid rgba(217, 182, 93, 0.28);
     border-radius: 2.4rem;
-    background:
-        linear-gradient(135deg, rgba(138, 21, 56, 0.28), transparent 58%),
-        #241219;
+    background: linear-gradient(135deg, rgba(138, 21, 56, 0.28), transparent 58%), #241219;
     box-shadow: 0 2.8rem 7rem rgba(0, 0, 0, 0.2);
 }
 
@@ -6184,7 +6205,9 @@ body.player-report-body .theme-toggle {
     background: color-mix(in srgb, var(--qatar-black, #100b0e) 42%, transparent);
 }
 @media (prefers-reduced-motion: reduce) {
-    .coach-pitch.is-formulating { transition: none; }
+    .coach-pitch.is-formulating {
+        transition: none;
+    }
 }
 
 /* Knockout fixture picker at the board — a single grouped dropdown. */

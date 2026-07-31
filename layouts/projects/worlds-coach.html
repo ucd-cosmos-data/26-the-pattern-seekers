@@ -434,11 +434,11 @@
         hidden
     >
         <nav class="pres-index" aria-label="Presentation chapters">
-            <a href="#pres-acquire" data-pres-jump>01 Acquire</a>
-            <a href="#pres-engineer" data-pres-jump>02 Engineer</a>
-            <a href="#pres-discover" data-pres-jump>03 Discover</a>
-            <a href="#pres-model" data-pres-jump>04 Model</a>
-            <a href="#pres-validate" data-pres-jump>05 Validate</a>
+            <a href="#pres-data-acquisition" data-pres-jump>01 Data Acquisition</a>
+            <a href="#pres-data-processing" data-pres-jump>02 Data Processing</a>
+            <a href="#pres-eda" data-pres-jump>03 EDA</a>
+            <a href="#pres-modeling" data-pres-jump>04 Modeling</a>
+            <a href="#pres-validation" data-pres-jump>05 Validation</a>
             <a href="#pres-deliver" data-pres-jump>06 Deliver</a>
             <i class="pres-index__progress" data-pres-progress aria-hidden="true"></i>
         </nav>
@@ -481,9 +481,9 @@
             </dl>
         </header>
 
-        <section class="pres-chapter" id="pres-acquire" data-pres-chapter>
+        <section class="pres-chapter" id="pres-data-acquisition" data-pres-chapter>
             <div class="pres-chapter__meta">
-                <p class="pres-kicker" data-pres-reveal>Acquire</p>
+                <p class="pres-kicker" data-pres-reveal>Data Acquisition</p>
                 <span class="pres-chapter__num" aria-hidden="true" data-pres-reveal>01</span>
             </div>
             <div class="pres-chapter__body">
@@ -520,9 +520,9 @@
             </div>
         </section>
 
-        <section class="pres-chapter" id="pres-engineer" data-pres-chapter>
+        <section class="pres-chapter" id="pres-data-processing" data-pres-chapter>
             <div class="pres-chapter__meta">
-                <p class="pres-kicker" data-pres-reveal>Engineer</p>
+                <p class="pres-kicker" data-pres-reveal>Data Processing</p>
                 <span class="pres-chapter__num" aria-hidden="true" data-pres-reveal>02</span>
             </div>
             <div class="pres-chapter__body">
@@ -568,9 +568,9 @@
             </div>
         </section>
 
-        <section class="pres-chapter" id="pres-discover" data-pres-chapter>
+        <section class="pres-chapter" id="pres-eda" data-pres-chapter>
             <div class="pres-chapter__meta">
-                <p class="pres-kicker" data-pres-reveal>Discover</p>
+                <p class="pres-kicker" data-pres-reveal>EDA</p>
                 <span class="pres-chapter__num" aria-hidden="true" data-pres-reveal>03</span>
             </div>
             <div class="pres-chapter__body">
@@ -628,9 +628,9 @@
             </div>
         </section>
 
-        <section class="pres-chapter pres-chapter--dark" id="pres-model" data-pres-chapter>
+        <section class="pres-chapter pres-chapter--dark" id="pres-modeling" data-pres-chapter>
             <div class="pres-chapter__meta">
-                <p class="pres-kicker" data-pres-reveal>Model</p>
+                <p class="pres-kicker" data-pres-reveal>Modeling</p>
                 <span class="pres-chapter__num" aria-hidden="true" data-pres-reveal>04</span>
             </div>
             <div class="pres-chapter__body">
@@ -671,16 +671,16 @@
                     <div class="pres-spec__row"><span>300+ view</span><strong>126 players</strong><em>the same outfield order, filtered by minutes</em></div>
                     <div class="pres-spec__row"><span>Goalkeepers</span><strong>32 starters</strong><em>separate PSxG + clutch consolidated value</em></div>
                 </div>
-                <figure class="pres-artifact" data-pres-reveal style="--pres-delay: 280ms">
+                <figure class="pres-artifact tw:invert" data-pres-reveal style="--pres-delay: 280ms">
                     <img src="{{ "projects/worlds-coach-output/vaep_vs_xt_scatter.png" | relURL }}" alt="Supporting scatter plot of VAEP per 90 against expected threat per 90 for outfield players" loading="lazy" width="1280" height="960" />
                     <figcaption>Supporting evidence &mdash; VAEP&frasl;90 &times; xT&frasl;90; these channels are not the active ranking by themselves.</figcaption>
                 </figure>
             </div>
         </section>
 
-        <section class="pres-chapter" id="pres-validate" data-pres-chapter>
+        <section class="pres-chapter" id="pres-validation" data-pres-chapter>
             <div class="pres-chapter__meta">
-                <p class="pres-kicker" data-pres-reveal>Validate</p>
+                <p class="pres-kicker" data-pres-reveal>Validation</p>
                 <span class="pres-chapter__num" aria-hidden="true" data-pres-reveal>05</span>
             </div>
             <div class="pres-chapter__body">
@@ -770,7 +770,7 @@
                         an acceptance gate that fails loudly.
                     </p>
                 </div>
-                <figure class="pres-artifact is-plain" data-pres-reveal style="--pres-delay: 150ms">
+                <figure class="pres-artifact is-plain tw:invert" data-pres-reveal style="--pres-delay: 150ms">
                     <img src="{{ "projects/worlds-coach-output/messi_heatmap.svg" | relURL }}" alt="Event and 360 spatial heatmap for Lionel Messi from the team dossiers" loading="lazy" width="640" height="500" />
                     <figcaption>Dossier artifact &mdash; L. Messi, event + 360 spatial heatmap.</figcaption>
                 </figure>
@@ -782,8 +782,8 @@
         </section>
 
         <footer class="pres-coda" data-pres-chapter>
-            <p class="pres-serif pres-coda__line" data-pres-reveal>
-                Retrospective, one tournament, honest about both.
+            <p class="pres-serif tw:text-right pres-coda__line" data-pres-reveal>
+                &mdash;The World&apos;s Coach
             </p>
             <div class="pres-coda__meta" data-pres-reveal style="--pres-delay: 120ms">
                 <span>Next &mdash; possession-start live features &middot; a second competition &middot; calibration transfer</span>
