@@ -1,5 +1,5 @@
 {
-  "generated_from": "player_leaderboard.csv + player_rating_uncertainty.csv",
+  "generated_from": "player_leaderboard.csv + compiled team coaching reports (code-name mapping)",
   "team_count": 32,
   "rated_player_count": 142,
   "unmapped_teams": [],
