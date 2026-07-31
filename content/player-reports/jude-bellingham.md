@@ -9,7 +9,7 @@ displayName: "Jude Bellingham"
 wikiTitle: "Jude Bellingham"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Jude Bellingham played as a defensive midfield for England. His main role was box-to-box / engine midfielder, with an active outfield rank of #52 globally and #4 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Jude Bellingham played as a defensive midfield for England. His main role was box-to-box / engine midfielder, with an active outfield rank of #33 globally and #2 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Works hard without the ball and pressures opponents effectively."
   - "Offers a strong goal threat when attacks reach the final third."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Defensive Midfield
 - Functional role: Box-to-Box / Engine Midfielder
 - Minutes: 441.8
-- Global Rank v3: 52
-- Team Rank v3: 4
-- Position Rank v3: 11
-- Role Rank v3: 4
-- Tournament Impact: 1.7141
+- Global Rank v4: 33
+- Team Rank v4: 2
+- Position Rank v4: 5
+- Role Rank v4: 3
+- Tournament Impact: 1.4167
 - Role Quality: 0.3000
-- Impact interval: [0.3126, 3.1784]
-- Rank band: 16–263
+- Impact interval: [0.1026, 2.8530]
+- Rank band: 7–245
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

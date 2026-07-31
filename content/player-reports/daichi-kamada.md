@@ -9,7 +9,7 @@ displayName: "Daichi Kamada"
 wikiTitle: "Daichi Kamada"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Daichi Kamada played as an attacking midfield/wing for Japan. His main role was ball-winner, with an active outfield rank of #145 globally and #2 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Daichi Kamada played as an attacking midfield/wing for Japan. His main role was ball-winner, with an active outfield rank of #100 globally and #1 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Works hard without the ball and pressures opponents effectively."
   - "Offers a strong goal threat when attacks reach the final third."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Attacking Midfield/Wing
 - Functional role: Ball-Winner
 - Minutes: 337.2
-- Global Rank v3: 145
-- Team Rank v3: 2
-- Position Rank v3: 108
-- Role Rank v3: 41
-- Tournament Impact: 0.7848
+- Global Rank v4: 100
+- Team Rank v4: 1
+- Position Rank v4: 24
+- Role Rank v4: 8
+- Tournament Impact: 0.6241
 - Role Quality: 0.2572
-- Impact interval: [0.1247, 1.5856]
-- Rank band: 57–365
+- Impact interval: [-0.2532, 1.5371]
+- Rank band: 33–447
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

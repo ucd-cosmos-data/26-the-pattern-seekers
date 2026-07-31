@@ -9,7 +9,7 @@ displayName: "Boulaye Dia"
 wikiTitle: "Boulaye Dia"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Boulaye Dia played as an attacking midfield/wing for Senegal. His main role was target forward, with an active outfield rank of #81 globally and #2 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Boulaye Dia played as an attacking midfield/wing for Senegal. His main role was target forward, with an active outfield rank of #102 globally and #2 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Offers a strong goal threat when attacks reach the final third."
   - "Keeps possession reliably when receiving or carrying under pressure."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Attacking Midfield/Wing
 - Functional role: Target Forward
 - Minutes: 330.1
-- Global Rank v3: 81
-- Team Rank v3: 2
-- Position Rank v3: 40
-- Role Rank v3: 36
-- Tournament Impact: 1.2135
+- Global Rank v4: 102
+- Team Rank v4: 2
+- Position Rank v4: 25
+- Role Rank v4: 14
+- Tournament Impact: 0.6215
 - Role Quality: 0.4668
-- Impact interval: [0.2740, 2.1781]
-- Rank band: 32–285
+- Impact interval: [-0.2073, 1.4984]
+- Rank band: 37–415
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

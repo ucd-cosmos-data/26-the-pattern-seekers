@@ -9,7 +9,7 @@ displayName: "Ángel Di María"
 wikiTitle: "Ángel Di María"
 headshotUrl: "https://a.espncdn.com/i/headshots/soccer/players/full/108223.png"
 shirtNumber: 11
-overview: "Ángel Di María played as a central/wide midfield for Argentina. His main role was progressive winger, with an active outfield rank of #13 globally and #4 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Ángel Di María played as a central/wide midfield for Argentina. His main role was progressive winger, with an active outfield rank of #30 globally and #6 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Offers a strong goal threat when attacks reach the final third."
   - "Moves the ball forward well through carries and forward passes."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Central/Wide Midfield
 - Functional role: Progressive Winger
 - Minutes: 304.8
-- Global Rank v3: 13
-- Team Rank v3: 4
-- Position Rank v3: 11
-- Role Rank v3: 12
-- Tournament Impact: 2.7987
+- Global Rank v4: 30
+- Team Rank v4: 6
+- Position Rank v4: 4
+- Role Rank v4: 6
+- Tournament Impact: 1.4879
 - Role Quality: 0.5477
-- Impact interval: [0.8412, 5.7175]
-- Rank band: 4–141
+- Impact interval: [0.2277, 3.2295]
+- Rank band: 7–218
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

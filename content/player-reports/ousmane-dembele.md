@@ -9,7 +9,7 @@ displayName: "Ousmane Dembélé"
 wikiTitle: "Ousmane Dembélé"
 headshotUrl: "https://a.espncdn.com/i/headshots/soccer/players/full/229744.png"
 shirtNumber: 11
-overview: "Ousmane Dembélé played as an attacking midfield/wing for France. His main role was progressive winger, with an active outfield rank of #38 globally and #5 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Ousmane Dembélé played as an attacking midfield/wing for France. His main role was progressive winger, with an active outfield rank of #54 globally and #6 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Creates useful chances and connects attacks."
   - "Works hard without the ball and pressures opponents effectively."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Attacking Midfield/Wing
 - Functional role: Progressive Winger
 - Minutes: 448.0
-- Global Rank v3: 38
-- Team Rank v3: 5
-- Position Rank v3: 65
-- Role Rank v3: 38
-- Tournament Impact: 1.8658
+- Global Rank v4: 54
+- Team Rank v4: 6
+- Position Rank v4: 17
+- Role Rank v4: 16
+- Tournament Impact: 1.0215
 - Role Quality: 0.4134
-- Impact interval: [0.5998, 3.4104]
-- Rank band: 13–181
+- Impact interval: [0.0862, 2.0926]
+- Rank band: 16–251
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

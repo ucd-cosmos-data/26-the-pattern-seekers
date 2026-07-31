@@ -9,7 +9,7 @@ displayName: "Bartosz Bereszyński"
 wikiTitle: "Bartosz Bereszyński"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Bartosz Bereszyński played as a fullback/wingback for Poland. His main role was wide creator, with an active outfield rank of #319 globally and #8 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Bartosz Bereszyński played as a fullback/wingback for Poland. His main role was wide creator, with an active outfield rank of #422 globally and #9 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Reads danger and contributes well in defensive situations."
   - "Competes well for headers and aerial balls."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Fullback/Wingback
 - Functional role: Wide Creator
 - Minutes: 365.7
-- Global Rank v3: 319
-- Team Rank v3: 8
-- Position Rank v3: 88
-- Role Rank v3: 26
-- Tournament Impact: 0.3031
+- Global Rank v4: 422
+- Team Rank v4: 9
+- Position Rank v4: 75
+- Role Rank v4: 20
+- Tournament Impact: -0.1291
 - Role Quality: 0.1557
-- Impact interval: [-0.0398, 0.7621]
-- Rank band: 149–543
+- Impact interval: [-0.4975, 0.3253]
+- Rank band: 179–551
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

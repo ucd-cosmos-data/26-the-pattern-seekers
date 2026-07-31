@@ -9,7 +9,7 @@ displayName: "Raphinha"
 wikiTitle: "Raphinha (footballer, born 1996)"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Raphinha played as an attacking midfield/wing for Brazil. His main role was progressive winger, with an active outfield rank of #19 globally and #3 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Raphinha played as an attacking midfield/wing for Brazil. His main role was progressive winger, with an active outfield rank of #34 globally and #3 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Offers a strong goal threat when attacks reach the final third."
   - "Creates useful chances and connects attacks."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Attacking Midfield/Wing
 - Functional role: Progressive Winger
 - Minutes: 330.4
-- Global Rank v3: 19
-- Team Rank v3: 3
-- Position Rank v3: 23
-- Role Rank v3: 18
-- Tournament Impact: 2.4566
+- Global Rank v4: 34
+- Team Rank v4: 3
+- Position Rank v4: 10
+- Role Rank v4: 7
+- Tournament Impact: 1.4014
 - Role Quality: 0.5050
-- Impact interval: [0.3441, 4.9234]
-- Rank band: 6–255
+- Impact interval: [-0.0821, 2.9467]
+- Rank band: 7–313
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

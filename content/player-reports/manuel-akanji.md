@@ -9,7 +9,7 @@ displayName: "Manuel Akanji"
 wikiTitle: "Manuel Akanji"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Manuel Akanji played as a center back for Switzerland. His main role was ball-playing centre-back, with an active outfield rank of #166 globally and #5 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Manuel Akanji played as a center back for Switzerland. His main role was ball-playing centre-back, with an active outfield rank of #109 globally and #4 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Keeps possession reliably when receiving or carrying under pressure."
   - "Competes well for headers and aerial balls."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Center Back
 - Functional role: Ball-Playing Centre-Back
 - Minutes: 386.6
-- Global Rank v3: 166
-- Team Rank v3: 5
-- Position Rank v3: 20
-- Role Rank v3: 4
-- Tournament Impact: 0.7247
+- Global Rank v4: 109
+- Team Rank v4: 4
+- Position Rank v4: 15
+- Role Rank v4: 9
+- Tournament Impact: 0.5999
 - Role Quality: 0.1192
-- Impact interval: [0.1059, 1.5147]
-- Rank band: 65–379
+- Impact interval: [-0.2746, 1.6578]
+- Rank band: 28–482
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

@@ -9,7 +9,7 @@ displayName: "Kim Jin-su"
 wikiTitle: "Kim Jin-su"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Kim Jin-su played as a fullback/wingback for South Korea. His main role was attacking wingback, with an active outfield rank of #96 globally and #4 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Kim Jin-su played as a fullback/wingback for South Korea. His main role was attacking wingback, with an active outfield rank of #208 globally and #8 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Competes well for headers and aerial balls."
   - "Creates useful chances and connects attacks."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Fullback/Wingback
 - Functional role: Attacking Wingback
 - Minutes: 340.7
-- Global Rank v3: 96
-- Team Rank v3: 4
-- Position Rank v3: 16
-- Role Rank v3: 13
-- Tournament Impact: 1.0700
+- Global Rank v4: 208
+- Team Rank v4: 8
+- Position Rank v4: 34
+- Role Rank v4: 25
+- Tournament Impact: 0.2649
 - Role Quality: 0.2213
-- Impact interval: [0.0199, 2.9236]
-- Rank band: 22–467
+- Impact interval: [-0.3361, 0.9994]
+- Rank band: 73–518
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

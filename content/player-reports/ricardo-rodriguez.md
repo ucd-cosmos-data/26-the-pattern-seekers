@@ -9,7 +9,7 @@ displayName: "Ricardo Rodríguez"
 wikiTitle: "Ricardo Rodríguez"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Ricardo Rodríguez played as a fullback/wingback for Switzerland. His main role was attacking wingback, with an active outfield rank of #220 globally and #7 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Ricardo Rodríguez played as a fullback/wingback for Switzerland. His main role was attacking wingback, with an active outfield rank of #149 globally and #7 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Competes well for headers and aerial balls."
   - "Moves the ball forward well through carries and forward passes."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Fullback/Wingback
 - Functional role: Attacking Wingback
 - Minutes: 380.2
-- Global Rank v3: 220
-- Team Rank v3: 7
-- Position Rank v3: 65
-- Role Rank v3: 46
-- Tournament Impact: 0.5460
+- Global Rank v4: 149
+- Team Rank v4: 7
+- Position Rank v4: 21
+- Role Rank v4: 17
+- Tournament Impact: 0.4240
 - Role Quality: 0.1704
-- Impact interval: [0.0731, 1.1923]
-- Rank band: 86–421
+- Impact interval: [-0.2528, 1.3400]
+- Rank band: 47–456
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

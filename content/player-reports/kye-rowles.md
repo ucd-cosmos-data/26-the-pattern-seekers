@@ -9,7 +9,7 @@ displayName: "Kye Rowles"
 wikiTitle: "Kye Rowles"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Kye Rowles played as a center back for Australia. His main role was sweeper cb, with an active outfield rank of #244 globally and #7 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Kye Rowles played as a center back for Australia. His main role was sweeper cb, with an active outfield rank of #173 globally and #5 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Competes well for headers and aerial balls."
   - "Keeps possession reliably when receiving or carrying under pressure."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Center Back
 - Functional role: Sweeper CB
 - Minutes: 386.9
-- Global Rank v3: 244
-- Team Rank v3: 7
-- Position Rank v3: 12
-- Role Rank v3: 8
-- Tournament Impact: 0.4680
+- Global Rank v4: 173
+- Team Rank v4: 5
+- Position Rank v4: 30
+- Role Rank v4: 19
+- Tournament Impact: 0.3509
 - Role Quality: 0.1320
-- Impact interval: [-0.2143, 1.5456]
-- Rank band: 62–553
+- Impact interval: [-0.1374, 1.1443]
+- Rank band: 63–378
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

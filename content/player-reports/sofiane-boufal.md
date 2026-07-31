@@ -9,7 +9,7 @@ displayName: "Sofiane Boufal"
 wikiTitle: "Sofiane Boufal"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Sofiane Boufal played as a central/wide midfield for Morocco. His main role was progressive winger, with an active outfield rank of #71 globally and #3 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Sofiane Boufal played as a central/wide midfield for Morocco. His main role was progressive winger, with an active outfield rank of #38 globally and #6 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Works hard without the ball and pressures opponents effectively."
   - "Moves the ball forward well through carries and forward passes."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Central/Wide Midfield
 - Functional role: Progressive Winger
 - Minutes: 476.7
-- Global Rank v3: 71
-- Team Rank v3: 3
-- Position Rank v3: 93
-- Role Rank v3: 58
-- Tournament Impact: 1.3046
+- Global Rank v4: 38
+- Team Rank v4: 6
+- Position Rank v4: 6
+- Role Rank v4: 11
+- Tournament Impact: 1.2424
 - Role Quality: 0.3320
-- Impact interval: [0.4528, 2.1024]
-- Rank band: 33–220
+- Impact interval: [0.1465, 2.2203]
+- Rank band: 16–236
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

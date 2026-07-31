@@ -9,7 +9,7 @@ displayName: "Aurélien Tchouaméni"
 wikiTitle: "Aurélien Tchouaméni"
 headshotUrl: "https://a.espncdn.com/i/headshots/soccer/players/full/265919.png"
 shirtNumber: 8
-overview: "Aurélien Tchouaméni played as a defensive midfield for France. His main role was holding / controlling midfielder, with an active outfield rank of #200 globally and #10 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Aurélien Tchouaméni played as a defensive midfield for France. His main role was holding / controlling midfielder, with an active outfield rank of #47 globally and #5 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Keeps possession reliably when receiving or carrying under pressure."
   - "Offers a strong goal threat when attacks reach the final third."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Defensive Midfield
 - Functional role: Holding / Controlling Midfielder
 - Minutes: 662.2
-- Global Rank v3: 200
-- Team Rank v3: 10
-- Position Rank v3: 69
-- Role Rank v3: 5
-- Tournament Impact: 0.5938
+- Global Rank v4: 47
+- Team Rank v4: 5
+- Position Rank v4: 9
+- Role Rank v4: 1
+- Tournament Impact: 1.1514
 - Role Quality: 0.0979
-- Impact interval: [0.0846, 1.2820]
-- Rank band: 79–402
+- Impact interval: [0.2315, 2.3870]
+- Rank band: 14–203
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

@@ -9,7 +9,7 @@ displayName: "Antonee Robinson"
 wikiTitle: "Antonee Robinson"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Antonee Robinson played as a fullback/wingback for United States. His main role was attacking wingback, with an active outfield rank of #100 globally and #4 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Antonee Robinson played as a fullback/wingback for United States. His main role was attacking wingback, with an active outfield rank of #91 globally and #3 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Moves the ball forward well through carries and forward passes."
   - "Creates useful chances and connects attacks."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Fullback/Wingback
 - Functional role: Attacking Wingback
 - Minutes: 386.3
-- Global Rank v3: 100
-- Team Rank v3: 4
-- Position Rank v3: 22
-- Role Rank v3: 18
-- Tournament Impact: 1.0538
+- Global Rank v4: 91
+- Team Rank v4: 3
+- Position Rank v4: 9
+- Role Rank v4: 8
+- Tournament Impact: 0.6763
 - Role Quality: 0.2108
-- Impact interval: [0.1491, 2.1583]
-- Rank band: 35–351
+- Impact interval: [-0.2409, 1.7759]
+- Rank band: 24–451
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

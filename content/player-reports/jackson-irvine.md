@@ -9,7 +9,7 @@ displayName: "Jackson Irvine"
 wikiTitle: "Jackson Irvine"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Jackson Irvine played as a forward for Australia. His main role was pressing forward, with an active outfield rank of #229 globally and #4 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Jackson Irvine played as a forward for Australia. His main role was pressing forward, with an active outfield rank of #87 globally and #2 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Competes well for headers and aerial balls."
   - "Works hard without the ball and pressures opponents effectively."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Forward
 - Functional role: Pressing Forward
 - Minutes: 373.8
-- Global Rank v3: 229
-- Team Rank v3: 4
-- Position Rank v3: 81
-- Role Rank v3: 21
-- Tournament Impact: 0.5210
+- Global Rank v4: 87
+- Team Rank v4: 2
+- Position Rank v4: 20
+- Role Rank v4: 4
+- Tournament Impact: 0.7297
 - Role Quality: 0.1223
-- Impact interval: [0.0766, 1.0877]
-- Rank band: 100–406
+- Impact interval: [-0.1218, 1.8827]
+- Rank band: 26–379
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

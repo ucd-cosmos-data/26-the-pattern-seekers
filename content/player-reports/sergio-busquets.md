@@ -9,7 +9,7 @@ displayName: "Sergio Busquets"
 wikiTitle: "Sergio Busquets"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Sergio Busquets played as a defensive midfield for Spain. His main role was holding anchor, with an active outfield rank of #248 globally and #12 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Sergio Busquets played as a defensive midfield for Spain. His main role was holding anchor, with an active outfield rank of #84 globally and #6 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Competes well for headers and aerial balls."
   - "Keeps possession reliably when receiving or carrying under pressure."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Defensive Midfield
 - Functional role: Holding Anchor
 - Minutes: 379.3
-- Global Rank v3: 248
-- Team Rank v3: 12
-- Position Rank v3: 49
-- Role Rank v3: 33
-- Tournament Impact: 0.4543
+- Global Rank v4: 84
+- Team Rank v4: 6
+- Position Rank v4: 12
+- Role Rank v4: 9
+- Tournament Impact: 0.7563
 - Role Quality: 0.1113
-- Impact interval: [0.0000, 0.9091]
-- Rank band: 124–506
+- Impact interval: [-0.1972, 1.7392]
+- Rank band: 27–410
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

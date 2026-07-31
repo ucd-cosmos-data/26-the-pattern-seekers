@@ -9,7 +9,7 @@ displayName: "Youssouf Sabaly"
 wikiTitle: "Youssouf Sabaly"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Youssouf Sabaly played as a fullback/wingback for Senegal. His main role was attacking wingback, with an active outfield rank of #153 globally and #3 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Youssouf Sabaly played as a fullback/wingback for Senegal. His main role was attacking wingback, with an active outfield rank of #188 globally and #5 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Creates useful chances and connects attacks."
   - "Moves the ball forward well through carries and forward passes."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Fullback/Wingback
 - Functional role: Attacking Wingback
 - Minutes: 387.3
-- Global Rank v3: 153
-- Team Rank v3: 3
-- Position Rank v3: 47
-- Role Rank v3: 38
-- Tournament Impact: 0.7589
+- Global Rank v4: 188
+- Team Rank v4: 5
+- Position Rank v4: 29
+- Role Rank v4: 22
+- Tournament Impact: 0.3074
 - Role Quality: 0.1795
-- Impact interval: [0.1630, 1.3826]
-- Rank band: 72–352
+- Impact interval: [-0.2970, 1.0071]
+- Rank band: 68–517
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

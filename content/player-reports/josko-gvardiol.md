@@ -9,7 +9,7 @@ displayName: "Joško Gvardiol"
 wikiTitle: "Joško Gvardiol"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Joško Gvardiol played as a center back for Croatia. His main role was ball-playing centre-back, with an active outfield rank of #203 globally and #14 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Joško Gvardiol played as a center back for Croatia. His main role was ball-playing centre-back, with an active outfield rank of #12 globally and #4 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Reads danger and contributes well in defensive situations."
   - "Keeps possession reliably when receiving or carrying under pressure."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Center Back
 - Functional role: Ball-Playing Centre-Back
 - Minutes: 720.3
-- Global Rank v3: 203
-- Team Rank v3: 14
-- Position Rank v3: 81
-- Role Rank v3: 19
-- Tournament Impact: 0.5831
+- Global Rank v4: 12
+- Team Rank v4: 4
+- Position Rank v4: 1
+- Role Rank v4: 1
+- Tournament Impact: 1.9547
 - Role Quality: 0.0719
-- Impact interval: [0.1496, 1.1610]
-- Rank band: 94–349
+- Impact interval: [0.3489, 3.4842]
+- Rank band: 7–165
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

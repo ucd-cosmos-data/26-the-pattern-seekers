@@ -9,7 +9,7 @@ displayName: "Marcelo Brozović"
 wikiTitle: "Marcelo Brozović"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Marcelo Brozović played as a defensive midfield for Croatia. His main role was box-to-box / engine midfielder, with an active outfield rank of #98 globally and #9 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Marcelo Brozović played as a defensive midfield for Croatia. His main role was box-to-box / engine midfielder, with an active outfield rank of #15 globally and #6 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Offers a strong goal threat when attacks reach the final third."
   - "Reads danger and contributes well in defensive situations."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Defensive Midfield
 - Functional role: Box-to-Box / Engine Midfielder
 - Minutes: 569.9
-- Global Rank v3: 98
-- Team Rank v3: 9
-- Position Rank v3: 34
-- Role Rank v3: 9
-- Tournament Impact: 1.0604
+- Global Rank v4: 15
+- Team Rank v4: 6
+- Position Rank v4: 2
+- Role Rank v4: 1
+- Tournament Impact: 1.8111
 - Role Quality: 0.1364
-- Impact interval: [0.2541, 1.9528]
-- Rank band: 44–294
+- Impact interval: [0.2565, 3.4426]
+- Rank band: 6–199
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

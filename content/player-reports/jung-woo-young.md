@@ -9,7 +9,7 @@ displayName: "Jung Woo-young"
 wikiTitle: "Jung Woo-young"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Jung Woo-young played as a defensive midfield for South Korea. His main role was holding anchor, with an active outfield rank of #480 globally and #16 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Jung Woo-young played as a defensive midfield for South Korea. His main role was holding anchor, with an active outfield rank of #267 globally and #9 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Competes well for headers and aerial balls."
   - "Creates useful chances and connects attacks."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Defensive Midfield
 - Functional role: Holding Anchor
 - Minutes: 317.9
-- Global Rank v3: 480
-- Team Rank v3: 16
-- Position Rank v3: 83
-- Role Rank v3: 57
-- Tournament Impact: 0.0574
+- Global Rank v4: 267
+- Team Rank v4: 9
+- Position Rank v4: 40
+- Role Rank v4: 29
+- Tournament Impact: 0.1254
 - Role Quality: 0.0851
-- Impact interval: [-0.0477, 0.1835]
-- Rank band: 329–542
+- Impact interval: [-0.3216, 0.7219]
+- Rank band: 95–519
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

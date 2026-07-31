@@ -9,7 +9,7 @@ displayName: "Pedri"
 wikiTitle: "Pedri"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Pedri played as a central/wide midfield for Spain. His main role was holding anchor, with an active outfield rank of #122 globally and #6 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Pedri played as a central/wide midfield for Spain. His main role was holding anchor, with an active outfield rank of #81 globally and #5 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Creates useful chances and connects attacks."
   - "Moves the ball forward well through carries and forward passes."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Central/Wide Midfield
 - Functional role: Holding Anchor
 - Minutes: 372.4
-- Global Rank v3: 122
-- Team Rank v3: 6
-- Position Rank v3: 24
-- Role Rank v3: 4
-- Tournament Impact: 0.8863
+- Global Rank v4: 81
+- Team Rank v4: 5
+- Position Rank v4: 13
+- Role Rank v4: 8
+- Tournament Impact: 0.8063
 - Role Quality: 0.2562
-- Impact interval: [0.1401, 1.7004]
-- Rank band: 54–364
+- Impact interval: [-0.1463, 1.7937]
+- Rank band: 25–373
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

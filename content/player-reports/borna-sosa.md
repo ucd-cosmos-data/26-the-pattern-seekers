@@ -9,7 +9,7 @@ displayName: "Borna Sosa"
 wikiTitle: "Borna Sosa"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Borna Sosa played as a fullback/wingback for Croatia. His main role was attacking wingback, with an active outfield rank of #177 globally and #13 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Borna Sosa played as a fullback/wingback for Croatia. His main role was attacking wingback, with an active outfield rank of #110 globally and #11 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Moves the ball forward well through carries and forward passes."
   - "Creates useful chances and connects attacks."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Fullback/Wingback
 - Functional role: Attacking Wingback
 - Minutes: 440.5
-- Global Rank v3: 177
-- Team Rank v3: 13
-- Position Rank v3: 54
-- Role Rank v3: 40
-- Tournament Impact: 0.6820
+- Global Rank v4: 110
+- Team Rank v4: 11
+- Position Rank v4: 14
+- Role Rank v4: 10
+- Tournament Impact: 0.5927
 - Role Quality: 0.1765
-- Impact interval: [0.0037, 1.5037]
-- Rank band: 65–471
+- Impact interval: [-0.2759, 1.5027]
+- Rank band: 41–485
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

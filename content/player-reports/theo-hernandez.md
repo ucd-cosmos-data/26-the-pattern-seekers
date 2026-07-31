@@ -9,7 +9,7 @@ displayName: "Théo Hernández"
 wikiTitle: "Théo Hernández"
 headshotUrl: "https://a.espncdn.com/i/headshots/soccer/players/full/233621.png"
 shirtNumber: 22
-overview: "Théo Hernández played as a fullback/wingback for France. His main role was attacking wingback, with an active outfield rank of #80 globally and #7 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Théo Hernández played as a fullback/wingback for France. His main role was attacking wingback, with an active outfield rank of #97 globally and #7 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Creates useful chances and connects attacks."
   - "Reads danger and contributes well in defensive situations."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Fullback/Wingback
 - Functional role: Attacking Wingback
 - Minutes: 548.5
-- Global Rank v3: 80
-- Team Rank v3: 7
-- Position Rank v3: 30
-- Role Rank v3: 25
-- Tournament Impact: 1.2308
+- Global Rank v4: 97
+- Team Rank v4: 7
+- Position Rank v4: 11
+- Role Rank v4: 9
+- Tournament Impact: 0.6446
 - Role Quality: 0.1964
-- Impact interval: [0.3747, 2.3935]
-- Rank band: 29–249
+- Impact interval: [-0.0533, 1.5464]
+- Rank band: 34–312
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

@@ -9,7 +9,7 @@ displayName: "Tyler Adams"
 wikiTitle: "Tyler Adams"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Tyler Adams played as a defensive midfield for United States. His main role was holding / controlling midfielder, with an active outfield rank of #388 globally and #13 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Tyler Adams played as a defensive midfield for United States. His main role was holding / controlling midfielder, with an active outfield rank of #106 globally and #6 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Works hard without the ball and pressures opponents effectively."
   - "Reads danger and contributes well in defensive situations."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Defensive Midfield
 - Functional role: Holding / Controlling Midfielder
 - Minutes: 391.2
-- Global Rank v3: 388
-- Team Rank v3: 13
-- Position Rank v3: 81
-- Role Rank v3: 6
-- Tournament Impact: 0.1746
+- Global Rank v4: 106
+- Team Rank v4: 6
+- Position Rank v4: 15
+- Role Rank v4: 2
+- Tournament Impact: 0.6155
 - Role Quality: 0.0894
-- Impact interval: [-0.0724, 0.5159]
-- Rank band: 197–545
+- Impact interval: [-0.2731, 1.6515]
+- Rank band: 31–487
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

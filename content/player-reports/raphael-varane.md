@@ -9,7 +9,7 @@ displayName: "Raphaël Varane"
 wikiTitle: "Raphaël Varane"
 headshotUrl: "https://a.espncdn.com/i/headshots/soccer/players/full/153053.png"
 shirtNumber: 4
-overview: "Raphaël Varane played as a center back for France. His main role was ball-playing centre-back, with an active outfield rank of #386 globally and #15 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Raphaël Varane played as a center back for France. His main role was ball-playing centre-back, with an active outfield rank of #152 globally and #10 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Keeps possession reliably when receiving or carrying under pressure."
   - "Competes well for headers and aerial balls."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Center Back
 - Functional role: Ball-Playing Centre-Back
 - Minutes: 544.6
-- Global Rank v3: 386
-- Team Rank v3: 15
-- Position Rank v3: 93
-- Role Rank v3: 20
-- Tournament Impact: 0.1777
+- Global Rank v4: 152
+- Team Rank v4: 10
+- Position Rank v4: 24
+- Role Rank v4: 11
+- Tournament Impact: 0.4032
 - Role Quality: 0.0660
-- Impact interval: [-0.0216, 0.3938]
-- Rank band: 234–529
+- Impact interval: [-0.1785, 1.2003]
+- Rank band: 57–412
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

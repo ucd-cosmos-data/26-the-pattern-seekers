@@ -9,7 +9,7 @@ displayName: "Yunus Musah"
 wikiTitle: "Yunus Musah"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Yunus Musah played as a central/wide midfield for United States. His main role was box-to-box / engine midfielder, with an active outfield rank of #175 globally and #9 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Yunus Musah played as a central/wide midfield for United States. His main role was box-to-box / engine midfielder, with an active outfield rank of #96 globally and #4 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Works hard without the ball and pressures opponents effectively."
   - "Keeps possession reliably when receiving or carrying under pressure."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Central/Wide Midfield
 - Functional role: Box-to-Box / Engine Midfielder
 - Minutes: 364.9
-- Global Rank v3: 175
-- Team Rank v3: 9
-- Position Rank v3: 32
-- Role Rank v3: 5
-- Tournament Impact: 0.6845
+- Global Rank v4: 96
+- Team Rank v4: 4
+- Position Rank v4: 16
+- Role Rank v4: 5
+- Tournament Impact: 0.6576
 - Role Quality: 0.2325
-- Impact interval: [0.1563, 1.3231]
-- Rank band: 79–351
+- Impact interval: [-0.2186, 1.6163]
+- Rank band: 30–428
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

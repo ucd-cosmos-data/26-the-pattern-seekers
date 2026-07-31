@@ -9,7 +9,7 @@ displayName: "Thiago Silva"
 wikiTitle: "Thiago Silva"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Thiago Silva played as a center back for Brazil. His main role was ball-playing centre-back, with an active outfield rank of #289 globally and #16 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Thiago Silva played as a center back for Brazil. His main role was ball-playing centre-back, with an active outfield rank of #85 globally and #9 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Creates useful chances and connects attacks."
   - "Competes well for headers and aerial balls."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Center Back
 - Functional role: Ball-Playing Centre-Back
 - Minutes: 409.1
-- Global Rank v3: 289
-- Team Rank v3: 16
-- Position Rank v3: 79
-- Role Rank v3: 18
-- Tournament Impact: 0.3601
+- Global Rank v4: 85
+- Team Rank v4: 9
+- Position Rank v4: 12
+- Role Rank v4: 6
+- Tournament Impact: 0.7409
 - Role Quality: 0.0738
-- Impact interval: [0.0381, 0.7753]
-- Rank band: 145–431
+- Impact interval: [-0.2110, 1.9327]
+- Rank band: 27–421
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

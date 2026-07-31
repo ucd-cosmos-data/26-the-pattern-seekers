@@ -9,7 +9,7 @@ displayName: "Selim Amallah"
 wikiTitle: "Selim Amallah"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Selim Amallah played as a central/wide midfield for Morocco. His main role was ball-winner, with an active outfield rank of #307 globally and #14 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Selim Amallah played as a central/wide midfield for Morocco. His main role was ball-winner, with an active outfield rank of #89 globally and #8 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Works hard without the ball and pressures opponents effectively."
   - "Reads danger and contributes well in defensive situations."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Central/Wide Midfield
 - Functional role: Ball-Winner
 - Minutes: 423.7
-- Global Rank v3: 307
-- Team Rank v3: 14
-- Position Rank v3: 42
-- Role Rank v3: 52
-- Tournament Impact: 0.3209
+- Global Rank v4: 89
+- Team Rank v4: 8
+- Position Rank v4: 15
+- Role Rank v4: 7
+- Tournament Impact: 0.7020
 - Role Quality: 0.1345
-- Impact interval: [0.0831, 0.5780]
-- Rank band: 190–391
+- Impact interval: [-0.1346, 1.6446]
+- Rank band: 34–374
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

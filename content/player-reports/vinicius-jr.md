@@ -9,7 +9,7 @@ displayName: "Vinícius Jr"
 wikiTitle: "Vinícius Júnior"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Vinícius Jr played as a central/wide midfield for Brazil. His main role was progressive winger, with an active outfield rank of #33 globally and #4 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Vinícius Jr played as a central/wide midfield for Brazil. His main role was progressive winger, with an active outfield rank of #48 globally and #5 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Offers a strong goal threat when attacks reach the final third."
   - "Creates useful chances and connects attacks."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Central/Wide Midfield
 - Functional role: Progressive Winger
 - Minutes: 306.6
-- Global Rank v3: 33
-- Team Rank v3: 4
-- Position Rank v3: 14
-- Role Rank v3: 13
-- Tournament Impact: 1.9906
+- Global Rank v4: 48
+- Team Rank v4: 5
+- Position Rank v4: 8
+- Role Rank v4: 15
+- Tournament Impact: 1.1432
 - Role Quality: 0.5328
-- Impact interval: [0.4373, 3.6934]
-- Rank band: 11–233
+- Impact interval: [-0.0956, 2.5521]
+- Rank band: 11–338
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

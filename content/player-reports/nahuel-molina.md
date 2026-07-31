@@ -9,7 +9,7 @@ displayName: "Nahuel Molina"
 wikiTitle: "Nahuel Molina"
 headshotUrl: "https://a.espncdn.com/i/headshots/soccer/players/full/164826.png"
 shirtNumber: 26
-overview: "Nahuel Molina played as a fullback/wingback for Argentina. His main role was deep playmaker, with an active outfield rank of #78 globally and #9 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Nahuel Molina played as a fullback/wingback for Argentina. His main role was deep playmaker, with an active outfield rank of #52 globally and #9 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Works hard without the ball and pressures opponents effectively."
   - "Offers a strong goal threat when attacks reach the final third."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Fullback/Wingback
 - Functional role: Deep Playmaker
 - Minutes: 594.0
-- Global Rank v3: 78
-- Team Rank v3: 9
-- Position Rank v3: 43
-- Role Rank v3: 13
-- Tournament Impact: 1.2502
+- Global Rank v4: 52
+- Team Rank v4: 9
+- Position Rank v4: 3
+- Role Rank v4: 3
+- Tournament Impact: 1.0847
 - Role Quality: 0.1849
-- Impact interval: [0.2295, 2.5438]
-- Rank band: 27–309
+- Impact interval: [0.1100, 2.3734]
+- Rank band: 18–245
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

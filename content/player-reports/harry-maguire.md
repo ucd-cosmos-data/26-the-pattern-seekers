@@ -9,7 +9,7 @@ displayName: "Harry Maguire"
 wikiTitle: "Harry Maguire"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Harry Maguire played as a center back for England. His main role was sweeper cb, with an active outfield rank of #103 globally and #7 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Harry Maguire played as a center back for England. His main role was sweeper cb, with an active outfield rank of #53 globally and #4 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Competes well for headers and aerial balls."
   - "Moves the ball forward well through carries and forward passes."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Center Back
 - Functional role: Sweeper CB
 - Minutes: 453.7
-- Global Rank v3: 103
-- Team Rank v3: 7
-- Position Rank v3: 15
-- Role Rank v3: 11
-- Tournament Impact: 1.0283
+- Global Rank v4: 53
+- Team Rank v4: 4
+- Position Rank v4: 4
+- Role Rank v4: 2
+- Tournament Impact: 1.0435
 - Role Quality: 0.1222
-- Impact interval: [0.2777, 1.8205]
-- Rank band: 49–271
+- Impact interval: [0.0850, 2.2003]
+- Rank band: 17–258
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

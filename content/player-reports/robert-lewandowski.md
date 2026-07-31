@@ -9,7 +9,7 @@ displayName: "Robert Lewandowski"
 wikiTitle: "Robert Lewandowski"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Robert Lewandowski played as a forward for Poland. His main role was target forward / penalty-box anchor, with an active outfield rank of #4 globally and #1 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Robert Lewandowski played as a forward for Poland. His main role was target forward / penalty-box anchor, with an active outfield rank of #16 globally and #1 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Offers a strong goal threat when attacks reach the final third."
   - "Competes well for headers and aerial balls."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Forward
 - Functional role: Target Forward / Penalty-Box Anchor
 - Minutes: 389.8
-- Global Rank v3: 4
-- Team Rank v3: 1
-- Position Rank v3: 30
-- Role Rank v3: 11
-- Tournament Impact: 3.6367
+- Global Rank v4: 16
+- Team Rank v4: 1
+- Position Rank v4: 5
+- Role Rank v4: 2
+- Tournament Impact: 1.7306
 - Role Quality: 0.6385
-- Impact interval: [0.7292, 7.6402]
-- Rank band: 1–169
+- Impact interval: [0.1963, 3.5785]
+- Rank band: 3–269
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

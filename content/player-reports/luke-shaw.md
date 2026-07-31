@@ -9,7 +9,7 @@ displayName: "Luke Shaw"
 wikiTitle: "Luke Shaw"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Luke Shaw played as a fullback/wingback for England. His main role was attacking wingback, with an active outfield rank of #70 globally and #6 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Luke Shaw played as a fullback/wingback for England. His main role was attacking wingback, with an active outfield rank of #71 globally and #7 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Creates useful chances and connects attacks."
   - "Moves the ball forward well through carries and forward passes."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Fullback/Wingback
 - Functional role: Attacking Wingback
 - Minutes: 457.2
-- Global Rank v3: 70
-- Team Rank v3: 6
-- Position Rank v3: 17
-- Role Rank v3: 14
-- Tournament Impact: 1.3410
+- Global Rank v4: 71
+- Team Rank v4: 7
+- Position Rank v4: 5
+- Role Rank v4: 4
+- Tournament Impact: 0.8517
 - Role Quality: 0.2201
-- Impact interval: [0.3436, 2.5159]
-- Rank band: 26–262
+- Impact interval: [-0.0344, 1.8379]
+- Rank band: 27–302
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

@@ -9,7 +9,7 @@ displayName: "Tim Weah"
 wikiTitle: "Tim Weah"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Tim Weah played as an attacking midfield/wing for United States. His main role was ball-winner, with an active outfield rank of #37 globally and #2 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Tim Weah played as an attacking midfield/wing for United States. His main role was ball-winner, with an active outfield rank of #56 globally and #2 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Offers a strong goal threat when attacks reach the final third."
   - "Keeps possession reliably when receiving or carrying under pressure."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Attacking Midfield/Wing
 - Functional role: Ball-Winner
 - Minutes: 317.9
-- Global Rank v3: 37
-- Team Rank v3: 2
-- Position Rank v3: 43
-- Role Rank v3: 12
-- Tournament Impact: 1.8921
+- Global Rank v4: 56
+- Team Rank v4: 2
+- Position Rank v4: 18
+- Role Rank v4: 5
+- Tournament Impact: 1.0164
 - Role Quality: 0.4622
-- Impact interval: [0.3167, 3.8105]
-- Rank band: 9–275
+- Impact interval: [-0.0916, 2.2074]
+- Rank band: 13–336
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

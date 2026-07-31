@@ -9,7 +9,7 @@ displayName: "Walker Zimmerman"
 wikiTitle: "Walker Zimmerman"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Walker Zimmerman played as a center back for United States. His main role was ball-playing centre-back, with an active outfield rank of #362 globally and #12 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Walker Zimmerman played as a center back for United States. His main role was ball-playing centre-back, with an active outfield rank of #210 globally and #10 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Competes well for headers and aerial balls."
   - "Keeps possession reliably when receiving or carrying under pressure."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Center Back
 - Functional role: Ball-Playing Centre-Back
 - Minutes: 310.1
-- Global Rank v3: 362
-- Team Rank v3: 12
-- Position Rank v3: 54
-- Role Rank v3: 10
-- Tournament Impact: 0.2283
+- Global Rank v4: 210
+- Team Rank v4: 10
+- Position Rank v4: 41
+- Role Rank v4: 13
+- Tournament Impact: 0.2624
 - Role Quality: 0.0872
-- Impact interval: [-0.1187, 0.8031]
-- Rank band: 147–550
+- Impact interval: [-0.2517, 1.0461]
+- Rank band: 65–484
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

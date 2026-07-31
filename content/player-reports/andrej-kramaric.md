@@ -9,7 +9,7 @@ displayName: "Andrej Kramarić"
 wikiTitle: "Andrej Kramarić"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Andrej Kramarić played as an attacking midfield/wing for Croatia. His main role was ball-winner, with an active outfield rank of #20 globally and #2 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Andrej Kramarić played as an attacking midfield/wing for Croatia. His main role was ball-winner, with an active outfield rank of #13 globally and #5 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Offers a strong goal threat when attacks reach the final third."
   - "Keeps possession reliably when receiving or carrying under pressure."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Attacking Midfield/Wing
 - Functional role: Ball-Winner
 - Minutes: 478.4
-- Global Rank v3: 20
-- Team Rank v3: 2
-- Position Rank v3: 30
-- Role Rank v3: 7
-- Tournament Impact: 2.3121
+- Global Rank v4: 13
+- Team Rank v4: 5
+- Position Rank v4: 5
+- Role Rank v4: 2
+- Tournament Impact: 1.8402
 - Role Quality: 0.4827
-- Impact interval: [0.6898, 4.3678]
-- Rank band: 8–154
+- Impact interval: [0.4891, 3.4256]
+- Rank band: 7–142
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

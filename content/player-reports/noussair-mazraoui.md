@@ -9,7 +9,7 @@ displayName: "Noussair Mazraoui"
 wikiTitle: "Noussair Mazraoui"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Noussair Mazraoui played as a fullback/wingback for Morocco. His main role was wide creator, with an active outfield rank of #401 globally and #17 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Noussair Mazraoui played as a fullback/wingback for Morocco. His main role was wide creator, with an active outfield rank of #251 globally and #12 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Reads danger and contributes well in defensive situations."
   - "Works hard without the ball and pressures opponents effectively."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Fullback/Wingback
 - Functional role: Wide Creator
 - Minutes: 376.8
-- Global Rank v3: 401
-- Team Rank v3: 17
-- Position Rank v3: 95
-- Role Rank v3: 30
-- Tournament Impact: 0.1604
+- Global Rank v4: 251
+- Team Rank v4: 12
+- Position Rank v4: 42
+- Role Rank v4: 9
+- Tournament Impact: 0.1765
 - Role Quality: 0.1406
-- Impact interval: [0.0001, 0.3459]
-- Rank band: 258–469
+- Impact interval: [-0.3838, 0.7937]
+- Rank band: 91–534
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

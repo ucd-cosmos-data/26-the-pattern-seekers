@@ -9,7 +9,7 @@ displayName: "Josip Juranović"
 wikiTitle: "Josip Juranović"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Josip Juranović played as a fullback/wingback for Croatia. His main role was attacking wingback, with an active outfield rank of #76 globally and #7 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Josip Juranović played as a fullback/wingback for Croatia. His main role was attacking wingback, with an active outfield rank of #28 globally and #8 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Moves the ball forward well through carries and forward passes."
   - "Creates useful chances and connects attacks."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Fullback/Wingback
 - Functional role: Attacking Wingback
 - Minutes: 624.1
-- Global Rank v3: 76
-- Team Rank v3: 7
-- Position Rank v3: 45
-- Role Rank v3: 36
-- Tournament Impact: 1.2581
+- Global Rank v4: 28
+- Team Rank v4: 8
+- Position Rank v4: 2
+- Role Rank v4: 2
+- Tournament Impact: 1.5131
 - Role Quality: 0.1813
-- Impact interval: [0.3364, 2.3542]
-- Rank band: 31–265
+- Impact interval: [0.1584, 3.0001]
+- Rank band: 10–228
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

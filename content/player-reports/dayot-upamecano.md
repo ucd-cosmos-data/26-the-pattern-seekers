@@ -9,7 +9,7 @@ displayName: "Dayot Upamecano"
 wikiTitle: "Dayot Upamecano"
 headshotUrl: "https://a.espncdn.com/i/headshots/soccer/players/full/222793.png"
 shirtNumber: 18
-overview: "Dayot Upamecano played as a center back for France. His main role was sweeper cb, with an active outfield rank of #530 globally and #20 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Dayot Upamecano played as a center back for France. His main role was sweeper cb, with an active outfield rank of #172 globally and #11 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Reads danger and contributes well in defensive situations."
   - "Keeps possession reliably when receiving or carrying under pressure."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Center Back
 - Functional role: Sweeper CB
 - Minutes: 518.2
-- Global Rank v3: 530
-- Team Rank v3: 20
-- Position Rank v3: 107
-- Role Rank v3: 80
-- Tournament Impact: -0.0125
+- Global Rank v4: 172
+- Team Rank v4: 11
+- Position Rank v4: 29
+- Role Rank v4: 18
+- Tournament Impact: 0.3529
 - Role Quality: 0.0463
-- Impact interval: [-0.1428, 0.1453]
-- Rank band: 349–552
+- Impact interval: [-0.2119, 1.1850]
+- Rank band: 58–429
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

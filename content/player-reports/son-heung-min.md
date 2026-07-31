@@ -9,7 +9,7 @@ displayName: "Son Heung-min"
 wikiTitle: "Son Heung-min"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Son Heung-min played as an attacking midfield/wing for South Korea. His main role was target forward, with an active outfield rank of #39 globally and #1 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Son Heung-min played as an attacking midfield/wing for South Korea. His main role was target forward, with an active outfield rank of #63 globally and #1 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Creates useful chances and connects attacks."
   - "Offers a strong goal threat when attacks reach the final third."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Attacking Midfield/Wing
 - Functional role: Target Forward
 - Minutes: 389.6
-- Global Rank v3: 39
-- Team Rank v3: 1
-- Position Rank v3: 31
-- Role Rank v3: 34
-- Tournament Impact: 1.8624
+- Global Rank v4: 63
+- Team Rank v4: 1
+- Position Rank v4: 20
+- Role Rank v4: 9
+- Tournament Impact: 0.9512
 - Role Quality: 0.4824
-- Impact interval: [0.4458, 3.5897]
-- Rank band: 12–229
+- Impact interval: [-0.0188, 2.0813]
+- Rank band: 15–318
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

@@ -9,7 +9,7 @@ displayName: "Marquinhos"
 wikiTitle: "Marquinhos (footballer, born 1994)"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Marquinhos played as a center back for Brazil. His main role was ball-playing centre-back, with an active outfield rank of #250 globally and #15 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Marquinhos played as a center back for Brazil. His main role was ball-playing centre-back, with an active outfield rank of #83 globally and #8 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Creates useful chances and connects attacks."
   - "Keeps possession reliably when receiving or carrying under pressure."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Center Back
 - Functional role: Ball-Playing Centre-Back
 - Minutes: 455.0
-- Global Rank v3: 250
-- Team Rank v3: 15
-- Position Rank v3: 48
-- Role Rank v3: 9
-- Tournament Impact: 0.4517
+- Global Rank v4: 83
+- Team Rank v4: 8
+- Position Rank v4: 11
+- Role Rank v4: 5
+- Tournament Impact: 0.7632
 - Role Quality: 0.0916
-- Impact interval: [0.0000, 1.0713]
-- Rank band: 100–467
+- Impact interval: [-0.0724, 1.7201]
+- Rank band: 29–327
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

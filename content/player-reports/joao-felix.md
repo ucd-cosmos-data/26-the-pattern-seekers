@@ -9,7 +9,7 @@ displayName: "João Félix"
 wikiTitle: "João Félix"
 headshotUrl: ""
 shirtNumber: ""
-overview: "João Félix played as an attacking midfield/wing for Portugal. His main role was ball-winner, with an active outfield rank of #43 globally and #3 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "João Félix played as an attacking midfield/wing for Portugal. His main role was ball-winner, with an active outfield rank of #46 globally and #3 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Offers a strong goal threat when attacks reach the final third."
   - "Keeps possession reliably when receiving or carrying under pressure."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Attacking Midfield/Wing
 - Functional role: Ball-Winner
 - Minutes: 340.2
-- Global Rank v3: 43
-- Team Rank v3: 3
-- Position Rank v3: 45
-- Role Rank v3: 13
-- Tournament Impact: 1.8340
+- Global Rank v4: 46
+- Team Rank v4: 3
+- Position Rank v4: 15
+- Role Rank v4: 3
+- Tournament Impact: 1.1531
 - Role Quality: 0.4596
-- Impact interval: [0.3629, 3.5889]
-- Rank band: 12–260
+- Impact interval: [-0.0361, 2.4475]
+- Rank band: 10–314
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

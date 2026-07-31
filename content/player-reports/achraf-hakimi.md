@@ -9,7 +9,7 @@ displayName: "Achraf Hakimi"
 wikiTitle: "Achraf Hakimi"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Achraf Hakimi played as a fullback/wingback for Morocco. His main role was attacking wingback, with an active outfield rank of #79 globally and #4 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Achraf Hakimi played as a fullback/wingback for Morocco. His main role was attacking wingback, with an active outfield rank of #21 globally and #1 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Works hard without the ball and pressures opponents effectively."
   - "Reads danger and contributes well in defensive situations."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Fullback/Wingback
 - Functional role: Attacking Wingback
 - Minutes: 660.8
-- Global Rank v3: 79
-- Team Rank v3: 4
-- Position Rank v3: 61
-- Role Rank v3: 45
-- Tournament Impact: 1.2476
+- Global Rank v4: 21
+- Team Rank v4: 1
+- Position Rank v4: 1
+- Role Rank v4: 1
+- Tournament Impact: 1.6272
 - Role Quality: 0.1726
-- Impact interval: [0.3525, 2.1988]
-- Rank band: 34–251
+- Impact interval: [0.2417, 2.9884]
+- Rank band: 6–199
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

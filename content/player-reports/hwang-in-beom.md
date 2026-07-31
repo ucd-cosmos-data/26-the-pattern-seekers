@@ -9,7 +9,7 @@ displayName: "Hwang In-beom"
 wikiTitle: "Hwang In-beom"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Hwang In-beom played as a defensive midfield for South Korea. His main role was holding anchor, with an active outfield rank of #199 globally and #6 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Hwang In-beom played as a defensive midfield for South Korea. His main role was holding anchor, with an active outfield rank of #130 globally and #3 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Creates useful chances and connects attacks."
   - "Moves the ball forward well through carries and forward passes."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Defensive Midfield
 - Functional role: Holding Anchor
 - Minutes: 360.1
-- Global Rank v3: 199
-- Team Rank v3: 6
-- Position Rank v3: 18
-- Role Rank v3: 8
-- Tournament Impact: 0.5954
+- Global Rank v4: 130
+- Team Rank v4: 3
+- Position Rank v4: 18
+- Role Rank v4: 14
+- Tournament Impact: 0.4912
 - Role Quality: 0.2373
-- Impact interval: [0.1135, 1.1739]
-- Rank band: 91–367
+- Impact interval: [-0.2300, 1.2764]
+- Rank band: 44–443
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

@@ -9,7 +9,7 @@ displayName: "Denzel Dumfries"
 wikiTitle: "Denzel Dumfries"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Denzel Dumfries played as a fullback/wingback for Netherlands. His main role was attacking wingback, with an active outfield rank of #93 globally and #5 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Denzel Dumfries played as a fullback/wingback for Netherlands. His main role was attacking wingback, with an active outfield rank of #115 globally and #6 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Competes well for headers and aerial balls."
   - "Creates useful chances and connects attacks."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Fullback/Wingback
 - Functional role: Attacking Wingback
 - Minutes: 509.5
-- Global Rank v3: 93
-- Team Rank v3: 5
-- Position Rank v3: 36
-- Role Rank v3: 29
-- Tournament Impact: 1.1122
+- Global Rank v4: 115
+- Team Rank v4: 6
+- Position Rank v4: 15
+- Role Rank v4: 11
+- Tournament Impact: 0.5758
 - Role Quality: 0.1898
-- Impact interval: [0.2157, 2.1258]
-- Rank band: 36–313
+- Impact interval: [-0.2041, 1.4583]
+- Rank band: 40–418
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

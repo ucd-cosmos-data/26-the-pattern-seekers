@@ -9,7 +9,7 @@ displayName: "Mateo Kovačić"
 wikiTitle: "Mateo Kovačić"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Mateo Kovačić played as a central/wide midfield for Croatia. His main role was deep playmaker / metronome, with an active outfield rank of #29 globally and #3 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Mateo Kovačić played as a central/wide midfield for Croatia. His main role was deep playmaker / metronome, with an active outfield rank of #4 globally and #2 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Works hard without the ball and pressures opponents effectively."
   - "Keeps possession reliably when receiving or carrying under pressure."
@@ -26,15 +26,15 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Central/Wide Midfield
 - Functional role: Deep Playmaker / Metronome
 - Minutes: 649.9
-- Global Rank v3: 29
-- Team Rank v3: 3
-- Position Rank v3: 20
-- Role Rank v3: 2
-- Tournament Impact: 2.0788
+- Global Rank v4: 4
+- Team Rank v4: 2
+- Position Rank v4: 1
+- Role Rank v4: 1
+- Tournament Impact: 2.5494
 - Role Quality: 0.2795
-- Impact interval: [0.6202, 3.7105]
-- Rank band: 12–170
-- Uncertainty status: wide
+- Impact interval: [0.7429, 4.4427]
+- Rank band: 3–100
+- Uncertainty status: moderate
 
 ## Decisive outcomes
 
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

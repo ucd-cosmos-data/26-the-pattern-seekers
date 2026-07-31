@@ -9,7 +9,7 @@ displayName: "Ismaïla Sarr"
 wikiTitle: "Ismaïla Sarr"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Ismaïla Sarr played as an attacking midfield/wing for Senegal. His main role was progressive winger, with an active outfield rank of #17 globally and #1 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Ismaïla Sarr played as an attacking midfield/wing for Senegal. His main role was progressive winger, with an active outfield rank of #35 globally and #1 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Offers a strong goal threat when attacks reach the final third."
   - "Competes well for headers and aerial balls."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Attacking Midfield/Wing
 - Functional role: Progressive Winger
 - Minutes: 365.2
-- Global Rank v3: 17
-- Team Rank v3: 1
-- Position Rank v3: 7
-- Role Rank v3: 7
-- Tournament Impact: 2.7249
+- Global Rank v4: 35
+- Team Rank v4: 1
+- Position Rank v4: 11
+- Role Rank v4: 8
+- Tournament Impact: 1.3761
 - Role Quality: 0.5649
-- Impact interval: [0.7963, 5.1215]
-- Rank band: 4–152
+- Impact interval: [0.0744, 3.0456]
+- Rank band: 6–270
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

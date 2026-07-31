@@ -9,7 +9,7 @@ displayName: "Éder Militão"
 wikiTitle: "Éder Militão"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Éder Militão played as a fullback/wingback for Brazil. His main role was two-way fullback, with an active outfield rank of #182 globally and #13 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Éder Militão played as a fullback/wingback for Brazil. His main role was two-way fullback, with an active outfield rank of #107 globally and #10 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Moves the ball forward well through carries and forward passes."
   - "Works hard without the ball and pressures opponents effectively."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Fullback/Wingback
 - Functional role: Two-Way Fullback
 - Minutes: 363.6
-- Global Rank v3: 182
-- Team Rank v3: 13
-- Position Rank v3: 97
-- Role Rank v3: 3
-- Tournament Impact: 0.6626
+- Global Rank v4: 107
+- Team Rank v4: 10
+- Position Rank v4: 13
+- Role Rank v4: 1
+- Tournament Impact: 0.6107
 - Role Quality: 0.1365
-- Impact interval: [0.0711, 1.4218]
-- Rank band: 70–411
+- Impact interval: [-0.1880, 1.7056]
+- Rank band: 32–448
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

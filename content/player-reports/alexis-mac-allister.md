@@ -9,7 +9,7 @@ displayName: "Alexis Mac Allister"
 wikiTitle: "Alexis Mac Allister"
 headshotUrl: "https://a.espncdn.com/i/headshots/soccer/players/full/249299.png"
 shirtNumber: 20
-overview: "Alexis Mac Allister played as a central/wide midfield for Argentina. His main role was ball-winner, with an active outfield rank of #27 globally and #5 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Alexis Mac Allister played as a central/wide midfield for Argentina. His main role was ball-winner, with an active outfield rank of #10 globally and #3 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Keeps possession reliably when receiving or carrying under pressure."
   - "Offers a strong goal threat when attacks reach the final third."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Central/Wide Midfield
 - Functional role: Ball-Winner
 - Minutes: 552.4
-- Global Rank v3: 27
-- Team Rank v3: 5
-- Position Rank v3: 19
-- Role Rank v3: 38
-- Tournament Impact: 2.1425
+- Global Rank v4: 10
+- Team Rank v4: 3
+- Position Rank v4: 3
+- Role Rank v4: 1
+- Tournament Impact: 2.0210
 - Role Quality: 0.3089
-- Impact interval: [0.7483, 4.1039]
-- Rank band: 9–159
+- Impact interval: [0.5565, 3.9949]
+- Rank band: 4–136
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

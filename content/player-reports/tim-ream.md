@@ -9,7 +9,7 @@ displayName: "Tim Ream"
 wikiTitle: "Tim Ream"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Tim Ream played as a center back for United States. His main role was ball-playing centre-back, with an active outfield rank of #262 globally and #10 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Tim Ream played as a center back for United States. His main role was ball-playing centre-back, with an active outfield rank of #103 globally and #5 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Keeps possession reliably when receiving or carrying under pressure."
   - "Competes well for headers and aerial balls."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Center Back
 - Functional role: Ball-Playing Centre-Back
 - Minutes: 391.2
-- Global Rank v3: 262
-- Team Rank v3: 10
-- Position Rank v3: 73
-- Role Rank v3: 16
-- Tournament Impact: 0.4174
+- Global Rank v4: 103
+- Team Rank v4: 5
+- Position Rank v4: 14
+- Role Rank v4: 8
+- Tournament Impact: 0.6194
 - Role Quality: 0.0799
-- Impact interval: [0.0508, 0.9458]
-- Rank band: 120–444
+- Impact interval: [-0.2464, 1.6129]
+- Rank band: 32–456
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

@@ -9,7 +9,7 @@ displayName: "Jurriën Timber"
 wikiTitle: "Jurriën Timber"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Jurriën Timber played as a center back for Netherlands. His main role was sweeper cb, with an active outfield rank of #478 globally and #16 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Jurriën Timber played as a center back for Netherlands. His main role was sweeper cb, with an active outfield rank of #180 globally and #9 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Works hard without the ball and pressures opponents effectively."
   - "Competes well for headers and aerial balls."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Center Back
 - Functional role: Sweeper CB
 - Minutes: 409.4
-- Global Rank v3: 478
-- Team Rank v3: 16
-- Position Rank v3: 58
-- Role Rank v3: 43
-- Tournament Impact: 0.0595
+- Global Rank v4: 180
+- Team Rank v4: 9
+- Position Rank v4: 32
+- Role Rank v4: 21
+- Tournament Impact: 0.3227
 - Role Quality: 0.0856
-- Impact interval: [-0.0663, 0.2149]
-- Rank band: 312–546
+- Impact interval: [-0.2803, 1.2480]
+- Rank band: 53–512
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

@@ -9,7 +9,7 @@ displayName: "Lucas Paquetá"
 wikiTitle: "Lucas Paquetá"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Lucas Paquetá played as a defensive midfield for Brazil. His main role was holding anchor, with an active outfield rank of #74 globally and #6 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Lucas Paquetá played as a defensive midfield for Brazil. His main role was holding anchor, with an active outfield rank of #51 globally and #6 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Offers a strong goal threat when attacks reach the final third."
   - "Works hard without the ball and pressures opponents effectively."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Defensive Midfield
 - Functional role: Holding Anchor
 - Minutes: 318.8
-- Global Rank v3: 74
-- Team Rank v3: 6
-- Position Rank v3: 3
-- Role Rank v3: 2
-- Tournament Impact: 1.2732
+- Global Rank v4: 51
+- Team Rank v4: 6
+- Position Rank v4: 10
+- Role Rank v4: 6
+- Tournament Impact: 1.0888
 - Role Quality: 0.3465
-- Impact interval: [0.2060, 2.6584]
-- Rank band: 25–335
+- Impact interval: [-0.1855, 2.6207]
+- Rank band: 12–429
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

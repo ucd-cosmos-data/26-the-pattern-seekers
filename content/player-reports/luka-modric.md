@@ -9,7 +9,7 @@ displayName: "Luka Modrić"
 wikiTitle: "Luka Modrić"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Luka Modrić played as a central/wide midfield for Croatia. His main role was deep playmaker / metronome, with an active outfield rank of #56 globally and #6 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Luka Modrić played as a central/wide midfield for Croatia. His main role was deep playmaker / metronome, with an active outfield rank of #7 globally and #3 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Moves the ball forward well through carries and forward passes."
   - "Creates useful chances and connects attacks."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Central/Wide Midfield
 - Functional role: Deep Playmaker / Metronome
 - Minutes: 672.7
-- Global Rank v3: 56
-- Team Rank v3: 6
-- Position Rank v3: 40
-- Role Rank v3: 6
-- Tournament Impact: 1.5917
+- Global Rank v4: 7
+- Team Rank v4: 3
+- Position Rank v4: 2
+- Role Rank v4: 2
+- Tournament Impact: 2.1718
 - Role Quality: 0.1652
-- Impact interval: [0.5599, 2.6577]
-- Rank band: 24–191
+- Impact interval: [0.5107, 3.7875]
+- Rank band: 5–139
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

@@ -9,7 +9,7 @@ displayName: "Julián Álvarez"
 wikiTitle: "Julián Álvarez"
 headshotUrl: "https://a.espncdn.com/i/headshots/soccer/players/full/277206.png"
 shirtNumber: 9
-overview: "Julián Álvarez played as a forward for Argentina. His main role was pressing forward, with an active outfield rank of #8 globally and #3 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Julián Álvarez played as a forward for Argentina. His main role was pressing forward, with an active outfield rank of #6 globally and #2 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Offers a strong goal threat when attacks reach the final third."
   - "Works hard without the ball and pressures opponents effectively."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Forward
 - Functional role: Pressing Forward
 - Minutes: 485.2
-- Global Rank v3: 8
-- Team Rank v3: 3
-- Position Rank v3: 38
-- Role Rank v3: 9
-- Tournament Impact: 3.4140
+- Global Rank v4: 6
+- Team Rank v4: 2
+- Position Rank v4: 2
+- Role Rank v4: 1
+- Tournament Impact: 2.2310
 - Role Quality: 0.5708
-- Impact interval: [1.0924, 6.1917]
-- Rank band: 3–99
+- Impact interval: [0.5986, 4.3814]
+- Rank band: 3–123
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

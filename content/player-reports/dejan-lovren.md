@@ -9,7 +9,7 @@ displayName: "Dejan Lovren"
 wikiTitle: "Dejan Lovren"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Dejan Lovren played as a center back for Croatia. His main role was sweeper cb, with an active outfield rank of #176 globally and #12 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Dejan Lovren played as a center back for Croatia. His main role was sweeper cb, with an active outfield rank of #18 globally and #7 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Competes well for headers and aerial balls."
   - "Moves the ball forward well through carries and forward passes."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Center Back
 - Functional role: Sweeper CB
 - Minutes: 624.1
-- Global Rank v3: 176
-- Team Rank v3: 12
-- Position Rank v3: 39
-- Role Rank v3: 27
-- Tournament Impact: 0.6834
+- Global Rank v4: 18
+- Team Rank v4: 7
+- Position Rank v4: 2
+- Role Rank v4: 1
+- Tournament Impact: 1.7120
 - Role Quality: 0.0959
-- Impact interval: [0.1659, 1.2163]
-- Rank band: 84–351
+- Impact interval: [0.2020, 3.1836]
+- Rank band: 8–216
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

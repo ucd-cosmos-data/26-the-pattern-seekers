@@ -9,7 +9,7 @@ displayName: "Junya Ito"
 wikiTitle: "Junya Ito"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Junya Ito played as a fullback/wingback for Japan. His main role was attacking wingback, with an active outfield rank of #162 globally and #4 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Junya Ito played as a fullback/wingback for Japan. His main role was attacking wingback, with an active outfield rank of #148 globally and #5 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Creates useful chances and connects attacks."
   - "Reads danger and contributes well in defensive situations."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Fullback/Wingback
 - Functional role: Attacking Wingback
 - Minutes: 346.3
-- Global Rank v3: 162
-- Team Rank v3: 4
-- Position Rank v3: 42
-- Role Rank v3: 35
-- Tournament Impact: 0.7407
+- Global Rank v4: 148
+- Team Rank v4: 5
+- Position Rank v4: 20
+- Role Rank v4: 16
+- Tournament Impact: 0.4303
 - Role Quality: 0.1859
-- Impact interval: [0.1848, 1.3991]
-- Rank band: 72–329
+- Impact interval: [-0.2384, 1.3025]
+- Rank band: 48–478
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

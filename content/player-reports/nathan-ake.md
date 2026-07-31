@@ -9,7 +9,7 @@ displayName: "Nathan Aké"
 wikiTitle: "Nathan Aké"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Nathan Aké played as a center back for Netherlands. His main role was sweeper cb, with an active outfield rank of #485 globally and #17 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Nathan Aké played as a center back for Netherlands. His main role was sweeper cb, with an active outfield rank of #150 globally and #7 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Competes well for headers and aerial balls."
   - "Moves the ball forward well through carries and forward passes."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Center Back
 - Functional role: Sweeper CB
 - Minutes: 506.3
-- Global Rank v3: 485
-- Team Rank v3: 17
-- Position Rank v3: 106
-- Role Rank v3: 79
-- Tournament Impact: 0.0536
+- Global Rank v4: 150
+- Team Rank v4: 7
+- Position Rank v4: 23
+- Role Rank v4: 13
+- Tournament Impact: 0.4173
 - Role Quality: 0.0493
-- Impact interval: [-0.0680, 0.2062]
-- Rank band: 311–547
+- Impact interval: [-0.2859, 1.2627]
+- Rank band: 49–490
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

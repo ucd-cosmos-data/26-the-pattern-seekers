@@ -9,7 +9,7 @@ displayName: "Enzo Fernández"
 wikiTitle: "Enzo Fernández"
 headshotUrl: "https://a.espncdn.com/i/headshots/soccer/players/full/285450.png"
 shirtNumber: 24
-overview: "Enzo Fernández played as a defensive midfield for Argentina. His main role was holding anchor, with an active outfield rank of #140 globally and #10 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Enzo Fernández played as a defensive midfield for Argentina. His main role was holding anchor, with an active outfield rank of #41 globally and #7 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Offers a strong goal threat when attacks reach the final third."
   - "Works hard without the ball and pressures opponents effectively."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Defensive Midfield
 - Functional role: Holding Anchor
 - Minutes: 601.1
-- Global Rank v3: 140
-- Team Rank v3: 10
-- Position Rank v3: 44
-- Role Rank v3: 28
-- Tournament Impact: 0.8047
+- Global Rank v4: 41
+- Team Rank v4: 7
+- Position Rank v4: 7
+- Role Rank v4: 4
+- Tournament Impact: 1.2149
 - Role Quality: 0.1175
-- Impact interval: [0.2666, 1.5218]
-- Rank band: 62–299
+- Impact interval: [0.2315, 2.5476]
+- Rank band: 14–201
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

@@ -9,7 +9,7 @@ displayName: "Bruno Fernandes"
 wikiTitle: "Bruno Fernandes"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Bruno Fernandes played as an attacking midfield/wing for Portugal. His main role was progressive winger, with an active outfield rank of #51 globally and #4 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Bruno Fernandes played as an attacking midfield/wing for Portugal. His main role was progressive winger, with an active outfield rank of #39 globally and #2 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Offers a strong goal threat when attacks reach the final third."
   - "Creates useful chances and connects attacks."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Attacking Midfield/Wing
 - Functional role: Progressive Winger
 - Minutes: 384.9
-- Global Rank v3: 51
-- Team Rank v3: 4
-- Position Rank v3: 82
-- Role Rank v3: 51
-- Tournament Impact: 1.7260
+- Global Rank v4: 39
+- Team Rank v4: 2
+- Position Rank v4: 13
+- Role Rank v4: 12
+- Tournament Impact: 1.2356
 - Role Quality: 0.3700
-- Impact interval: [0.3221, 3.2482]
-- Rank band: 14–270
+- Impact interval: [-0.0185, 2.5810]
+- Rank band: 8–294
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

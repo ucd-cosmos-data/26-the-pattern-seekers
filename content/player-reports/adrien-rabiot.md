@@ -9,7 +9,7 @@ displayName: "Adrien Rabiot"
 wikiTitle: "Adrien Rabiot"
 headshotUrl: "https://a.espncdn.com/i/headshots/soccer/players/full/176203.png"
 shirtNumber: 14
-overview: "Adrien Rabiot played as a defensive midfield for France. His main role was holding anchor, with an active outfield rank of #36 globally and #4 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Adrien Rabiot played as a defensive midfield for France. His main role was holding anchor, with an active outfield rank of #27 globally and #4 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Competes well for headers and aerial balls."
   - "Offers a strong goal threat when attacks reach the final third."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Defensive Midfield
 - Functional role: Holding Anchor
 - Minutes: 529.2
-- Global Rank v3: 36
-- Team Rank v3: 4
-- Position Rank v3: 12
-- Role Rank v3: 3
-- Tournament Impact: 1.9310
+- Global Rank v4: 27
+- Team Rank v4: 4
+- Position Rank v4: 3
+- Role Rank v4: 1
+- Tournament Impact: 1.5411
 - Role Quality: 0.2964
-- Impact interval: [0.6887, 3.5198]
-- Rank band: 12–162
+- Impact interval: [0.3118, 3.1316]
+- Rank band: 7–186
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

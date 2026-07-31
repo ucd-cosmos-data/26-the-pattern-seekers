@@ -9,7 +9,7 @@ displayName: "Remo Freuler"
 wikiTitle: "Remo Freuler"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Remo Freuler played as a defensive midfield for Switzerland. His main role was holding anchor, with an active outfield rank of #195 globally and #6 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Remo Freuler played as a defensive midfield for Switzerland. His main role was holding anchor, with an active outfield rank of #120 globally and #5 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Offers a strong goal threat when attacks reach the final third."
   - "Works hard without the ball and pressures opponents effectively."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Defensive Midfield
 - Functional role: Holding Anchor
 - Minutes: 346.1
-- Global Rank v3: 195
-- Team Rank v3: 6
-- Position Rank v3: 24
-- Role Rank v3: 14
-- Tournament Impact: 0.6103
+- Global Rank v4: 120
+- Team Rank v4: 5
+- Position Rank v4: 16
+- Role Rank v4: 11
+- Tournament Impact: 0.5631
 - Role Quality: 0.1967
-- Impact interval: [0.0687, 1.4048]
-- Rank band: 74–416
+- Impact interval: [-0.2484, 1.5774]
+- Rank band: 32–451
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

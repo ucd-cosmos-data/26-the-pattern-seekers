@@ -9,7 +9,7 @@ displayName: "Declan Rice"
 wikiTitle: "Declan Rice"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Declan Rice played as a defensive midfield for England. His main role was holding anchor, with an active outfield rank of #279 globally and #15 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Declan Rice played as a defensive midfield for England. His main role was holding anchor, with an active outfield rank of #61 globally and #5 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Keeps possession reliably when receiving or carrying under pressure."
   - "Works hard without the ball and pressures opponents effectively."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Defensive Midfield
 - Functional role: Holding Anchor
 - Minutes: 449.6
-- Global Rank v3: 279
-- Team Rank v3: 15
-- Position Rank v3: 67
-- Role Rank v3: 46
-- Tournament Impact: 0.3903
+- Global Rank v4: 61
+- Team Rank v4: 5
+- Position Rank v4: 11
+- Role Rank v4: 7
+- Tournament Impact: 0.9638
 - Role Quality: 0.0988
-- Impact interval: [0.0730, 0.7915]
-- Rank band: 140–405
+- Impact interval: [-0.0069, 2.0409]
+- Rank band: 21–295
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

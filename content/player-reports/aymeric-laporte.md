@@ -9,7 +9,7 @@ displayName: "Aymeric Laporte"
 wikiTitle: "Aymeric Laporte"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Aymeric Laporte played as a center back for Spain. His main role was sweeper cb, with an active outfield rank of #371 globally and #15 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Aymeric Laporte played as a center back for Spain. His main role was sweeper cb, with an active outfield rank of #201 globally and #10 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Competes well for headers and aerial balls."
   - "Moves the ball forward well through carries and forward passes."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Center Back
 - Functional role: Sweeper CB
 - Minutes: 316.9
-- Global Rank v3: 371
-- Team Rank v3: 15
-- Position Rank v3: 90
-- Role Rank v3: 65
-- Tournament Impact: 0.2069
+- Global Rank v4: 201
+- Team Rank v4: 10
+- Position Rank v4: 37
+- Role Rank v4: 26
+- Tournament Impact: 0.2781
 - Role Quality: 0.0670
-- Impact interval: [0.0000, 0.4549]
-- Rank band: 216–499
+- Impact interval: [-0.3970, 0.9401]
+- Rank band: 82–524
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

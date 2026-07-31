@@ -9,7 +9,7 @@ displayName: "Antoine Griezmann"
 wikiTitle: "Antoine Griezmann"
 headshotUrl: "https://a.espncdn.com/i/headshots/soccer/players/full/140416.png"
 shirtNumber: 7
-overview: "Antoine Griezmann played as an attacking midfield/wing for France. His main role was hybrid playmaker / roaming creator, with an active outfield rank of #9 globally and #3 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Antoine Griezmann played as an attacking midfield/wing for France. His main role was hybrid playmaker / roaming creator, with an active outfield rank of #5 globally and #2 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Creates useful chances and connects attacks."
   - "Works hard without the ball and pressures opponents effectively."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Attacking Midfield/Wing
 - Functional role: Hybrid Playmaker / Roaming Creator
 - Minutes: 586.1
-- Global Rank v3: 9
-- Team Rank v3: 3
-- Position Rank v3: 68
-- Role Rank v3: 2
-- Tournament Impact: 3.1716
+- Global Rank v4: 5
+- Team Rank v4: 2
+- Position Rank v4: 3
+- Role Rank v4: 1
+- Tournament Impact: 2.3015
 - Role Quality: 0.4083
-- Impact interval: [1.0488, 5.9739]
-- Rank band: 4–107
+- Impact interval: [0.7355, 4.3001]
+- Rank band: 3–106
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

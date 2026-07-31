@@ -9,7 +9,7 @@ displayName: "Memphis Depay"
 wikiTitle: "Memphis Depay"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Memphis Depay played as a forward for Netherlands. His main role was target forward, with an active outfield rank of #32 globally and #1 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Memphis Depay played as a forward for Netherlands. His main role was target forward, with an active outfield rank of #49 globally and #3 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Offers a strong goal threat when attacks reach the final third."
   - "Works hard without the ball and pressures opponents effectively."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Forward
 - Functional role: Target Forward
 - Minutes: 315.6
-- Global Rank v3: 32
-- Team Rank v3: 1
-- Position Rank v3: 46
-- Role Rank v3: 21
-- Tournament Impact: 2.0091
+- Global Rank v4: 49
+- Team Rank v4: 3
+- Position Rank v4: 12
+- Role Rank v4: 3
+- Tournament Impact: 1.1425
 - Role Quality: 0.5385
-- Impact interval: [0.3966, 3.9658]
-- Rank band: 8–242
+- Impact interval: [-0.0098, 2.4724]
+- Rank band: 12–289
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

@@ -9,7 +9,7 @@ displayName: "John Stones"
 wikiTitle: "John Stones"
 headshotUrl: ""
 shirtNumber: ""
-overview: "John Stones played as a center back for England. His main role was ball-playing centre-back, with an active outfield rank of #168 globally and #10 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "John Stones played as a center back for England. His main role was ball-playing centre-back, with an active outfield rank of #76 globally and #8 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Keeps possession reliably when receiving or carrying under pressure."
   - "Competes well for headers and aerial balls."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Center Back
 - Functional role: Ball-Playing Centre-Back
 - Minutes: 464.9
-- Global Rank v3: 168
-- Team Rank v3: 10
-- Position Rank v3: 26
-- Role Rank v3: 5
-- Tournament Impact: 0.7207
+- Global Rank v4: 76
+- Team Rank v4: 8
+- Position Rank v4: 8
+- Role Rank v4: 3
+- Tournament Impact: 0.8316
 - Role Quality: 0.1080
-- Impact interval: [0.1508, 1.3441]
-- Rank band: 74–359
+- Impact interval: [-0.0081, 1.7814]
+- Rank band: 27–305
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

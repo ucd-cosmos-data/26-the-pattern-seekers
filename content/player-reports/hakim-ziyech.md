@@ -9,7 +9,7 @@ displayName: "Hakim Ziyech"
 wikiTitle: "Hakim Ziyech"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Hakim Ziyech played as an attacking midfield/wing for Morocco. His main role was deep playmaker, with an active outfield rank of #66 globally and #2 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Hakim Ziyech played as an attacking midfield/wing for Morocco. His main role was deep playmaker, with an active outfield rank of #26 globally and #3 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Offers a strong goal threat when attacks reach the final third."
   - "Works hard without the ball and pressures opponents effectively."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Attacking Midfield/Wing
 - Functional role: Deep Playmaker
 - Minutes: 662.6
-- Global Rank v3: 66
-- Team Rank v3: 2
-- Position Rank v3: 115
-- Role Rank v3: 12
-- Tournament Impact: 1.4104
+- Global Rank v4: 26
+- Team Rank v4: 3
+- Position Rank v4: 9
+- Role Rank v4: 2
+- Tournament Impact: 1.5436
 - Role Quality: 0.1865
-- Impact interval: [0.4842, 2.3086]
-- Rank band: 29–215
+- Impact interval: [0.2279, 2.8162]
+- Rank band: 7–209
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

@@ -9,7 +9,7 @@ displayName: "Kim Young-gwon"
 wikiTitle: "Kim Young-gwon"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Kim Young-gwon played as a center back for South Korea. His main role was sweeper cb, with an active outfield rank of #206 globally and #7 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Kim Young-gwon played as a center back for South Korea. His main role was sweeper cb, with an active outfield rank of #159 globally and #7 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Offers a strong goal threat when attacks reach the final third."
   - "Creates useful chances and connects attacks."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Center Back
 - Functional role: Sweeper CB
 - Minutes: 373.2
-- Global Rank v3: 206
-- Team Rank v3: 7
-- Position Rank v3: 41
-- Role Rank v3: 29
-- Tournament Impact: 0.5759
+- Global Rank v4: 159
+- Team Rank v4: 7
+- Position Rank v4: 27
+- Role Rank v4: 16
+- Tournament Impact: 0.3769
 - Role Quality: 0.0953
-- Impact interval: [0.0354, 1.4164]
-- Rank band: 73–440
+- Impact interval: [-0.2356, 1.1703]
+- Rank band: 55–488
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

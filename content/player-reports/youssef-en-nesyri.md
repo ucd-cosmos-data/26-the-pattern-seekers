@@ -9,7 +9,7 @@ displayName: "Youssef En-Nesyri"
 wikiTitle: "Youssef En-Nesyri"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Youssef En-Nesyri played as a forward for Morocco. His main role was target forward / penalty-box anchor, with an active outfield rank of #48 globally and #1 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Youssef En-Nesyri played as a forward for Morocco. His main role was target forward / penalty-box anchor, with an active outfield rank of #24 globally and #2 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Competes well for headers and aerial balls."
   - "Offers a strong goal threat when attacks reach the final third."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Forward
 - Functional role: Target Forward / Penalty-Box Anchor
 - Minutes: 553.8
-- Global Rank v3: 48
-- Team Rank v3: 1
-- Position Rank v3: 53
-- Role Rank v3: 16
-- Tournament Impact: 1.7745
+- Global Rank v4: 24
+- Team Rank v4: 2
+- Position Rank v4: 8
+- Role Rank v4: 4
+- Tournament Impact: 1.5531
 - Role Quality: 0.5282
-- Impact interval: [0.4239, 3.4345]
-- Rank band: 12–227
+- Impact interval: [0.2324, 2.8642]
+- Rank band: 7–200
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

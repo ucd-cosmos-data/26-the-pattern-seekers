@@ -9,7 +9,7 @@ displayName: "Harry Kane"
 wikiTitle: "Harry Kane"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Harry Kane played as a forward for England. His main role was target forward, with an active outfield rank of #11 globally and #1 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Harry Kane played as a forward for England. His main role was target forward, with an active outfield rank of #14 globally and #1 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Offers a strong goal threat when attacks reach the final third."
   - "Competes well for headers and aerial balls."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Forward
 - Functional role: Target Forward
 - Minutes: 421.5
-- Global Rank v3: 11
-- Team Rank v3: 1
-- Position Rank v3: 39
-- Role Rank v3: 16
-- Tournament Impact: 2.9393
+- Global Rank v4: 14
+- Team Rank v4: 1
+- Position Rank v4: 4
+- Role Rank v4: 1
+- Tournament Impact: 1.8177
 - Role Quality: 0.5653
-- Impact interval: [0.7599, 5.5481]
-- Rank band: 4–151
+- Impact interval: [0.2180, 3.5986]
+- Rank band: 3–212
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

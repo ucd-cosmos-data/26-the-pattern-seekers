@@ -9,7 +9,7 @@ displayName: "Virgil van Dijk"
 wikiTitle: "Virgil van Dijk"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Virgil van Dijk played as a center back for Netherlands. His main role was sweeper cb, with an active outfield rank of #271 globally and #11 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Virgil van Dijk played as a center back for Netherlands. His main role was sweeper cb, with an active outfield rank of #67 globally and #4 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Competes well for headers and aerial balls."
   - "Moves the ball forward well through carries and forward passes."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Center Back
 - Functional role: Sweeper CB
 - Minutes: 509.5
-- Global Rank v3: 271
-- Team Rank v3: 11
-- Position Rank v3: 61
-- Role Rank v3: 45
-- Tournament Impact: 0.4054
+- Global Rank v4: 67
+- Team Rank v4: 4
+- Position Rank v4: 6
+- Role Rank v4: 4
+- Tournament Impact: 0.8978
 - Role Quality: 0.0834
-- Impact interval: [-0.0213, 0.9888]
-- Rank band: 111–525
+- Impact interval: [-0.1278, 2.0406]
+- Rank band: 20–362
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

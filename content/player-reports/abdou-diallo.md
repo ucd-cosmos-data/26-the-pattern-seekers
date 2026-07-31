@@ -9,7 +9,7 @@ displayName: "Abdou Diallo"
 wikiTitle: "Abdou Diallo"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Abdou Diallo played as a center back for Senegal. His main role was sweeper cb, with an active outfield rank of #453 globally and #16 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Abdou Diallo played as a center back for Senegal. His main role was sweeper cb, with an active outfield rank of #248 globally and #7 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Moves the ball forward well through carries and forward passes."
   - "Competes well for headers and aerial balls."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Center Back
 - Functional role: Sweeper CB
 - Minutes: 348.6
-- Global Rank v3: 453
-- Team Rank v3: 16
-- Position Rank v3: 99
-- Role Rank v3: 73
-- Tournament Impact: 0.0937
+- Global Rank v4: 248
+- Team Rank v4: 7
+- Position Rank v4: 48
+- Role Rank v4: 33
+- Tournament Impact: 0.1816
 - Role Quality: 0.0590
-- Impact interval: [-0.0377, 0.2767]
-- Rank band: 289–536
+- Impact interval: [-0.3232, 0.7849]
+- Rank band: 93–522
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

@@ -9,7 +9,7 @@ displayName: "Cristiano Ronaldo"
 wikiTitle: "Cristiano Ronaldo"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Cristiano Ronaldo played as a forward for Portugal. His main role was target forward, with an active outfield rank of #10 globally and #1 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Cristiano Ronaldo played as a forward for Portugal. His main role was target forward, with an active outfield rank of #25 globally and #1 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Offers a strong goal threat when attacks reach the final third."
   - "Competes well for headers and aerial balls."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Forward
 - Functional role: Target Forward
 - Minutes: 302.8
-- Global Rank v3: 10
-- Team Rank v3: 1
-- Position Rank v3: 27
-- Role Rank v3: 10
-- Tournament Impact: 3.0153
+- Global Rank v4: 25
+- Team Rank v4: 1
+- Position Rank v4: 9
+- Role Rank v4: 2
+- Tournament Impact: 1.5439
 - Role Quality: 0.7082
-- Impact interval: [0.5401, 6.2055]
-- Rank band: 2–199
+- Impact interval: [0.0958, 3.4943]
+- Rank band: 3–248
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

@@ -9,7 +9,7 @@ displayName: "Jakub Kiwior"
 wikiTitle: "Jakub Kiwior"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Jakub Kiwior played as a center back for Poland. His main role was sweeper cb, with an active outfield rank of #360 globally and #9 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Jakub Kiwior played as a center back for Poland. His main role was sweeper cb, with an active outfield rank of #328 globally and #7 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Moves the ball forward well through carries and forward passes."
   - "Creates useful chances and connects attacks."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Center Back
 - Functional role: Sweeper CB
 - Minutes: 376.7
-- Global Rank v3: 360
-- Team Rank v3: 9
-- Position Rank v3: 85
-- Role Rank v3: 61
-- Tournament Impact: 0.2296
+- Global Rank v4: 328
+- Team Rank v4: 7
+- Position Rank v4: 66
+- Role Rank v4: 46
+- Tournament Impact: -0.0039
 - Role Quality: 0.0693
-- Impact interval: [-0.0818, 0.7710]
-- Rank band: 140–548
+- Impact interval: [-0.3924, 0.4600]
+- Rank band: 144–536
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

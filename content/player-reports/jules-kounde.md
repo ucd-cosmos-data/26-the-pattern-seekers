@@ -9,7 +9,7 @@ displayName: "Jules Koundé"
 wikiTitle: "Jules Koundé"
 headshotUrl: "https://a.espncdn.com/i/headshots/soccer/players/full/231692.png"
 shirtNumber: 5
-overview: "Jules Koundé played as a fullback/wingback for France. His main role was deep playmaker, with an active outfield rank of #157 globally and #8 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Jules Koundé played as a fullback/wingback for France. His main role was deep playmaker, with an active outfield rank of #104 globally and #8 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Competes well for headers and aerial balls."
   - "Creates useful chances and connects attacks."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Fullback/Wingback
 - Functional role: Deep Playmaker
 - Minutes: 514.4
-- Global Rank v3: 157
-- Team Rank v3: 8
-- Position Rank v3: 99
-- Role Rank v3: 31
-- Tournament Impact: 0.7468
+- Global Rank v4: 104
+- Team Rank v4: 8
+- Position Rank v4: 12
+- Role Rank v4: 4
+- Tournament Impact: 0.6167
 - Role Quality: 0.1264
-- Impact interval: [0.2112, 1.4182]
-- Rank band: 71–325
+- Impact interval: [-0.0865, 1.5585]
+- Rank band: 39–336
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

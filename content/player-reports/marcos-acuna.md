@@ -9,7 +9,7 @@ displayName: "Marcos Acuña"
 wikiTitle: "Marcos Acuña"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Marcos Acuña played as a fullback/wingback for Argentina. His main role was attacking wingback, with an active outfield rank of #40 globally and #6 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Marcos Acuña played as a fullback/wingback for Argentina. His main role was attacking wingback, with an active outfield rank of #66 globally and #10 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Competes well for headers and aerial balls."
   - "Reads danger and contributes well in defensive situations."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Fullback/Wingback
 - Functional role: Attacking Wingback
 - Minutes: 397.5
-- Global Rank v3: 40
-- Team Rank v3: 6
-- Position Rank v3: 6
-- Role Rank v3: 5
-- Tournament Impact: 1.8525
+- Global Rank v4: 66
+- Team Rank v4: 10
+- Position Rank v4: 4
+- Role Rank v4: 3
+- Tournament Impact: 0.9094
 - Role Quality: 0.2730
-- Impact interval: [0.2717, 4.3571]
-- Rank band: 8–290
+- Impact interval: [0.0432, 2.0781]
+- Rank band: 20–277
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

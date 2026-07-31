@@ -9,7 +9,7 @@ displayName: "Kamil Glik"
 wikiTitle: "Kamil Glik"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Kamil Glik played as a center back for Poland. His main role was sweeper cb, with an active outfield rank of #313 globally and #7 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Kamil Glik played as a center back for Poland. His main role was sweeper cb, with an active outfield rank of #237 globally and #4 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Competes well for headers and aerial balls."
   - "Keeps possession reliably when receiving or carrying under pressure."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Center Back
 - Functional role: Sweeper CB
 - Minutes: 389.8
-- Global Rank v3: 313
-- Team Rank v3: 7
-- Position Rank v3: 59
-- Role Rank v3: 44
-- Tournament Impact: 0.3107
+- Global Rank v4: 237
+- Team Rank v4: 4
+- Position Rank v4: 44
+- Role Rank v4: 30
+- Tournament Impact: 0.1952
 - Role Quality: 0.0851
-- Impact interval: [0.0018, 0.6361]
-- Rank band: 167–467
+- Impact interval: [-0.3664, 0.8708]
+- Rank band: 75–537
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

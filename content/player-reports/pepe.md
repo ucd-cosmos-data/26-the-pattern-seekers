@@ -9,7 +9,7 @@ displayName: "Pepe"
 wikiTitle: "Pepe (footballer, born 1983)"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Pepe played as a center back for Portugal. His main role was sweeper cb, with an active outfield rank of #210 globally and #11 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Pepe played as a center back for Portugal. His main role was sweeper cb, with an active outfield rank of #140 globally and #7 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Competes well for headers and aerial balls."
   - "Offers a strong goal threat when attacks reach the final third."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Center Back
 - Functional role: Sweeper CB
 - Minutes: 389.3
-- Global Rank v3: 210
-- Team Rank v3: 11
-- Position Rank v3: 24
-- Role Rank v3: 16
-- Tournament Impact: 0.5690
+- Global Rank v4: 140
+- Team Rank v4: 7
+- Position Rank v4: 21
+- Role Rank v4: 12
+- Tournament Impact: 0.4630
 - Role Quality: 0.1085
-- Impact interval: [0.1074, 1.2279]
-- Rank band: 85–398
+- Impact interval: [-0.2485, 1.4430]
+- Rank band: 42–477
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

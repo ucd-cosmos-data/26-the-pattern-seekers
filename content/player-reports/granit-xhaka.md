@@ -9,7 +9,7 @@ displayName: "Granit Xhaka"
 wikiTitle: "Granit Xhaka"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Granit Xhaka played as a defensive midfield for Switzerland. His main role was holding anchor, with an active outfield rank of #282 globally and #9 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Granit Xhaka played as a defensive midfield for Switzerland. His main role was holding anchor, with an active outfield rank of #99 globally and #2 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Moves the ball forward well through carries and forward passes."
   - "Creates useful chances and connects attacks."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Defensive Midfield
 - Functional role: Holding Anchor
 - Minutes: 386.6
-- Global Rank v3: 282
-- Team Rank v3: 9
-- Position Rank v3: 59
-- Role Rank v3: 39
-- Tournament Impact: 0.3819
+- Global Rank v4: 99
+- Team Rank v4: 2
+- Position Rank v4: 13
+- Role Rank v4: 10
+- Tournament Impact: 0.6287
 - Role Quality: 0.1041
-- Impact interval: [0.0965, 0.7668]
-- Rank band: 146–392
+- Impact interval: [-0.1710, 1.5839]
+- Rank band: 30–392
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

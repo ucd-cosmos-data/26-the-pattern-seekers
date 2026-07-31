@@ -50,21 +50,49 @@ def team_code_names() -> dict[str, str]:
 def build(analysis: Path) -> dict:
     ranking_dir = analysis / "results" / "reports" / "ranking"
     outfield = read_csv(ranking_dir / "global_rankings_outfield.csv")
+    v4_rows = read_csv(
+        analysis / "results" / "diagnostics" / "ranking_repair" / "outfield_v4_rank_intervals.csv"
+    )
+    v4_by_id = {row["player_id"]: row for row in v4_rows}
+    if len(v4_by_id) != 553 or len(outfield) != 553:
+        raise ValueError("The active outfield v4 release must contain exactly 553 players")
+
+    raw_scores = [float(row["tournament_impact_score_outfield_v4"]) for row in v4_rows]
+    min_score, max_score = min(raw_scores), max(raw_scores)
+    if max_score <= min_score:
+        raise ValueError("The active outfield v4 score range is invalid")
+
+    ordered = sorted(
+        outfield,
+        key=lambda row: int(v4_by_id[row["player_id"]]["tournament_impact_rank_outfield_v4"]),
+    )
+    team_ranks: dict[str, int] = {}
+    position_ranks: dict[str, int] = {}
+    derived_ranks: dict[str, tuple[int, int]] = {}
+    for row in ordered:
+        team = row["team"]
+        position = row.get("position_group", "")
+        team_ranks[team] = team_ranks.get(team, 0) + 1
+        position_ranks[position] = position_ranks.get(position, 0) + 1
+        derived_ranks[row["player_id"]] = (team_ranks[team], position_ranks[position])
     code_to_name = team_code_names()
     code_by_name = {name: code for code, name in code_to_name.items()}
 
     players_by_team: dict[str, list[dict]] = {}
-    for row in outfield:
+    for row in ordered:
         team = row["team"]
+        v4 = v4_by_id[row["player_id"]]
+        raw_score = float(v4["tournament_impact_score_outfield_v4"])
+        team_rank, position_rank = derived_ranks[row["player_id"]]
         player = {
             "id": row["player_id"],
             "name": row["player"],
             "position": row.get("position_group", ""),
             "role": row.get("functional_role", ""),
-            "rating": to_float(row.get("active_publication_score_v5")),
-            "team_rank": to_int(row.get("publication_team_rank_v5")),
-            "global_rank": to_int(row.get("publication_global_rank_v5")),
-            "position_rank": to_int(row.get("position_rank_v3")),
+            "rating": round((raw_score - min_score) / (max_score - min_score), 4),
+            "team_rank": team_rank,
+            "global_rank": int(v4["tournament_impact_rank_outfield_v4"]),
+            "position_rank": position_rank,
             "minutes": to_int(row.get("minutes")),
         }
         if player["global_rank"] is None or player["team_rank"] is None or player["rating"] is None:
@@ -89,8 +117,8 @@ def build(analysis: Path) -> dict:
     unmapped = sorted(set(players_by_team) - set(code_by_name))
     return {
         "generated_from": (
-            "global_rankings_outfield.csv "
-            "(active outfield publication; goalkeepers ranked separately)"
+            "outfield_v4_rank_intervals.csv "
+            "(approved outfield v4 publication; goalkeepers ranked separately on v5)"
         ),
         "team_count": len(teams),
         "rated_player_count": len(outfield),

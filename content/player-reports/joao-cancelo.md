@@ -9,7 +9,7 @@ displayName: "João Cancelo"
 wikiTitle: "João Cancelo"
 headshotUrl: ""
 shirtNumber: ""
-overview: "João Cancelo played as a fullback/wingback for Portugal. His main role was wide creator, with an active outfield rank of #148 globally and #9 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "João Cancelo played as a fullback/wingback for Portugal. His main role was wide creator, with an active outfield rank of #161 globally and #9 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Competes well for headers and aerial balls."
   - "Moves the ball forward well through carries and forward passes."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Fullback/Wingback
 - Functional role: Wide Creator
 - Minutes: 344.5
-- Global Rank v3: 148
-- Team Rank v3: 9
-- Position Rank v3: 5
-- Role Rank v3: 6
-- Tournament Impact: 0.7764
+- Global Rank v4: 161
+- Team Rank v4: 9
+- Position Rank v4: 22
+- Role Rank v4: 3
+- Tournament Impact: 0.3673
 - Role Quality: 0.2960
-- Impact interval: [0.1845, 1.5866]
-- Rank band: 57–319
+- Impact interval: [-0.2720, 1.1180]
+- Rank band: 60–479
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

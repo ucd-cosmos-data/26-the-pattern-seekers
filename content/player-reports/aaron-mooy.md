@@ -9,7 +9,7 @@ displayName: "Aaron Mooy"
 wikiTitle: "Aaron Mooy"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Aaron Mooy played as a defensive midfield for Australia. His main role was holding anchor, with an active outfield rank of #469 globally and #15 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Aaron Mooy played as a defensive midfield for Australia. His main role was holding anchor, with an active outfield rank of #124 globally and #3 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Creates useful chances and connects attacks."
   - "Reads danger and contributes well in defensive situations."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Defensive Midfield
 - Functional role: Holding Anchor
 - Minutes: 386.9
-- Global Rank v3: 469
-- Team Rank v3: 15
-- Position Rank v3: 88
-- Role Rank v3: 61
-- Tournament Impact: 0.0655
+- Global Rank v4: 124
+- Team Rank v4: 3
+- Position Rank v4: 17
+- Role Rank v4: 13
+- Tournament Impact: 0.5314
 - Role Quality: 0.0788
-- Impact interval: [-0.0046, 0.1842]
-- Rank band: 332–518
+- Impact interval: [-0.2648, 1.5498]
+- Rank band: 35–484
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

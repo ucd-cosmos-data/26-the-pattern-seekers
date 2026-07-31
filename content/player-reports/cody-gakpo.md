@@ -9,7 +9,7 @@ displayName: "Cody Gakpo"
 wikiTitle: "Cody Gakpo"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Cody Gakpo played as an attacking midfield/wing for Netherlands. His main role was progressive winger, with an active outfield rank of #44 globally and #2 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Cody Gakpo played as an attacking midfield/wing for Netherlands. His main role was progressive winger, with an active outfield rank of #36 globally and #1 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Offers a strong goal threat when attacks reach the final third."
   - "Creates useful chances and connects attacks."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Attacking Midfield/Wing
 - Functional role: Progressive Winger
 - Minutes: 460.2
-- Global Rank v3: 44
-- Team Rank v3: 2
-- Position Rank v3: 86
-- Role Rank v3: 53
-- Tournament Impact: 1.8253
+- Global Rank v4: 36
+- Team Rank v4: 1
+- Position Rank v4: 12
+- Role Rank v4: 9
+- Tournament Impact: 1.3198
 - Role Quality: 0.3550
-- Impact interval: [0.5073, 3.2447]
-- Rank band: 15–208
+- Impact interval: [0.0651, 2.6951]
+- Rank band: 9–269
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

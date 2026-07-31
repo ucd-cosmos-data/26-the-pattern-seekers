@@ -9,7 +9,7 @@ displayName: "Rúben Dias"
 wikiTitle: "Rúben Dias"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Rúben Dias played as a center back for Portugal. His main role was sweeper cb, with an active outfield rank of #498 globally and #18 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Rúben Dias played as a center back for Portugal. His main role was sweeper cb, with an active outfield rank of #207 globally and #11 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Competes well for headers and aerial balls."
   - "Keeps possession reliably when receiving or carrying under pressure."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Center Back
 - Functional role: Sweeper CB
 - Minutes: 392.4
-- Global Rank v3: 498
-- Team Rank v3: 18
-- Position Rank v3: 104
-- Role Rank v3: 77
-- Tournament Impact: 0.0349
+- Global Rank v4: 207
+- Team Rank v4: 11
+- Position Rank v4: 39
+- Role Rank v4: 27
+- Tournament Impact: 0.2661
 - Role Quality: 0.0521
-- Impact interval: [-0.0595, 0.1866]
-- Rank band: 325–544
+- Impact interval: [-0.3472, 0.9220]
+- Rank band: 76–524
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

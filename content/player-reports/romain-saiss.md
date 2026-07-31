@@ -9,7 +9,7 @@ displayName: "Romain Saïss"
 wikiTitle: "Romain Saïss"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Romain Saïss played as a center back for Morocco. His main role was sweeper cb, with an active outfield rank of #174 globally and #8 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Romain Saïss played as a center back for Morocco. His main role was sweeper cb, with an active outfield rank of #64 globally and #7 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Competes well for headers and aerial balls."
   - "Offers a strong goal threat when attacks reach the final third."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Center Back
 - Functional role: Sweeper CB
 - Minutes: 485.8
-- Global Rank v3: 174
-- Team Rank v3: 8
-- Position Rank v3: 7
-- Role Rank v3: 4
-- Tournament Impact: 0.6869
+- Global Rank v4: 64
+- Team Rank v4: 7
+- Position Rank v4: 5
+- Role Rank v4: 3
+- Tournament Impact: 0.9486
 - Role Quality: 0.1375
-- Impact interval: [-0.1679, 1.7947]
-- Rank band: 47–552
+- Impact interval: [-0.2024, 2.3011]
+- Rank band: 15–448
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

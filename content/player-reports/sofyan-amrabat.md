@@ -9,7 +9,7 @@ displayName: "Sofyan Amrabat"
 wikiTitle: "Sofyan Amrabat"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Sofyan Amrabat played as a defensive midfield for Morocco. His main role was holding anchor, with an active outfield rank of #470 globally and #19 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Sofyan Amrabat played as a defensive midfield for Morocco. His main role was holding anchor, with an active outfield rank of #29 globally and #4 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Works hard without the ball and pressures opponents effectively."
   - "Keeps possession reliably when receiving or carrying under pressure."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Defensive Midfield
 - Functional role: Holding Anchor
 - Minutes: 698.4
-- Global Rank v3: 470
-- Team Rank v3: 19
-- Position Rank v3: 89
-- Role Rank v3: 62
-- Tournament Impact: 0.0644
+- Global Rank v4: 29
+- Team Rank v4: 4
+- Position Rank v4: 4
+- Role Rank v4: 2
+- Tournament Impact: 1.4969
 - Role Quality: 0.0661
-- Impact interval: [-0.1013, 0.2711]
-- Rank band: 287–549
+- Impact interval: [0.1791, 2.7796]
+- Rank band: 8–219
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

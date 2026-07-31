@@ -9,7 +9,7 @@ displayName: "Azzedine Ounahi"
 wikiTitle: "Azzedine Ounahi"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Azzedine Ounahi played as a central/wide midfield for Morocco. His main role was box-to-box / engine midfielder, with an active outfield rank of #121 globally and #5 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Azzedine Ounahi played as a central/wide midfield for Morocco. His main role was box-to-box / engine midfielder, with an active outfield rank of #32 globally and #5 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Reads danger and contributes well in defensive situations."
   - "Creates useful chances and connects attacks."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Central/Wide Midfield
 - Functional role: Box-to-Box / Engine Midfielder
 - Minutes: 589.2
-- Global Rank v3: 121
-- Team Rank v3: 5
-- Position Rank v3: 41
-- Role Rank v3: 6
-- Tournament Impact: 0.8873
+- Global Rank v4: 32
+- Team Rank v4: 5
+- Position Rank v4: 5
+- Role Rank v4: 2
+- Tournament Impact: 1.4343
 - Role Quality: 0.1536
-- Impact interval: [0.2641, 1.5751]
-- Rank band: 61–285
+- Impact interval: [0.1732, 2.6817]
+- Rank band: 9–227
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

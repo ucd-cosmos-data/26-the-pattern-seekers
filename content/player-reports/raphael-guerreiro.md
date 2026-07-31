@@ -9,7 +9,7 @@ displayName: "Raphaël Guerreiro"
 wikiTitle: "Raphaël Guerreiro"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Raphaël Guerreiro played as a fullback/wingback for Portugal. His main role was attacking wingback, with an active outfield rank of #99 globally and #5 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Raphaël Guerreiro played as a fullback/wingback for Portugal. His main role was attacking wingback, with an active outfield rank of #132 globally and #6 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Creates useful chances and connects attacks."
   - "Offers a strong goal threat when attacks reach the final third."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Fullback/Wingback
 - Functional role: Attacking Wingback
 - Minutes: 303.6
-- Global Rank v3: 99
-- Team Rank v3: 5
-- Position Rank v3: 12
-- Role Rank v3: 10
-- Tournament Impact: 1.0571
+- Global Rank v4: 132
+- Team Rank v4: 6
+- Position Rank v4: 17
+- Role Rank v4: 13
+- Tournament Impact: 0.4876
 - Role Quality: 0.2281
-- Impact interval: [0.0815, 2.1508]
-- Rank band: 33–399
+- Impact interval: [-0.2858, 1.3702]
+- Rank band: 44–513
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

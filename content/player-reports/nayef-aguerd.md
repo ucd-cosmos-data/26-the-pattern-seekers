@@ -9,7 +9,7 @@ displayName: "Nayef Aguerd"
 wikiTitle: "Nayef Aguerd"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Nayef Aguerd played as a center back for Morocco. His main role was sweeper cb, with an active outfield rank of #300 globally and #12 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Nayef Aguerd played as a center back for Morocco. His main role was sweeper cb, with an active outfield rank of #127 globally and #9 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Competes well for headers and aerial balls."
   - "Creates useful chances and connects attacks."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Center Back
 - Functional role: Sweeper CB
 - Minutes: 369.2
-- Global Rank v3: 300
-- Team Rank v3: 12
-- Position Rank v3: 49
-- Role Rank v3: 35
-- Tournament Impact: 0.3356
+- Global Rank v4: 127
+- Team Rank v4: 9
+- Position Rank v4: 17
+- Role Rank v4: 8
+- Tournament Impact: 0.5122
 - Role Quality: 0.0916
-- Impact interval: [-0.0331, 0.9816]
-- Rank band: 111–536
+- Impact interval: [-0.3465, 1.5850]
+- Rank band: 39–526
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

@@ -9,7 +9,7 @@ displayName: "Cristian Romero"
 wikiTitle: "Cristian Romero"
 headshotUrl: "https://a.espncdn.com/i/headshots/soccer/players/full/96970.png"
 shirtNumber: 13
-overview: "Cristian Romero played as a center back for Argentina. His main role was ball-playing centre-back, with an active outfield rank of #280 globally and #11 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Cristian Romero played as a center back for Argentina. His main role was ball-playing centre-back, with an active outfield rank of #44 globally and #8 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Competes well for headers and aerial balls."
   - "Keeps possession reliably when receiving or carrying under pressure."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Center Back
 - Functional role: Ball-Playing Centre-Back
 - Minutes: 575.9
-- Global Rank v3: 280
-- Team Rank v3: 11
-- Position Rank v3: 69
-- Role Rank v3: 14
-- Tournament Impact: 0.3875
+- Global Rank v4: 44
+- Team Rank v4: 8
+- Position Rank v4: 3
+- Role Rank v4: 2
+- Tournament Impact: 1.1775
 - Role Quality: 0.0811
-- Impact interval: [-0.0002, 0.9793]
-- Rank band: 109–510
+- Impact interval: [0.0865, 2.5867]
+- Rank band: 14–251
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

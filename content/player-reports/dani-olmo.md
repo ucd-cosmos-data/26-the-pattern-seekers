@@ -9,7 +9,7 @@ displayName: "Dani Olmo"
 wikiTitle: "Dani Olmo"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Dani Olmo played as an attacking midfield/wing for Spain. His main role was progressive winger, with an active outfield rank of #15 globally and #1 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Dani Olmo played as an attacking midfield/wing for Spain. His main role was progressive winger, with an active outfield rank of #22 globally and #1 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Offers a strong goal threat when attacks reach the final third."
   - "Reads danger and contributes well in defensive situations."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Attacking Midfield/Wing
 - Functional role: Progressive Winger
 - Minutes: 388.2
-- Global Rank v3: 15
-- Team Rank v3: 1
-- Position Rank v3: 10
-- Role Rank v3: 11
-- Tournament Impact: 2.7623
+- Global Rank v4: 22
+- Team Rank v4: 1
+- Position Rank v4: 7
+- Role Rank v4: 4
+- Tournament Impact: 1.5840
 - Role Quality: 0.5562
-- Impact interval: [0.4378, 5.1534]
-- Rank band: 4–229
+- Impact interval: [-0.0336, 3.1331]
+- Rank band: 4–295
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

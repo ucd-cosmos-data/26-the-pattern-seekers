@@ -9,7 +9,7 @@ displayName: "Jawad El Yamiq"
 wikiTitle: "Jawad El Yamiq"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Jawad El Yamiq played as a center back for Morocco. His main role was sweeper cb, with an active outfield rank of #483 globally and #21 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Jawad El Yamiq played as a center back for Morocco. His main role was sweeper cb, with an active outfield rank of #209 globally and #11 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Reads danger and contributes well in defensive situations."
   - "Competes well for headers and aerial balls."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Center Back
 - Functional role: Sweeper CB
 - Minutes: 335.6
-- Global Rank v3: 483
-- Team Rank v3: 21
-- Position Rank v3: 77
-- Role Rank v3: 55
-- Tournament Impact: 0.0558
+- Global Rank v4: 209
+- Team Rank v4: 11
+- Position Rank v4: 40
+- Role Rank v4: 28
+- Tournament Impact: 0.2640
 - Role Quality: 0.0744
-- Impact interval: [-0.1508, 0.2650]
-- Rank band: 279–552
+- Impact interval: [-0.4095, 1.1055]
+- Rank band: 59–545
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

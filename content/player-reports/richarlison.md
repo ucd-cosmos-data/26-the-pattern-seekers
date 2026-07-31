@@ -9,7 +9,7 @@ displayName: "Richarlison"
 wikiTitle: "Richarlison"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Richarlison played as a forward for Brazil. His main role was pressing forward, with an active outfield rank of #14 globally and #2 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Richarlison played as a forward for Brazil. His main role was pressing forward, with an active outfield rank of #19 globally and #2 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Offers a strong goal threat when attacks reach the final third."
   - "Works hard without the ball and pressures opponents effectively."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Forward
 - Functional role: Pressing Forward
 - Minutes: 328.2
-- Global Rank v3: 14
-- Team Rank v3: 2
-- Position Rank v3: 14
-- Role Rank v3: 3
-- Tournament Impact: 2.7649
+- Global Rank v4: 19
+- Team Rank v4: 2
+- Position Rank v4: 6
+- Role Rank v4: 2
+- Tournament Impact: 1.6450
 - Role Quality: 0.7819
-- Impact interval: [0.6008, 5.2420]
-- Rank band: 4–189
+- Impact interval: [0.0193, 3.5325]
+- Rank band: 3–290
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

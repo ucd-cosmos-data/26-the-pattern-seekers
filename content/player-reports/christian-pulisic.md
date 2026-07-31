@@ -9,7 +9,7 @@ displayName: "Christian Pulisic"
 wikiTitle: "Christian Pulisic"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Christian Pulisic played as an attacking midfield/wing for United States. His main role was progressive winger, with an active outfield rank of #18 globally and #1 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Christian Pulisic played as an attacking midfield/wing for United States. His main role was progressive winger, with an active outfield rank of #23 globally and #1 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Offers a strong goal threat when attacks reach the final third."
   - "Moves the ball forward well through carries and forward passes."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Attacking Midfield/Wing
 - Functional role: Progressive Winger
 - Minutes: 336.3
-- Global Rank v3: 18
-- Team Rank v3: 1
-- Position Rank v3: 4
-- Role Rank v3: 5
-- Tournament Impact: 2.6945
+- Global Rank v4: 23
+- Team Rank v4: 1
+- Position Rank v4: 8
+- Role Rank v4: 5
+- Tournament Impact: 1.5572
 - Role Quality: 0.5774
-- Impact interval: [0.5750, 5.0824]
-- Rank band: 3–190
+- Impact interval: [0.0202, 3.3523]
+- Rank band: 3–269
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

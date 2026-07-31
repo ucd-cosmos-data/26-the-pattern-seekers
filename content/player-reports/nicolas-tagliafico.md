@@ -9,7 +9,7 @@ displayName: "Nicolás Tagliafico"
 wikiTitle: "Nicolás Tagliafico"
 headshotUrl: "https://a.espncdn.com/i/headshots/soccer/players/full/145190.png"
 shirtNumber: 3
-overview: "Nicolás Tagliafico played as a fullback/wingback for Argentina. His main role was wide creator, with an active outfield rank of #75 globally and #8 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Nicolás Tagliafico played as a fullback/wingback for Argentina. His main role was wide creator, with an active outfield rank of #92 globally and #12 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Works hard without the ball and pressures opponents effectively."
   - "Competes well for headers and aerial balls."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Fullback/Wingback
 - Functional role: Wide Creator
 - Minutes: 393.3
-- Global Rank v3: 75
-- Team Rank v3: 8
-- Position Rank v3: 14
-- Role Rank v3: 12
-- Tournament Impact: 1.2617
+- Global Rank v4: 92
+- Team Rank v4: 12
+- Position Rank v4: 10
+- Role Rank v4: 2
+- Tournament Impact: 0.6684
 - Role Quality: 0.2263
-- Impact interval: [0.2099, 2.6640]
-- Rank band: 24–325
+- Impact interval: [-0.1674, 1.7068]
+- Rank band: 32–389
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

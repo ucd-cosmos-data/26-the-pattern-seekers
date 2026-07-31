@@ -9,7 +9,7 @@ displayName: "Frenkie de Jong"
 wikiTitle: "Frenkie de Jong"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Frenkie de Jong played as a defensive midfield for Netherlands. His main role was holding anchor, with an active outfield rank of #91 globally and #3 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Frenkie de Jong played as a defensive midfield for Netherlands. His main role was holding anchor, with an active outfield rank of #40 globally and #2 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Competes well for headers and aerial balls."
   - "Keeps possession reliably when receiving or carrying under pressure."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Defensive Midfield
 - Functional role: Holding Anchor
 - Minutes: 499.5
-- Global Rank v3: 91
-- Team Rank v3: 3
-- Position Rank v3: 30
-- Role Rank v3: 21
-- Tournament Impact: 1.1538
+- Global Rank v4: 40
+- Team Rank v4: 2
+- Position Rank v4: 6
+- Role Rank v4: 3
+- Tournament Impact: 1.2282
 - Role Quality: 0.1585
-- Impact interval: [0.0520, 2.4960]
-- Rank band: 27–415
+- Impact interval: [-0.0079, 2.8341]
+- Rank band: 9–299
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

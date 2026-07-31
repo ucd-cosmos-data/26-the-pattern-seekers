@@ -9,7 +9,7 @@ displayName: "Mathew Leckie"
 wikiTitle: "Mathew Leckie"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Mathew Leckie played as a central/wide midfield for Australia. His main role was target forward, with an active outfield rank of #154 globally and #3 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Mathew Leckie played as a central/wide midfield for Australia. His main role was target forward, with an active outfield rank of #144 globally and #4 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Competes well for headers and aerial balls."
   - "Works hard without the ball and pressures opponents effectively."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Central/Wide Midfield
 - Functional role: Target Forward
 - Minutes: 341.6
-- Global Rank v3: 154
-- Team Rank v3: 3
-- Position Rank v3: 100
-- Role Rank v3: 46
-- Tournament Impact: 0.7512
+- Global Rank v4: 144
+- Team Rank v4: 4
+- Position Rank v4: 24
+- Role Rank v4: 15
+- Tournament Impact: 0.4428
 - Role Quality: 0.3035
-- Impact interval: [0.1759, 1.4693]
-- Rank band: 66–331
+- Impact interval: [-0.2611, 1.3547]
+- Rank band: 47–473
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

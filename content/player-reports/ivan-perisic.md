@@ -9,7 +9,7 @@ displayName: "Ivan Perišić"
 wikiTitle: "Ivan Perišić"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Ivan Perišić played as an attacking midfield/wing for Croatia. His main role was wide creator, with an active outfield rank of #5 globally and #1 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Ivan Perišić played as an attacking midfield/wing for Croatia. His main role was wide creator, with an active outfield rank of #3 globally and #1 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Offers a strong goal threat when attacks reach the final third."
   - "Competes well for headers and aerial balls."
@@ -26,15 +26,15 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Attacking Midfield/Wing
 - Functional role: Wide Creator
 - Minutes: 686.8
-- Global Rank v3: 5
-- Team Rank v3: 1
-- Position Rank v3: 28
-- Role Rank v3: 2
-- Tournament Impact: 3.6214
+- Global Rank v4: 3
+- Team Rank v4: 1
+- Position Rank v4: 2
+- Role Rank v4: 1
+- Tournament Impact: 3.0537
 - Role Quality: 0.4931
-- Impact interval: [1.2206, 6.2129]
-- Rank band: 3–88
-- Uncertainty status: wide
+- Impact interval: [0.8861, 5.3014]
+- Rank band: 1–78
+- Uncertainty status: moderate
 
 ## Decisive outcomes
 
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

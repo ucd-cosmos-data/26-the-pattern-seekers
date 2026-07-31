@@ -9,7 +9,7 @@ displayName: "Piotr Zieliński"
 wikiTitle: "Piotr Zieliński"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Piotr Zieliński played as a central/wide midfield for Poland. His main role was holding anchor, with an active outfield rank of #151 globally and #2 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Piotr Zieliński played as a central/wide midfield for Poland. His main role was holding anchor, with an active outfield rank of #177 globally and #2 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Creates useful chances and connects attacks."
   - "Offers a strong goal threat when attacks reach the final third."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Central/Wide Midfield
 - Functional role: Holding Anchor
 - Minutes: 344.4
-- Global Rank v3: 151
-- Team Rank v3: 2
-- Position Rank v3: 39
-- Role Rank v3: 16
-- Tournament Impact: 0.7646
+- Global Rank v4: 177
+- Team Rank v4: 2
+- Position Rank v4: 28
+- Role Rank v4: 19
+- Tournament Impact: 0.3349
 - Role Quality: 0.1787
-- Impact interval: [0.1203, 1.5388]
-- Rank band: 62–380
+- Impact interval: [-0.2925, 1.0906]
+- Rank band: 57–494
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

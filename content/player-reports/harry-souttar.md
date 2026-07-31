@@ -9,7 +9,7 @@ displayName: "Harry Souttar"
 wikiTitle: "Harry Souttar"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Harry Souttar played as a center back for Australia. His main role was sweeper cb, with an active outfield rank of #240 globally and #5 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Harry Souttar played as a center back for Australia. His main role was sweeper cb, with an active outfield rank of #78 globally and #1 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Competes well for headers and aerial balls."
   - "Keeps possession reliably when receiving or carrying under pressure."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Center Back
 - Functional role: Sweeper CB
 - Minutes: 386.9
-- Global Rank v3: 240
-- Team Rank v3: 5
-- Position Rank v3: 36
-- Role Rank v3: 25
-- Tournament Impact: 0.4772
+- Global Rank v4: 78
+- Team Rank v4: 1
+- Position Rank v4: 9
+- Role Rank v4: 6
+- Tournament Impact: 0.8170
 - Role Quality: 0.1003
-- Impact interval: [-0.0004, 1.1046]
-- Rank band: 101–514
+- Impact interval: [-0.1889, 2.0155]
+- Rank band: 18–418
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

@@ -9,7 +9,7 @@ displayName: "Grzegorz Krychowiak"
 wikiTitle: "Grzegorz Krychowiak"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Grzegorz Krychowiak played as a defensive midfield for Poland. His main role was box-to-box / engine midfielder, with an active outfield rank of #454 globally and #12 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Grzegorz Krychowiak played as a defensive midfield for Poland. His main role was box-to-box / engine midfielder, with an active outfield rank of #310 globally and #6 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Reads danger and contributes well in defensive situations."
   - "Works hard without the ball and pressures opponents effectively."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Defensive Midfield
 - Functional role: Box-to-Box / Engine Midfielder
 - Minutes: 347.9
-- Global Rank v3: 454
-- Team Rank v3: 12
-- Position Rank v3: 85
-- Role Rank v3: 19
-- Tournament Impact: 0.0890
+- Global Rank v4: 310
+- Team Rank v4: 6
+- Position Rank v4: 48
+- Role Rank v4: 14
+- Tournament Impact: 0.0256
 - Role Quality: 0.0828
-- Impact interval: [-0.0111, 0.2721]
-- Rank band: 288–521
+- Impact interval: [-0.3932, 0.5383]
+- Rank band: 128–540
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

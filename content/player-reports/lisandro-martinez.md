@@ -9,7 +9,7 @@ displayName: "Lisandro Martínez"
 wikiTitle: "Lisandro Martínez"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Lisandro Martínez played as a center back for Argentina. His main role was sweeper cb, with an active outfield rank of #347 globally and #13 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Lisandro Martínez played as a center back for Argentina. His main role was sweeper cb, with an active outfield rank of #280 globally and #14 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Keeps possession reliably when receiving or carrying under pressure."
   - "Competes well for headers and aerial balls."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Center Back
 - Functional role: Sweeper CB
 - Minutes: 334.9
-- Global Rank v3: 347
-- Team Rank v3: 13
-- Position Rank v3: 76
-- Role Rank v3: 54
-- Tournament Impact: 0.2573
+- Global Rank v4: 280
+- Team Rank v4: 14
+- Position Rank v4: 52
+- Role Rank v4: 37
+- Tournament Impact: 0.1030
 - Role Quality: 0.0751
-- Impact interval: [-0.0504, 0.7809]
-- Rank band: 144–543
+- Impact interval: [-0.3741, 0.7068]
+- Rank band: 101–534
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

@@ -9,7 +9,7 @@ displayName: "Daley Blind"
 wikiTitle: "Daley Blind"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Daley Blind played as a fullback/wingback for Netherlands. His main role was attacking wingback, with an active outfield rank of #92 globally and #4 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Daley Blind played as a fullback/wingback for Netherlands. His main role was attacking wingback, with an active outfield rank of #88 globally and #5 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Offers a strong goal threat when attacks reach the final third."
   - "Creates useful chances and connects attacks."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Fullback/Wingback
 - Functional role: Attacking Wingback
 - Minutes: 452.5
-- Global Rank v3: 92
-- Team Rank v3: 4
-- Position Rank v3: 25
-- Role Rank v3: 20
-- Tournament Impact: 1.1231
+- Global Rank v4: 88
+- Team Rank v4: 5
+- Position Rank v4: 8
+- Role Rank v4: 7
+- Tournament Impact: 0.7235
 - Role Quality: 0.2042
-- Impact interval: [0.2729, 2.1208]
-- Rank band: 38–282
+- Impact interval: [-0.1766, 1.7270]
+- Rank band: 30–382
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

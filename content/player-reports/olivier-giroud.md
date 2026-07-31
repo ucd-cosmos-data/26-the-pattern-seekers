@@ -9,7 +9,7 @@ displayName: "Olivier Giroud"
 wikiTitle: "Olivier Giroud"
 headshotUrl: "https://a.espncdn.com/i/headshots/soccer/players/full/88965.png"
 shirtNumber: 9
-overview: "Olivier Giroud played as a forward for France. His main role was target forward / penalty-box anchor, with an active outfield rank of #3 globally and #2 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Olivier Giroud played as a forward for France. His main role was target forward / penalty-box anchor, with an active outfield rank of #8 globally and #3 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Offers a strong goal threat when attacks reach the final third."
   - "Competes well for headers and aerial balls."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Forward
 - Functional role: Target Forward / Penalty-Box Anchor
 - Minutes: 432.6
-- Global Rank v3: 3
-- Team Rank v3: 2
-- Position Rank v3: 15
-- Role Rank v3: 7
-- Tournament Impact: 3.6830
+- Global Rank v4: 8
+- Team Rank v4: 3
+- Position Rank v4: 3
+- Role Rank v4: 1
+- Tournament Impact: 2.1115
 - Role Quality: 0.7762
-- Impact interval: [0.9567, 6.5917]
-- Rank band: 3–111
+- Impact interval: [0.4919, 4.0173]
+- Rank band: 3–142
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

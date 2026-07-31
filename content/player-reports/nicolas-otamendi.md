@@ -9,7 +9,7 @@ displayName: "Nicolás Otamendi"
 wikiTitle: "Nicolás Otamendi"
 headshotUrl: "https://a.espncdn.com/i/headshots/soccer/players/full/119289.png"
 shirtNumber: 19
-overview: "Nicolás Otamendi played as a center back for Argentina. His main role was sweeper cb, with an active outfield rank of #452 globally and #17 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Nicolás Otamendi played as a center back for Argentina. His main role was sweeper cb, with an active outfield rank of #74 globally and #11 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Competes well for headers and aerial balls."
   - "Creates useful chances and connects attacks."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Center Back
 - Functional role: Sweeper CB
 - Minutes: 733.9
-- Global Rank v3: 452
-- Team Rank v3: 17
-- Position Rank v3: 105
-- Role Rank v3: 78
-- Tournament Impact: 0.0946
+- Global Rank v4: 74
+- Team Rank v4: 11
+- Position Rank v4: 7
+- Role Rank v4: 5
+- Tournament Impact: 0.8414
 - Role Quality: 0.0513
-- Impact interval: [-0.2488, 0.4912]
-- Rank band: 209–553
+- Impact interval: [0.0063, 1.8610]
+- Rank band: 28–291
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

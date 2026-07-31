@@ -23,6 +23,17 @@ const sourceBase =
     "https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis/blob/" +
     analysisCommit + "/World-Cup-S-Bomb/results/reports/player_profiles/";
 
+function parseCsv(text) {
+    const lines = text.split(/\r?\n/).filter(function (line) { return line.length; });
+    const header = lines[0].split(",");
+    return lines.slice(1).map(function (line) {
+        const cells = line.split(",");
+        const row = {};
+        header.forEach(function (key, index) { row[key] = cells[index]; });
+        return row;
+    });
+}
+
 const KNOCKOUT_TEAMS = new Set([
     "Netherlands", "United States", "Argentina", "Australia", "France", "Poland",
     "England", "Senegal", "Japan", "Croatia", "Brazil", "South Korea", "Morocco",
@@ -252,6 +263,29 @@ function makeViewerSummary(report, ranking, displayName) {
     };
 }
 
+function applyV4ProfileRanking(markdown, ranking) {
+    if (ranking.position_group === "Goalkeeper") return markdown;
+    const low = Number(ranking.tournament_impact_interval_low_outfield_v4);
+    const high = Number(ranking.tournament_impact_interval_high_outfield_v4);
+    const best = Number(ranking.bootstrap_rank_best_outfield_v4);
+    const worst = Number(ranking.bootstrap_rank_worst_outfield_v4);
+    const bandWidth = worst - best;
+    const uncertaintyStatus = bandWidth > 100 ? "wide" : bandWidth > 50 ? "moderate" : "stable";
+    return markdown
+        .replace(/- Global Rank v3: .*$/m, `- Global Rank v4: ${ranking.publication_global_rank_v5}`)
+        .replace(/- Team Rank v3: .*$/m, `- Team Rank v4: ${ranking.publication_team_rank_v5}`)
+        .replace(/- Position Rank v3: .*$/m, `- Position Rank v4: ${ranking.position_rank_v4}`)
+        .replace(/- Role Rank v3: .*$/m, `- Role Rank v4: ${ranking.role_rank_v4}`)
+        .replace(/- Tournament Impact: .*$/m, `- Tournament Impact: ${Number(ranking.tournament_impact_score_outfield_v4).toFixed(4)}`)
+        .replace(/- Impact interval: .*$/m, `- Impact interval: [${low.toFixed(4)}, ${high.toFixed(4)}]`)
+        .replace(/- Rank band: .*$/m, `- Rank band: ${best}\u2013${worst}`)
+        .replace(/- Uncertainty status: .*$/m, `- Uncertainty status: ${uncertaintyStatus}`)
+        .replace(
+            /Older v2\/v5 columns are retained for provenance only\. They are not the active ordering described above\./,
+            "Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4."
+        );
+}
+
 function parsePageFrontMatter(markdown) {
     const match = markdown.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);
     if (!match) throw new Error("Existing player report is missing front matter");
@@ -268,6 +302,44 @@ function parsePageFrontMatter(markdown) {
 
 // ---- build ----------------------------------------------------------------
 const rankings = JSON.parse(fs.readFileSync(rankingsPath, "utf8"));
+const outfieldV4Path = path.resolve(
+    analysisRoot,
+    "../diagnostics/ranking_repair/outfield_v4_rank_intervals.csv"
+);
+const outfieldV4 = parseCsv(fs.readFileSync(outfieldV4Path, "utf8"));
+if (outfieldV4.length !== 553) throw new Error("The approved outfield v4 release must contain 553 players");
+const rankingById = new Map(rankings.map((row) => [String(row.player_id), row]));
+const v4ById = new Map(outfieldV4.map((row) => [String(row.player_id), row]));
+const rawScores = outfieldV4.map((row) => Number(row.tournament_impact_score_outfield_v4));
+const minV4Score = Math.min(...rawScores);
+const maxV4Score = Math.max(...rawScores);
+const teamCounters = new Map();
+const positionCounters = new Map();
+const roleCounters = new Map();
+outfieldV4
+    .slice()
+    .sort((a, b) => Number(a.tournament_impact_rank_outfield_v4) - Number(b.tournament_impact_rank_outfield_v4))
+    .forEach((v4) => {
+        const ranking = rankingById.get(String(v4.player_id));
+        if (!ranking || ranking.position_group === "Goalkeeper") {
+            throw new Error(`Outfield v4 player ${v4.player_id} is missing compatible profile metadata`);
+        }
+        const teamRank = (teamCounters.get(ranking.team) || 0) + 1;
+        const positionRank = (positionCounters.get(ranking.position_group) || 0) + 1;
+        const roleRank = (roleCounters.get(ranking.functional_role) || 0) + 1;
+        teamCounters.set(ranking.team, teamRank);
+        positionCounters.set(ranking.position_group, positionRank);
+        roleCounters.set(ranking.functional_role, roleRank);
+        const raw = Number(v4.tournament_impact_score_outfield_v4);
+        Object.assign(ranking, v4, {
+            active_publication_score_v5: (raw - minV4Score) / (maxV4Score - minV4Score),
+            publication_global_rank_v5: Number(v4.tournament_impact_rank_outfield_v4),
+            publication_team_rank_v5: teamRank,
+            position_rank_v4: positionRank,
+            role_rank_v4: roleRank
+        });
+    });
+if (v4ById.size !== 553) throw new Error("The outfield v4 release contains duplicate player ids");
 const profileFiles = fs.readdirSync(profilesDir).filter((f) => f.endsWith(".md"));
 const fileById = {};
 profileFiles.forEach((f) => {
@@ -321,7 +393,7 @@ rankings.forEach((p) => {
             teamRank: isGoalkeeper ? null : p.publication_team_rank_v5 || null,
             positionRank: isGoalkeeper
                 ? p.goalkeeper_consolidated_value_rank_v5 || null
-                : p.position_rank_v3 || null,
+                : p.position_rank_v4 || null,
             globalRank: isGoalkeeper ? null : p.publication_global_rank_v5 || null,
             goalkeeperRank: isMainGoalkeeper ? p.goalkeeper_consolidated_value_rank_v5 : null,
             rankingProduct: isGoalkeeper ? "goalkeeper" : "outfield",
@@ -336,7 +408,7 @@ rankings.forEach((p) => {
 
         if (existingPage) {
             const sourceUrl = sourceBase + file;
-            const pageBody = markdown.replace(/^# .+\r?\n+/, "");
+            const pageBody = applyV4ProfileRanking(markdown.replace(/^# .+\r?\n+/, ""), p);
             const frontMatter = existingPage.frontMatter;
             const fm = [
                 "---",
@@ -364,17 +436,6 @@ rankings.forEach((p) => {
     });
 
 // ---- full appearance squads: fill formations with real players ------------
-function parseCsv(text) {
-    const lines = text.split(/\r?\n/).filter(function (l) { return l.length; });
-    const header = lines[0].split(",");
-    return lines.slice(1).map(function (line) {
-        const cells = line.split(","); // player names in this dataset have no commas
-        const row = {};
-        header.forEach(function (h, i) { row[h] = cells[i]; });
-        return row;
-    });
-}
-
 const READABLE_POS = {
     "Goalkeeper": "Goalkeeper", "Center Back": "Centre-back",
     "Fullback/Wingback": "Full-back", "Defensive Midfield": "Defensive midfielder",

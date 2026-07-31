@@ -9,7 +9,7 @@ displayName: "Ibrahima Konaté"
 wikiTitle: "Ibrahima Konaté"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Ibrahima Konaté played as a center back for France. His main role was ball-playing centre-back, with an active outfield rank of #277 globally and #12 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Ibrahima Konaté played as a center back for France. His main role was ball-playing centre-back, with an active outfield rank of #203 globally and #12 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Competes well for headers and aerial balls."
   - "Reads danger and contributes well in defensive situations."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Center Back
 - Functional role: Ball-Playing Centre-Back
 - Minutes: 330.8
-- Global Rank v3: 277
-- Team Rank v3: 12
-- Position Rank v3: 42
-- Role Rank v3: 8
-- Tournament Impact: 0.3948
+- Global Rank v4: 203
+- Team Rank v4: 12
+- Position Rank v4: 38
+- Role Rank v4: 12
+- Tournament Impact: 0.2753
 - Role Quality: 0.0950
-- Impact interval: [0.0621, 0.8527]
-- Rank band: 129–410
+- Impact interval: [-0.2252, 0.9442]
+- Rank band: 74–433
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

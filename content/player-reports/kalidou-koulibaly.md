@@ -9,7 +9,7 @@ displayName: "Kalidou Koulibaly"
 wikiTitle: "Kalidou Koulibaly"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Kalidou Koulibaly played as a center back for Senegal. His main role was sweeper cb, with an active outfield rank of #356 globally and #10 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Kalidou Koulibaly played as a center back for Senegal. His main role was sweeper cb, with an active outfield rank of #165 globally and #3 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Competes well for headers and aerial balls."
   - "Reads danger and contributes well in defensive situations."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Center Back
 - Functional role: Sweeper CB
 - Minutes: 387.3
-- Global Rank v3: 356
-- Team Rank v3: 10
-- Position Rank v3: 56
-- Role Rank v3: 41
-- Tournament Impact: 0.2360
+- Global Rank v4: 165
+- Team Rank v4: 3
+- Position Rank v4: 28
+- Role Rank v4: 17
+- Tournament Impact: 0.3623
 - Role Quality: 0.0859
-- Impact interval: [-0.1247, 0.6324]
-- Rank band: 170–551
+- Impact interval: [-0.3486, 1.1243]
+- Rank band: 57–525
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

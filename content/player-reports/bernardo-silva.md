@@ -9,7 +9,7 @@ displayName: "Bernardo Silva"
 wikiTitle: "Bernardo Silva"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Bernardo Silva played as a central/wide midfield for Portugal. His main role was ball-winner, with an active outfield rank of #116 globally and #6 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Bernardo Silva played as a central/wide midfield for Portugal. His main role was ball-winner, with an active outfield rank of #73 globally and #5 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Keeps possession reliably when receiving or carrying under pressure."
   - "Moves the ball forward well through carries and forward passes."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Central/Wide Midfield
 - Functional role: Ball-Winner
 - Minutes: 382.1
-- Global Rank v3: 116
-- Team Rank v3: 6
-- Position Rank v3: 33
-- Role Rank v3: 44
-- Tournament Impact: 0.9610
+- Global Rank v4: 73
+- Team Rank v4: 5
+- Position Rank v4: 11
+- Role Rank v4: 6
+- Tournament Impact: 0.8435
 - Role Quality: 0.2320
-- Impact interval: [0.2371, 1.7677]
-- Rank band: 49–317
+- Impact interval: [-0.1316, 1.9059]
+- Rank band: 19–362
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

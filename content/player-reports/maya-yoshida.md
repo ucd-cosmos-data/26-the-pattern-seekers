@@ -9,7 +9,7 @@ displayName: "Maya Yoshida"
 wikiTitle: "Maya Yoshida"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Maya Yoshida played as a center back for Japan. His main role was sweeper cb, with an active outfield rank of #506 globally and #21 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Maya Yoshida played as a center back for Japan. His main role was sweeper cb, with an active outfield rank of #123 globally and #3 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Competes well for headers and aerial balls."
   - "Keeps possession reliably when receiving or carrying under pressure."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Center Back
 - Functional role: Sweeper CB
 - Minutes: 412.5
-- Global Rank v3: 506
-- Team Rank v3: 21
-- Position Rank v3: 95
-- Role Rank v3: 69
-- Tournament Impact: 0.0225
+- Global Rank v4: 123
+- Team Rank v4: 3
+- Position Rank v4: 16
+- Role Rank v4: 7
+- Tournament Impact: 0.5432
 - Role Quality: 0.0626
-- Impact interval: [-0.0869, 0.1859]
-- Rank band: 330–549
+- Impact interval: [-0.2376, 1.4300]
+- Rank band: 39–463
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

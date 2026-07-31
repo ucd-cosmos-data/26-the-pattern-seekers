@@ -9,7 +9,7 @@ displayName: "Rodrigo De Paul"
 wikiTitle: "Rodrigo De Paul"
 headshotUrl: "https://a.espncdn.com/i/headshots/soccer/players/full/174466.png"
 shirtNumber: 7
-overview: "Rodrigo De Paul played as a defensive midfield for Argentina. His main role was deep playmaker, with an active outfield rank of #41 globally and #7 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Rodrigo De Paul played as a defensive midfield for Argentina. His main role was deep playmaker, with an active outfield rank of #11 globally and #4 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Moves the ball forward well through carries and forward passes."
   - "Works hard without the ball and pressures opponents effectively."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Defensive Midfield
 - Functional role: Deep Playmaker
 - Minutes: 634.7
-- Global Rank v3: 41
-- Team Rank v3: 7
-- Position Rank v3: 10
-- Role Rank v3: 6
-- Tournament Impact: 1.8495
+- Global Rank v4: 11
+- Team Rank v4: 4
+- Position Rank v4: 1
+- Role Rank v4: 1
+- Tournament Impact: 1.9616
 - Role Quality: 0.3041
-- Impact interval: [0.7484, 3.3671]
-- Rank band: 15–153
+- Impact interval: [0.5168, 3.7555]
+- Rank band: 5–136
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

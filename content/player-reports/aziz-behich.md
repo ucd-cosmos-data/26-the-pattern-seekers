@@ -9,7 +9,7 @@ displayName: "Aziz Behich"
 wikiTitle: "Aziz Behich"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Aziz Behich played as a fullback/wingback for Australia. His main role was wide creator, with an active outfield rank of #241 globally and #6 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Aziz Behich played as a fullback/wingback for Australia. His main role was wide creator, with an active outfield rank of #179 globally and #6 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Reads danger and contributes well in defensive situations."
   - "Moves the ball forward well through carries and forward passes."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Fullback/Wingback
 - Functional role: Wide Creator
 - Minutes: 386.9
-- Global Rank v3: 241
-- Team Rank v3: 6
-- Position Rank v3: 77
-- Role Rank v3: 24
-- Tournament Impact: 0.4769
+- Global Rank v4: 179
+- Team Rank v4: 6
+- Position Rank v4: 28
+- Role Rank v4: 4
+- Tournament Impact: 0.3266
 - Role Quality: 0.1659
-- Impact interval: [0.0772, 0.9956]
-- Rank band: 110–410
+- Impact interval: [-0.3042, 1.1814]
+- Rank band: 56–523
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

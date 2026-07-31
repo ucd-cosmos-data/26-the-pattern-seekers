@@ -9,7 +9,7 @@ displayName: "Breel Embolo"
 wikiTitle: "Breel Embolo"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Breel Embolo played as a forward for Switzerland. His main role was pressing forward, with an active outfield rank of #16 globally and #1 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Breel Embolo played as a forward for Switzerland. His main role was pressing forward, with an active outfield rank of #31 globally and #1 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Offers a strong goal threat when attacks reach the final third."
   - "Keeps possession reliably when receiving or carrying under pressure."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Forward
 - Functional role: Pressing Forward
 - Minutes: 330.1
-- Global Rank v3: 16
-- Team Rank v3: 1
-- Position Rank v3: 34
-- Role Rank v3: 8
-- Tournament Impact: 2.7334
+- Global Rank v4: 31
+- Team Rank v4: 1
+- Position Rank v4: 10
+- Role Rank v4: 3
+- Tournament Impact: 1.4635
 - Role Quality: 0.6060
-- Impact interval: [0.3100, 5.8984]
-- Rank band: 2–271
+- Impact interval: [-0.0606, 3.2746]
+- Rank band: 3–302
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

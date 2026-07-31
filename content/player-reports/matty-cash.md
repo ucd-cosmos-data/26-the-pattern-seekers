@@ -9,7 +9,7 @@ displayName: "Matty Cash"
 wikiTitle: "Matty Cash"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Matty Cash played as a fullback/wingback for Poland. His main role was deep playmaker, with an active outfield rank of #219 globally and #4 on the team. The notes below translate his tournament evidence into simple soccer terms."
+overview: "Matty Cash played as a fullback/wingback for Poland. His main role was deep playmaker, with an active outfield rank of #198 globally and #3 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Creates useful chances and connects attacks."
   - "Moves the ball forward well through carries and forward passes."
@@ -26,14 +26,14 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 - Position group: Fullback/Wingback
 - Functional role: Deep Playmaker
 - Minutes: 389.8
-- Global Rank v3: 219
-- Team Rank v3: 4
-- Position Rank v3: 82
-- Role Rank v3: 25
-- Tournament Impact: 0.5488
+- Global Rank v4: 198
+- Team Rank v4: 3
+- Position Rank v4: 32
+- Role Rank v4: 7
+- Tournament Impact: 0.2868
 - Role Quality: 0.1621
-- Impact interval: [0.0408, 1.4047]
-- Rank band: 72–435
+- Impact interval: [-0.2903, 1.0117]
+- Rank band: 65–498
 - Uncertainty status: wide
 
 ## Decisive outcomes
@@ -55,4 +55,4 @@ This generated profile uses Qatar 2022 event evidence only. Player identity is d
 
 ## Compatibility
 
-Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.
