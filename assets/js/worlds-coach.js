@@ -1074,12 +1074,11 @@
                 var bits = [];
                 if (idx.rankingProduct === "goalkeeper") {
                     if (idx.goalkeeperRank) bits.push("GK #" + idx.goalkeeperRank);
-                    bits.push(idx.rating.toFixed(3) + " GK value");
                 } else {
                     if (idx.globalRank) bits.push("Global #" + idx.globalRank);
                     if (idx.teamRank) bits.push("Team #" + idx.teamRank);
-                    bits.push(idx.rating.toFixed(3) + " outfield score");
                 }
+                bits.push(idx.rating.toFixed(2) + " overall");
                 if (idx.minutes) bits.push(idx.minutes + "′");
                 meta = bits.join(" · ");
             }
@@ -2334,7 +2333,7 @@
     }
 
     function formatRating(value) {
-        return value == null ? "—" : value.toFixed(3);
+        return value == null ? "—" : value.toFixed(2);
     }
 
     function possessiveTeamName(value) {
@@ -2390,7 +2389,7 @@
                 "<span class=\"matchup-player__name\">" + escapeHtml(goesByName(player)) +
                 (subtitle ? "<em>" + escapeHtml(subtitle) + "</em>" : "") + "</span>" +
                 "<span class=\"matchup-player__bar\"><i style=\"--w: " + width + "%\"></i></span>" +
-                "<span class=\"matchup-player__rating\">" + formatRating(player.rating) + "</span>" +
+                "<span class=\"matchup-player__rating\" title=\"FIFA-style overall rating\">" + formatRating(player.rating) + "</span>" +
                 "</li>";
         }
 
@@ -2414,7 +2413,7 @@
         function topLine(team) {
             var top = team.players && team.players[0];
             return top
-                ? "<strong>" + escapeHtml(goesByName(top)) + "</strong><em>top outfield · " + formatRating(top.rating) + "</em>"
+                ? "<strong>" + escapeHtml(goesByName(top)) + "</strong><em>top overall · " + formatRating(top.rating) + "</em>"
                 : "<em>No eligible outfield players</em>";
         }
 

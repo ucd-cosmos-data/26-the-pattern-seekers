@@ -340,6 +340,42 @@ outfieldV4
         });
     });
 if (v4ById.size !== 553) throw new Error("The outfield v4 release contains duplicate player ids");
+
+const OVERALL_MAX_RANK = 585;
+const OVERALL_ANCHORS = [[1, 95.5], [100, 84], [300, 72], [OVERALL_MAX_RANK, 60]];
+function overallRatingFromRank(rank) {
+    const segment = rank <= 100 ? [OVERALL_ANCHORS[0], OVERALL_ANCHORS[1]]
+        : rank <= 300 ? [OVERALL_ANCHORS[1], OVERALL_ANCHORS[2]]
+            : [OVERALL_ANCHORS[2], OVERALL_ANCHORS[3]];
+    const progress = (rank - segment[0][0]) / (segment[1][0] - segment[0][0]);
+    return Number((segment[0][1] + progress * (segment[1][1] - segment[0][1])).toFixed(2));
+}
+
+const mainGoalkeepers = rankings.filter((player) =>
+    player.position_group === "Goalkeeper" && Boolean(player.is_main_goalkeeper)
+);
+if (mainGoalkeepers.length !== 32) throw new Error("The active goalkeeper v5 release must contain 32 main goalkeepers");
+const overallOrder = rankings
+    .filter((player) => player.position_group !== "Goalkeeper")
+    .map((player) => ({
+        player,
+        percentile: (Number(player.publication_global_rank_v4) - 0.5) / 553,
+        productOrder: 0
+    }))
+    .concat(mainGoalkeepers.map((player) => ({
+        player,
+        percentile: (Number(player.goalkeeper_consolidated_value_rank_v5) - 0.5) / 32,
+        productOrder: 1
+    })))
+    .sort((left, right) =>
+        left.percentile - right.percentile || left.productOrder - right.productOrder
+    );
+if (overallOrder.length !== OVERALL_MAX_RANK) throw new Error("Overall publication must contain 585 players");
+overallOrder.forEach(({ player }, index) => {
+    player.overall_rank = index + 1;
+    player.overall_rating = overallRatingFromRank(index + 1);
+});
+
 const profileFiles = fs.readdirSync(profilesDir).filter((f) => f.endsWith(".md"));
 const fileById = {};
 profileFiles.forEach((f) => {
@@ -381,9 +417,7 @@ rankings.forEach((p) => {
         if (slug) usedSlugs.add(slug);
         const isGoalkeeper = p.position_group === "Goalkeeper";
         const isMainGoalkeeper = isGoalkeeper && Boolean(p.is_main_goalkeeper);
-        const rating = isGoalkeeper
-            ? (isMainGoalkeeper ? Number(p.goalkeeper_consolidated_value_score_v5) : null)
-            : Number(p.active_outfield_score_v4);
+        const rating = isMainGoalkeeper || !isGoalkeeper ? Number(p.overall_rating) : null;
 
         index[id] = {
             name: goesBy,
@@ -396,6 +430,7 @@ rankings.forEach((p) => {
                 : p.position_rank_v4 || null,
             globalRank: isGoalkeeper ? null : p.publication_global_rank_v4 || null,
             goalkeeperRank: isMainGoalkeeper ? p.goalkeeper_consolidated_value_rank_v5 : null,
+            overallRank: isMainGoalkeeper || !isGoalkeeper ? p.overall_rank : null,
             rankingProduct: isGoalkeeper ? "goalkeeper" : "outfield",
             rating: Number.isFinite(rating) ? rating : null,
             minutes: p.minutes ? Math.round(p.minutes) : null,
@@ -449,14 +484,13 @@ matchups.teams.forEach(function (t) { nameToCode[t.name] = t.code; codeToName[t.
 const ratedInfoById = {};
 rankings.forEach(function (p) {
     const isGoalkeeper = p.position_group === "Goalkeeper";
-    const rating = isGoalkeeper
-        ? (p.is_main_goalkeeper ? Number(p.goalkeeper_consolidated_value_score_v5) : null)
-        : Number(p.active_outfield_score_v4);
+    const rating = !isGoalkeeper || p.is_main_goalkeeper ? Number(p.overall_rating) : null;
     ratedInfoById[String(p.player_id)] = {
         rating: Number.isFinite(rating) ? rating : null,
         role: p.functional_role,
         rankingProduct: isGoalkeeper ? "goalkeeper" : "outfield",
-        goalkeeperRank: isGoalkeeper ? p.goalkeeper_consolidated_value_rank_v5 || null : null
+        goalkeeperRank: isGoalkeeper ? p.goalkeeper_consolidated_value_rank_v5 || null : null,
+        overallRank: p.overall_rank || null
     };
 });
 
@@ -501,6 +535,7 @@ Object.keys(squadAgg).forEach(function (code) {
             rating: rated ? rated.rating : null,
             rankingProduct: rated ? rated.rankingProduct : null,
             goalkeeperRank: rated ? rated.goalkeeperRank : null,
+            overallRank: rated ? rated.overallRank : null,
             min: Math.round(s.min)
         };
     }).sort(function (a, b) {
