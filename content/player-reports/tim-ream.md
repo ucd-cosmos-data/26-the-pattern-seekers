@@ -4,12 +4,12 @@ description: "This report uses tournament events and coverage-qualified StatsBom
 layout: "player-report"
 url: "/projects/worlds-coach-output/reports/tim-ream/"
 playerId: "sb-18242"
-sourceUrl: "https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis/blob/718ae91e82bedbd53486a1e0381aaa70e124ba12/World-Cup-S-Bomb/results/reports/player_profiles/tim-ream-18242.md"
+sourceUrl: "https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis/blob/0aa13e7289c0ce81452c8fc3a67efe3e849c1aef/World-Cup-S-Bomb/results/reports/player_profiles/tim-ream-18242.md"
 displayName: "Tim Ream"
 wikiTitle: "Tim Ream"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Tim Ream played as a center back for United States. His main role was ball-playing centre-back, and the model ranked him #6 on the team. The notes below translate his tournament data into simple soccer terms."
+overview: "Tim Ream played as a center back for United States. His main role was ball-playing centre-back, with an active outfield rank of #103 globally and #5 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Keeps possession reliably when receiving or carrying under pressure."
   - "Competes well for headers and aerial balls."
@@ -17,61 +17,42 @@ weaknesses:
   - "Pressing intensity is a weaker area in this tournament model."
   - "Finishing is a smaller part of his overall impact."
 ---
-## Ranking and role
+
+This generated profile uses Qatar 2022 event evidence only. Player identity is displayed after scoring and is never a feature.
+
+## Tournament Impact, Role Quality, and Uncertainty
 
 - Team: United States
 - Position group: Center Back
 - Functional role: Ball-Playing Centre-Back
-- Probabilistic role: Aerial/Progressive Centre-Back
-- Role entropy: 0.0000
-- Global rank: 104
-- Position rank: 25
-- Role rank: 7
-- Team rank: 6
-- Final player rating: 0.4543
-- Global ranking eligibility: eligible
 - Minutes: 391.2
-- Minutes reliability: 0.5660
+- Global Rank v4: 103
+- Team Rank v4: 5
+- Position Rank v4: 14
+- Role Rank v4: 8
+- Tournament Impact: 0.6194
+- Role Quality: 0.0799
+- Impact interval: [-0.2464, 1.6129]
+- Rank band: 32–456
+- Uncertainty status: wide
 
-## Rating components
+## Decisive outcomes
 
-| Metric | Value |
+- Non-penalty goals: 0
+- Regular penalty goals: 0
+- Actual assists: 0
+- Non-shootout xG: 0.2582
+- Non-shootout xA: 0.0000
+- Shootout conversions are displayed only in the separate shootout field and do not enter outfield impact.
+
+## Active components
+
+| Component | Value |
 |---|---|
-| vaep_off_scaled | 0.5892 |
-| vaep_def_scaled | 0.7351 |
-| vaep_per_touch | -0.0000 |
-| open_play_xt_p90 | 0.0022 |
-| set_piece_xt_p90 | -0.0054 |
-| role_adjusted_value | 0.1313 |
-| completeness_score | 0.4983 |
-| off_ball_score | 0.4206 |
+| Attack | 0.3516 |
+| Defense | 0.0657 |
+| Other | 0.0000 |
 
-## Continuous role vector
+## Compatibility
 
-| Metric | Value |
-|---|---|
-| progression_score | 0.5317 |
-| creation_score | 0.3866 |
-| finishing_score | 0.3615 |
-| pressing_score | 0.3153 |
-| defensive_score | 0.5100 |
-| ball_security_score | 0.6803 |
-| aerial_score | 0.6608 |
-
-## Spatial, 360 and passing-network context
-
-| Metric | Value |
-|---|---|
-| sb360_coverage | 0.9163 |
-| mean_defenders_within_3m | 0.1583 |
-| mean_defenders_within_5m | 0.3111 |
-| mean_nearest_defender_m | 10.0688 |
-| mean_passing_lane_availability | 0.9479 |
-| packing_index_mean | 0.7108 |
-| mean_space_received | 0.9102 |
-| network_pagerank | 0.0956 |
-| network_betweenness | 0.2173 |
-| network_entropy | 0.8265 |
-| build_up_involvement_ratio | 0.5865 |
-
-Missing values indicate unavailable evidence; they are not converted into zero contribution.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

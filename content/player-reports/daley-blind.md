@@ -4,74 +4,55 @@ description: "This report uses tournament events and coverage-qualified StatsBom
 layout: "player-report"
 url: "/projects/worlds-coach-output/reports/daley-blind/"
 playerId: "sb-3311"
-sourceUrl: "https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis/blob/718ae91e82bedbd53486a1e0381aaa70e124ba12/World-Cup-S-Bomb/results/reports/player_profiles/daley-blind-3311.md"
+sourceUrl: "https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis/blob/0aa13e7289c0ce81452c8fc3a67efe3e849c1aef/World-Cup-S-Bomb/results/reports/player_profiles/daley-blind-3311.md"
 displayName: "Daley Blind"
 wikiTitle: "Daley Blind"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Daley Blind played as a fullback/wingback for Netherlands. His main role was wide creator, and the model ranked him #2 on the team. The notes below translate his tournament data into simple soccer terms."
+overview: "Daley Blind played as a fullback/wingback for Netherlands. His main role was attacking wingback, with an active outfield rank of #88 globally and #5 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Offers a strong goal threat when attacks reach the final third."
-  - "Works hard without the ball and pressures opponents effectively."
+  - "Creates useful chances and connects attacks."
 weaknesses:
   - "Aerial play is one of the less influential parts of his profile."
-  - "Has less impact moving possession upfield."
+  - "Defensive actions are a less prominent part of his game."
 ---
-## Ranking and role
+
+This generated profile uses Qatar 2022 event evidence only. Player identity is displayed after scoring and is never a feature.
+
+## Tournament Impact, Role Quality, and Uncertainty
 
 - Team: Netherlands
 - Position group: Fullback/Wingback
-- Functional role: Wide Creator
-- Probabilistic role: Creative/Progressive Fullback
-- Role entropy: 0.0000
-- Global rank: 15
-- Position rank: 5
-- Role rank: 2
-- Team rank: 2
-- Final player rating: 0.6665
-- Global ranking eligibility: eligible
+- Functional role: Attacking Wingback
 - Minutes: 452.5
-- Minutes reliability: 0.6013
+- Global Rank v4: 88
+- Team Rank v4: 5
+- Position Rank v4: 8
+- Role Rank v4: 7
+- Tournament Impact: 0.7235
+- Role Quality: 0.2042
+- Impact interval: [-0.1766, 1.7270]
+- Rank band: 30–382
+- Uncertainty status: wide
 
-## Rating components
+## Decisive outcomes
 
-| Metric | Value |
+- Non-penalty goals: 1
+- Regular penalty goals: 0
+- Actual assists: 1
+- Non-shootout xG: 0.5217
+- Non-shootout xA: 0.3113
+- Shootout conversions are displayed only in the separate shootout field and do not enter outfield impact.
+
+## Active components
+
+| Component | Value |
 |---|---|
-| vaep_off_scaled | 0.3147 |
-| vaep_def_scaled | 0.7605 |
-| vaep_per_touch | 0.0009 |
-| open_play_xt_p90 | 0.0249 |
-| set_piece_xt_p90 | 0.0148 |
-| role_adjusted_value | 0.8420 |
-| completeness_score | 0.6395 |
-| off_ball_score | 0.4764 |
+| Attack | 1.0825 |
+| Defense | 0.0406 |
+| Other | 0.0000 |
 
-## Continuous role vector
+## Compatibility
 
-| Metric | Value |
-|---|---|
-| progression_score | 0.5749 |
-| creation_score | 0.6458 |
-| finishing_score | 0.6984 |
-| pressing_score | 0.6476 |
-| defensive_score | 0.6215 |
-| ball_security_score | 0.6120 |
-| aerial_score | 0.4965 |
-
-## Spatial, 360 and passing-network context
-
-| Metric | Value |
-|---|---|
-| sb360_coverage | 0.8738 |
-| mean_defenders_within_3m | 0.2717 |
-| mean_defenders_within_5m | 0.5508 |
-| mean_nearest_defender_m | 7.5459 |
-| mean_passing_lane_availability | 0.9141 |
-| packing_index_mean | 0.6328 |
-| mean_space_received | 0.7370 |
-| network_pagerank | 0.0892 |
-| network_betweenness | 0.1826 |
-| network_entropy | 0.8628 |
-| build_up_involvement_ratio | 0.6706 |
-
-Missing values indicate unavailable evidence; they are not converted into zero contribution.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

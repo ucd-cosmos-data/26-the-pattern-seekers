@@ -4,74 +4,55 @@ description: "This report uses tournament events and coverage-qualified StatsBom
 layout: "player-report"
 url: "/projects/worlds-coach-output/reports/frenkie-de-jong/"
 playerId: "sb-8118"
-sourceUrl: "https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis/blob/718ae91e82bedbd53486a1e0381aaa70e124ba12/World-Cup-S-Bomb/results/reports/player_profiles/frenkie-de-jong-8118.md"
+sourceUrl: "https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis/blob/0aa13e7289c0ce81452c8fc3a67efe3e849c1aef/World-Cup-S-Bomb/results/reports/player_profiles/frenkie-de-jong-8118.md"
 displayName: "Frenkie de Jong"
 wikiTitle: "Frenkie de Jong"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Frenkie de Jong played as a defensive midfield for Netherlands. His main role was box-to-box / engine midfielder, and the model ranked him #6 on the team. The notes below translate his tournament data into simple soccer terms."
+overview: "Frenkie de Jong played as a defensive midfield for Netherlands. His main role was holding anchor, with an active outfield rank of #40 globally and #2 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Competes well for headers and aerial balls."
-  - "Works hard without the ball and pressures opponents effectively."
+  - "Keeps possession reliably when receiving or carrying under pressure."
 weaknesses:
   - "Has less impact moving possession upfield."
   - "Creates fewer chances than his stronger areas suggest."
 ---
-## Ranking and role
+
+This generated profile uses Qatar 2022 event evidence only. Player identity is displayed after scoring and is never a feature.
+
+## Tournament Impact, Role Quality, and Uncertainty
 
 - Team: Netherlands
 - Position group: Defensive Midfield
-- Functional role: Box-to-Box / Engine Midfielder
-- Probabilistic role: Pressing/Defensive Midfielder
-- Role entropy: 0.0000
-- Global rank: 65
-- Position rank: 8
-- Role rank: 7
-- Team rank: 6
-- Final player rating: 0.5482
-- Global ranking eligibility: eligible
+- Functional role: Holding Anchor
 - Minutes: 499.5
-- Minutes reliability: 0.6247
+- Global Rank v4: 40
+- Team Rank v4: 2
+- Position Rank v4: 6
+- Role Rank v4: 3
+- Tournament Impact: 1.2282
+- Role Quality: 0.1585
+- Impact interval: [-0.0079, 2.8341]
+- Rank band: 9–299
+- Uncertainty status: wide
 
-## Rating components
+## Decisive outcomes
 
-| Metric | Value |
+- Non-penalty goals: 1
+- Regular penalty goals: 0
+- Actual assists: 1
+- Non-shootout xG: 0.7210
+- Non-shootout xA: 0.4012
+- Shootout conversions are displayed only in the separate shootout field and do not enter outfield impact.
+
+## Active components
+
+| Component | Value |
 |---|---|
-| vaep_off_scaled | 0.3383 |
-| vaep_def_scaled | 0.7061 |
-| vaep_per_touch | 0.0003 |
-| open_play_xt_p90 | 0.0133 |
-| set_piece_xt_p90 | 0.0072 |
-| role_adjusted_value | 0.3591 |
-| completeness_score | 0.6830 |
-| off_ball_score | 0.6336 |
+| Attack | 1.1718 |
+| Defense | -0.0180 |
+| Other | 0.0000 |
 
-## Continuous role vector
+## Compatibility
 
-| Metric | Value |
-|---|---|
-| progression_score | 0.5201 |
-| creation_score | 0.5415 |
-| finishing_score | 0.6162 |
-| pressing_score | 0.7146 |
-| defensive_score | 0.6784 |
-| ball_security_score | 0.7007 |
-| aerial_score | 0.7523 |
-
-## Spatial, 360 and passing-network context
-
-| Metric | Value |
-|---|---|
-| sb360_coverage | 0.9211 |
-| mean_defenders_within_3m | 0.4533 |
-| mean_defenders_within_5m | 0.8886 |
-| mean_nearest_defender_m | 5.3040 |
-| mean_passing_lane_availability | 0.9277 |
-| packing_index_mean | 0.6305 |
-| mean_space_received | 0.5591 |
-| network_pagerank | 0.1139 |
-| network_betweenness | 0.2205 |
-| network_entropy | 0.8929 |
-| build_up_involvement_ratio | 0.6443 |
-
-Missing values indicate unavailable evidence; they are not converted into zero contribution.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

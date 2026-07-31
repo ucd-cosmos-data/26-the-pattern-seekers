@@ -4,74 +4,55 @@ description: "This report uses tournament events and coverage-qualified StatsBom
 layout: "player-report"
 url: "/projects/worlds-coach-output/reports/robert-lewandowski/"
 playerId: "sb-5668"
-sourceUrl: "https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis/blob/718ae91e82bedbd53486a1e0381aaa70e124ba12/World-Cup-S-Bomb/results/reports/player_profiles/robert-lewandowski-5668.md"
+sourceUrl: "https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis/blob/0aa13e7289c0ce81452c8fc3a67efe3e849c1aef/World-Cup-S-Bomb/results/reports/player_profiles/robert-lewandowski-5668.md"
 displayName: "Robert Lewandowski"
 wikiTitle: "Robert Lewandowski"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Robert Lewandowski played as a forward for Poland. His main role was target forward / penalty-box anchor, and the model ranked him #2 on the team. The notes below translate his tournament data into simple soccer terms."
+overview: "Robert Lewandowski played as a forward for Poland. His main role was target forward / penalty-box anchor, with an active outfield rank of #16 globally and #1 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Offers a strong goal threat when attacks reach the final third."
   - "Competes well for headers and aerial balls."
 weaknesses:
   - "Can be less secure on the ball when pressure arrives."
-  - "Defensive actions are a less prominent part of his game."
+  - "Pressing intensity is a weaker area in this tournament model."
 ---
-## Ranking and role
+
+This generated profile uses Qatar 2022 event evidence only. Player identity is displayed after scoring and is never a feature.
+
+## Tournament Impact, Role Quality, and Uncertainty
 
 - Team: Poland
 - Position group: Forward
 - Functional role: Target Forward / Penalty-Box Anchor
-- Probabilistic role: Finishing/Aerial Forward
-- Role entropy: 0.0004
-- Global rank: 30
-- Position rank: 7
-- Role rank: 1
-- Team rank: 2
-- Final player rating: 0.6260
-- Global ranking eligibility: eligible
 - Minutes: 389.8
-- Minutes reliability: 0.5651
+- Global Rank v4: 16
+- Team Rank v4: 1
+- Position Rank v4: 5
+- Role Rank v4: 2
+- Tournament Impact: 1.7306
+- Role Quality: 0.6385
+- Impact interval: [0.1963, 3.5785]
+- Rank band: 3–269
+- Uncertainty status: wide
 
-## Rating components
+## Decisive outcomes
 
-| Metric | Value |
+- Non-penalty goals: 1
+- Regular penalty goals: 1
+- Actual assists: 1
+- Non-shootout xG: 3.1259
+- Non-shootout xA: 0.4114
+- Shootout conversions are displayed only in the separate shootout field and do not enter outfield impact.
+
+## Active components
+
+| Component | Value |
 |---|---|
-| vaep_off_scaled | 0.5687 |
-| vaep_def_scaled | 0.3674 |
-| vaep_per_touch | 0.0042 |
-| open_play_xt_p90 | 0.0059 |
-| set_piece_xt_p90 | 0.0080 |
-| role_adjusted_value | 0.8684 |
-| completeness_score | 0.5192 |
-| off_ball_score | 0.5109 |
+| Attack | 3.6200 |
+| Defense | 0.0167 |
+| Other | 0.0000 |
 
-## Continuous role vector
+## Compatibility
 
-| Metric | Value |
-|---|---|
-| progression_score | 0.4713 |
-| creation_score | 0.6282 |
-| finishing_score | 0.9577 |
-| pressing_score | 0.5252 |
-| defensive_score | 0.4407 |
-| ball_security_score | 0.3923 |
-| aerial_score | 0.7958 |
-
-## Spatial, 360 and passing-network context
-
-| Metric | Value |
-|---|---|
-| sb360_coverage | 0.9024 |
-| mean_defenders_within_3m | 0.5904 |
-| mean_defenders_within_5m | 1.0416 |
-| mean_nearest_defender_m | 9.8071 |
-| mean_passing_lane_availability | 0.8682 |
-| packing_index_mean | 0.5073 |
-| mean_space_received | 0.5217 |
-| network_pagerank | 0.0965 |
-| network_betweenness | 0.0532 |
-| network_entropy | 0.9350 |
-| build_up_involvement_ratio | 0.7293 |
-
-Missing values indicate unavailable evidence; they are not converted into zero contribution.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

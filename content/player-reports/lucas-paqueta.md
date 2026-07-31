@@ -4,12 +4,12 @@ description: "This report uses tournament events and coverage-qualified StatsBom
 layout: "player-report"
 url: "/projects/worlds-coach-output/reports/lucas-paqueta/"
 playerId: "sb-22600"
-sourceUrl: "https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis/blob/718ae91e82bedbd53486a1e0381aaa70e124ba12/World-Cup-S-Bomb/results/reports/player_profiles/lucas-tolentino-coelho-de-lima-22600.md"
+sourceUrl: "https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis/blob/0aa13e7289c0ce81452c8fc3a67efe3e849c1aef/World-Cup-S-Bomb/results/reports/player_profiles/lucas-tolentino-coelho-de-lima-22600.md"
 displayName: "Lucas Paquetá"
 wikiTitle: "Lucas Paquetá"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Lucas Paquetá played as a defensive midfield for Brazil. His main role was ball-winner, and the model ranked him #4 on the team. The notes below translate his tournament data into simple soccer terms."
+overview: "Lucas Paquetá played as a defensive midfield for Brazil. His main role was holding anchor, with an active outfield rank of #51 globally and #6 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Offers a strong goal threat when attacks reach the final third."
   - "Works hard without the ball and pressures opponents effectively."
@@ -17,61 +17,42 @@ weaknesses:
   - "Has less impact moving possession upfield."
   - "Aerial play is one of the less influential parts of his profile."
 ---
-## Ranking and role
+
+This generated profile uses Qatar 2022 event evidence only. Player identity is displayed after scoring and is never a feature.
+
+## Tournament Impact, Role Quality, and Uncertainty
 
 - Team: Brazil
 - Position group: Defensive Midfield
-- Functional role: Ball-Winner
-- Probabilistic role: Pressing/Defensive Midfielder
-- Role entropy: 0.0175
-- Global rank: 25
-- Position rank: 3
-- Role rank: 2
-- Team rank: 4
-- Final player rating: 0.6459
-- Global ranking eligibility: eligible
+- Functional role: Holding Anchor
 - Minutes: 318.8
-- Minutes reliability: 0.5152
+- Global Rank v4: 51
+- Team Rank v4: 6
+- Position Rank v4: 10
+- Role Rank v4: 6
+- Tournament Impact: 1.0888
+- Role Quality: 0.3465
+- Impact interval: [-0.1855, 2.6207]
+- Rank band: 12–429
+- Uncertainty status: wide
 
-## Rating components
+## Decisive outcomes
 
-| Metric | Value |
+- Non-penalty goals: 1
+- Regular penalty goals: 0
+- Actual assists: 1
+- Non-shootout xG: 0.7043
+- Non-shootout xA: 0.9875
+- Shootout conversions are displayed only in the separate shootout field and do not enter outfield impact.
+
+## Active components
+
+| Component | Value |
 |---|---|
-| vaep_off_scaled | 0.5685 |
-| vaep_def_scaled | 0.9129 |
-| vaep_per_touch | 0.0010 |
-| open_play_xt_p90 | 0.0227 |
-| set_piece_xt_p90 | 0.0105 |
-| role_adjusted_value | 0.7549 |
-| completeness_score | 0.7315 |
-| off_ball_score | 0.6617 |
+| Attack | 1.2768 |
+| Defense | -0.0036 |
+| Other | 0.0000 |
 
-## Continuous role vector
+## Compatibility
 
-| Metric | Value |
-|---|---|
-| progression_score | 0.3939 |
-| creation_score | 0.7049 |
-| finishing_score | 0.8016 |
-| pressing_score | 0.7995 |
-| defensive_score | 0.6725 |
-| ball_security_score | 0.7148 |
-| aerial_score | 0.4824 |
-
-## Spatial, 360 and passing-network context
-
-| Metric | Value |
-|---|---|
-| sb360_coverage | 0.9114 |
-| mean_defenders_within_3m | 0.4489 |
-| mean_defenders_within_5m | 0.8266 |
-| mean_nearest_defender_m | 5.8048 |
-| mean_passing_lane_availability | 0.9090 |
-| packing_index_mean | 0.5721 |
-| mean_space_received | 0.5151 |
-| network_pagerank | 0.0779 |
-| network_betweenness | 0.0702 |
-| network_entropy | 0.9052 |
-| build_up_involvement_ratio | 0.5870 |
-
-Missing values indicate unavailable evidence; they are not converted into zero contribution.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

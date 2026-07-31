@@ -4,74 +4,55 @@ description: "This report uses tournament events and coverage-qualified StatsBom
 layout: "player-report"
 url: "/projects/worlds-coach-output/reports/romain-saiss/"
 playerId: "sb-5219"
-sourceUrl: "https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis/blob/718ae91e82bedbd53486a1e0381aaa70e124ba12/World-Cup-S-Bomb/results/reports/player_profiles/romain-sa-ss-5219.md"
+sourceUrl: "https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis/blob/0aa13e7289c0ce81452c8fc3a67efe3e849c1aef/World-Cup-S-Bomb/results/reports/player_profiles/romain-sa-ss-5219.md"
 displayName: "Romain Saïss"
 wikiTitle: "Romain Saïss"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Romain Saïss played as a center back for Morocco. His main role was sweeper cb, and the model ranked him #9 on the team. The notes below translate his tournament data into simple soccer terms."
+overview: "Romain Saïss played as a center back for Morocco. His main role was sweeper cb, with an active outfield rank of #64 globally and #7 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Competes well for headers and aerial balls."
-  - "Reads danger and contributes well in defensive situations."
+  - "Offers a strong goal threat when attacks reach the final third."
 weaknesses:
-  - "Creates fewer chances than his stronger areas suggest."
+  - "Pressing intensity is a weaker area in this tournament model."
   - "Can be less secure on the ball when pressure arrives."
 ---
-## Ranking and role
+
+This generated profile uses Qatar 2022 event evidence only. Player identity is displayed after scoring and is never a feature.
+
+## Tournament Impact, Role Quality, and Uncertainty
 
 - Team: Morocco
 - Position group: Center Back
 - Functional role: Sweeper CB
-- Probabilistic role: Aerial/Progressive Centre-Back
-- Role entropy: 0.0000
-- Global rank: 98
-- Position rank: 21
-- Role rank: 11
-- Team rank: 9
-- Final player rating: 0.4662
-- Global ranking eligibility: eligible
 - Minutes: 485.8
-- Minutes reliability: 0.6182
+- Global Rank v4: 64
+- Team Rank v4: 7
+- Position Rank v4: 5
+- Role Rank v4: 3
+- Tournament Impact: 0.9486
+- Role Quality: 0.1375
+- Impact interval: [-0.2024, 2.3011]
+- Rank band: 15–448
+- Uncertainty status: wide
 
-## Rating components
+## Decisive outcomes
 
-| Metric | Value |
+- Non-penalty goals: 1
+- Regular penalty goals: 0
+- Actual assists: 0
+- Non-shootout xG: 0.5650
+- Non-shootout xA: 0.0000
+- Shootout conversions are displayed only in the separate shootout field and do not enter outfield impact.
+
+## Active components
+
+| Component | Value |
 |---|---|
-| vaep_off_scaled | 0.6486 |
-| vaep_def_scaled | 0.5065 |
-| vaep_per_touch | -0.0005 |
-| open_play_xt_p90 | 0.0064 |
-| set_piece_xt_p90 | 0.0005 |
-| role_adjusted_value | 0.4927 |
-| completeness_score | 0.5187 |
-| off_ball_score | 0.4907 |
+| Attack | 0.7009 |
+| Defense | -0.0140 |
+| Other | 0.0000 |
 
-## Continuous role vector
+## Compatibility
 
-| Metric | Value |
-|---|---|
-| progression_score | 0.4819 |
-| creation_score | 0.3908 |
-| finishing_score | 0.5387 |
-| pressing_score | 0.5134 |
-| defensive_score | 0.5522 |
-| ball_security_score | 0.4408 |
-| aerial_score | 0.6244 |
-
-## Spatial, 360 and passing-network context
-
-| Metric | Value |
-|---|---|
-| sb360_coverage | 0.8879 |
-| mean_defenders_within_3m | 0.2621 |
-| mean_defenders_within_5m | 0.4485 |
-| mean_nearest_defender_m | 9.1007 |
-| mean_passing_lane_availability | 0.9299 |
-| packing_index_mean | 0.7359 |
-| mean_space_received | 0.8407 |
-| network_pagerank | 0.0699 |
-| network_betweenness | 0.1398 |
-| network_entropy | 0.8921 |
-| build_up_involvement_ratio | 0.6556 |
-
-Missing values indicate unavailable evidence; they are not converted into zero contribution.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

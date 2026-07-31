@@ -4,73 +4,55 @@ description: "This report uses tournament events and coverage-qualified StatsBom
 layout: "player-report"
 url: "/projects/worlds-coach-output/reports/angel-di-maria/"
 playerId: "dimaria"
-sourceUrl: "https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis/blob/718ae91e82bedbd53486a1e0381aaa70e124ba12/World-Cup-S-Bomb/results/reports/player_profiles/ngel-fabi-n-di-mar-a-hern-ndez-2995.md"
+sourceUrl: "https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis/blob/0aa13e7289c0ce81452c8fc3a67efe3e849c1aef/World-Cup-S-Bomb/results/reports/player_profiles/ngel-fabi-n-di-mar-a-hern-ndez-2995.md"
 displayName: "Ángel Di María"
+wikiTitle: "Ángel Di María"
 headshotUrl: "https://a.espncdn.com/i/headshots/soccer/players/full/108223.png"
 shirtNumber: 11
-overview: "Ángel Fabián Di María Hernández played as a central/wide midfield for Argentina. His main role was progressive winger, and the model ranked him #3 on the team. The notes below translate his tournament data into simple soccer terms."
+overview: "Ángel Di María played as a central/wide midfield for Argentina. His main role was progressive winger, with an active outfield rank of #30 globally and #6 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Offers a strong goal threat when attacks reach the final third."
   - "Moves the ball forward well through carries and forward passes."
 weaknesses:
   - "Aerial play is one of the less influential parts of his profile."
-  - "Can be less secure on the ball when pressure arrives."
+  - "Defensive actions are a less prominent part of his game."
 ---
-## Ranking and role
+
+This generated profile uses Qatar 2022 event evidence only. Player identity is displayed after scoring and is never a feature.
+
+## Tournament Impact, Role Quality, and Uncertainty
 
 - Team: Argentina
 - Position group: Central/Wide Midfield
 - Functional role: Progressive Winger
-- Probabilistic role: Creative/Progressive/Pressing Fullback
-- Role entropy: 0.0001
-- Global rank: 5
-- Position rank: 2
-- Role rank: 4
-- Team rank: 3
-- Final player rating: 0.7329
-- Global ranking eligibility: eligible
 - Minutes: 304.8
-- Minutes reliability: 0.5040
+- Global Rank v4: 30
+- Team Rank v4: 6
+- Position Rank v4: 4
+- Role Rank v4: 6
+- Tournament Impact: 1.4879
+- Role Quality: 0.5477
+- Impact interval: [0.2277, 3.2295]
+- Rank band: 7–218
+- Uncertainty status: wide
 
-## Rating components
+## Decisive outcomes
 
-| Metric | Value |
+- Non-penalty goals: 1
+- Regular penalty goals: 0
+- Actual assists: 1
+- Non-shootout xG: 0.5338
+- Non-shootout xA: 0.7451
+- Shootout conversions are displayed only in the separate shootout field and do not enter outfield impact.
+
+## Active components
+
+| Component | Value |
 |---|---|
-| vaep_off_scaled | 1.0000 |
-| vaep_def_scaled | 0.8096 |
-| vaep_per_touch | 0.0045 |
-| open_play_xt_p90 | 0.0681 |
-| set_piece_xt_p90 | 0.1233 |
-| role_adjusted_value | 0.9535 |
-| completeness_score | 0.6129 |
-| off_ball_score | 0.5308 |
+| Attack | 2.7839 |
+| Defense | 0.0148 |
+| Other | 0.0000 |
 
-## Continuous role vector
+## Compatibility
 
-| Metric | Value |
-|---|---|
-| progression_score | 0.6574 |
-| creation_score | 0.6120 |
-| finishing_score | 0.8369 |
-| pressing_score | 0.6244 |
-| defensive_score | 0.4777 |
-| ball_security_score | 0.4465 |
-| aerial_score | 0.0904 |
-
-## Spatial, 360 and passing-network context
-
-| Metric | Value |
-|---|---|
-| sb360_coverage | 0.8371 |
-| mean_defenders_within_3m | 0.4304 |
-| mean_defenders_within_5m | 0.8446 |
-| mean_nearest_defender_m | 7.9117 |
-| mean_passing_lane_availability | 0.8307 |
-| packing_index_mean | 0.7554 |
-| mean_space_received | 0.6107 |
-| network_pagerank | 0.0560 |
-| network_betweenness | 0.0066 |
-| network_entropy | 0.8862 |
-| build_up_involvement_ratio | 0.6691 |
-
-Missing values indicate unavailable evidence; they are not converted into zero contribution.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

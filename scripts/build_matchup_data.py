@@ -1,23 +1,9 @@
 #!/usr/bin/env python3
-"""Build the World's Coach matchup dataset from the analysis repo.
+"""Refresh matchup cards from outfield v4 on the shared Overall scale.
 
-Reads the canonical unified ranking (plus the rich player table and team
-coaching-report filenames) from the sibling analysis repo, and emits a single
-``assets/matchups.json`` that the interactive tool loads.
-
-Rating confidence intervals are NOT included: ``player_rating_uncertainty.csv``
-is still on the legacy rating scale, so joining it against the v5 leaderboard
-would misstate uncertainty. Re-add once that table is regenerated on the v5
-scale.
-
-All 32 World Cup teams are included so any matchup is selectable; teams whose
-players have not yet cleared the rating floor come through with an empty player
-list and ``rated_count = 0`` (they fill in when the analysis pipeline rates more
-players). Stdlib only — no third-party dependencies.
-
-    python scripts/build_matchup_data.py \
-        [--analysis ../26-the-pattern-seekers-analysis/World-Cup-S-Bomb] \
-        [--output assets/matchups.json]
+The cards retain the approved 553-player outfield-v4 order. The 32 main
+goalkeepers stay in their separate v5 product, but their rank percentiles are
+inserted into the same 585-player comparison order used to calculate Overall.
 """
 
 from __future__ import annotations
@@ -25,41 +11,31 @@ from __future__ import annotations
 import argparse
 import csv
 import json
-import re
 from pathlib import Path
 
 WEBSITE_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_ANALYSIS = WEBSITE_ROOT.parent / "26-the-pattern-seekers-analysis" / "World-Cup-S-Bomb"
 DEFAULT_OUTPUT = WEBSITE_ROOT / "assets" / "matchups.json"
-
-TITLE_RE = re.compile(r"^#\s+(.+?)\s+[—-]\s+.*Team (?:Coaching Report|Profile)", re.MULTILINE)
 MAX_RANK = 585
 RATING_ANCHORS = ((1, 95.50), (100, 84.00), (300, 72.00), (MAX_RANK, 60.00))
+TEAM_CODE_BY_NAME = {
+    "Argentina": "ARG", "Australia": "AUS", "Belgium": "BEL", "Brazil": "BRA",
+    "Cameroon": "CMR", "Canada": "CAN", "Costa Rica": "CRC", "Croatia": "CRO",
+    "Denmark": "DEN", "Ecuador": "ECU", "England": "ENG", "France": "FRA",
+    "Germany": "GER", "Ghana": "GHA", "Iran": "IRN", "Japan": "JPN",
+    "Mexico": "MEX", "Morocco": "MAR", "Netherlands": "NED", "Poland": "POL",
+    "Portugal": "POR", "Qatar": "QAT", "Saudi Arabia": "KSA", "Senegal": "SEN",
+    "Serbia": "SRB", "South Korea": "KOR", "Spain": "ESP", "Switzerland": "SUI",
+    "Tunisia": "TUN", "United States": "USA", "Uruguay": "URU", "Wales": "WAL",
+}
 
 
 def read_csv(path: Path) -> list[dict[str, str]]:
-    with path.open(encoding="utf-8") as handle:
+    with path.open(encoding="utf-8-sig", newline="") as handle:
         return list(csv.DictReader(handle))
 
 
-def team_code_names(compiled_dir: Path) -> dict[str, str]:
-    """Map 3-letter code -> full team name from the 32 team reports."""
-    mapping: dict[str, str] = {}
-    for report in sorted(compiled_dir.glob("*_team_coaching_report.md")):
-        code = report.name.split("_", 1)[0]
-        match = TITLE_RE.search(report.read_text(encoding="utf-8"))
-        mapping[code] = match.group(1).strip() if match else code
-    return mapping
-
-
-def to_float(value: str) -> float | None:
-    try:
-        return round(float(value), 4)
-    except (TypeError, ValueError):
-        return None
-
-
-def to_int(value: str) -> int | None:
+def to_int(value: str | None) -> int | None:
     try:
         return int(float(value))
     except (TypeError, ValueError):
@@ -67,9 +43,8 @@ def to_int(value: str) -> int | None:
 
 
 def overall_rating(global_rank: int) -> float:
-    """Map canonical publication rank to the shared, two-decimal overall scale."""
     if not 1 <= global_rank <= MAX_RANK:
-        raise ValueError(f"Global rank outside 1..{MAX_RANK}: {global_rank}")
+        raise ValueError(f"Overall rank outside 1..{MAX_RANK}: {global_rank}")
     left, right = next(
         (left, right)
         for left, right in zip(RATING_ANCHORS, RATING_ANCHORS[1:])
@@ -79,66 +54,102 @@ def overall_rating(global_rank: int) -> float:
     return round(left[1] + progress * (right[1] - left[1]), 2)
 
 
+def percentile_merged_ranks(
+    outfield_rows: list[dict[str, str]], goalkeeper_rows: list[dict]
+) -> dict[str, int]:
+    entries = [
+        ((int(row["tournament_impact_rank_outfield_v4"]) - 0.5) / 553, 0, row["player_id"])
+        for row in outfield_rows
+    ]
+    entries.extend(
+        (
+            (int(row["goalkeeper_consolidated_value_rank_v5"]) - 0.5) / 32,
+            1,
+            str(row["player_id"]),
+        )
+        for row in goalkeeper_rows
+    )
+    entries.sort()
+    if len(entries) != MAX_RANK or len({entry[2] for entry in entries}) != MAX_RANK:
+        raise ValueError("The percentile bridge must contain 553 outfield players and 32 goalkeepers")
+    return {player_id: index + 1 for index, (_, _, player_id) in enumerate(entries)}
+
+
 def build(analysis: Path) -> dict:
-    compiled = analysis / "results" / "reports" / "teams"
     ranking_dir = analysis / "results" / "reports" / "ranking"
-    unified = read_csv(ranking_dir / "unified_tournament_rankings.csv")
-    rich_rows = read_csv(ranking_dir / "player_rankings_v3.csv")
-    rich_by_identity = {(row["player"], row["team"]): row for row in rich_rows}
+    outfield = read_csv(ranking_dir / "global_rankings_outfield.csv")
+    v4_rows = read_csv(
+        analysis / "results" / "diagnostics" / "ranking_repair" / "outfield_v4_rank_intervals.csv"
+    )
+    rankings = json.loads((ranking_dir / "player_rankings.json").read_text(encoding="utf-8"))
+    main_goalkeepers = [
+        row
+        for row in rankings
+        if row.get("position_group") == "Goalkeeper" and row.get("is_main_goalkeeper")
+    ]
+    v4_by_id = {row["player_id"]: row for row in v4_rows}
+    if len(v4_by_id) != 553 or len(outfield) != 553 or len(main_goalkeepers) != 32:
+        raise ValueError("Expected 553 outfield-v4 players and 32 main goalkeepers")
+    overall_rank_by_id = percentile_merged_ranks(v4_rows, main_goalkeepers)
 
-    if len(unified) != MAX_RANK:
-        raise ValueError(f"Expected {MAX_RANK} unified players, found {len(unified)}")
-
-    code_by_name = {name: code for code, name in team_code_names(compiled).items()}
+    ordered = sorted(
+        outfield,
+        key=lambda row: int(v4_by_id[row["player_id"]]["tournament_impact_rank_outfield_v4"]),
+    )
+    team_ranks: dict[str, int] = {}
+    position_ranks: dict[str, int] = {}
+    derived_ranks: dict[str, tuple[int, int]] = {}
+    for row in ordered:
+        team = row["team"]
+        position = row.get("position_group", "")
+        team_ranks[team] = team_ranks.get(team, 0) + 1
+        position_ranks[position] = position_ranks.get(position, 0) + 1
+        derived_ranks[row["player_id"]] = (team_ranks[team], position_ranks[position])
 
     players_by_team: dict[str, list[dict]] = {}
-    for row in unified:
-        name = row["Team"]
-        player_name = row["Player"]
-        rich = rich_by_identity.get((player_name, name))
-        if rich is None:
-            raise ValueError(f"Unified player missing rich row: {player_name} ({name})")
-        global_rank = to_int(row["Global Rank"])
-        if global_rank is None:
-            raise ValueError(f"Missing global rank: {player_name} ({name})")
-        players_by_team.setdefault(name, []).append(
+    for row in ordered:
+        team = row["team"]
+        v4 = v4_by_id[row["player_id"]]
+        team_rank, position_rank = derived_ranks[row["player_id"]]
+        overall_rank = overall_rank_by_id[row["player_id"]]
+        players_by_team.setdefault(team, []).append(
             {
-                "id": rich["player_id"],
-                "name": player_name,
-                "position": row.get("Position Group", ""),
-                "role": rich.get("functional_role", ""),
-                "rating": overall_rating(global_rank),
-                "team_rank": to_int(row.get("Team Rank", "")),
-                "global_rank": global_rank,
-                "position_rank": to_int(rich.get("position_rank_v3", "")),
-                "minutes": to_int(rich.get("minutes", "")),
+                "id": row["player_id"],
+                "name": row["player"],
+                "position": row.get("position_group", ""),
+                "role": row.get("functional_role", ""),
+                "rating": overall_rating(overall_rank),
+                "overall_rank": overall_rank,
+                "team_rank": team_rank,
+                "global_rank": int(v4["tournament_impact_rank_outfield_v4"]),
+                "position_rank": position_rank,
+                "minutes": to_int(row.get("minutes")),
             }
         )
 
     teams = []
-    for code, name in sorted(team_code_names(compiled).items(), key=lambda kv: kv[1]):
-        roster = sorted(
-            players_by_team.get(name, []),
-            key=lambda player: (player["team_rank"] is None, player["team_rank"] or 0),
-        )
-        ratings = [p["rating"] for p in roster if p["rating"] is not None]
+    for name, code in sorted(TEAM_CODE_BY_NAME.items()):
+        roster = sorted(players_by_team.get(name, []), key=lambda player: player["team_rank"])
+        ratings = [player["rating"] for player in roster]
         teams.append(
             {
                 "code": code,
                 "name": name,
                 "rated_count": len(roster),
-                "avg_rating": round(sum(ratings) / len(ratings), 4) if ratings else None,
+                "avg_rating": round(sum(ratings) / len(ratings), 2) if ratings else None,
                 "top_rating": max(ratings) if ratings else None,
                 "players": roster,
             }
         )
 
-    # sanity: teams present in the leaderboard should all have mapped to a code
-    unmapped = sorted(set(players_by_team) - set(code_by_name))
+    unmapped = sorted(set(players_by_team) - set(TEAM_CODE_BY_NAME))
     return {
-        "generated_from": "unified_tournament_rankings.csv + player_rankings_v3.csv + FIFA-style rank scale",
+        "generated_from": (
+            "outfield_v4_rank_intervals.csv + goalkeeper consolidated value v5 "
+            "(percentile-bridged FIFA-style Overall)"
+        ),
         "team_count": len(teams),
-        "rated_player_count": len(unified),
+        "rated_player_count": len(outfield),
         "unmapped_teams": unmapped,
         "teams": teams,
     }
@@ -149,22 +160,17 @@ def main() -> None:
     parser.add_argument("--analysis", type=Path, default=DEFAULT_ANALYSIS)
     parser.add_argument("--output", type=Path, default=DEFAULT_OUTPUT)
     args = parser.parse_args()
-
     if not args.analysis.exists():
         raise SystemExit(f"Analysis repo not found: {args.analysis}")
-
     payload = build(args.analysis)
+    if payload["unmapped_teams"]:
+        raise SystemExit(f"Ranking teams have no site code: {payload['unmapped_teams']}")
     args.output.parent.mkdir(parents=True, exist_ok=True)
-    args.output.write_text(json.dumps(payload, indent=2, ensure_ascii=False), encoding="utf-8")
-
-    rated = sum(1 for t in payload["teams"] if t["rated_count"])
+    args.output.write_text(json.dumps(payload, indent=2, ensure_ascii=False) + "\n", encoding="utf-8")
     print(
         f"Wrote {args.output.relative_to(WEBSITE_ROOT)}: "
-        f"{payload['team_count']} teams ({rated} with rated players), "
-        f"{payload['rated_player_count']} players."
+        f"{payload['team_count']} teams, {payload['rated_player_count']} outfield players."
     )
-    if payload["unmapped_teams"]:
-        print(f"WARNING: leaderboard teams with no code mapping: {payload['unmapped_teams']}")
 
 
 if __name__ == "__main__":

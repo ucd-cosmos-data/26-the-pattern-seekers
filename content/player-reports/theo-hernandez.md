@@ -4,73 +4,55 @@ description: "This report uses tournament events and coverage-qualified StatsBom
 layout: "player-report"
 url: "/projects/worlds-coach-output/reports/theo-hernandez/"
 playerId: "fra_lb"
-sourceUrl: "https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis/blob/718ae91e82bedbd53486a1e0381aaa70e124ba12/World-Cup-S-Bomb/results/reports/player_profiles/theo-bernard-fran-ois-hern-ndez-6704.md"
+sourceUrl: "https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis/blob/0aa13e7289c0ce81452c8fc3a67efe3e849c1aef/World-Cup-S-Bomb/results/reports/player_profiles/theo-bernard-fran-ois-hern-ndez-6704.md"
 displayName: "Théo Hernández"
+wikiTitle: "Théo Hernández"
 headshotUrl: "https://a.espncdn.com/i/headshots/soccer/players/full/233621.png"
 shirtNumber: 22
-overview: "Theo Bernard François Hernández played as a fullback/wingback for France. His main role was attacking wingback, and the model ranked him #2 on the team. The notes below translate his tournament data into simple soccer terms."
+overview: "Théo Hernández played as a fullback/wingback for France. His main role was attacking wingback, with an active outfield rank of #97 globally and #7 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
-  - "Reads danger and contributes well in defensive situations."
   - "Creates useful chances and connects attacks."
+  - "Reads danger and contributes well in defensive situations."
 weaknesses:
+  - "Pressing intensity is a weaker area in this tournament model."
   - "Can be less secure on the ball when pressure arrives."
-  - "Finishing is a smaller part of his overall impact."
 ---
-## Ranking and role
+
+This generated profile uses Qatar 2022 event evidence only. Player identity is displayed after scoring and is never a feature.
+
+## Tournament Impact, Role Quality, and Uncertainty
 
 - Team: France
 - Position group: Fullback/Wingback
 - Functional role: Attacking Wingback
-- Probabilistic role: Creative/Progressive Fullback
-- Role entropy: 0.0000
-- Global rank: 12
-- Position rank: 3
-- Role rank: 2
-- Team rank: 2
-- Final player rating: 0.6874
-- Global ranking eligibility: eligible
 - Minutes: 548.5
-- Minutes reliability: 0.6464
+- Global Rank v4: 97
+- Team Rank v4: 7
+- Position Rank v4: 11
+- Role Rank v4: 9
+- Tournament Impact: 0.6446
+- Role Quality: 0.1964
+- Impact interval: [-0.0533, 1.5464]
+- Rank band: 34–312
+- Uncertainty status: wide
 
-## Rating components
+## Decisive outcomes
 
-| Metric | Value |
+- Non-penalty goals: 1
+- Regular penalty goals: 0
+- Actual assists: 2
+- Non-shootout xG: 0.2593
+- Non-shootout xA: 0.9766
+- Shootout conversions are displayed only in the separate shootout field and do not enter outfield impact.
+
+## Active components
+
+| Component | Value |
 |---|---|
-| vaep_off_scaled | 0.3451 |
-| vaep_def_scaled | 0.8134 |
-| vaep_per_touch | 0.0011 |
-| open_play_xt_p90 | 0.0213 |
-| set_piece_xt_p90 | 0.0292 |
-| role_adjusted_value | 0.8562 |
-| completeness_score | 0.6518 |
-| off_ball_score | 0.4947 |
+| Attack | 1.3919 |
+| Defense | -0.1610 |
+| Other | 0.0000 |
 
-## Continuous role vector
+## Compatibility
 
-| Metric | Value |
-|---|---|
-| progression_score | 0.5910 |
-| creation_score | 0.7204 |
-| finishing_score | 0.5880 |
-| pressing_score | 0.6346 |
-| defensive_score | 0.7254 |
-| ball_security_score | 0.5549 |
-| aerial_score | 0.5962 |
-
-## Spatial, 360 and passing-network context
-
-| Metric | Value |
-|---|---|
-| sb360_coverage | 0.7962 |
-| mean_defenders_within_3m | 0.2621 |
-| mean_defenders_within_5m | 0.4867 |
-| mean_nearest_defender_m | 7.9623 |
-| mean_passing_lane_availability | 0.9485 |
-| packing_index_mean | 0.6365 |
-| mean_space_received | 0.7592 |
-| network_pagerank | 0.0895 |
-| network_betweenness | 0.1092 |
-| network_entropy | 0.8388 |
-| build_up_involvement_ratio | 0.6453 |
-
-Missing values indicate unavailable evidence; they are not converted into zero contribution.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

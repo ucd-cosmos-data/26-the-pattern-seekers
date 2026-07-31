@@ -45,7 +45,7 @@
         <section class="matchup" data-matchup aria-labelledby="matchup-title">
             <div class="matchup__head">
                 <h2 id="matchup-title">Choose a matchup</h2>
-                <p>Pick two teams to compare their rated squads head-to-head.</p>
+                <p>Pick two teams to compare their active outfield rankings head-to-head.</p>
             </div>
             <div class="matchup__picker">
                 <label class="matchup__team">
@@ -477,7 +477,7 @@
                 <div><dt>Matches</dt><dd><span data-count="64">0</span></dd></div>
                 <div><dt>Possessions</dt><dd><span data-count="11016">0</span></dd></div>
                 <div><dt>Actions scored</dt><dd><span data-count="233529">0</span></dd></div>
-                <div><dt>Players rated</dt><dd><span data-count="142">0</span></dd></div>
+                <div><dt>Outfield ranked</dt><dd><span data-count="553">0</span></dd></div>
             </dl>
         </header>
 
@@ -666,14 +666,14 @@
                     </p>
                 </div>
                 <div class="pres-spec is-wide" data-pres-reveal style="--pres-delay: 240ms">
-                    <header><span>Player value</span><strong>360-VAEP + xT</strong><em>every rated action, out of fold</em></header>
-                    <div class="pres-spec__row"><span>Dev OOF ROC-AUC</span><strong>0.949</strong><em>untouched test 0.967</em></div>
-                    <div class="pres-spec__row"><span>Rating</span><strong>50 / 30 / 20</strong><em>VAEP&frasl;90 &middot; VAEP&frasl;touch &middot; xT&frasl;90</em></div>
-                    <div class="pres-spec__row"><span>Shrinkage</span><strong>min &frasl; (min + 300)</strong><em>toward position-group mean &middot; 142 players &ge; 300&prime;</em></div>
+                    <header><span>Player value</span><strong>Tournament Impact</strong><em>identity-blind Qatar 2022 evidence</em></header>
+                    <div class="pres-spec__row"><span>Outfield order</span><strong>553 players</strong><em>ordinary periods 1&ndash;4 &middot; goalkeepers excluded</em></div>
+                    <div class="pres-spec__row"><span>300+ view</span><strong>126 players</strong><em>the same outfield order, filtered by minutes</em></div>
+                    <div class="pres-spec__row"><span>Goalkeepers</span><strong>32 starters</strong><em>separate PSxG + clutch consolidated value</em></div>
                 </div>
                 <figure class="pres-artifact" data-pres-reveal style="--pres-delay: 280ms">
-                    <img src="{{ "projects/worlds-coach-output/vaep_vs_xt_scatter.png" | relURL }}" alt="Scatter plot of VAEP per 90 against expected threat per 90 for every rated player" loading="lazy" width="1280" height="960" />
-                    <figcaption>Pipeline output &mdash; VAEP&frasl;90 &times; xT&frasl;90, every rated player.</figcaption>
+                    <img src="{{ "projects/worlds-coach-output/vaep_vs_xt_scatter.png" | relURL }}" alt="Supporting scatter plot of VAEP per 90 against expected threat per 90 for outfield players" loading="lazy" width="1280" height="960" />
+                    <figcaption>Supporting evidence &mdash; VAEP&frasl;90 &times; xT&frasl;90; these channels are not the active ranking by themselves.</figcaption>
                 </figure>
             </div>
         </section>
@@ -711,43 +711,43 @@
                         The gap is noise &mdash; the headline numbers hold.
                     </p>
                     <p>
-                        And every player grade ships with its own error bar: a 2,000-replicate
-                        match bootstrap reruns the exact rating formula on resampled
-                        tournaments. Twelve of eighteen teams have a statistically clear
-                        number&nbsp;one. Argentina doesn&rsquo;t.
+                        Outfield uncertainty comes from a match bootstrap that reruns the
+                        active Tournament Impact calculation on resampled tournaments.
+                        The intervals describe sampling variation and do not act as a score
+                        penalty.
                     </p>
                 </div>
                 <div class="pres-intervals" data-pres-reveal style="--pres-delay: 230ms">
-                    <p class="pres-bars__head">Final rating, 95% interval &mdash; is the team&rsquo;s #1 real?</p>
+                    <p class="pres-bars__head">Tournament Impact and bootstrap interval</p>
                     <div class="pres-intervals__group">
-                        <p>Argentina <strong>P(#1) = 63% &mdash; a lean</strong></p>
+                        <p>Argentina <strong>active outfield ranks #1 and #8</strong></p>
                         <div class="pres-interval">
                             <span class="pres-interval__name">Messi</span>
-                            <span class="pres-interval__track"><i style="left: 17.4%; width: 68.9%"></i><b style="left: 51.4%"></b></span>
-                            <span class="pres-interval__value">0.330</span>
+                            <span class="pres-interval__track"><i style="left: 22.2%; width: 77.1%"></i><b style="left: 56.9%"></b></span>
+                            <span class="pres-interval__value">7.965</span>
                         </div>
                         <div class="pres-interval">
                             <span class="pres-interval__name">&Aacute;lvarez</span>
-                            <span class="pres-interval__track"><i style="left: 10.0%; width: 67.7%"></i><b style="left: 40.3%"></b></span>
-                            <span class="pres-interval__value">0.291</span>
+                            <span class="pres-interval__track"><i style="left: 7.8%; width: 36.4%"></i><b style="left: 24.4%"></b></span>
+                            <span class="pres-interval__value">3.414</span>
                         </div>
                     </div>
                     <div class="pres-intervals__group">
-                        <p>France <strong>P(#1) = 94% &mdash; clear</strong></p>
+                        <p>France <strong>active outfield ranks #2 and #3</strong></p>
                         <div class="pres-interval">
                             <span class="pres-interval__name">Mbapp&eacute;</span>
-                            <span class="pres-interval__track"><i style="left: 17.4%; width: 62.6%"></i><b style="left: 46.6%"></b></span>
-                            <span class="pres-interval__value">0.313</span>
+                            <span class="pres-interval__track"><i style="left: 19.4%; width: 63.7%"></i><b style="left: 47.0%"></b></span>
+                            <span class="pres-interval__value">6.576</span>
                         </div>
                         <div class="pres-interval">
                             <span class="pres-interval__name">Giroud</span>
-                            <span class="pres-interval__track"><i style="left: 11.7%; width: 25.7%"></i><b style="left: 25.1%"></b></span>
-                            <span class="pres-interval__value">0.238</span>
+                            <span class="pres-interval__track"><i style="left: 6.8%; width: 40.3%"></i><b style="left: 26.3%"></b></span>
+                            <span class="pres-interval__value">3.683</span>
                         </div>
                     </div>
                     <p class="pres-intervals__note">
-                        Intervals share match draws, so the joint test &mdash; not visual
-                        overlap &mdash; is the verdict. Ghana&rsquo;s top spot is a coin flip.
+                        Bootstrap rank bands are 1&ndash;14 for Messi, 3&ndash;99 for
+                        &Aacute;lvarez, 1&ndash;21 for Mbapp&eacute;, and 3&ndash;111 for Giroud.
                     </p>
                 </div>
             </div>
@@ -764,7 +764,7 @@
                     <p>
                         The <em>Interactive coach</em> view on this page is the product: scenario
                         in, plan out, a seven-phase attacking sequence you can scrub like film.
-                        Behind it sit 36 annotated team dossiers &mdash; every grade printed with
+                        Behind it sit 32 annotated team dossiers &mdash; every grade printed with
                         its confidence interval &mdash; and a single ordered pipeline of
                         twenty-odd scripts that rebuilds everything from the raw feed, ending in
                         an acceptance gate that fails loudly.

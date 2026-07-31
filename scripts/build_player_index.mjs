@@ -2,7 +2,7 @@
 // generated matchup boards can show the name each player goes by, a description
 // imported from their profile, and a working "open player report" link.
 //
-// Inputs (from the analysis repo): ranking/player_rankings_v3.json + player_profiles/*.md
+// Inputs (from the analysis repo): ranking/player_rankings.json + player_profiles/*.md
 // Outputs: assets/player-index.json (keyed by StatsBomb player_id) and
 //          content/player-reports/<slug>.md pages (non-curated players only).
 import fs from "node:fs";
@@ -14,14 +14,25 @@ const analysisRoot =
     process.env.PATTERN_SEEKERS_ANALYSIS_REPORTS_DIR ||
     path.resolve(projectRoot, "../26-the-pattern-seekers-analysis/World-Cup-S-Bomb/results/reports");
 const profilesDir = path.join(analysisRoot, "player_profiles");
-const rankingsPath = path.join(analysisRoot, "ranking/player_rankings_v3.json");
+const rankingsPath = path.join(analysisRoot, "ranking", "player_rankings.json");
 const contentRoot = path.join(projectRoot, "content/player-reports");
 const indexOut = path.join(projectRoot, "assets/player-index.json");
 
-const analysisCommit = "718ae91e82bedbd53486a1e0381aaa70e124ba12";
+const analysisCommit = "0aa13e7289c0ce81452c8fc3a67efe3e849c1aef";
 const sourceBase =
     "https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis/blob/" +
     analysisCommit + "/World-Cup-S-Bomb/results/reports/player_profiles/";
+
+function parseCsv(text) {
+    const lines = text.split(/\r?\n/).filter(function (line) { return line.length; });
+    const header = lines[0].split(",");
+    return lines.slice(1).map(function (line) {
+        const cells = line.split(",");
+        const row = {};
+        header.forEach(function (key, index) { row[key] = cells[index]; });
+        return row;
+    });
+}
 
 const KNOCKOUT_TEAMS = new Set([
     "Netherlands", "United States", "Argentina", "Australia", "France", "Poland",
@@ -223,37 +234,148 @@ const viewerLanguage = {
     aerial_score: { strength: "Competes well for headers and aerial balls.", weakness: "Aerial play is one of the less influential parts of his profile." }
 };
 function goalkeeperSummary(name, team, ranking) {
-    const teamRank = ranking["Team rank"];
+    const goalkeeperRank = ranking.goalkeeper_consolidated_value_rank_v5;
     return {
-        overview: `${name} was ${team}'s goalkeeper. The model ranked him ${teamRank ? `#${teamRank} within the team` : "within the team goalkeeper pool"}, using shot-stopping, cross control, sweeping, and distribution data.`,
-        strengths: ["Provides a steady goalkeeper presence and a safe passing option in buildup.", "Commands his box and organises the defence in front of him."],
-        weaknesses: ["The available tournament sample is small, so goalkeeper conclusions remain cautious."]
+        overview: `${name} was ${team}'s goalkeeper. The active goalkeeper model ranked him ${goalkeeperRank ? `#${goalkeeperRank} in its separate 32-player table` : "outside the main-goalkeeper table"}. Goalkeepers do not enter the global outfield or 300-minute rankings.`,
+        strengths: ["The goalkeeper value combines calibrated PSxG prevention with distinct clutch, penalty, shootout, and support channels."],
+        weaknesses: ["The result describes a small tournament sample, so goalkeeper conclusions remain cautious."]
     };
 }
-function makeViewerSummary(report) {
-    const ranking = reportItems(report, "Ranking and role");
-    const vector = reportItems(report, "Continuous role vector");
-    const name = report.title.replace(/ Player Profile$/, "");
-    const team = ranking.Team || "his national team";
-    const position = ranking["Position group"] || "outfield player";
+function makeViewerSummary(report, ranking, displayName) {
+    const name = displayName || report.title.replace(/ (Player|Goalkeeper) Profile$/, "");
+    const team = ranking.team || "his national team";
+    const position = ranking.position_group || "outfield player";
     const positionLabel = position.toLowerCase();
     const article = /^[aeiou]/i.test(positionLabel) ? "an" : "a";
-    const role = ranking["Functional role"] || "a flexible role";
+    const role = ranking.functional_role || "a flexible role";
     if (positionLabel.includes("goalkeeper")) return goalkeeperSummary(name, team, ranking);
     const scored = Object.keys(viewerLanguage)
-        .map((k) => ({ k, v: num(vector, k) })).filter((i) => i.v !== null)
+        .map((k) => ({ k, v: Number.isFinite(Number(ranking[k])) ? Number(ranking[k]) : null }))
+        .filter((i) => i.v !== null)
         .sort((a, b) => b.v - a.v);
     const strengths = scored.slice(0, 2).map((i) => viewerLanguage[i.k].strength);
     const weaknesses = scored.slice(-2).reverse().map((i) => viewerLanguage[i.k].weakness);
-    const teamRank = ranking["Team rank"];
+    const globalRank = ranking.publication_global_rank_v4;
+    const teamRank = ranking.publication_team_rank_v4;
     return {
-        overview: `${name} played as ${article} ${positionLabel} for ${team}. His main role was ${role.toLowerCase()}${teamRank ? `, and the model ranked him #${teamRank} on the team` : ""}. The notes below translate his tournament data into simple soccer terms.`,
+        overview: `${name} played as ${article} ${positionLabel} for ${team}. His main role was ${role.toLowerCase()}${globalRank ? `, with an active outfield rank of #${globalRank} globally and #${teamRank} on the team` : ""}. The notes below translate his tournament evidence into simple soccer terms.`,
         strengths, weaknesses
     };
 }
 
+function applyV4ProfileRanking(markdown, ranking) {
+    if (ranking.position_group === "Goalkeeper") return markdown;
+    const low = Number(ranking.tournament_impact_interval_low_outfield_v4);
+    const high = Number(ranking.tournament_impact_interval_high_outfield_v4);
+    const best = Number(ranking.bootstrap_rank_best_outfield_v4);
+    const worst = Number(ranking.bootstrap_rank_worst_outfield_v4);
+    const bandWidth = worst - best;
+    const uncertaintyStatus = bandWidth > 100 ? "wide" : bandWidth > 50 ? "moderate" : "stable";
+    return markdown
+        .replace(/- Global Rank v3: .*$/m, `- Global Rank v4: ${ranking.publication_global_rank_v4}`)
+        .replace(/- Team Rank v3: .*$/m, `- Team Rank v4: ${ranking.publication_team_rank_v4}`)
+        .replace(/- Position Rank v3: .*$/m, `- Position Rank v4: ${ranking.position_rank_v4}`)
+        .replace(/- Role Rank v3: .*$/m, `- Role Rank v4: ${ranking.role_rank_v4}`)
+        .replace(/- Tournament Impact: .*$/m, `- Tournament Impact: ${Number(ranking.tournament_impact_score_outfield_v4).toFixed(4)}`)
+        .replace(/- Impact interval: .*$/m, `- Impact interval: [${low.toFixed(4)}, ${high.toFixed(4)}]`)
+        .replace(/- Rank band: .*$/m, `- Rank band: ${best}\u2013${worst}`)
+        .replace(/- Uncertainty status: .*$/m, `- Uncertainty status: ${uncertaintyStatus}`)
+        .replace(
+            /Older v2\/v5 columns are retained for provenance only\. They are not the active ordering described above\./,
+            "Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4."
+        );
+}
+
+function parsePageFrontMatter(markdown) {
+    const match = markdown.match(/^---\r?\n([\s\S]*?)\r?\n---\r?\n?/);
+    if (!match) throw new Error("Existing player report is missing front matter");
+    const values = {};
+    match[1].split(/\r?\n/).forEach((line) => {
+        const field = line.match(/^([A-Za-z][A-Za-z0-9]*):\s*(.*)$/);
+        if (!field || !field[2]) return;
+        let value = field[2];
+        try { value = JSON.parse(value); } catch { /* retain plain YAML scalar */ }
+        values[field[1]] = value;
+    });
+    return values;
+}
+
 // ---- build ----------------------------------------------------------------
 const rankings = JSON.parse(fs.readFileSync(rankingsPath, "utf8"));
+const outfieldV4Path = path.resolve(
+    analysisRoot,
+    "../diagnostics/ranking_repair/outfield_v4_rank_intervals.csv"
+);
+const outfieldV4 = parseCsv(fs.readFileSync(outfieldV4Path, "utf8"));
+if (outfieldV4.length !== 553) throw new Error("The approved outfield v4 release must contain 553 players");
+const rankingById = new Map(rankings.map((row) => [String(row.player_id), row]));
+const v4ById = new Map(outfieldV4.map((row) => [String(row.player_id), row]));
+const rawScores = outfieldV4.map((row) => Number(row.tournament_impact_score_outfield_v4));
+const minV4Score = Math.min(...rawScores);
+const maxV4Score = Math.max(...rawScores);
+const teamCounters = new Map();
+const positionCounters = new Map();
+const roleCounters = new Map();
+outfieldV4
+    .slice()
+    .sort((a, b) => Number(a.tournament_impact_rank_outfield_v4) - Number(b.tournament_impact_rank_outfield_v4))
+    .forEach((v4) => {
+        const ranking = rankingById.get(String(v4.player_id));
+        if (!ranking || ranking.position_group === "Goalkeeper") {
+            throw new Error(`Outfield v4 player ${v4.player_id} is missing compatible profile metadata`);
+        }
+        const teamRank = (teamCounters.get(ranking.team) || 0) + 1;
+        const positionRank = (positionCounters.get(ranking.position_group) || 0) + 1;
+        const roleRank = (roleCounters.get(ranking.functional_role) || 0) + 1;
+        teamCounters.set(ranking.team, teamRank);
+        positionCounters.set(ranking.position_group, positionRank);
+        roleCounters.set(ranking.functional_role, roleRank);
+        const raw = Number(v4.tournament_impact_score_outfield_v4);
+        Object.assign(ranking, v4, {
+            active_outfield_score_v4: (raw - minV4Score) / (maxV4Score - minV4Score),
+            publication_global_rank_v4: Number(v4.tournament_impact_rank_outfield_v4),
+            publication_team_rank_v4: teamRank,
+            position_rank_v4: positionRank,
+            role_rank_v4: roleRank
+        });
+    });
+if (v4ById.size !== 553) throw new Error("The outfield v4 release contains duplicate player ids");
+
+const OVERALL_MAX_RANK = 585;
+const OVERALL_ANCHORS = [[1, 95.5], [100, 84], [300, 72], [OVERALL_MAX_RANK, 60]];
+function overallRatingFromRank(rank) {
+    const segment = rank <= 100 ? [OVERALL_ANCHORS[0], OVERALL_ANCHORS[1]]
+        : rank <= 300 ? [OVERALL_ANCHORS[1], OVERALL_ANCHORS[2]]
+            : [OVERALL_ANCHORS[2], OVERALL_ANCHORS[3]];
+    const progress = (rank - segment[0][0]) / (segment[1][0] - segment[0][0]);
+    return Number((segment[0][1] + progress * (segment[1][1] - segment[0][1])).toFixed(2));
+}
+
+const mainGoalkeepers = rankings.filter((player) =>
+    player.position_group === "Goalkeeper" && Boolean(player.is_main_goalkeeper)
+);
+if (mainGoalkeepers.length !== 32) throw new Error("The active goalkeeper v5 release must contain 32 main goalkeepers");
+const overallOrder = rankings
+    .filter((player) => player.position_group !== "Goalkeeper")
+    .map((player) => ({
+        player,
+        percentile: (Number(player.publication_global_rank_v4) - 0.5) / 553,
+        productOrder: 0
+    }))
+    .concat(mainGoalkeepers.map((player) => ({
+        player,
+        percentile: (Number(player.goalkeeper_consolidated_value_rank_v5) - 0.5) / 32,
+        productOrder: 1
+    })))
+    .sort((left, right) =>
+        left.percentile - right.percentile || left.productOrder - right.productOrder
+    );
+if (overallOrder.length !== OVERALL_MAX_RANK) throw new Error("Overall publication must contain 585 players");
+overallOrder.forEach(({ player }, index) => {
+    player.overall_rank = index + 1;
+    player.overall_rating = overallRatingFromRank(index + 1);
+});
+
 const profileFiles = fs.readdirSync(profilesDir).filter((f) => f.endsWith(".md"));
 const fileById = {};
 profileFiles.forEach((f) => {
@@ -266,35 +388,51 @@ const index = {};
 let pagesWritten = 0;
 fs.mkdirSync(contentRoot, { recursive: true });
 
-rankings
-    .filter((p) => KNOCKOUT_TEAMS.has(p.team))
-    .forEach((p) => {
-        const id = p.player_id;
+const curatedIdBySlug = new Map(
+    Object.entries(CURATED_SLUG).map(([id, slug]) => [slug, Number(id)])
+);
+const existingPageById = new Map();
+fs.readdirSync(contentRoot).filter((file) => file.endsWith(".md")).forEach((file) => {
+    const slug = path.basename(file, ".md");
+    const markdown = fs.readFileSync(path.join(contentRoot, file), "utf8");
+    const frontMatter = parsePageFrontMatter(markdown);
+    const rawPlayerId = String(frontMatter.playerId || "");
+    const playerId = rawPlayerId.startsWith("sb-")
+        ? Number(rawPlayerId.slice(3))
+        : curatedIdBySlug.get(slug);
+    if (!Number.isInteger(playerId)) throw new Error(`Cannot resolve player id for ${file}`);
+    existingPageById.set(playerId, { file, slug, frontMatter });
+});
+
+rankings.forEach((p) => {
+        const id = Number(p.player_id);
         const file = fileById[String(id)];
         if (!file) { console.warn("No profile for", id, p.player_name); return; }
         const markdown = fs.readFileSync(path.join(profilesDir, file), "utf8");
         const parsed = parseReport(markdown);
-        const summary = makeViewerSummary(parsed);
         const { goesBy, surname } = resolveNames(id, p.player_name);
-
-        let slug = CURATED_SLUG[id];
-        const curated = Boolean(slug);
-        if (!slug) {
-            slug = slugify(goesBy);
-            if (!slug || usedSlugs.has(slug)) slug = slug ? slug + "-" + id : "player-" + id;
-            usedSlugs.add(slug);
-        }
+        const summary = makeViewerSummary(parsed, p, goesBy);
+        const existingPage = existingPageById.get(id);
+        const slug = existingPage?.slug || null;
+        if (slug) usedSlugs.add(slug);
+        const isGoalkeeper = p.position_group === "Goalkeeper";
+        const isMainGoalkeeper = isGoalkeeper && Boolean(p.is_main_goalkeeper);
+        const rating = isMainGoalkeeper || !isGoalkeeper ? Number(p.overall_rating) : null;
 
         index[id] = {
             name: goesBy,
             surname,
             team: p.team,
             role: p.functional_role || parsed && reportItems(parsed, "Ranking and role")["Functional role"] || "",
-            teamRank: p.team_rank || null,
-            positionRank: p.position_rank || null,
-            globalRank: p.global_rank || null,
-            rating: typeof p["Final player rating"] === "number" ? p["Final player rating"]
-                : (typeof p.final_player_rating === "number" ? p.final_player_rating : null),
+            teamRank: isGoalkeeper ? null : p.publication_team_rank_v4 || null,
+            positionRank: isGoalkeeper
+                ? p.goalkeeper_consolidated_value_rank_v5 || null
+                : p.position_rank_v4 || null,
+            globalRank: isGoalkeeper ? null : p.publication_global_rank_v4 || null,
+            goalkeeperRank: isMainGoalkeeper ? p.goalkeeper_consolidated_value_rank_v5 : null,
+            overallRank: isMainGoalkeeper || !isGoalkeeper ? p.overall_rank : null,
+            rankingProduct: isGoalkeeper ? "goalkeeper" : "outfield",
+            rating: Number.isFinite(rating) ? rating : null,
             minutes: p.minutes ? Math.round(p.minutes) : null,
             overview: summary.overview,
             strength: summary.strengths[0] || "",
@@ -303,24 +441,23 @@ rankings
             slug
         };
 
-        if (!curated) {
+        if (existingPage) {
             const sourceUrl = sourceBase + file;
-            const pageBody = markdown.replace(/^# .+\r?\n+/, "").replace(`${parsed.intro[0]}\n\n`, "");
-            // Use the name the player goes by in the reader-facing overview + title.
-            const overview = summary.overview.split(p.player_name).join(goesBy);
+            const pageBody = applyV4ProfileRanking(markdown.replace(/^# .+\r?\n+/, ""), p);
+            const frontMatter = existingPage.frontMatter;
             const fm = [
                 "---",
-                `title: ${JSON.stringify(goesBy + " — player profile")}`,
-                `description: ${JSON.stringify(parsed.intro[0] || "World Cup player analysis report.")}`,
-                'layout: "player-report"',
-                `url: "/projects/worlds-coach-output/reports/${slug}/"`,
-                `playerId: ${JSON.stringify("sb-" + id)}`,
+                `title: ${JSON.stringify(frontMatter.title || goesBy + " — player profile")}`,
+                `description: ${JSON.stringify(frontMatter.description || parsed.intro[0] || "World Cup player analysis report.")}`,
+                `layout: ${JSON.stringify(frontMatter.layout || "player-report")}`,
+                `url: ${JSON.stringify(frontMatter.url || `/projects/worlds-coach-output/reports/${slug}/`)}`,
+                `playerId: ${JSON.stringify(frontMatter.playerId || "sb-" + id)}`,
                 `sourceUrl: ${JSON.stringify(sourceUrl)}`,
-                `displayName: ${JSON.stringify(goesBy)}`,
-                `wikiTitle: ${JSON.stringify(WIKI_OVERRIDE[id] || goesBy)}`,
-                `headshotUrl: ""`,
-                `shirtNumber: ""`,
-                `overview: ${JSON.stringify(overview)}`,
+                `displayName: ${JSON.stringify(frontMatter.displayName || goesBy)}`,
+                `wikiTitle: ${JSON.stringify(frontMatter.wikiTitle || WIKI_OVERRIDE[id] || goesBy)}`,
+                `headshotUrl: ${JSON.stringify(frontMatter.headshotUrl || "")}`,
+                `shirtNumber: ${JSON.stringify(frontMatter.shirtNumber || "")}`,
+                `overview: ${JSON.stringify(summary.overview)}`,
                 "strengths:",
                 ...summary.strengths.map((s) => `  - ${JSON.stringify(s)}`),
                 "weaknesses:",
@@ -328,23 +465,12 @@ rankings
                 "---",
                 ""
             ].join("\n");
-            fs.writeFileSync(path.join(contentRoot, `${slug}.md`), `${fm}${pageBody}`, "utf8");
+            fs.writeFileSync(path.join(contentRoot, existingPage.file), `${fm}${pageBody}`, "utf8");
             pagesWritten += 1;
         }
     });
 
 // ---- full appearance squads: fill formations with real players ------------
-function parseCsv(text) {
-    const lines = text.split(/\r?\n/).filter(function (l) { return l.length; });
-    const header = lines[0].split(",");
-    return lines.slice(1).map(function (line) {
-        const cells = line.split(","); // player names in this dataset have no commas
-        const row = {};
-        header.forEach(function (h, i) { row[h] = cells[i]; });
-        return row;
-    });
-}
-
 const READABLE_POS = {
     "Goalkeeper": "Goalkeeper", "Center Back": "Centre-back",
     "Fullback/Wingback": "Full-back", "Defensive Midfield": "Defensive midfielder",
@@ -356,20 +482,16 @@ const matchups = JSON.parse(fs.readFileSync(path.join(projectRoot, "assets/match
 const nameToCode = {}, codeToName = {};
 matchups.teams.forEach(function (t) { nameToCode[t.name] = t.code; codeToName[t.code] = t.name; });
 const ratedInfoById = {};
-matchups.teams.forEach(function (team) {
-    team.players.forEach(function (player) {
-        ratedInfoById[String(player.id)] = {
-            rating: player.rating,
-            role: player.role,
-            globalRank: player.global_rank,
-            teamRank: player.team_rank
-        };
-        if (index[String(player.id)]) {
-            index[String(player.id)].rating = player.rating;
-            index[String(player.id)].globalRank = player.global_rank;
-            index[String(player.id)].teamRank = player.team_rank;
-        }
-    });
+rankings.forEach(function (p) {
+    const isGoalkeeper = p.position_group === "Goalkeeper";
+    const rating = !isGoalkeeper || p.is_main_goalkeeper ? Number(p.overall_rating) : null;
+    ratedInfoById[String(p.player_id)] = {
+        rating: Number.isFinite(rating) ? rating : null,
+        role: p.functional_role,
+        rankingProduct: isGoalkeeper ? "goalkeeper" : "outfield",
+        goalkeeperRank: isGoalkeeper ? p.goalkeeper_consolidated_value_rank_v5 || null : null,
+        overallRank: p.overall_rank || null
+    };
 });
 
 const intervalsPath = process.env.PATTERN_SEEKERS_LINEUP_INTERVALS ||
@@ -410,7 +532,11 @@ Object.keys(squadAgg).forEach(function (code) {
         return {
             id: pid, name: index[pid].name, position: primary,
             role: rated && rated.role ? rated.role : (READABLE_POS[primary] || "Squad player"),
-            rating: rated ? rated.rating : null, min: Math.round(s.min)
+            rating: rated ? rated.rating : null,
+            rankingProduct: rated ? rated.rankingProduct : null,
+            goalkeeperRank: rated ? rated.goalkeeperRank : null,
+            overallRank: rated ? rated.overallRank : null,
+            min: Math.round(s.min)
         };
     }).sort(function (a, b) {
         const ra = a.rating == null ? -1 : a.rating;
@@ -422,5 +548,5 @@ Object.keys(squadAgg).forEach(function (code) {
 fs.writeFileSync(path.join(projectRoot, "assets/squads.json"), JSON.stringify(squads, null, 0) + "\n", "utf8");
 
 fs.writeFileSync(indexOut, `${JSON.stringify(index, null, 0)}\n`, "utf8");
-console.log(`player-index: ${Object.keys(index).length} players, ${pagesWritten} new report pages`);
+console.log(`player-index: ${Object.keys(index).length} players, ${pagesWritten} existing report pages refreshed`);
 console.log(`squads: ${Object.keys(squads).length} teams, sizes ${Object.keys(squads).map(function (c) { return squads[c].length; }).join("/")}`);

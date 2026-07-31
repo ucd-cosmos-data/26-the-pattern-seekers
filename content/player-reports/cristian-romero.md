@@ -4,11 +4,12 @@ description: "This report uses tournament events and coverage-qualified StatsBom
 layout: "player-report"
 url: "/projects/worlds-coach-output/reports/cristian-romero/"
 playerId: "romero"
-sourceUrl: "https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis/blob/718ae91e82bedbd53486a1e0381aaa70e124ba12/World-Cup-S-Bomb/results/reports/player_profiles/cristian-gabriel-romero-20572.md"
+sourceUrl: "https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis/blob/0aa13e7289c0ce81452c8fc3a67efe3e849c1aef/World-Cup-S-Bomb/results/reports/player_profiles/cristian-gabriel-romero-20572.md"
 displayName: "Cristian Romero"
+wikiTitle: "Cristian Romero"
 headshotUrl: "https://a.espncdn.com/i/headshots/soccer/players/full/96970.png"
 shirtNumber: 13
-overview: "Cristian Gabriel Romero played as a center back for Argentina. His main role was deep playmaker, and the model ranked him #13 on the team. The notes below translate his tournament data into simple soccer terms."
+overview: "Cristian Romero played as a center back for Argentina. His main role was ball-playing centre-back, with an active outfield rank of #44 globally and #8 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Competes well for headers and aerial balls."
   - "Keeps possession reliably when receiving or carrying under pressure."
@@ -16,61 +17,42 @@ weaknesses:
   - "Finishing is a smaller part of his overall impact."
   - "Creates fewer chances than his stronger areas suggest."
 ---
-## Ranking and role
+
+This generated profile uses Qatar 2022 event evidence only. Player identity is displayed after scoring and is never a feature.
+
+## Tournament Impact, Role Quality, and Uncertainty
 
 - Team: Argentina
 - Position group: Center Back
-- Functional role: Deep Playmaker
-- Probabilistic role: Aerial/Secure Centre-Back
-- Role entropy: 0.0007
-- Global rank: 125
-- Position rank: 37
-- Role rank: 11
-- Team rank: 13
-- Final player rating: 0.3336
-- Global ranking eligibility: eligible
+- Functional role: Ball-Playing Centre-Back
 - Minutes: 575.9
-- Minutes reliability: 0.6575
+- Global Rank v4: 44
+- Team Rank v4: 8
+- Position Rank v4: 3
+- Role Rank v4: 2
+- Tournament Impact: 1.1775
+- Role Quality: 0.0811
+- Impact interval: [0.0865, 2.5867]
+- Rank band: 14–251
+- Uncertainty status: wide
 
-## Rating components
+## Decisive outcomes
 
-| Metric | Value |
+- Non-penalty goals: 0
+- Regular penalty goals: 0
+- Actual assists: 0
+- Non-shootout xG: 0.0000
+- Non-shootout xA: 0.0000
+- Shootout conversions are displayed only in the separate shootout field and do not enter outfield impact.
+
+## Active components
+
+| Component | Value |
 |---|---|
-| vaep_off_scaled | 0.4198 |
-| vaep_def_scaled | 0.4268 |
-| vaep_per_touch | -0.0007 |
-| open_play_xt_p90 | 0.0026 |
-| set_piece_xt_p90 | -0.0000 |
-| role_adjusted_value | 0.0360 |
-| completeness_score | 0.3783 |
-| off_ball_score | 0.4220 |
+| Attack | 0.1259 |
+| Defense | 0.2616 |
+| Other | 0.0000 |
 
-## Continuous role vector
+## Compatibility
 
-| Metric | Value |
-|---|---|
-| progression_score | 0.4150 |
-| creation_score | 0.2246 |
-| finishing_score | 0.1749 |
-| pressing_score | 0.4214 |
-| defensive_score | 0.4043 |
-| ball_security_score | 0.7070 |
-| aerial_score | 0.7876 |
-
-## Spatial, 360 and passing-network context
-
-| Metric | Value |
-|---|---|
-| sb360_coverage | 0.8884 |
-| mean_defenders_within_3m | 0.2201 |
-| mean_defenders_within_5m | 0.3940 |
-| mean_nearest_defender_m | 8.8068 |
-| mean_passing_lane_availability | 0.9433 |
-| packing_index_mean | 0.6121 |
-| mean_space_received | 0.8880 |
-| network_pagerank | 0.0648 |
-| network_betweenness | 0.0319 |
-| network_entropy | 0.8719 |
-| build_up_involvement_ratio | 0.5890 |
-
-Missing values indicate unavailable evidence; they are not converted into zero contribution.
+Older v2/v3/v5 columns are retained for provenance only. The active outfield order above is Tournament Impact v4.

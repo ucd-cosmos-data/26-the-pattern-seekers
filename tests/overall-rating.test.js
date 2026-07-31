@@ -4,6 +4,7 @@ var assert = require("node:assert/strict");
 var test = require("node:test");
 var rating = require("../assets/js/overall-rating.js");
 var matchupData = require("../assets/matchups.json");
+var playerIndex = require("../assets/player-index.json");
 
 test("overall scale preserves all 585 ranks with distinct two-decimal ratings", function () {
     var values = Array.from({ length: rating.MAX_RANK }, function (_, index) {
@@ -20,11 +21,23 @@ test("overall scale preserves all 585 ranks with distinct two-decimal ratings", 
     });
 });
 
-test("matchup data publishes every unified player on the canonical overall scale", function () {
+test("outfield v4 cards and goalkeeper v5 profiles share one percentile-bridged scale", function () {
     var players = matchupData.teams.flatMap(function (team) { return team.players; });
-    assert.equal(players.length, rating.MAX_RANK);
-    assert.equal(new Set(players.map(function (player) { return player.global_rank; })).size, rating.MAX_RANK);
+    var rankedProfiles = Object.values(playerIndex).filter(function (player) {
+        return Number.isInteger(player.overallRank);
+    });
+
+    assert.equal(players.length, 553);
+    assert.equal(rankedProfiles.length, rating.MAX_RANK);
+    assert.deepEqual(
+        rankedProfiles.map(function (player) { return player.overallRank; }).sort(function (a, b) { return a - b; }),
+        Array.from({ length: rating.MAX_RANK }, function (_, index) { return index + 1; })
+    );
+    rankedProfiles.forEach(function (player) {
+        assert.equal(player.rating, rating.fromRank(player.overallRank), player.name);
+    });
     players.forEach(function (player) {
-        assert.equal(player.rating, rating.fromRank(player.global_rank), player.name);
+        assert.equal(player.rating, rating.fromRank(player.overall_rank), player.name);
+        assert.equal(playerIndex[player.id].overallRank, player.overall_rank, player.name);
     });
 });
