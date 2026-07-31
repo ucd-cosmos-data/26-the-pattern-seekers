@@ -4,74 +4,55 @@ description: "This report uses tournament events and coverage-qualified StatsBom
 layout: "player-report"
 url: "/projects/worlds-coach-output/reports/piotr-zielinski/"
 playerId: "sb-5660"
-sourceUrl: "https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis/blob/718ae91e82bedbd53486a1e0381aaa70e124ba12/World-Cup-S-Bomb/results/reports/player_profiles/piotr-zieli-ski-5660.md"
+sourceUrl: "https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis/blob/0aa13e7289c0ce81452c8fc3a67efe3e849c1aef/World-Cup-S-Bomb/results/reports/player_profiles/piotr-zieli-ski-5660.md"
 displayName: "Piotr Zieliński"
 wikiTitle: "Piotr Zieliński"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Piotr Zieliński played as a central/wide midfield for Poland. His main role was ball-winner, and the model ranked him #5 on the team. The notes below translate his tournament data into simple soccer terms."
+overview: "Piotr Zieliński played as a central/wide midfield for Poland. His main role was holding anchor, with an active outfield rank of #151 globally and #2 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Creates useful chances and connects attacks."
   - "Offers a strong goal threat when attacks reach the final third."
 weaknesses:
   - "Aerial play is one of the less influential parts of his profile."
-  - "Defensive actions are a less prominent part of his game."
+  - "Pressing intensity is a weaker area in this tournament model."
 ---
-## Ranking and role
+
+This generated profile uses Qatar 2022 event evidence only. Player identity is displayed after scoring and is never a feature.
+
+## Tournament Impact, Role Quality, and Uncertainty
 
 - Team: Poland
 - Position group: Central/Wide Midfield
-- Functional role: Ball-Winner
-- Probabilistic role: Pressing/Defensive Midfielder
-- Role entropy: 0.0000
-- Global rank: 79
-- Position rank: 8
-- Role rank: 9
-- Team rank: 5
-- Final player rating: 0.5030
-- Global ranking eligibility: eligible
+- Functional role: Holding Anchor
 - Minutes: 344.4
-- Minutes reliability: 0.5345
+- Global Rank v3: 151
+- Team Rank v3: 2
+- Position Rank v3: 39
+- Role Rank v3: 16
+- Tournament Impact: 0.7646
+- Role Quality: 0.1787
+- Impact interval: [0.1203, 1.5388]
+- Rank band: 62–380
+- Uncertainty status: wide
 
-## Rating components
+## Decisive outcomes
 
-| Metric | Value |
+- Non-penalty goals: 1
+- Regular penalty goals: 0
+- Actual assists: 0
+- Non-shootout xG: 0.5839
+- Non-shootout xA: 0.4309
+- Shootout conversions are displayed only in the separate shootout field and do not enter outfield impact.
+
+## Active components
+
+| Component | Value |
 |---|---|
-| vaep_off_scaled | 0.0391 |
-| vaep_def_scaled | 0.2605 |
-| vaep_per_touch | 0.0008 |
-| open_play_xt_p90 | 0.0071 |
-| set_piece_xt_p90 | 0.0527 |
-| role_adjusted_value | 0.4714 |
-| completeness_score | 0.6738 |
-| off_ball_score | 0.5575 |
+| Attack | 0.8211 |
+| Defense | -0.0564 |
+| Other | 0.0000 |
 
-## Continuous role vector
+## Compatibility
 
-| Metric | Value |
-|---|---|
-| progression_score | 0.6645 |
-| creation_score | 0.7937 |
-| finishing_score | 0.7218 |
-| pressing_score | 0.5957 |
-| defensive_score | 0.5587 |
-| ball_security_score | 0.6634 |
-| aerial_score | 0.3016 |
-
-## Spatial, 360 and passing-network context
-
-| Metric | Value |
-|---|---|
-| sb360_coverage | 0.9170 |
-| mean_defenders_within_3m | 0.4084 |
-| mean_defenders_within_5m | 0.8675 |
-| mean_nearest_defender_m | 6.5793 |
-| mean_passing_lane_availability | 0.8898 |
-| packing_index_mean | 0.9095 |
-| mean_space_received | 0.5315 |
-| network_pagerank | 0.0952 |
-| network_betweenness | 0.1459 |
-| network_entropy | 0.9397 |
-| build_up_involvement_ratio | 0.7304 |
-
-Missing values indicate unavailable evidence; they are not converted into zero contribution.
+Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.

@@ -1072,15 +1072,21 @@
             var meta = "";
             if (idx && isRated) {
                 var bits = [];
-                if (idx.teamRank) bits.push("Team #" + idx.teamRank + " rated");
-                bits.push(idx.rating.toFixed(2) + " rating");
+                if (idx.rankingProduct === "goalkeeper") {
+                    if (idx.goalkeeperRank) bits.push("GK #" + idx.goalkeeperRank);
+                    bits.push(idx.rating.toFixed(3) + " GK value");
+                } else {
+                    if (idx.globalRank) bits.push("Global #" + idx.globalRank);
+                    if (idx.teamRank) bits.push("Team #" + idx.teamRank);
+                    bits.push(idx.rating.toFixed(3) + " outfield score");
+                }
                 if (idx.minutes) bits.push(idx.minutes + "′");
                 meta = bits.join(" · ");
             }
             // Unrated squad players are shown by name + position, with an honest
             // note that they were below the individual-rating minutes floor.
             var description = isRated ? idx.strength
-                : (idx ? "Squad player — below the tournament minutes floor, so not individually rated."
+                : (idx ? "Squad player — below the active ranking eligibility floor."
                     : (r.instruction || ""));
             genRoster[id] = {
                 team: r.team, isOurs: r.isOurs, number: r.number,
@@ -2362,7 +2368,7 @@
 
         var optionsHtml = teams.map(function (team) {
             return "<option value=\"" + team.code + "\">" + escapeHtml(team.name) +
-                (team.rated_count ? "" : " — no rated players yet") + "</option>";
+                (team.rated_count ? "" : " — no eligible outfield players") + "</option>";
         }).join("");
         teamASelect.innerHTML = optionsHtml;
         teamBSelect.innerHTML = optionsHtml;
@@ -2392,7 +2398,7 @@
             if (!team.rated_count) {
                 return "<article class=\"matchup-card is-empty\">" +
                     "<div class=\"matchup-card__head\"><h3>" + escapeHtml(team.name) + "</h3></div>" +
-                    "<p class=\"matchup-card__empty\">No players have cleared the rating floor yet — this squad fills in as more players are rated.</p>" +
+                    "<p class=\"matchup-card__empty\">No player met the active outfield eligibility floor.</p>" +
                     "</article>";
             }
             var rows = team.players.map(function (player, index) {
@@ -2400,7 +2406,7 @@
             }).join("");
             return "<article class=\"matchup-card\">" +
                 "<div class=\"matchup-card__head\"><h3>" + escapeHtml(team.name) + "</h3>" +
-                "<dl><div><dt>Rated</dt><dd>" + team.rated_count + "</dd></div>" +
+                "<dl><div><dt>Outfield</dt><dd>" + team.rated_count + "</dd></div>" +
                 "<div><dt>Avg</dt><dd>" + formatRating(team.avg_rating) + "</dd></div></dl></div>" +
                 "<ol class=\"matchup-card__list\">" + rows + "</ol></article>";
         }
@@ -2408,8 +2414,8 @@
         function topLine(team) {
             var top = team.players && team.players[0];
             return top
-                ? "<strong>" + escapeHtml(goesByName(top)) + "</strong><em>top rated · " + formatRating(top.rating) + "</em>"
-                : "<em>No rated players yet</em>";
+                ? "<strong>" + escapeHtml(goesByName(top)) + "</strong><em>top outfield · " + formatRating(top.rating) + "</em>"
+                : "<em>No eligible outfield players</em>";
         }
 
         function headToHeadHtml(teamA, teamB) {

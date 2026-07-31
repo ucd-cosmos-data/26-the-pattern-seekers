@@ -4,74 +4,55 @@ description: "This report uses tournament events and coverage-qualified StatsBom
 layout: "player-report"
 url: "/projects/worlds-coach-output/reports/borna-sosa/"
 playerId: "sb-12625"
-sourceUrl: "https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis/blob/718ae91e82bedbd53486a1e0381aaa70e124ba12/World-Cup-S-Bomb/results/reports/player_profiles/borna-sosa-12625.md"
+sourceUrl: "https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis/blob/0aa13e7289c0ce81452c8fc3a67efe3e849c1aef/World-Cup-S-Bomb/results/reports/player_profiles/borna-sosa-12625.md"
 displayName: "Borna Sosa"
 wikiTitle: "Borna Sosa"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Borna Sosa played as a fullback/wingback for Croatia. His main role was wide creator, and the model ranked him #1 on the team. The notes below translate his tournament data into simple soccer terms."
+overview: "Borna Sosa played as a fullback/wingback for Croatia. His main role was attacking wingback, with an active outfield rank of #177 globally and #13 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Moves the ball forward well through carries and forward passes."
   - "Creates useful chances and connects attacks."
 weaknesses:
-  - "Aerial play is one of the less influential parts of his profile."
   - "Finishing is a smaller part of his overall impact."
+  - "Aerial play is one of the less influential parts of his profile."
 ---
-## Ranking and role
+
+This generated profile uses Qatar 2022 event evidence only. Player identity is displayed after scoring and is never a feature.
+
+## Tournament Impact, Role Quality, and Uncertainty
 
 - Team: Croatia
 - Position group: Fullback/Wingback
-- Functional role: Wide Creator
-- Probabilistic role: Creative/Progressive Fullback
-- Role entropy: 0.0000
-- Global rank: 36
-- Position rank: 13
-- Role rank: 5
-- Team rank: 1
-- Final player rating: 0.6170
-- Global ranking eligibility: eligible
+- Functional role: Attacking Wingback
 - Minutes: 440.5
-- Minutes reliability: 0.5949
+- Global Rank v3: 177
+- Team Rank v3: 13
+- Position Rank v3: 54
+- Role Rank v3: 40
+- Tournament Impact: 0.6820
+- Role Quality: 0.1765
+- Impact interval: [0.0037, 1.5037]
+- Rank band: 65–471
+- Uncertainty status: wide
 
-## Rating components
+## Decisive outcomes
 
-| Metric | Value |
+- Non-penalty goals: 0
+- Regular penalty goals: 0
+- Actual assists: 0
+- Non-shootout xG: 0.0484
+- Non-shootout xA: 0.5520
+- Shootout conversions are displayed only in the separate shootout field and do not enter outfield impact.
+
+## Active components
+
+| Component | Value |
 |---|---|
-| vaep_off_scaled | 0.2741 |
-| vaep_def_scaled | 0.7852 |
-| vaep_per_touch | 0.0009 |
-| open_play_xt_p90 | 0.0306 |
-| set_piece_xt_p90 | 0.0181 |
-| role_adjusted_value | 0.2409 |
-| completeness_score | 0.5063 |
-| off_ball_score | 0.4486 |
+| Attack | 0.8561 |
+| Defense | -0.1741 |
+| Other | 0.0000 |
 
-## Continuous role vector
+## Compatibility
 
-| Metric | Value |
-|---|---|
-| progression_score | 0.7414 |
-| creation_score | 0.6035 |
-| finishing_score | 0.3415 |
-| pressing_score | 0.4627 |
-| defensive_score | 0.4865 |
-| ball_security_score | 0.4028 |
-| aerial_score | 0.3392 |
-
-## Spatial, 360 and passing-network context
-
-| Metric | Value |
-|---|---|
-| sb360_coverage | 0.8436 |
-| mean_defenders_within_3m | 0.2780 |
-| mean_defenders_within_5m | 0.5450 |
-| mean_nearest_defender_m | 7.3524 |
-| mean_passing_lane_availability | 0.9115 |
-| packing_index_mean | 0.8437 |
-| mean_space_received | 0.7103 |
-| network_pagerank | 0.0785 |
-| network_betweenness | 0.1566 |
-| network_entropy | 0.8771 |
-| build_up_involvement_ratio | 0.6728 |
-
-Missing values indicate unavailable evidence; they are not converted into zero contribution.
+Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.

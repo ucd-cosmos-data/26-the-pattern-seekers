@@ -4,73 +4,55 @@ description: "This report uses tournament events and coverage-qualified StatsBom
 layout: "player-report"
 url: "/projects/worlds-coach-output/reports/jules-kounde/"
 playerId: "fra_rb"
-sourceUrl: "https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis/blob/718ae91e82bedbd53486a1e0381aaa70e124ba12/World-Cup-S-Bomb/results/reports/player_profiles/jules-kound-4445.md"
+sourceUrl: "https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis/blob/0aa13e7289c0ce81452c8fc3a67efe3e849c1aef/World-Cup-S-Bomb/results/reports/player_profiles/jules-kound-4445.md"
 displayName: "Jules Koundé"
+wikiTitle: "Jules Koundé"
 headshotUrl: "https://a.espncdn.com/i/headshots/soccer/players/full/231692.png"
 shirtNumber: 5
-overview: "Jules Koundé played as a fullback/wingback for France. His main role was box-to-box runner, and the model ranked him #10 on the team. The notes below translate his tournament data into simple soccer terms."
+overview: "Jules Koundé played as a fullback/wingback for France. His main role was deep playmaker, with an active outfield rank of #157 globally and #8 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Competes well for headers and aerial balls."
-  - "Reads danger and contributes well in defensive situations."
+  - "Creates useful chances and connects attacks."
 weaknesses:
-  - "Can be less secure on the ball when pressure arrives."
   - "Pressing intensity is a weaker area in this tournament model."
+  - "Can be less secure on the ball when pressure arrives."
 ---
-## Ranking and role
+
+This generated profile uses Qatar 2022 event evidence only. Player identity is displayed after scoring and is never a feature.
+
+## Tournament Impact, Role Quality, and Uncertainty
 
 - Team: France
 - Position group: Fullback/Wingback
-- Functional role: Box-to-Box Runner
-- Probabilistic role: Creative/Progressive/Pressing Fullback
-- Role entropy: 0.0000
-- Global rank: 101
-- Position rank: 25
-- Role rank: 5
-- Team rank: 10
-- Final player rating: 0.4613
-- Global ranking eligibility: eligible
+- Functional role: Deep Playmaker
 - Minutes: 514.4
-- Minutes reliability: 0.6316
+- Global Rank v3: 157
+- Team Rank v3: 8
+- Position Rank v3: 99
+- Role Rank v3: 31
+- Tournament Impact: 0.7468
+- Role Quality: 0.1264
+- Impact interval: [0.2112, 1.4182]
+- Rank band: 71–325
+- Uncertainty status: wide
 
-## Rating components
+## Decisive outcomes
 
-| Metric | Value |
+- Non-penalty goals: 0
+- Regular penalty goals: 0
+- Actual assists: 0
+- Non-shootout xG: 0.1696
+- Non-shootout xA: 0.1903
+- Shootout conversions are displayed only in the separate shootout field and do not enter outfield impact.
+
+## Active components
+
+| Component | Value |
 |---|---|
-| vaep_off_scaled | 0.1348 |
-| vaep_def_scaled | 0.4363 |
-| vaep_per_touch | 0.0002 |
-| open_play_xt_p90 | 0.0098 |
-| set_piece_xt_p90 | 0.0056 |
-| role_adjusted_value | 0.2866 |
-| completeness_score | 0.4741 |
-| off_ball_score | 0.3889 |
+| Attack | 0.6014 |
+| Defense | 0.1454 |
+| Other | 0.0000 |
 
-## Continuous role vector
+## Compatibility
 
-| Metric | Value |
-|---|---|
-| progression_score | 0.4582 |
-| creation_score | 0.5359 |
-| finishing_score | 0.4237 |
-| pressing_score | 0.3776 |
-| defensive_score | 0.5446 |
-| ball_security_score | 0.3542 |
-| aerial_score | 0.7430 |
-
-## Spatial, 360 and passing-network context
-
-| Metric | Value |
-|---|---|
-| sb360_coverage | 0.8155 |
-| mean_defenders_within_3m | 0.2317 |
-| mean_defenders_within_5m | 0.4634 |
-| mean_nearest_defender_m | 8.2822 |
-| mean_passing_lane_availability | 0.9311 |
-| packing_index_mean | 0.6483 |
-| mean_space_received | 0.7828 |
-| network_pagerank | 0.0857 |
-| network_betweenness | 0.2174 |
-| network_entropy | 0.8838 |
-| build_up_involvement_ratio | 0.6229 |
-
-Missing values indicate unavailable evidence; they are not converted into zero contribution.
+Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.

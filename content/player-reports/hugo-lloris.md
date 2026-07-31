@@ -4,74 +4,49 @@ description: "This report uses tournament events and coverage-qualified StatsBom
 layout: "player-report"
 url: "/projects/worlds-coach-output/reports/hugo-lloris/"
 playerId: "fra_gk"
-sourceUrl: "https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis/blob/718ae91e82bedbd53486a1e0381aaa70e124ba12/World-Cup-S-Bomb/results/reports/player_profiles/hugo-lloris-3099.md"
+sourceUrl: "https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis/blob/0aa13e7289c0ce81452c8fc3a67efe3e849c1aef/World-Cup-S-Bomb/results/reports/player_profiles/hugo-lloris-3099.md"
 displayName: "Hugo Lloris"
+wikiTitle: "Hugo Lloris"
 headshotUrl: "https://a.espncdn.com/i/headshots/soccer/players/full/43372.png"
 shirtNumber: 1
-overview: "Hugo Lloris was France's goalkeeper. The model ranked him #11 within the team, using shot-stopping, cross control, sweeping, and distribution data."
+overview: "Hugo Lloris was France's goalkeeper. The active goalkeeper model ranked him #9 in its separate 32-player table. Goalkeepers do not enter the global outfield or 300-minute rankings."
 strengths:
-  - "Comes off his line regularly to claim crosses and relieve pressure."
-  - "Offers useful cover behind the defensive line as a sweeper."
+  - "The goalkeeper value combines calibrated PSxG prevention with distinct clutch, penalty, shootout, and support channels."
 weaknesses:
-  - "Stopping crosses was less consistent than his stronger goalkeeper skills."
-  - "Distribution under pressure was not one of his stronger areas."
+  - "The result describes a small tournament sample, so goalkeeper conclusions remain cautious."
 ---
-## Ranking and role
+
+## Active tournament valuation
 
 - Team: France
-- Position group: Goalkeeper
-- Functional role: Goalkeeper
-- Probabilistic role: Goalkeeper
-- Role entropy: 0.0000
-- Global rank: not available
-- Position rank: 14
-- Role rank: 14
-- Team rank: 11
-- Final player rating: 0.4493
-- Global ranking eligibility: goalkeeper-only ranking
 - Minutes: 614.2
-- Minutes reliability: 0.6718
+- Status: Ranked (team main goalkeeper)
+- Goalkeeper rank: 9
+- Consolidated Goalkeeper Value: 0.2259
+- Raw consolidated value: 0.0554
+- 95% score interval: 0.0000 to 0.9677
+- Bootstrap rank interval: 2 to 32
 
-## Rating components
+## Evidence channels
 
-| Metric | Value |
-|---|---|
-| post_shot_xg_proxy | 10.8465 |
-| goals_prevented_proxy_p90 | 0.5636 |
-| save_rate | 0.7083 |
-| claims_p90 | 1.6119 |
-| cross_stopping_rate | 0.1447 |
-| sweeper_actions_p90 | 0.5861 |
-| distribution_under_pressure | 0.1818 |
-| penalty_save_rate_shrunk | 0.1000 |
-| goalkeeper_feature_coverage | 1.0000 |
+| Channel | Value |
+|---|---:|
+| PSxG shot-stopping | 0.1174 |
+| Clutch-save residual | 0.1622 |
+| Regular-penalty impact | -0.4184 |
+| Shootout win probability added | 0.0000 |
+| Support value | -0.0783 |
+| Expected threat faced per 90 | 0.9376 |
+| Defensive-shield downside adjustment | 0.0000 |
+| Reliability | 0.5771 |
 
-## Continuous role vector
+The active goalkeeper ranking is one consolidated, identity-blind metric. It values
+ordinary shot prevention from calibrated post-shot probabilities, adds only the
+incremental residual for late high-consequence saves, and applies sample-size
+reliability to penalties, shootouts, and the final score. When at least four
+matches of evidence show below-median threat faced, a below-prior ordinary-play
+downside is additionally shrunk toward the cohort prior; positive evidence,
+penalties, shootouts, and support play are unchanged. Advancement, awards,
+reputation, and named-player rules are not scoring inputs.
 
-| Metric | Value |
-|---|---|
-| progression_score | 0.5171 |
-| creation_score | 0.3493 |
-| finishing_score | 0.1749 |
-| pressing_score | 0.0502 |
-| defensive_score | 0.1350 |
-| ball_security_score | 0.2176 |
-| aerial_score | 0.0681 |
-
-## Spatial, 360 and passing-network context
-
-| Metric | Value |
-|---|---|
-| sb360_coverage | 0.6190 |
-| mean_defenders_within_3m | 0.0989 |
-| mean_defenders_within_5m | 0.1941 |
-| mean_nearest_defender_m | 14.1818 |
-| mean_passing_lane_availability | 0.9358 |
-| packing_index_mean | 0.8608 |
-| mean_space_received | 0.9548 |
-| network_pagerank | 0.0319 |
-| network_betweenness | 0.0396 |
-| network_entropy | 0.9044 |
-| build_up_involvement_ratio | 0.7521 |
-
-Missing values indicate unavailable evidence; they are not converted into zero contribution.
+Goalkeepers are excluded from the global outfield and 300-minute rankings.

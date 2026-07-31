@@ -4,73 +4,55 @@ description: "This report uses tournament events and coverage-qualified StatsBom
 layout: "player-report"
 url: "/projects/worlds-coach-output/reports/enzo-fernandez/"
 playerId: "enzo"
-sourceUrl: "https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis/blob/718ae91e82bedbd53486a1e0381aaa70e124ba12/World-Cup-S-Bomb/results/reports/player_profiles/enzo-fernandez-38718.md"
+sourceUrl: "https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis/blob/0aa13e7289c0ce81452c8fc3a67efe3e849c1aef/World-Cup-S-Bomb/results/reports/player_profiles/enzo-fernandez-38718.md"
 displayName: "Enzo Fernández"
+wikiTitle: "Enzo Fernández"
 headshotUrl: "https://a.espncdn.com/i/headshots/soccer/players/full/285450.png"
 shirtNumber: 24
-overview: "Enzo Fernandez played as a defensive midfield for Argentina. His main role was ball-winner, and the model ranked him #9 on the team. The notes below translate his tournament data into simple soccer terms."
+overview: "Enzo Fernández played as a defensive midfield for Argentina. His main role was holding anchor, with an active outfield rank of #140 globally and #10 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
-  - "Works hard without the ball and pressures opponents effectively."
   - "Offers a strong goal threat when attacks reach the final third."
+  - "Works hard without the ball and pressures opponents effectively."
 weaknesses:
   - "Aerial play is one of the less influential parts of his profile."
   - "Defensive actions are a less prominent part of his game."
 ---
-## Ranking and role
+
+This generated profile uses Qatar 2022 event evidence only. Player identity is displayed after scoring and is never a feature.
+
+## Tournament Impact, Role Quality, and Uncertainty
 
 - Team: Argentina
 - Position group: Defensive Midfield
-- Functional role: Ball-Winner
-- Probabilistic role: Pressing/Defensive Midfielder
-- Role entropy: 0.0000
-- Global rank: 86
-- Position rank: 14
-- Role rank: 11
-- Team rank: 9
-- Final player rating: 0.4966
-- Global ranking eligibility: eligible
+- Functional role: Holding Anchor
 - Minutes: 601.1
-- Minutes reliability: 0.6671
+- Global Rank v3: 140
+- Team Rank v3: 10
+- Position Rank v3: 44
+- Role Rank v3: 28
+- Tournament Impact: 0.8047
+- Role Quality: 0.1175
+- Impact interval: [0.2666, 1.5218]
+- Rank band: 62–299
+- Uncertainty status: wide
 
-## Rating components
+## Decisive outcomes
 
-| Metric | Value |
+- Non-penalty goals: 1
+- Regular penalty goals: 0
+- Actual assists: 1
+- Non-shootout xG: 0.2671
+- Non-shootout xA: 0.7093
+- Shootout conversions are displayed only in the separate shootout field and do not enter outfield impact.
+
+## Active components
+
+| Component | Value |
 |---|---|
-| vaep_off_scaled | 0.3513 |
-| vaep_def_scaled | 0.2342 |
-| vaep_per_touch | 0.0000 |
-| open_play_xt_p90 | 0.0266 |
-| set_piece_xt_p90 | 0.0187 |
-| role_adjusted_value | 0.5583 |
-| completeness_score | 0.6874 |
-| off_ball_score | 0.6698 |
+| Attack | 0.8180 |
+| Defense | -0.0132 |
+| Other | 0.0000 |
 
-## Continuous role vector
+## Compatibility
 
-| Metric | Value |
-|---|---|
-| progression_score | 0.5780 |
-| creation_score | 0.6768 |
-| finishing_score | 0.7312 |
-| pressing_score | 0.7770 |
-| defensive_score | 0.5634 |
-| ball_security_score | 0.6261 |
-| aerial_score | 0.4988 |
-
-## Spatial, 360 and passing-network context
-
-| Metric | Value |
-|---|---|
-| sb360_coverage | 0.9182 |
-| mean_defenders_within_3m | 0.3081 |
-| mean_defenders_within_5m | 0.6339 |
-| mean_nearest_defender_m | 6.5891 |
-| mean_passing_lane_availability | 0.9264 |
-| packing_index_mean | 0.6481 |
-| mean_space_received | 0.6556 |
-| network_pagerank | 0.0981 |
-| network_betweenness | 0.1924 |
-| network_entropy | 0.9171 |
-| build_up_involvement_ratio | 0.6636 |
-
-Missing values indicate unavailable evidence; they are not converted into zero contribution.
+Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.

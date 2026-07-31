@@ -4,74 +4,55 @@ description: "This report uses tournament events and coverage-qualified StatsBom
 layout: "player-report"
 url: "/projects/worlds-coach-output/reports/ruben-dias/"
 playerId: "sb-5206"
-sourceUrl: "https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis/blob/718ae91e82bedbd53486a1e0381aaa70e124ba12/World-Cup-S-Bomb/results/reports/player_profiles/r-ben-santos-gato-alves-dias-5206.md"
+sourceUrl: "https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis/blob/0aa13e7289c0ce81452c8fc3a67efe3e849c1aef/World-Cup-S-Bomb/results/reports/player_profiles/r-ben-santos-gato-alves-dias-5206.md"
 displayName: "Rúben Dias"
 wikiTitle: "Rúben Dias"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Rúben Dias played as a center back for Portugal. His main role was sweeper cb, and the model ranked him #9 on the team. The notes below translate his tournament data into simple soccer terms."
+overview: "Rúben Dias played as a center back for Portugal. His main role was sweeper cb, with an active outfield rank of #498 globally and #18 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Competes well for headers and aerial balls."
   - "Keeps possession reliably when receiving or carrying under pressure."
 weaknesses:
-  - "Creates fewer chances than his stronger areas suggest."
+  - "Pressing intensity is a weaker area in this tournament model."
   - "Finishing is a smaller part of his overall impact."
 ---
-## Ranking and role
+
+This generated profile uses Qatar 2022 event evidence only. Player identity is displayed after scoring and is never a feature.
+
+## Tournament Impact, Role Quality, and Uncertainty
 
 - Team: Portugal
 - Position group: Center Back
 - Functional role: Sweeper CB
-- Probabilistic role: Aerial/Progressive Centre-Back
-- Role entropy: 0.0000
-- Global rank: 81
-- Position rank: 16
-- Role rank: 6
-- Team rank: 9
-- Final player rating: 0.5016
-- Global ranking eligibility: eligible
 - Minutes: 392.4
-- Minutes reliability: 0.5667
+- Global Rank v3: 498
+- Team Rank v3: 18
+- Position Rank v3: 104
+- Role Rank v3: 77
+- Tournament Impact: 0.0349
+- Role Quality: 0.0521
+- Impact interval: [-0.0595, 0.1866]
+- Rank band: 325–544
+- Uncertainty status: wide
 
-## Rating components
+## Decisive outcomes
 
-| Metric | Value |
+- Non-penalty goals: 0
+- Regular penalty goals: 0
+- Actual assists: 0
+- Non-shootout xG: 0.0375
+- Non-shootout xA: 0.0000
+- Shootout conversions are displayed only in the separate shootout field and do not enter outfield impact.
+
+## Active components
+
+| Component | Value |
 |---|---|
-| vaep_off_scaled | 0.4709 |
-| vaep_def_scaled | 0.9050 |
-| vaep_per_touch | 0.0001 |
-| open_play_xt_p90 | 0.0030 |
-| set_piece_xt_p90 | 0.0028 |
-| role_adjusted_value | 0.1020 |
-| completeness_score | 0.4494 |
-| off_ball_score | 0.4874 |
+| Attack | 0.1214 |
+| Defense | -0.0865 |
+| Other | 0.0000 |
 
-## Continuous role vector
+## Compatibility
 
-| Metric | Value |
-|---|---|
-| progression_score | 0.4291 |
-| creation_score | 0.2711 |
-| finishing_score | 0.2805 |
-| pressing_score | 0.3737 |
-| defensive_score | 0.5282 |
-| ball_security_score | 0.5915 |
-| aerial_score | 0.7993 |
-
-## Spatial, 360 and passing-network context
-
-| Metric | Value |
-|---|---|
-| sb360_coverage | 0.8933 |
-| mean_defenders_within_3m | 0.1482 |
-| mean_defenders_within_5m | 0.2978 |
-| mean_nearest_defender_m | 9.9695 |
-| mean_passing_lane_availability | 0.9687 |
-| packing_index_mean | 0.4863 |
-| mean_space_received | 0.9154 |
-| network_pagerank | 0.0904 |
-| network_betweenness | 0.1304 |
-| network_entropy | 0.9166 |
-| build_up_involvement_ratio | 0.6769 |
-
-Missing values indicate unavailable evidence; they are not converted into zero contribution.
+Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.

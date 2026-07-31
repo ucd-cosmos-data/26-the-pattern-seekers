@@ -4,73 +4,55 @@ description: "This report uses tournament events and coverage-qualified StatsBom
 layout: "player-report"
 url: "/projects/worlds-coach-output/reports/adrien-rabiot/"
 playerId: "fra_lm"
-sourceUrl: "https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis/blob/718ae91e82bedbd53486a1e0381aaa70e124ba12/World-Cup-S-Bomb/results/reports/player_profiles/adrien-rabiot-3026.md"
+sourceUrl: "https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis/blob/0aa13e7289c0ce81452c8fc3a67efe3e849c1aef/World-Cup-S-Bomb/results/reports/player_profiles/adrien-rabiot-3026.md"
 displayName: "Adrien Rabiot"
+wikiTitle: "Adrien Rabiot"
 headshotUrl: "https://a.espncdn.com/i/headshots/soccer/players/full/176203.png"
 shirtNumber: 14
-overview: "Adrien Rabiot played as a defensive midfield for France. His main role was ball-winner, and the model ranked him #3 on the team. The notes below translate his tournament data into simple soccer terms."
+overview: "Adrien Rabiot played as a defensive midfield for France. His main role was holding anchor, with an active outfield rank of #36 globally and #4 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Competes well for headers and aerial balls."
-  - "Works hard without the ball and pressures opponents effectively."
+  - "Offers a strong goal threat when attacks reach the final third."
 weaknesses:
   - "Has less impact moving possession upfield."
   - "Creates fewer chances than his stronger areas suggest."
 ---
-## Ranking and role
+
+This generated profile uses Qatar 2022 event evidence only. Player identity is displayed after scoring and is never a feature.
+
+## Tournament Impact, Role Quality, and Uncertainty
 
 - Team: France
 - Position group: Defensive Midfield
-- Functional role: Ball-Winner
-- Probabilistic role: Pressing/Defensive Midfielder
-- Role entropy: 0.0005
-- Global rank: 17
-- Position rank: 2
-- Role rank: 1
-- Team rank: 3
-- Final player rating: 0.6586
-- Global ranking eligibility: eligible
+- Functional role: Holding Anchor
 - Minutes: 529.2
-- Minutes reliability: 0.6382
+- Global Rank v3: 36
+- Team Rank v3: 4
+- Position Rank v3: 12
+- Role Rank v3: 3
+- Tournament Impact: 1.9310
+- Role Quality: 0.2964
+- Impact interval: [0.6887, 3.5198]
+- Rank band: 12–162
+- Uncertainty status: wide
 
-## Rating components
+## Decisive outcomes
 
-| Metric | Value |
+- Non-penalty goals: 1
+- Regular penalty goals: 0
+- Actual assists: 1
+- Non-shootout xG: 0.7281
+- Non-shootout xA: 0.7965
+- Shootout conversions are displayed only in the separate shootout field and do not enter outfield impact.
+
+## Active components
+
+| Component | Value |
 |---|---|
-| vaep_off_scaled | 0.9912 |
-| vaep_def_scaled | 0.5905 |
-| vaep_per_touch | 0.0018 |
-| open_play_xt_p90 | 0.0097 |
-| set_piece_xt_p90 | -0.0002 |
-| role_adjusted_value | 0.6043 |
-| completeness_score | 0.7396 |
-| off_ball_score | 0.6598 |
+| Attack | 1.9999 |
+| Defense | -0.0688 |
+| Other | 0.0000 |
 
-## Continuous role vector
+## Compatibility
 
-| Metric | Value |
-|---|---|
-| progression_score | 0.3627 |
-| creation_score | 0.4585 |
-| finishing_score | 0.7336 |
-| pressing_score | 0.7941 |
-| defensive_score | 0.7653 |
-| ball_security_score | 0.5866 |
-| aerial_score | 0.8392 |
-
-## Spatial, 360 and passing-network context
-
-| Metric | Value |
-|---|---|
-| sb360_coverage | 0.8947 |
-| mean_defenders_within_3m | 0.4084 |
-| mean_defenders_within_5m | 0.8529 |
-| mean_nearest_defender_m | 6.4272 |
-| mean_passing_lane_availability | 0.9251 |
-| packing_index_mean | 0.6369 |
-| mean_space_received | 0.5895 |
-| network_pagerank | 0.0851 |
-| network_betweenness | 0.0456 |
-| network_entropy | 0.9108 |
-| build_up_involvement_ratio | 0.6111 |
-
-Missing values indicate unavailable evidence; they are not converted into zero contribution.
+Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.

@@ -4,74 +4,55 @@ description: "This report uses tournament events and coverage-qualified StatsBom
 layout: "player-report"
 url: "/projects/worlds-coach-output/reports/joao-felix/"
 playerId: "sb-12041"
-sourceUrl: "https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis/blob/718ae91e82bedbd53486a1e0381aaa70e124ba12/World-Cup-S-Bomb/results/reports/player_profiles/jo-o-f-lix-sequeira-12041.md"
+sourceUrl: "https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis/blob/0aa13e7289c0ce81452c8fc3a67efe3e849c1aef/World-Cup-S-Bomb/results/reports/player_profiles/jo-o-f-lix-sequeira-12041.md"
 displayName: "João Félix"
 wikiTitle: "João Félix"
 headshotUrl: ""
 shirtNumber: ""
-overview: "João Félix played as an attacking midfield/wing for Portugal. His main role was target forward, and the model ranked him #4 on the team. The notes below translate his tournament data into simple soccer terms."
+overview: "João Félix played as an attacking midfield/wing for Portugal. His main role was ball-winner, with an active outfield rank of #43 globally and #3 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Offers a strong goal threat when attacks reach the final third."
   - "Keeps possession reliably when receiving or carrying under pressure."
 weaknesses:
-  - "Aerial play is one of the less influential parts of his profile."
   - "Pressing intensity is a weaker area in this tournament model."
+  - "Aerial play is one of the less influential parts of his profile."
 ---
-## Ranking and role
+
+This generated profile uses Qatar 2022 event evidence only. Player identity is displayed after scoring and is never a feature.
+
+## Tournament Impact, Role Quality, and Uncertainty
 
 - Team: Portugal
 - Position group: Attacking Midfield/Wing
-- Functional role: Target Forward
-- Probabilistic role: Finishing/Creative Attacker
-- Role entropy: 0.0022
-- Global rank: 37
-- Position rank: 7
-- Role rank: 8
-- Team rank: 4
-- Final player rating: 0.6119
-- Global ranking eligibility: eligible
+- Functional role: Ball-Winner
 - Minutes: 340.2
-- Minutes reliability: 0.5314
+- Global Rank v3: 43
+- Team Rank v3: 3
+- Position Rank v3: 45
+- Role Rank v3: 13
+- Tournament Impact: 1.8340
+- Role Quality: 0.4596
+- Impact interval: [0.3629, 3.5889]
+- Rank band: 12–260
+- Uncertainty status: wide
 
-## Rating components
+## Decisive outcomes
 
-| Metric | Value |
+- Non-penalty goals: 1
+- Regular penalty goals: 0
+- Actual assists: 2
+- Non-shootout xG: 0.6692
+- Non-shootout xA: 0.5973
+- Shootout conversions are displayed only in the separate shootout field and do not enter outfield impact.
+
+## Active components
+
+| Component | Value |
 |---|---|
-| vaep_off_scaled | 0.5552 |
-| vaep_def_scaled | 0.3680 |
-| vaep_per_touch | 0.0035 |
-| open_play_xt_p90 | 0.0310 |
-| set_piece_xt_p90 | 0.0137 |
-| role_adjusted_value | 0.6300 |
-| completeness_score | 0.5175 |
-| off_ball_score | 0.4915 |
+| Attack | 1.8332 |
+| Defense | 0.0008 |
+| Other | 0.0000 |
 
-## Continuous role vector
+## Compatibility
 
-| Metric | Value |
-|---|---|
-| progression_score | 0.4090 |
-| creation_score | 0.5218 |
-| finishing_score | 0.8697 |
-| pressing_score | 0.4033 |
-| defensive_score | 0.5000 |
-| ball_security_score | 0.6056 |
-| aerial_score | 0.3791 |
-
-## Spatial, 360 and passing-network context
-
-| Metric | Value |
-|---|---|
-| sb360_coverage | 0.9052 |
-| mean_defenders_within_3m | 0.5406 |
-| mean_defenders_within_5m | 1.0150 |
-| mean_nearest_defender_m | 6.3413 |
-| mean_passing_lane_availability | 0.8786 |
-| packing_index_mean | 0.5556 |
-| mean_space_received | 0.4940 |
-| network_pagerank | 0.0652 |
-| network_betweenness | 0.0208 |
-| network_entropy | 0.9304 |
-| build_up_involvement_ratio | 0.6364 |
-
-Missing values indicate unavailable evidence; they are not converted into zero contribution.
+Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.

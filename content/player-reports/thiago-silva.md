@@ -4,74 +4,55 @@ description: "This report uses tournament events and coverage-qualified StatsBom
 layout: "player-report"
 url: "/projects/worlds-coach-output/reports/thiago-silva/"
 playerId: "sb-3295"
-sourceUrl: "https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis/blob/718ae91e82bedbd53486a1e0381aaa70e124ba12/World-Cup-S-Bomb/results/reports/player_profiles/thiago-emiliano-da-silva-3295.md"
+sourceUrl: "https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis/blob/0aa13e7289c0ce81452c8fc3a67efe3e849c1aef/World-Cup-S-Bomb/results/reports/player_profiles/thiago-emiliano-da-silva-3295.md"
 displayName: "Thiago Silva"
 wikiTitle: "Thiago Silva"
 headshotUrl: ""
 shirtNumber: ""
-overview: "Thiago Silva played as a center back for Brazil. His main role was deep playmaker, and the model ranked him #8 on the team. The notes below translate his tournament data into simple soccer terms."
+overview: "Thiago Silva played as a center back for Brazil. His main role was ball-playing centre-back, with an active outfield rank of #289 globally and #16 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Creates useful chances and connects attacks."
   - "Competes well for headers and aerial balls."
 weaknesses:
   - "Finishing is a smaller part of his overall impact."
-  - "Has less impact moving possession upfield."
+  - "Pressing intensity is a weaker area in this tournament model."
 ---
-## Ranking and role
+
+This generated profile uses Qatar 2022 event evidence only. Player identity is displayed after scoring and is never a feature.
+
+## Tournament Impact, Role Quality, and Uncertainty
 
 - Team: Brazil
 - Position group: Center Back
-- Functional role: Deep Playmaker
-- Probabilistic role: Aerial/Progressive Centre-Back
-- Role entropy: 0.0001
-- Global rank: 66
-- Position rank: 9
-- Role rank: 2
-- Team rank: 8
-- Final player rating: 0.5434
-- Global ranking eligibility: eligible
+- Functional role: Ball-Playing Centre-Back
 - Minutes: 409.1
-- Minutes reliability: 0.5769
+- Global Rank v3: 289
+- Team Rank v3: 16
+- Position Rank v3: 79
+- Role Rank v3: 18
+- Tournament Impact: 0.3601
+- Role Quality: 0.0738
+- Impact interval: [0.0381, 0.7753]
+- Rank band: 145–431
+- Uncertainty status: wide
 
-## Rating components
+## Decisive outcomes
 
-| Metric | Value |
+- Non-penalty goals: 0
+- Regular penalty goals: 0
+- Actual assists: 1
+- Non-shootout xG: 0.2082
+- Non-shootout xA: 0.6978
+- Shootout conversions are displayed only in the separate shootout field and do not enter outfield impact.
+
+## Active components
+
+| Component | Value |
 |---|---|
-| vaep_off_scaled | 0.5437 |
-| vaep_def_scaled | 0.8490 |
-| vaep_per_touch | 0.0001 |
-| open_play_xt_p90 | 0.0025 |
-| set_piece_xt_p90 | 0.0208 |
-| role_adjusted_value | 0.3611 |
-| completeness_score | 0.5543 |
-| off_ball_score | 0.5312 |
+| Attack | 0.4173 |
+| Defense | -0.0572 |
+| Other | 0.0000 |
 
-## Continuous role vector
+## Compatibility
 
-| Metric | Value |
-|---|---|
-| progression_score | 0.4764 |
-| creation_score | 0.6437 |
-| finishing_score | 0.3979 |
-| pressing_score | 0.5162 |
-| defensive_score | 0.5469 |
-| ball_security_score | 0.5908 |
-| aerial_score | 0.6127 |
-
-## Spatial, 360 and passing-network context
-
-| Metric | Value |
-|---|---|
-| sb360_coverage | 0.8865 |
-| mean_defenders_within_3m | 0.1246 |
-| mean_defenders_within_5m | 0.2410 |
-| mean_nearest_defender_m | 9.4880 |
-| mean_passing_lane_availability | 0.9645 |
-| packing_index_mean | 0.5809 |
-| mean_space_received | 0.9016 |
-| network_pagerank | 0.1040 |
-| network_betweenness | 0.1976 |
-| network_entropy | 0.8059 |
-| build_up_involvement_ratio | 0.6456 |
-
-Missing values indicate unavailable evidence; they are not converted into zero contribution.
+Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.

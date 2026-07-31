@@ -4,74 +4,55 @@ description: "This report uses tournament events and coverage-qualified StatsBom
 layout: "player-report"
 url: "/projects/worlds-coach-output/reports/joao-cancelo/"
 playerId: "sb-7005"
-sourceUrl: "https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis/blob/718ae91e82bedbd53486a1e0381aaa70e124ba12/World-Cup-S-Bomb/results/reports/player_profiles/jo-o-pedro-cavaco-cancelo-7005.md"
+sourceUrl: "https://github.com/ucd-cosmos-data/26-the-pattern-seekers-analysis/blob/0aa13e7289c0ce81452c8fc3a67efe3e849c1aef/World-Cup-S-Bomb/results/reports/player_profiles/jo-o-pedro-cavaco-cancelo-7005.md"
 displayName: "João Cancelo"
 wikiTitle: "João Cancelo"
 headshotUrl: ""
 shirtNumber: ""
-overview: "João Cancelo played as a fullback/wingback for Portugal. His main role was box-to-box runner, and the model ranked him #3 on the team. The notes below translate his tournament data into simple soccer terms."
+overview: "João Cancelo played as a fullback/wingback for Portugal. His main role was wide creator, with an active outfield rank of #148 globally and #9 on the team. The notes below translate his tournament evidence into simple soccer terms."
 strengths:
   - "Competes well for headers and aerial balls."
-  - "Reads danger and contributes well in defensive situations."
+  - "Moves the ball forward well through carries and forward passes."
 weaknesses:
   - "Can be less secure on the ball when pressure arrives."
   - "Finishing is a smaller part of his overall impact."
 ---
-## Ranking and role
+
+This generated profile uses Qatar 2022 event evidence only. Player identity is displayed after scoring and is never a feature.
+
+## Tournament Impact, Role Quality, and Uncertainty
 
 - Team: Portugal
 - Position group: Fullback/Wingback
-- Functional role: Box-to-Box Runner
-- Probabilistic role: Pressing/Defensive Midfielder
-- Role entropy: 0.0003
-- Global rank: 27
-- Position rank: 9
-- Role rank: 1
-- Team rank: 3
-- Final player rating: 0.6406
-- Global ranking eligibility: eligible
+- Functional role: Wide Creator
 - Minutes: 344.5
-- Minutes reliability: 0.5346
+- Global Rank v3: 148
+- Team Rank v3: 9
+- Position Rank v3: 5
+- Role Rank v3: 6
+- Tournament Impact: 0.7764
+- Role Quality: 0.2960
+- Impact interval: [0.1845, 1.5866]
+- Rank band: 57–319
+- Uncertainty status: wide
 
-## Rating components
+## Decisive outcomes
 
-| Metric | Value |
+- Non-penalty goals: 0
+- Regular penalty goals: 0
+- Actual assists: 0
+- Non-shootout xG: 0.0548
+- Non-shootout xA: 0.0327
+- Shootout conversions are displayed only in the separate shootout field and do not enter outfield impact.
+
+## Active components
+
+| Component | Value |
 |---|---|
-| vaep_off_scaled | 0.5023 |
-| vaep_def_scaled | 0.8553 |
-| vaep_per_touch | 0.0011 |
-| open_play_xt_p90 | 0.0226 |
-| set_piece_xt_p90 | 0.0353 |
-| role_adjusted_value | 0.2613 |
-| completeness_score | 0.5513 |
-| off_ball_score | 0.5272 |
+| Attack | 0.8441 |
+| Defense | -0.0677 |
+| Other | 0.0000 |
 
-## Continuous role vector
+## Compatibility
 
-| Metric | Value |
-|---|---|
-| progression_score | 0.6564 |
-| creation_score | 0.5190 |
-| finishing_score | 0.3721 |
-| pressing_score | 0.5237 |
-| defensive_score | 0.7312 |
-| ball_security_score | 0.2317 |
-| aerial_score | 0.8991 |
-
-## Spatial, 360 and passing-network context
-
-| Metric | Value |
-|---|---|
-| sb360_coverage | 0.8404 |
-| mean_defenders_within_3m | 0.2532 |
-| mean_defenders_within_5m | 0.5108 |
-| mean_nearest_defender_m | 7.0866 |
-| mean_passing_lane_availability | 0.9157 |
-| packing_index_mean | 0.7381 |
-| mean_space_received | 0.7076 |
-| network_pagerank | 0.0916 |
-| network_betweenness | 0.1575 |
-| network_entropy | 0.8381 |
-| build_up_involvement_ratio | 0.6715 |
-
-Missing values indicate unavailable evidence; they are not converted into zero contribution.
+Older v2/v5 columns are retained for provenance only. They are not the active ordering described above.
