@@ -2,7 +2,7 @@
 // generated matchup boards can show the name each player goes by, a description
 // imported from their profile, and a working "open player report" link.
 //
-// Inputs (from the analysis repo): v5_player_rankings.json + player_profiles/*.md
+// Inputs (from the analysis repo): ranking/player_rankings_v3.json + player_profiles/*.md
 // Outputs: assets/player-index.json (keyed by StatsBomb player_id) and
 //          content/player-reports/<slug>.md pages (non-curated players only).
 import fs from "node:fs";
@@ -14,7 +14,7 @@ const analysisRoot =
     process.env.PATTERN_SEEKERS_ANALYSIS_REPORTS_DIR ||
     path.resolve(projectRoot, "../26-the-pattern-seekers-analysis/World-Cup-S-Bomb/results/reports");
 const profilesDir = path.join(analysisRoot, "player_profiles");
-const rankingsPath = path.join(analysisRoot, "v5_player_rankings.json");
+const rankingsPath = path.join(analysisRoot, "ranking/player_rankings_v3.json");
 const contentRoot = path.join(projectRoot, "content/player-reports");
 const indexOut = path.join(projectRoot, "assets/player-index.json");
 
@@ -356,10 +356,20 @@ const matchups = JSON.parse(fs.readFileSync(path.join(projectRoot, "assets/match
 const nameToCode = {}, codeToName = {};
 matchups.teams.forEach(function (t) { nameToCode[t.name] = t.code; codeToName[t.code] = t.name; });
 const ratedInfoById = {};
-rankings.forEach(function (p) {
-    var rating = typeof p.final_player_rating === "number" ? p.final_player_rating
-        : (typeof p["Final player rating"] === "number" ? p["Final player rating"] : null);
-    ratedInfoById[String(p.player_id)] = { rating: rating, role: p.functional_role };
+matchups.teams.forEach(function (team) {
+    team.players.forEach(function (player) {
+        ratedInfoById[String(player.id)] = {
+            rating: player.rating,
+            role: player.role,
+            globalRank: player.global_rank,
+            teamRank: player.team_rank
+        };
+        if (index[String(player.id)]) {
+            index[String(player.id)].rating = player.rating;
+            index[String(player.id)].globalRank = player.global_rank;
+            index[String(player.id)].teamRank = player.team_rank;
+        }
+    });
 });
 
 const intervalsPath = process.env.PATTERN_SEEKERS_LINEUP_INTERVALS ||

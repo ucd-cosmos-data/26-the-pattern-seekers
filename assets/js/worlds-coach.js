@@ -1073,7 +1073,7 @@
             if (idx && isRated) {
                 var bits = [];
                 if (idx.teamRank) bits.push("Team #" + idx.teamRank + " rated");
-                bits.push(idx.rating.toFixed(2) + " rating");
+                bits.push(idx.rating.toFixed(2) + " overall");
                 if (idx.minutes) bits.push(idx.minutes + "′");
                 meta = bits.join(" · ");
             }
@@ -2328,7 +2328,7 @@
     }
 
     function formatRating(value) {
-        return value == null ? "—" : value.toFixed(3);
+        return value == null ? "—" : value.toFixed(2);
     }
 
     function possessiveTeamName(value) {
@@ -2384,7 +2384,7 @@
                 "<span class=\"matchup-player__name\">" + escapeHtml(goesByName(player)) +
                 (subtitle ? "<em>" + escapeHtml(subtitle) + "</em>" : "") + "</span>" +
                 "<span class=\"matchup-player__bar\"><i style=\"--w: " + width + "%\"></i></span>" +
-                "<span class=\"matchup-player__rating\">" + formatRating(player.rating) + "</span>" +
+                "<span class=\"matchup-player__rating\" title=\"FIFA-style overall rating\">" + formatRating(player.rating) + "</span>" +
                 "</li>";
         }
 
@@ -2408,7 +2408,7 @@
         function topLine(team) {
             var top = team.players && team.players[0];
             return top
-                ? "<strong>" + escapeHtml(goesByName(top)) + "</strong><em>top rated · " + formatRating(top.rating) + "</em>"
+                ? "<strong>" + escapeHtml(goesByName(top)) + "</strong><em>top overall · " + formatRating(top.rating) + "</em>"
                 : "<em>No rated players yet</em>";
         }
 

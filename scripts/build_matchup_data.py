@@ -1,8 +1,8 @@
 #!/usr/bin/env python3
 """Build the World's Coach matchup dataset from the analysis repo.
 
-Reads the per-player leaderboard (plus the team coaching-report filenames for
-code<->name mapping) from the sibling analysis repo, and emits a single
+Reads the canonical unified ranking (plus the rich player table and team
+coaching-report filenames) from the sibling analysis repo, and emits a single
 ``assets/matchups.json`` that the interactive tool loads.
 
 Rating confidence intervals are NOT included: ``player_rating_uncertainty.csv``
@@ -32,7 +32,9 @@ WEBSITE_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_ANALYSIS = WEBSITE_ROOT.parent / "26-the-pattern-seekers-analysis" / "World-Cup-S-Bomb"
 DEFAULT_OUTPUT = WEBSITE_ROOT / "assets" / "matchups.json"
 
-TITLE_RE = re.compile(r"^#\s+(.+?)\s+[—-]\s+Team Coaching Report", re.MULTILINE)
+TITLE_RE = re.compile(r"^#\s+(.+?)\s+[—-]\s+.*Team (?:Coaching Report|Profile)", re.MULTILINE)
+MAX_RANK = 585
+RATING_ANCHORS = ((1, 95.50), (100, 84.00), (300, 72.00), (MAX_RANK, 60.00))
 
 
 def read_csv(path: Path) -> list[dict[str, str]]:
@@ -64,30 +66,52 @@ def to_int(value: str) -> int | None:
         return None
 
 
-def build(analysis: Path) -> dict:
-    compiled = analysis / "results" / "reports" / "compiled"
-    leaderboard = read_csv(analysis / "results" / "reports" / "player_leaderboard.csv")
+def overall_rating(global_rank: int) -> float:
+    """Map canonical publication rank to the shared, two-decimal overall scale."""
+    if not 1 <= global_rank <= MAX_RANK:
+        raise ValueError(f"Global rank outside 1..{MAX_RANK}: {global_rank}")
+    left, right = next(
+        (left, right)
+        for left, right in zip(RATING_ANCHORS, RATING_ANCHORS[1:])
+        if left[0] <= global_rank <= right[0]
+    )
+    progress = (global_rank - left[0]) / (right[0] - left[0])
+    return round(left[1] + progress * (right[1] - left[1]), 2)
 
-    # player_leaderboard.csv is the canonical, self-consistent source: its rating
-    # (0-1) and global/position/team ranks all agree. Confidence intervals live
-    # in a separate table that is currently on an older rating scale, so they are
-    # intentionally not joined here — they can be re-added once regenerated.
+
+def build(analysis: Path) -> dict:
+    compiled = analysis / "results" / "reports" / "teams"
+    ranking_dir = analysis / "results" / "reports" / "ranking"
+    unified = read_csv(ranking_dir / "unified_tournament_rankings.csv")
+    rich_rows = read_csv(ranking_dir / "player_rankings_v3.csv")
+    rich_by_identity = {(row["player"], row["team"]): row for row in rich_rows}
+
+    if len(unified) != MAX_RANK:
+        raise ValueError(f"Expected {MAX_RANK} unified players, found {len(unified)}")
+
     code_by_name = {name: code for code, name in team_code_names(compiled).items()}
 
     players_by_team: dict[str, list[dict]] = {}
-    for row in leaderboard:
-        name = row["team"]
+    for row in unified:
+        name = row["Team"]
+        player_name = row["Player"]
+        rich = rich_by_identity.get((player_name, name))
+        if rich is None:
+            raise ValueError(f"Unified player missing rich row: {player_name} ({name})")
+        global_rank = to_int(row["Global Rank"])
+        if global_rank is None:
+            raise ValueError(f"Missing global rank: {player_name} ({name})")
         players_by_team.setdefault(name, []).append(
             {
-                "id": row["player_id"],
-                "name": row["player_name"],
-                "position": row.get("position_group", ""),
-                "role": row.get("functional_role", ""),
-                "rating": to_float(row.get("final_player_rating", "")),
-                "team_rank": to_int(row.get("team_rank", "")),
-                "global_rank": to_int(row.get("global_rank", "")),
-                "position_rank": to_int(row.get("position_rank", "")),
-                "minutes": to_int(row.get("minutes", "")),
+                "id": rich["player_id"],
+                "name": player_name,
+                "position": row.get("Position Group", ""),
+                "role": rich.get("functional_role", ""),
+                "rating": overall_rating(global_rank),
+                "team_rank": to_int(row.get("Team Rank", "")),
+                "global_rank": global_rank,
+                "position_rank": to_int(rich.get("position_rank_v3", "")),
+                "minutes": to_int(rich.get("minutes", "")),
             }
         )
 
@@ -112,9 +136,9 @@ def build(analysis: Path) -> dict:
     # sanity: teams present in the leaderboard should all have mapped to a code
     unmapped = sorted(set(players_by_team) - set(code_by_name))
     return {
-        "generated_from": "player_leaderboard.csv + compiled team coaching reports (code-name mapping)",
+        "generated_from": "unified_tournament_rankings.csv + player_rankings_v3.csv + FIFA-style rank scale",
         "team_count": len(teams),
-        "rated_player_count": len(leaderboard),
+        "rated_player_count": len(unified),
         "unmapped_teams": unmapped,
         "teams": teams,
     }
